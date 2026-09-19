@@ -64,4 +64,13 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Типово дія ставить wrangler 3.90 — він старший за підтримку
+          # wrangler.jsonc і поводиться інакше з аргументами pages deploy.
+          # Фіксуємо четверту гілку, щоб поведінка не залежала від того,
+          # що дія вирішить поставити цього разу.
+          wranglerVersion: '4'
+          # Тека передається аргументом, а не конфігом: файла wrangler.jsonc
+          # більше немає. Він задавав pages_build_output_dir, і разом із
+          # аргументом dist це два джерела правди для того самого — саме
+          # той випадок, коли wrangler зупиняється й просить лишити одне.
           command: pages deploy dist --project-name=vm-design
