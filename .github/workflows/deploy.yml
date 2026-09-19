@@ -59,6 +59,20 @@ jobs:
           # одному місці.
           PUBLIC_FORMSPREE_ID: ${{ secrets.PUBLIC_FORMSPREE_ID }}
 
+      # Проєкт Pages має існувати до першого деплою — wrangler його не
+      # створює сам. Крок ідемпотентний: якщо проєкт уже є, команда
+      # завершиться помилкою «вже існує», і ми її свідомо ігноруємо.
+      # Так налаштування не залежить від того, чи не забули створити
+      # проєкт руками в панелі.
+      - name: Створити проєкт Pages, якщо його немає
+        continue-on-error: true
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4'
+          command: pages project create vm-design --production-branch=main
+
       - name: Викласти на Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
