@@ -1,0 +1,561 @@
+---
+import { Picture } from 'astro:assets';
+import { localePath, t, type Locale } from '../../lib/i18n';
+
+/** Узагальнений елемент стрічки: підходить і проєкту, і розділу 3D. */
+export interface RailItem {
+  href: string;
+  title: string;
+  meta: string;
+  image: ImageMetadata;
+  alt: string;
+}
+
+interface Props {
+  locale: Locale;
+  /** Номер блока — виводиться як 01, 02… */
+  index: number;
+  titleKey: string;
+  textKey: string;
+  href: string;
+  items: RailItem[];
+  /** true — стрічка ліворуч, текст праворуч. Блоки чергуються. */
+  reverse?: boolean;
+  /** Якір для посилань із футера. */
+  anchor?: string;
+}
+
+const { locale, index, titleKey, textKey, href, items, reverse = false, anchor } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+{/*
+  Розкладка й плити повторюють секцію AMBIENTI на pistoremarmi.com.
+
+  Виміряно на самому сайті (обчислені стилі, viewport 1680, вміст 1280):
+    колонки        426 · проміжок 108 · стрічка 746
+    плита          263 × 420.8  →  пропорція 5 / 8
+    проміжок плит  20px (margin: 0 10px на слайді)
+    смуга          ::before, inset 0 0 100px 0, #f4f4f4
+    каруселя       transform: translateY(100px)
+    вікно стрічки  margin-right: -200px — рівно до краю вікна
+    кнопка         border-radius: 66px, 173 × 57
+
+  Важливе відкриття: 3D-нахилу там НЕМА. На зображенні стоїть
+  rotateY(170deg), але ні на ньому, ні на жодному з батьків немає
+  perspective, а transform-style лишається flat — тому матриця
+  згортається у плоский scaleX(cos 170°) = -0.985. Відчуття об'єму
+  дають лише темна смужка по лівому краю плити та те, що плити
+  спускаються нижче світлої смуги.
+
+  Свайп — на CSS scroll-snap, тому пальцем, трекпадом і скролбаром він
+  працює без JS. Скрипт лишає за собою тільки стрілки.
+*/}
+<section
+  class:list={['work', reverse && 'work--reverse']}
+  id={anchor}
+  data-swiper
+  data-swiper-align={reverse ? 'end' : 'start'}
+>
+  <div class="container work__inner">
+    <header class="work__type" data-reveal>
+      <p class="t-meta work__num">{num}</p>
+      <h2 class="t-h2">{t(locale, titleKey)}</h2>
+      <p class="work__text">{t(locale, textKey)}</p>
+
+      <p class="work__actions">
+        <a class="work__cta" href={localePath(locale, href)}>
+          {t(locale, 'work.viewAll')} <span aria-hidden="true">·</span> {items.length}
+        </a>
+      </p>
+
+      <div class="work__nav">
+        <button type="button" data-swiper-prev aria-label={t(locale, 'work.prev')}>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 4 L7 12 L15 20" />
+          </svg>
+        </button>
+        <button type="button" data-swiper-next aria-label={t(locale, 'work.next')}>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 4 L17 12 L9 20" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="work__side" data-reveal>
+      <div class="work__rail">
+        <ul class="rail" data-swiper-rail tabindex="0">
+          {
+            items.map((it) => (
+              <li class="rail__item">
+                <a class="tile" href={localePath(locale, it.href)}>
+                  <span class="tile__figure">
+                    <span class="tile__canvas">
+                      {/*
+                        Торець іде першим: на нього загортається лівий край
+                        того самого кадру, дзеркально — як на справжній
+                        картині, натягнутій на підрамник. Те саме зображення
+                        й ті самі widths, тож браузер бере вже завантажений
+                        файл, без зайвого запиту.
+                      */}
+                      <span class="tile__face">
+                        <Picture
+                          formats={['avif']}
+                          fallbackFormat="webp"
+                          src={it.image}
+                          alt={it.alt}
+                          widths={[400, 800, 1200]}
+                          sizes="(max-width: 700px) 72vw, 400px"
+                          loading="lazy"
+                        />
+                      </span>
+
+                      <span class="tile__side" aria-hidden="true">
+                        <Picture
+                          formats={['avif']}
+                          fallbackFormat="webp"
+                          src={it.image}
+                          alt=""
+                          widths={[400, 800, 1200]}
+                          sizes="(max-width: 700px) 72vw, 400px"
+                          loading="lazy"
+                        />
+                      </span>
+                    </span>
+                  </span>
+                  <span class="tile__caption">
+                    <span class="tile__title">{it.title}</span>
+                    <span class="t-meta">{it.meta}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    /* Пропорції з референсу: 426 / 108 / 746 при вмісті 1280. */
+    --col-gap: clamp(2rem, 6.4vw, 6.75rem); /* 108px */
+    --text-col: 0.3636; /* 426 із 1172 (вміст без проміжку) */
+
+    /*
+      Плита навмисно більша за референсну (263px): при широкому вікні
+      стрічка виїжджає за край екрана й стає такою широкою, що всі картки
+      вміщаються — і гортати вже нічого. З цією шириною переповнення
+      гарантоване від чотирьох карток.
+    */
+    --plate: clamp(240px, 26vw, 400px);
+    --plate-gap: clamp(1rem, 1.7vw, 2rem); /* 32px */
+
+    /* Нахил плити. Перспектива на кожній картці окремо, тому кут
+       однаковий незалежно від позиції прокрутки. */
+    /* Підрамник: товщина торця, кут розвороту плити, глибина перспективи. */
+    --thick: 24px;
+    --tilt: 26deg;
+    --persp: 1000px;
+
+    /*
+      Поле стрічки — воно ж внутрішнє поле світлої смуги, бо смуга обіймає
+      саме стрічку. Запас потрібен і технічно: overflow-x: auto робить
+      скролер обрізальним і по вертикалі, тож без нього зріже торець і тінь.
+
+      Згори й знизу значення різні навмисно. Над плитою потрібне повітря,
+      під підписом — ні: там лише два рядки дрібним, і симетричні 45 px
+      читалися як провал. 20 px вистачає, щоб тінь не обрізало.
+    */
+    --rail-pad: clamp(2rem, 3.2vw, 3.75rem);
+    --rail-top: var(--rail-pad);
+    --rail-bottom: 20px;
+
+    /*
+      Виїзд стрічки — точно до краю вікна, як у референсі
+      (там це -200px = поле контейнера 140 + його padding 60).
+      100vw ширший за clientWidth на смугу прокрутки, тому виїзд
+      трохи завеликий — його зрізає overflow-x нижче.
+      Постав 0, щоб стрічка лишалась у межах контейнера.
+    */
+    --rail-bleed: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+
+    position: relative;
+    padding-block: var(--section);
+
+    /*
+      clip, а не hidden: зрізає виїзд стрічки по горизонталі,
+      але лишає видимим вертикальний навис плит.
+    */
+    overflow-x: clip;
+  }
+
+  /*
+    Світла смуга обіймає стрічку, а не рахується формулою.
+
+    Раніше висота бралася з ланцюжка --section + --overhang + --rail-top +
+    плита + --band-tail. Через це над плитою опинялося 204 px, а під
+    підписом 38 — секція виглядала зсунутою вгору. Прив'язка до top/bottom
+    робить поле всередині смуги рівно --rail-pad з обох боків, і воно
+    лишається таким незалежно від довжини підпису чи висоти тексту зліва.
+  */
+  .work::before {
+    content: '';
+    position: absolute;
+    top: var(--section);
+    bottom: var(--section);
+    left: 0;
+    right: 0;
+    background: var(--sand);
+    z-index: -1;
+  }
+
+  /*
+    Flex, а не grid, саме через чергування сторін: ширина належить
+    елементу, тож розворот — це один row-reverse і ширини їдуть
+    разом зі сторонами.
+  */
+  .work__inner {
+    display: flex;
+    gap: var(--col-gap);
+    /*
+      Від верху, а не по центру: висота рядка дорівнює висоті стрічки,
+      і світла смуга обіймає саме її.
+    */
+    align-items: flex-start;
+  }
+
+  .work--reverse .work__inner {
+    flex-direction: row-reverse;
+  }
+
+  .work__type {
+    flex: 0 0 calc((100% - var(--col-gap)) * var(--text-col));
+    /*
+      По центру відносно плит.
+
+      Раніше стрічку зсував униз transform: translateY(--overhang). Трансформ
+      не змінює розкладки, тому flex центрував текст відносно НЕзсунутої
+      стрічки — і колонка зліва висіла на 100 px вище за плити.
+    */
+    align-self: center;
+  }
+
+  /* min-width: 0 обов'язковий — без нього скролер розсуває flex за min-content. */
+  .work__side {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .work__num {
+    color: var(--accent-line);
+    margin-bottom: var(--space-s);
+  }
+
+  .work__text {
+    margin-top: var(--space-m);
+    max-width: 38ch;
+    /* Помітно більший за базовий: у цій колонці тексту мало, і він має тримати вагу. */
+    font-size: clamp(1.0625rem, 0.95rem + 0.35vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--fg-muted);
+  }
+
+  .work__actions {
+    margin-top: var(--space-l);
+  }
+
+  /* Pill-кнопка з референсу: 173 × 57, радіус 66px, тонка рамка. */
+  .work__cta {
+    display: inline-block;
+    padding: 1.0625rem 2.25rem;
+    border: 1px solid var(--slate);
+    border-radius: 66px;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    transition:
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .work__cta:hover,
+  .work__cta:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ─── Стрічка ──────────────────────────────────────────── */
+
+  .work__rail {
+    margin-inline-end: calc(var(--rail-bleed) * -1);
+  }
+
+  .work--reverse .work__rail {
+    margin-inline: calc(var(--rail-bleed) * -1) 0;
+  }
+
+  .rail {
+    display: flex;
+    gap: var(--plate-gap);
+    list-style: none;
+    margin: 0;
+    /*
+      Торець виступає за ліве ребро плити, а тінь падає вниз і праворуч.
+      overflow-x: auto робить обрізальним і overflow-y, тож запас потрібен
+      з обох напрямків — інакше зріже і торець, і тінь.
+    */
+    padding: var(--rail-top) 0 var(--rail-bottom) var(--thick);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /*
+      Без цього snap притискає першу плиту до самого краю скролпорта й тим
+      скасовує ліве поле — торець виїжджає за межі й обрізається.
+      scroll-padding переносить точку прилипання на край поля.
+    */
+    scroll-padding-inline-start: var(--thick);
+    scrollbar-width: none;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*
+    У перевернутих блоках стрічка тримається правого краю колонки
+    й виїжджає за ліве поле вікна — дзеркало референсу. Робить це скрипт,
+    ставлячи стрічку в її кінець.
+
+    Саме скрипт, а не justify-content: flex-end — коли flex-вміст
+    переповнює скролер, вихід за ПОЧАТКОВИЙ край недосяжний і не входить
+    у scrollWidth. Стрічка тоді вважає, що гортати нічого, і ховає стрілки.
+  */
+
+  .rail__item {
+    flex: 0 0 var(--plate);
+    scroll-snap-align: start;
+    /*
+      Перспектива саме тут, а не на стрічці: якби вона стояла на скролері,
+      точка сходу лишалась би на місці, і кут кожної плити мінявся б
+      залежно від того, куди її догортали.
+    */
+    perspective: var(--persp);
+  }
+
+  .work--reverse .rail__item {
+    scroll-snap-align: end;
+  }
+
+  /* ─── Плита ────────────────────────────────────────────── */
+
+  .tile {
+    display: block;
+  }
+
+  /*
+    Картина на підрамнику.
+
+    Тінь живе на обгортці, а не на самій плиті. Це не косметика: filter
+    входить до групувальних властивостей, які примусово зводять
+    transform-style: preserve-3d до flat — торець просто зник би.
+  */
+  .tile__figure {
+    display: block;
+    filter: drop-shadow(15px 20px 22px rgb(0 0 0 / 0.22));
+    transition: transform var(--dur-slow) var(--ease);
+  }
+
+  /* Обидві грані лежать одна на одній; розводить їх поворот у 3D. */
+  .tile__canvas {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 8 / 11;
+    transform-style: preserve-3d;
+    transform: perspective(var(--persp)) rotateY(var(--tilt));
+  }
+
+  .tile__face,
+  .tile__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .tile__face {
+    width: 100%;
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  .tile__face :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--placeholder, var(--stone));
+  }
+
+  /*
+    Торець: рівно 90° УГЛИБ від лівого ребра.
+
+    Саме +90deg, не -90. Плита повернута на додатний кут, тож до глядача
+    йде ліве ребро. При -90deg грань відкидало вперед від цього ребра —
+    вона лягала поверх фото й читалась як смуга на зображенні, а не як
+    товщина підрамника. Плюс відводить її назад, за площину фото.
+  */
+  .tile__side {
+    width: var(--thick);
+    overflow: hidden;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+    filter: brightness(0.7) contrast(1.1);
+  }
+
+  /* Лівий край того самого кадру, дзеркально загорнутий на торець. */
+  .tile__side :global(img) {
+    display: block;
+    width: var(--plate);
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    transform: scaleX(-1);
+  }
+
+  /* При наведенні плита трохи підіймається. */
+  .tile:hover .tile__figure,
+  .tile:focus-visible .tile__figure {
+    transform: translateY(-8px);
+  }
+
+  .tile__caption {
+    display: block;
+    margin-top: var(--space-m);
+    /* У референсі підпис відцентрований під плитою. */
+    text-align: center;
+  }
+
+  .tile__title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  }
+
+  /* ─── Стрілки ──────────────────────────────────────────── */
+
+  /* Стрілки живуть у текстовій колонці, одразу під кнопкою. */
+  .work__nav {
+    display: none;
+    gap: 1.25rem;
+    margin-top: var(--space-l);
+  }
+
+  /* Стрілки безглузді без JS — показуємо їх зі скрипта. */
+  [data-swiper-ready] .work__nav {
+    display: flex;
+  }
+
+  .work__nav button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    transition:
+      color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+
+  .work__nav svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+    stroke-linecap: square;
+  }
+
+  .work__nav button:hover:not(:disabled) {
+    color: var(--accent);
+  }
+
+  .work__nav button:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
+  /* ─── Вузькі екрани ───────────────────────────────────── */
+
+  @media (max-width: 900px) {
+    /*
+      Низ 20px, як і в стрічки: у колонці під стрічкою вже є її власне
+      поле, і повні --section зверх нього відривали блок від наступного.
+    */
+    .work {
+      padding-block: var(--section) 20px;
+    }
+
+    /*
+      На вузькому екрані плити стоять під текстом, а не поруч, і смуга
+      накриває секцію повністю. Саме інсетами, а не height: 100% —
+      той переміг би bottom із базового правила й смуга вилізла б
+      нижче секції рівно на --section.
+    */
+    .work::before {
+      top: 0;
+      bottom: 0;
+    }
+
+    .work__inner,
+    .work--reverse .work__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2rem;
+    }
+
+    .work__type,
+    .work__side {
+      flex: 0 0 auto;
+    }
+
+    .work__rail,
+    .work--reverse .work__rail {
+      margin-inline: calc(var(--gutter) * -1);
+    }
+
+    .rail,
+    .work--reverse .rail {
+      padding-inline: calc(var(--gutter) + var(--thick)) var(--gutter);
+      scroll-padding-inline-start: calc(var(--gutter) + var(--thick));
+    }
+
+    /*
+      На телефоні всі стрічки йдуть зліва направо, без чергування сторін.
+
+      На широкому екрані чергування має сенс: стрічка притиснута до того
+      краю колонки, з якого виїжджає за вікно. У колонку це не переноситься —
+      обидві половини на всю ширину, і різна поведінка сусідніх блоків
+      читається як збій.
+
+      Тому перевернутий блок повертається до звичайного прилипання початком,
+      а скрипт на цій ширині не зсуває стрічку в кінець.
+    */
+    .work--reverse .rail__item {
+      scroll-snap-align: start;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile:hover .tile__figure,
+    .tile:focus-visible .tile__figure {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import { localePath, t, type Locale } from '../../lib/i18n';
+import { SITE } from '../../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+
+/**
+ * Секції головної.
+ *
+ * Посилання абсолютні (/#id), а не голі якорі: футер стоїть на кожній
+ * сторінці, тож із проєкту чи контактів вони мають вести на головну,
+ * а не шукати неіснуючий якір на поточній.
+ */
+const sections = [
+  { hash: 'residential', key: 'work.residential.title' },
+  { hash: 'christina', key: 'christina.title' },
+  { hash: 'services', key: 'footer.services' },
+  { hash: 'materials', key: 'materials.eyebrow' },
+];
+---
+
+<footer class="footer on-ink-deep">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="/brand/logo-light-264.png" width="264" height="264" alt="" decoding="async" />
+      <p class="t-meta">VM Design</p>
+    </div>
+
+    <div class="footer__col">
+      <p class="t-meta">{t(locale, 'contact.eyebrow')}</p>
+      <p>
+        <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+      <p>
+        <a class="link" href={SITE.instagramUrl} rel="me noopener" target="_blank">
+          {SITE.instagram}
+        </a>
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Pages">
+      <p class="t-meta">{t(locale, 'index.title')}</p>
+      <ul>
+        <li><a class="link" href={localePath(locale, '/projects')}>{t(locale, 'nav.work')}</a></li>
+        <li><a class="link" href={localePath(locale, '/visualisations')}>{t(locale, 'nav.renders')}</a></li>
+        <li><a class="link" href={localePath(locale, '/about')}>{t(locale, 'nav.about')}</a></li>
+        <li><a class="link" href={localePath(locale, '/contact')}>{t(locale, 'nav.contact')}</a></li>
+      </ul>
+    </nav>
+
+    <nav class="footer__col footer__col--sections" aria-label="Sections">
+      <p class="t-meta">{t(locale, 'footer.sections')}</p>
+      <ul>
+        {
+          sections.map((s) => (
+            <li>
+              <a class="link" href={`${localePath(locale, '/')}#${s.hash}`}>{t(locale, s.key)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <p class="footer__legal t-meta">© {year} VM Design</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+
+  .footer__brand img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .footer__brand p {
+    margin-top: var(--space-s);
+  }
+
+  .footer__col .t-meta {
+    margin-bottom: var(--space-s);
+  }
+
+  .footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer__col li + li,
+  .footer__col p + p {
+    margin-top: 0.375rem;
+  }
+
+  .footer__legal {
+    grid-column: 1 / -1;
+    /*
+      Це <p>, тому базове правило p { max-width: var(--measure) } обрізало
+      його до 68ch — лінія border-top тяглася на 472 px замість повної
+      ширини футера. Міра рядка тут не потрібна: це не текст для читання.
+    */
+    max-width: none;
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 700px) {
+    /*
+      Дві колонки по два рядки, за порядком у розмітці:
+        лого | контакти
+        сторінки | секції
+
+      Раніше лого розтягувалося на всю ширину (grid-column: 1 / -1),
+      через що поруч із ним лишалася порожнеча, а список секцій
+      опинявся сам-один у нижньому рядку.
+    */
+    .footer__inner {
+      /*
+        Колонки по вмісту й уся сітка по центру: при 1fr 1fr ліва колонка
+        була вдвічі ширша за свій текст, і зліва зяяла порожнеча.
+      */
+      grid-template-columns: repeat(2, auto);
+      justify-content: center;
+      gap: var(--space-l) var(--space-xl);
+      align-items: start;
+    }
+  }
+</style>

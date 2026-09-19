@@ -1,0 +1,155 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import { ROOMS, coverOf, imageFor } from '../../lib/renders';
+import { resolveLocale, localePath, t } from '../../lib/i18n';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+---
+
+<BaseLayout
+  title="3D Visualisations — VM Design"
+  description="Interior visualisations by Maryna Vashchenko, arranged by room: kitchens and living spaces, bedrooms, bathrooms, hallways, children's rooms, dressing rooms and studies."
+>
+  <section class="head section">
+    <div class="container">
+      <p class="t-eyebrow">{t(locale, 'renders.eyebrow')}</p>
+      <h1 class="t-display">{t(locale, 'renders.title')}</h1>
+      <p class="t-lead head__lead">{t(locale, 'renders.lead')}</p>
+    </div>
+  </section>
+
+  {/*
+    Розділи за типом приміщення, а не за об'єктами — так просила замовниця.
+    Легкий нахил карток узятий із секції AMBIENTI на pistoremarmi.com,
+    яку вона надіслала як референс, але приглушений: постійний сильний
+    скіс сперечався б із editorial-спокоєм решти сайту.
+  */}
+  <section class="rooms">
+    <ul class="container rooms__grid">
+      {
+        ROOMS.map((room, i) => {
+          const cover = coverOf(room);
+          return (
+            <li class="room" data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <a href={localePath(locale, `/visualisations/${room.slug}`)}>
+                <span class="room__frame">
+                  <span class="room__plate" style={`--placeholder:${cover.colour}`}>
+                    <Picture
+                      formats={['avif']}
+                      fallbackFormat="webp"
+                      src={imageFor(room.slug, cover.file)}
+                      alt={`${room.title} — interior visualisation`}
+                      widths={[420, 840, 1200]}
+                      sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 30vw"
+                      loading={i < 3 ? 'eager' : 'lazy'}
+                    />
+                  </span>
+                </span>
+                <span class="room__caption">
+                  <span class="room__title">{room.title}</span>
+                  <span class="t-meta">{room.count}</span>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: 7rem;
+    padding-bottom: var(--space-xl);
+  }
+
+  .head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .head__lead {
+    margin-top: var(--space-l);
+  }
+
+  .rooms {
+    padding-bottom: var(--section);
+  }
+
+  .rooms__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2.5rem);
+    list-style: none;
+    /* Лише типові відступи списка: margin: 0 перебивав
+       margin-inline: auto з .container, і той тулився влівo. */
+    margin-block: 0;
+    padding-inline: var(--gutter);
+  }
+
+  /* Перспектива живе на контейнері — картка обертається всередині неї. */
+  .room__frame {
+    display: block;
+    perspective: 1400px;
+  }
+
+  .room__plate {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--placeholder, var(--sand));
+    transform: rotateY(-6deg) scale(0.985);
+    transform-origin: left center;
+    transition:
+      transform var(--dur-slow) var(--ease),
+      box-shadow var(--dur-slow) var(--ease);
+    box-shadow: 0 10px 40px -24px rgb(43 42 41 / 0.5);
+  }
+
+  .room a:hover .room__plate,
+  .room a:focus-visible .room__plate {
+    transform: rotateY(0deg) scale(1);
+    box-shadow: 0 18px 60px -28px rgb(43 42 41 / 0.65);
+  }
+
+  .room__plate :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .room__caption {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-top: var(--space-m);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--rule);
+  }
+
+  .room__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  }
+
+  @media (max-width: 1100px) {
+    .rooms__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rooms__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Нахил — це рух; без нього картка просто рівна. */
+  @media (prefers-reduced-motion: reduce) {
+    .room__plate {
+      transform: none;
+    }
+  }
+</style>

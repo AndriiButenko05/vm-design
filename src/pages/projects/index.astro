@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import ProjectIndex from '../../components/project/ProjectIndex.astro';
+import ContactSection from '../../components/home/ContactSection.astro';
+import { getProjects, typeFilters } from '../../lib/projects';
+import { resolveLocale, localePath, t } from '../../lib/i18n';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const projects = await getProjects(locale);
+
+/**
+ * Фільтр — окремі статичні маршрути, а не JS.
+ * Дає індексовані URL, працює без скриптів і не залежить від гідратації.
+ */
+const filters = typeFilters(locale);
+---
+
+<BaseLayout
+  title="Projects — VM Design"
+  description="Realised interiors by Maryna Vashchenko: private residences and commercial spaces in France, Monaco and Italy."
+>
+  <section class="head section">
+    <div class="container">
+      <p class="t-eyebrow">{t(locale, 'index.eyebrow')}</p>
+      <h1 class="t-display">{t(locale, 'index.title')}</h1>
+
+      <nav class="filters" aria-label="Filter projects">
+        {
+          filters.map((f) => (
+            <a
+              href={f.href}
+              class="filters__link"
+              aria-current={f.key === 'all' ? 'page' : undefined}
+            >
+              {f.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  <section class="work">
+    <div class="container" data-reveal>
+      <ProjectIndex locale={locale} projects={projects} />
+    </div>
+  </section>
+
+  <ContactSection locale={locale} />
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: 7rem;
+    padding-bottom: var(--space-xl);
+  }
+
+  .head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .filters__link {
+    position: relative;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-block: 0.25rem;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .filters__link:hover,
+  .filters__link[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  .filters__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent-line);
+  }
+
+  .work {
+    padding-bottom: var(--section);
+  }
+</style>

@@ -1,0 +1,2027 @@
+{
+ "projects": {
+  "la-villa-nice": [
+   {
+    "file": "005-img-2451.jpg",
+    "source": "IMG_2451.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "007-img-2458.jpg",
+    "source": "IMG_2458.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "034-img-2560.jpg",
+    "source": "IMG_2560.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#989898"
+   },
+   {
+    "file": "028-img-2528.jpg",
+    "source": "IMG_2528.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "016-img-2485.jpg",
+    "source": "IMG_2485.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "043-img-2582.jpg",
+    "source": "IMG_2582.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "025-img-2519.jpg",
+    "source": "IMG_2519.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "030-img-2530.jpg",
+    "source": "IMG_2530.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "022-img-2508.jpg",
+    "source": "IMG_2508.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#988888"
+   },
+   {
+    "file": "032-img-2553.jpg",
+    "source": "IMG_2553.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787868"
+   },
+   {
+    "file": "020-img-2498.jpg",
+    "source": "IMG_2498.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "021-img-2502.jpg",
+    "source": "IMG_2502.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#988878"
+   },
+   {
+    "file": "036-img-2564.jpg",
+    "source": "IMG_2564.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "038-img-2569.jpg",
+    "source": "IMG_2569.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "041-img-2572.jpg",
+    "source": "IMG_2572.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "042-img-2578.jpg",
+    "source": "IMG_2578.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "008-img-2461.jpg",
+    "source": "IMG_2461.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8c8b8"
+   },
+   {
+    "file": "044-img-7561.jpg",
+    "source": "IMG_7561.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#989888"
+   },
+   {
+    "file": "045-img-7562.jpg",
+    "source": "IMG_7562.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "046-img-7831.jpg",
+    "source": "IMG_7831.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#989888"
+   },
+   {
+    "file": "050-img-8886.jpg",
+    "source": "IMG_8886.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#988878"
+   },
+   {
+    "file": "051-img-8889.jpg",
+    "source": "IMG_8889.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#d8c8a8"
+   },
+   {
+    "file": "055-img-9182.jpg",
+    "source": "IMG_9182.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#585848"
+   },
+   {
+    "file": "053-img-8892.jpg",
+    "source": "IMG_8892.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#686868"
+   }
+  ],
+  "monza-apartment": [
+   {
+    "file": "000-img-0421.jpg",
+    "source": "IMG_0421.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "008-img-0442.jpg",
+    "source": "IMG_0442.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "003-img-0428.jpg",
+    "source": "IMG_0428.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "005-img-0431.jpg",
+    "source": "IMG_0431.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "013-img-0460.jpg",
+    "source": "IMG_0460.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "018-img-0471.jpg",
+    "source": "IMG_0471.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#d8b898"
+   },
+   {
+    "file": "010-img-0451.jpg",
+    "source": "IMG_0451.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8a878"
+   },
+   {
+    "file": "012-img-0458.jpg",
+    "source": "IMG_0458.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8a898"
+   },
+   {
+    "file": "021-img-0477.jpg",
+    "source": "IMG_0477.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8a878"
+   },
+   {
+    "file": "023-img-0487.jpg",
+    "source": "IMG_0487.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8a868"
+   },
+   {
+    "file": "015-img-0463.jpg",
+    "source": "IMG_0463.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#585858"
+   },
+   {
+    "file": "016-img-0465.jpg",
+    "source": "IMG_0465.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#786848"
+   },
+   {
+    "file": "024-img-7018.jpg",
+    "source": "IMG_7018.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#786858"
+   },
+   {
+    "file": "030-img-7034.jpg",
+    "source": "IMG_7034.jpeg",
+    "role": "before",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#886848"
+   },
+   {
+    "file": "031-img-7035.jpg",
+    "source": "IMG_7035.jpeg",
+    "role": "before",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#987858"
+   },
+   {
+    "file": "032-img-7036.jpg",
+    "source": "IMG_7036.jpeg",
+    "role": "before",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a88868"
+   },
+   {
+    "file": "025-img-7019.jpg",
+    "source": "IMG_7019.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#584838"
+   },
+   {
+    "file": "029-img-7033.jpg",
+    "source": "IMG_7033.jpeg",
+    "role": "before",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c89878"
+   }
+  ],
+  "larimar-nice": [
+   {
+    "file": "007-img-2672.jpg",
+    "source": "IMG_2672.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#887868"
+   },
+   {
+    "file": "013-img-2686.jpg",
+    "source": "IMG_2686.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "010-img-2676.jpg",
+    "source": "IMG_2676.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "011-img-2677.jpg",
+    "source": "IMG_2677.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8a898"
+   },
+   {
+    "file": "012-img-2680.jpg",
+    "source": "IMG_2680.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "009-img-2674.jpg",
+    "source": "IMG_2674.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "008-img-2673.jpg",
+    "source": "IMG_2673.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#989888"
+   },
+   {
+    "file": "000-img-0328.jpg",
+    "source": "IMG_0328.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#887868"
+   },
+   {
+    "file": "002-img-0330.jpg",
+    "source": "IMG_0330.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#c8b8a8"
+   },
+   {
+    "file": "003-img-0331.jpg",
+    "source": "IMG_0331.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#988868"
+   },
+   {
+    "file": "004-img-0336.jpg",
+    "source": "IMG_0336.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#988868"
+   }
+  ],
+  "wow-hair-nice": [
+   {
+    "file": "000-img-2638.jpg",
+    "source": "IMG_2638.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "003-img-2642.jpg",
+    "source": "IMG_2642.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "001-img-2639.jpg",
+    "source": "IMG_2639.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "006-img-2653.jpg",
+    "source": "IMG_2653.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "004-img-2643.jpg",
+    "source": "IMG_2643.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "002-img-2641.jpg",
+    "source": "IMG_2641.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#888888"
+   },
+   {
+    "file": "005-img-2645.jpg",
+    "source": "IMG_2645.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "007-img-2654.jpg",
+    "source": "IMG_2654.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#787878"
+   },
+   {
+    "file": "010-img-8328.jpg",
+    "source": "IMG_8328.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "011-img-8329.jpg",
+    "source": "IMG_8329.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "012-img-8330.jpg",
+    "source": "IMG_8330.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "013-img-8762.jpg",
+    "source": "IMG_8762.jpeg",
+    "role": "before",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#888888"
+   }
+  ],
+  "christina-paris": [
+   {
+    "file": "005-img-1496.jpg",
+    "source": "IMG_1496.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "022-img-1571.jpg",
+    "source": "IMG_1571.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "003-img-1485.jpg",
+    "source": "IMG_1485.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a89888"
+   },
+   {
+    "file": "011-img-1531.jpg",
+    "source": "IMG_1531.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#988888"
+   },
+   {
+    "file": "006-img-1498.jpg",
+    "source": "IMG_1498.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "016-img-1549.jpg",
+    "source": "IMG_1549.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "014-img-1547.jpg",
+    "source": "IMG_1547.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a89898"
+   },
+   {
+    "file": "009-img-1525.jpg",
+    "source": "IMG_1525.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "020-img-1567.jpg",
+    "source": "IMG_1567.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#c8c8c8"
+   },
+   {
+    "file": "023-img-1574.jpg",
+    "source": "IMG_1574.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "017-img-1552.jpg",
+    "source": "IMG_1552.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "015-img-1548.jpg",
+    "source": "IMG_1548.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#887868"
+   },
+   {
+    "file": "027-img-9571.jpg",
+    "source": "IMG_9571.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8b8"
+   },
+   {
+    "file": "025-img-1584.jpg",
+    "source": "IMG_1584.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   }
+  ],
+  "christina-roma": [
+   {
+    "file": "035-img-9749.jpg",
+    "source": "IMG_9749.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "036-img-9764.jpg",
+    "source": "IMG_9764.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   },
+   {
+    "file": "044-img-9780.jpg",
+    "source": "IMG_9780.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   },
+   {
+    "file": "046-img-9782.jpg",
+    "source": "IMG_9782.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "038-img-9766.jpg",
+    "source": "IMG_9766.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8b8b8"
+   },
+   {
+    "file": "040-img-9769.jpg",
+    "source": "IMG_9769.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "045-img-9781.jpg",
+    "source": "IMG_9781.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "048-img-9786.jpg",
+    "source": "IMG_9786.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   },
+   {
+    "file": "050-img-9788.jpg",
+    "source": "IMG_9788.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "051-img-9789.jpg",
+    "source": "IMG_9789.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "041-img-9770.jpg",
+    "source": "IMG_9770.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "052-img-9790.jpg",
+    "source": "IMG_9790.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#787878"
+   },
+   {
+    "file": "037-img-9765.jpg",
+    "source": "IMG_9765.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "043-img-9776.jpg",
+    "source": "IMG_9776.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8c8b8"
+   },
+   {
+    "file": "031-img-9684.jpg",
+    "source": "IMG_9684.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "006-img-3266.jpg",
+    "source": "IMG_3266.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#988878"
+   },
+   {
+    "file": "007-img-3270.jpg",
+    "source": "IMG_3270.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#686868"
+   },
+   {
+    "file": "008-img-3343.jpg",
+    "source": "IMG_3343.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "011-img-4113.jpg",
+    "source": "IMG_4113.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#c8b8a8"
+   },
+   {
+    "file": "012-img-4114.jpg",
+    "source": "IMG_4114.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a89888"
+   },
+   {
+    "file": "000-7529f732-d9ef-4375-a00a-49adb3e138b2.jpg",
+    "source": "7529f732-d9ef-4375-a00a-49adb3e138b2.jpg",
+    "role": "before",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a89878"
+   },
+   {
+    "file": "024-img-8180.jpg",
+    "source": "IMG_8180.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "004-img-1488.jpg",
+    "source": "IMG_1488.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#e8e8e8"
+   }
+  ],
+  "christina-cannes": [
+   {
+    "file": "019-img-8005.jpg",
+    "source": "IMG_8005.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "022-img-8035.jpg",
+    "source": "IMG_8035.jpeg",
+    "role": "after",
+    "width": 1672,
+    "height": 2000,
+    "ratio": 0.836,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "020-img-8022.jpg",
+    "source": "IMG_8022.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "023-img-8038.jpg",
+    "source": "IMG_8038.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   },
+   {
+    "file": "025-img-8071.jpg",
+    "source": "IMG_8071.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "026-img-8077.jpg",
+    "source": "IMG_8077.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "021-img-8023.jpg",
+    "source": "IMG_8023.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "024-img-8043.jpg",
+    "source": "IMG_8043.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "003-img-1328.jpg",
+    "source": "IMG_1328.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "000-3e0b524b-f6ad-42bc-8e9c-7b4c844d9046.jpg",
+    "source": "3e0b524b-f6ad-42bc-8e9c-7b4c844d9046.jpg",
+    "role": "after",
+    "width": 1600,
+    "height": 1200,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "018-img-7999.jpg",
+    "source": "IMG_7999.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888878"
+   },
+   {
+    "file": "016-img-7642.jpg",
+    "source": "IMG_7642.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#f8e8d8"
+   },
+   {
+    "file": "004-img-1329.jpg",
+    "source": "IMG_1329.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "008-img-5094.jpg",
+    "source": "IMG_5094.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#787868"
+   },
+   {
+    "file": "012-img-5115.jpg",
+    "source": "IMG_5115.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#786868"
+   },
+   {
+    "file": "013-img-5118.jpg",
+    "source": "IMG_5118.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#887878"
+   },
+   {
+    "file": "014-img-5119.jpg",
+    "source": "IMG_5119.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#988878"
+   },
+   {
+    "file": "011-img-5105.jpg",
+    "source": "IMG_5105.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#785838"
+   }
+  ],
+  "christina-monaco": [
+   {
+    "file": "012-img-9407.jpg",
+    "source": "IMG_9407.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "010-img-9401.jpg",
+    "source": "IMG_9401.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "011-img-9402.jpg",
+    "source": "IMG_9402.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "009-img-9396.jpg",
+    "source": "IMG_9396.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "013-img-9408.jpg",
+    "source": "IMG_9408.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989898"
+   },
+   {
+    "file": "007-img-8865.jpg",
+    "source": "IMG_8865.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "005-img-8849.jpg",
+    "source": "IMG_8849.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "008-img-8876.jpg",
+    "source": "IMG_8876.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8b8"
+   },
+   {
+    "file": "006-img-8860.jpg",
+    "source": "IMG_8860.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   }
+  ],
+  "christina-kassel": [
+   {
+    "file": "004-christina-kassel-13-1.jpg",
+    "source": "Christina_Kassel (13_1).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "003-christina-kassel-13.jpg",
+    "source": "Christina_Kassel (13).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "013-christina-kassel-4-1.jpg",
+    "source": "Christina_Kassel (4_1).jpeg",
+    "role": "after",
+    "width": 1502,
+    "height": 2000,
+    "ratio": 0.751,
+    "orientation": "portrait",
+    "colour": "#c8c8c8"
+   },
+   {
+    "file": "005-christina-kassel-15.jpg",
+    "source": "Christina_Kassel (15).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "012-christina-kassel-3-1.jpg",
+    "source": "Christina_Kassel (3_1).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#c8c8c8"
+   },
+   {
+    "file": "006-christina-kassel-16.jpg",
+    "source": "Christina_Kassel (16).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "008-christina-kassel-20.jpg",
+    "source": "Christina_Kassel (20).jpeg",
+    "role": "after",
+    "width": 1486,
+    "height": 2000,
+    "ratio": 0.743,
+    "orientation": "portrait",
+    "colour": "#e8e8e8"
+   },
+   {
+    "file": "002-christina-kassel-12.jpg",
+    "source": "Christina_Kassel (12).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1226,
+    "ratio": 1.6313,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "007-christina-kassel-2.jpg",
+    "source": "Christina_Kassel (2).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#e8e8e8"
+   },
+   {
+    "file": "014-christina-kassel-5.jpg",
+    "source": "Christina_Kassel (5).jpeg",
+    "role": "after",
+    "width": 1495,
+    "height": 2000,
+    "ratio": 0.7475,
+    "orientation": "portrait",
+    "colour": "#c8c8c8"
+   },
+   {
+    "file": "015-christina-kassel-8.jpg",
+    "source": "Christina_Kassel (8).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#d8d8d8"
+   },
+   {
+    "file": "011-christina-kassel-3.jpg",
+    "source": "Christina_Kassel (3).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#c8c8c8"
+   },
+   {
+    "file": "001-christina-kassel-10.jpg",
+    "source": "Christina_Kassel (10).jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1333,
+    "ratio": 1.5004,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "020-img-9867.jpg",
+    "source": "IMG_9867.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#888878"
+   },
+   {
+    "file": "021-img-9868.jpg",
+    "source": "IMG_9868.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#888878"
+   },
+   {
+    "file": "018-img-9858.jpg",
+    "source": "IMG_9858.jpeg",
+    "role": "before",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#686858"
+   },
+   {
+    "file": "023-img-9875.jpg",
+    "source": "IMG_9875.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888878"
+   },
+   {
+    "file": "019-img-9862.jpg",
+    "source": "IMG_9862.jpeg",
+    "role": "before",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888888"
+   }
+  ],
+  "stand-bologna-2024": [
+   {
+    "file": "000-img-6542.jpg",
+    "source": "IMG_6542.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8b8"
+   },
+   {
+    "file": "001-img-6565.jpg",
+    "source": "IMG_6565.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#282818"
+   },
+   {
+    "file": "003-img-6571.jpg",
+    "source": "IMG_6571.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#382818"
+   },
+   {
+    "file": "004-img-6575.jpg",
+    "source": "IMG_6575.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#f8f8f8"
+   },
+   {
+    "file": "002-img-6566.jpg",
+    "source": "IMG_6566.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a8a8"
+   },
+   {
+    "file": "007-img-6578.jpg",
+    "source": "IMG_6578.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#989898"
+   }
+  ],
+  "stand-bologna-2025": [
+   {
+    "file": "002-img-4316.jpg",
+    "source": "IMG_4316.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8a8"
+   },
+   {
+    "file": "006-img-4322.jpg",
+    "source": "IMG_4322.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888878"
+   },
+   {
+    "file": "003-img-4318.jpg",
+    "source": "IMG_4318.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#a8a898"
+   },
+   {
+    "file": "009-img-4332.jpg",
+    "source": "IMG_4332.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#c8c8b8"
+   },
+   {
+    "file": "012-img-4339.jpg",
+    "source": "IMG_4339.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#888888"
+   },
+   {
+    "file": "011-img-4337.jpg",
+    "source": "IMG_4337.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#988878"
+   },
+   {
+    "file": "001-img-4314.jpg",
+    "source": "IMG_4314.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#b8b8b8"
+   },
+   {
+    "file": "004-img-4319.jpg",
+    "source": "IMG_4319.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#383828"
+   },
+   {
+    "file": "017-img-4359.jpg",
+    "source": "IMG_4359.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#989888"
+   },
+   {
+    "file": "018-img-4360.jpg",
+    "source": "IMG_4360.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1125,
+    "ratio": 1.7778,
+    "orientation": "landscape",
+    "colour": "#989888"
+   }
+  ],
+  "stand-bologna-2026": [
+   {
+    "file": "003-img-1124.jpg",
+    "source": "IMG_1124.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#584838"
+   },
+   {
+    "file": "002-img-1123.jpg",
+    "source": "IMG_1123.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#685848"
+   },
+   {
+    "file": "004-img-1125.jpg",
+    "source": "IMG_1125.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#685848"
+   },
+   {
+    "file": "005-img-1144.jpg",
+    "source": "IMG_1144.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#781818"
+   },
+   {
+    "file": "001-img-1122.jpg",
+    "source": "IMG_1122.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#887868"
+   },
+   {
+    "file": "006-img-1146.jpg",
+    "source": "IMG_1146.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#080808"
+   }
+  ],
+  "stand-paris-2025": [
+   {
+    "file": "003-img-4739.jpg",
+    "source": "IMG_4739.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "001-img-4736.jpg",
+    "source": "IMG_4736.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "005-img-4741.jpg",
+    "source": "IMG_4741.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "009-img-4755.jpg",
+    "source": "IMG_4755.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "002-img-4737.jpg",
+    "source": "IMG_4737.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "006-img-4742.jpg",
+    "source": "IMG_4742.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "010-img-4756.jpg",
+    "source": "IMG_4756.jpeg",
+    "role": "after",
+    "width": 1500,
+    "height": 2000,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "007-img-4748.jpg",
+    "source": "IMG_4748.jpeg",
+    "role": "after",
+    "width": 2000,
+    "height": 1500,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#080808"
+   }
+  ],
+  "stand-paris-2026": [
+   {
+    "file": "000-7c87ea47-6171-4a40-8c31-72084746afbb.jpg",
+    "source": "7c87ea47-6171-4a40-8c31-72084746afbb.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "001-9790d242-5f57-4618-b436-7f00722e83f0.jpg",
+    "source": "9790d242-5f57-4618-b436-7f00722e83f0.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "007-a1b5175b-61d1-459c-bc0a-b84535477a76.jpg",
+    "source": "a1b5175b-61d1-459c-bc0a-b84535477a76.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "008-b4002e84-3842-40c1-8efe-0af3a6b76c9f.jpg",
+    "source": "b4002e84-3842-40c1-8efe-0af3a6b76c9f.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "003-img-1538.jpg",
+    "source": "IMG_1538.jpeg",
+    "role": "after",
+    "width": 1125,
+    "height": 2000,
+    "ratio": 0.5625,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "009-b5a07df6-966d-41bb-8efc-cd2ae9e603bd.jpg",
+    "source": "b5a07df6-966d-41bb-8efc-cd2ae9e603bd.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "010-e2008c24-adc9-4fea-8b5c-843e2e094b62.jpg",
+    "source": "e2008c24-adc9-4fea-8b5c-843e2e094b62.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   }
+  ],
+  "stand-hong-kong-2026": [
+   {
+    "file": "002-be5487c6-991f-4b69-9adb-5f0f2ef80d2b.jpg",
+    "source": "be5487c6-991f-4b69-9adb-5f0f2ef80d2b.jpg",
+    "role": "after",
+    "width": 1600,
+    "height": 1200,
+    "ratio": 1.3333,
+    "orientation": "landscape",
+    "colour": "#080808"
+   },
+   {
+    "file": "001-b070032f-dc21-4ee8-9b47-301ae532ec9b.jpg",
+    "source": "b070032f-dc21-4ee8-9b47-301ae532ec9b.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "003-d4add08f-cde4-4381-a3a8-44429b98a6a4.jpg",
+    "source": "d4add08f-cde4-4381-a3a8-44429b98a6a4.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   },
+   {
+    "file": "000-399e4882-2c1d-444b-8865-9f07a636da2e.jpg",
+    "source": "399e4882-2c1d-444b-8865-9f07a636da2e.jpg",
+    "role": "after",
+    "width": 1200,
+    "height": 1600,
+    "ratio": 0.75,
+    "orientation": "portrait",
+    "colour": "#080808"
+   }
+  ]
+ },
+ "services": [
+  {
+   "file": "000-fullsizerender.jpg",
+   "source": "FullSizeRender.jpeg",
+   "role": "after",
+   "width": 2000,
+   "height": 1125,
+   "ratio": 1.7778,
+   "orientation": "landscape",
+   "colour": "#386898"
+  },
+  {
+   "file": "001-img-1415.jpg",
+   "source": "IMG_1415.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#080808"
+  },
+  {
+   "file": "002-img-1428.jpg",
+   "source": "IMG_1428.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#e8e8e8"
+  },
+  {
+   "file": "003-img-1429.jpg",
+   "source": "IMG_1429.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#d8d8d8"
+  },
+  {
+   "file": "004-img-1763.jpg",
+   "source": "IMG_1763.jpeg",
+   "role": "after",
+   "width": 1125,
+   "height": 2000,
+   "ratio": 0.5625,
+   "orientation": "portrait",
+   "colour": "#7888a8"
+  },
+  {
+   "file": "005-img-2356.jpg",
+   "source": "IMG_2356.jpeg",
+   "role": "after",
+   "width": 2000,
+   "height": 1125,
+   "ratio": 1.7778,
+   "orientation": "landscape",
+   "colour": "#386898"
+  },
+  {
+   "file": "006-img-2816.jpg",
+   "source": "IMG_2816.jpeg",
+   "role": "after",
+   "width": 2000,
+   "height": 1125,
+   "ratio": 1.7778,
+   "orientation": "landscape",
+   "colour": "#a8c8e8"
+  },
+  {
+   "file": "007-img-6207.jpg",
+   "source": "IMG_6207.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#b8b8b8"
+  },
+  {
+   "file": "008-img-8006.jpg",
+   "source": "IMG_8006.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#b8a898"
+  },
+  {
+   "file": "009-img-8011.jpg",
+   "source": "IMG_8011.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#b8b8a8"
+  },
+  {
+   "file": "010-img-8149.jpg",
+   "source": "IMG_8149.jpeg",
+   "role": "after",
+   "width": 1500,
+   "height": 2000,
+   "ratio": 0.75,
+   "orientation": "portrait",
+   "colour": "#b8a898"
+  }
+ ],
+ "portrait": null
+}

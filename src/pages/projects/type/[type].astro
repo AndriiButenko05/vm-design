@@ -1,0 +1,167 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import { getProjects, slugOf, PROJECT_TYPES, typeFilters } from '../../../lib/projects';
+import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../../lib/i18n';
+
+/**
+ * Фільтр як окремі статичні маршрути: /projects/type/residential.
+ * Нуль JS, індексовані URL, працює з кнопкою «назад».
+ */
+export async function getStaticPaths() {
+  const projects = await getProjects(DEFAULT_LOCALE);
+  return PROJECT_TYPES.map((type) => ({
+    params: { type },
+    props: { type, projects: projects.filter((p) => p.data.type === type) },
+  }));
+}
+
+const { type, projects } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+
+const filters = typeFilters(locale);
+---
+
+<BaseLayout
+  title={`${t(locale, `type.${type}`)} projects — VM Design`}
+  description={`${t(locale, `type.${type}`)} interiors by Maryna Vashchenko.`}
+>
+  <section class="head section">
+    <div class="container">
+      <p class="t-eyebrow">{t(locale, 'index.eyebrow')}</p>
+      <h1 class="t-display">{t(locale, `type.${type}`)}</h1>
+
+      <nav class="filters" aria-label="Filter projects">
+        {
+          filters.map((f) => (
+            <a
+              href={f.href}
+              class="filters__link"
+              aria-current={f.key === type ? 'page' : undefined}
+            >
+              {f.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  <section class="work">
+    <div class="container work__grid">
+      {
+        projects.map((p, i) => (
+          <a
+            class="work__item"
+            href={localePath(locale, `/projects/${slugOf(p)}`)}
+            data-reveal
+          >
+            <span class="plate plate--tall">
+              <Picture
+                formats={['avif']}
+                fallbackFormat="webp"
+                src={p.data.cover}
+                alt={p.data.coverAlt}
+                widths={[480, 720, 1080]}
+                sizes="(max-width: 700px) 92vw, 44vw"
+                loading={i < 2 ? 'eager' : 'lazy'}
+              />
+            </span>
+            <span class="work__caption">
+              <span class="work__title">{p.data.title}</span>
+              <span class="t-meta">
+                {p.data.city}
+                {p.data.year ? ` · ${p.data.year}` : ''}
+              </span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: 7rem;
+    padding-bottom: var(--space-xl);
+  }
+
+  .head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .filters__link {
+    position: relative;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-block: 0.25rem;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .filters__link:hover,
+  .filters__link[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  .filters__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent-line);
+  }
+
+  .work {
+    padding-bottom: var(--section);
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 5vw, 5rem);
+  }
+
+  /*
+    Висота плитки задається явно, а не пропорцією.
+
+    Пропорція 4/5 прив'язувала висоту до ширини колонки: на контейнері
+    1720 px це давало кадри понад 1000 px заввишки. Плюс обкладинки бувають
+    і вертикальні, і альбомні, тож при вільній висоті вони виходили різними.
+    Фіксована висота робить усі плитки однаковими, а object-fit: cover
+    підганяє будь-яку пропорцію.
+  */
+  .work__item .plate {
+    aspect-ratio: auto;
+    height: clamp(320px, 46vh, 560px);
+  }
+
+  .work__caption {
+    display: block;
+    margin-top: var(--space-s);
+  }
+
+  .work__title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  @media (max-width: 700px) {
+    .work__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

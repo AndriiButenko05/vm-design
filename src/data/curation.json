@@ -1,0 +1,273 @@
+{
+ "_note": "Відбір кадрів. after[0] = обкладинка. before — для блоку «до / після». Групи, яких тут немає, ще не куровані — беруться повністю. Генерується scripts/write-curation.mjs за індексами контактних аркушів.",
+ "christina-kassel": {
+  "after": [
+   "Christina_Kassel (13_1).jpeg",
+   "Christina_Kassel (13).jpeg",
+   "Christina_Kassel (4_1).jpeg",
+   "Christina_Kassel (15).jpeg",
+   "Christina_Kassel (3_1).jpeg",
+   "Christina_Kassel (16).jpeg",
+   "Christina_Kassel (20).jpeg",
+   "Christina_Kassel (12).jpeg",
+   "Christina_Kassel (2).jpeg",
+   "Christina_Kassel (5).jpeg",
+   "Christina_Kassel (8).jpeg",
+   "Christina_Kassel (3).jpeg",
+   "Christina_Kassel (10).jpeg"
+  ],
+  "before": [
+   "IMG_9867.jpeg",
+   "IMG_9868.jpeg",
+   "IMG_9858.jpeg",
+   "IMG_9875.jpeg",
+   "IMG_9862.jpeg"
+  ]
+ },
+ "la-villa-nice": {
+  "after": [
+   "IMG_2451.jpeg",
+   "IMG_2458.jpeg",
+   "IMG_2560.jpeg",
+   "IMG_2528.jpeg",
+   "IMG_2485.jpeg",
+   "IMG_2582.jpeg",
+   "IMG_2519.jpeg",
+   "IMG_2530.jpeg",
+   "IMG_2508.jpeg",
+   "IMG_2553.jpeg",
+   "IMG_2498.jpeg",
+   "IMG_2502.jpeg",
+   "IMG_2564.jpeg",
+   "IMG_2569.jpeg",
+   "IMG_2572.jpeg",
+   "IMG_2578.jpeg",
+   "IMG_2461.jpeg"
+  ],
+  "before": [
+   "IMG_7561.jpeg",
+   "IMG_7562.jpeg",
+   "IMG_7831.jpeg",
+   "IMG_8886.jpeg",
+   "IMG_8889.jpeg",
+   "IMG_9182.jpeg",
+   "IMG_8892.jpeg"
+  ]
+ },
+ "christina-roma": {
+  "after": [
+   "IMG_9749.jpeg",
+   "IMG_9764.jpeg",
+   "IMG_9780.jpeg",
+   "IMG_9782.jpeg",
+   "IMG_9766.jpeg",
+   "IMG_9769.jpeg",
+   "IMG_9781.jpeg",
+   "IMG_9786.jpeg",
+   "IMG_9788.jpeg",
+   "IMG_9789.jpeg",
+   "IMG_9770.jpeg",
+   "IMG_9790.jpeg",
+   "IMG_9765.jpeg",
+   "IMG_9776.jpeg",
+   "IMG_9684.jpeg"
+  ],
+  "before": [
+   "IMG_3266.jpeg",
+   "IMG_3270.jpeg",
+   "IMG_3343.jpeg",
+   "IMG_4113.jpeg",
+   "IMG_4114.jpeg",
+   "7529f732-d9ef-4375-a00a-49adb3e138b2.jpg",
+   "IMG_8180.jpeg",
+   "IMG_1488.jpeg"
+  ]
+ },
+ "christina-cannes": {
+  "after": [
+   "IMG_8005.jpeg",
+   "IMG_8035.jpeg",
+   "IMG_8022.jpeg",
+   "IMG_8038.jpeg",
+   "IMG_8071.jpeg",
+   "IMG_8077.jpeg",
+   "IMG_8023.jpeg",
+   "IMG_8043.jpeg",
+   "IMG_1328.jpeg",
+   "3e0b524b-f6ad-42bc-8e9c-7b4c844d9046.jpg",
+   "IMG_7999.jpeg",
+   "IMG_7642.jpeg",
+   "IMG_1329.jpeg"
+  ],
+  "before": [
+   "IMG_5094.jpeg",
+   "IMG_5115.jpeg",
+   "IMG_5118.jpeg",
+   "IMG_5119.jpeg",
+   "IMG_5105.jpeg"
+  ]
+ },
+ "monza-apartment": {
+  "after": [
+   "IMG_0421.jpeg",
+   "IMG_0442.jpeg",
+   "IMG_0428.jpeg",
+   "IMG_0431.jpeg",
+   "IMG_0460.jpeg",
+   "IMG_0471.jpeg",
+   "IMG_0451.jpeg",
+   "IMG_0458.jpeg",
+   "IMG_0477.jpeg",
+   "IMG_0487.jpeg",
+   "IMG_0463.jpeg",
+   "IMG_0465.jpeg"
+  ],
+  "before": [
+   "IMG_7018.jpeg",
+   "IMG_7034.jpeg",
+   "IMG_7035.jpeg",
+   "IMG_7036.jpeg",
+   "IMG_7019.jpeg",
+   "IMG_7033.jpeg"
+  ]
+ },
+ "christina-paris": {
+  "after": [
+   "IMG_1496.jpeg",
+   "IMG_1571.jpeg",
+   "IMG_1485.jpeg",
+   "IMG_1531.jpeg",
+   "IMG_1498.jpeg",
+   "IMG_1549.jpeg",
+   "IMG_1547.jpeg",
+   "IMG_1525.jpeg",
+   "IMG_1567.jpeg",
+   "IMG_1574.jpeg",
+   "IMG_1552.jpeg",
+   "IMG_1548.jpeg",
+   "IMG_9571.jpeg",
+   "IMG_1584.jpeg"
+  ],
+  "before": []
+ },
+ "christina-monaco": {
+  "after": [
+   "IMG_9407.jpeg",
+   "IMG_9401.jpeg",
+   "IMG_9402.jpeg",
+   "IMG_9396.jpeg",
+   "IMG_9408.jpeg",
+   "IMG_8865.jpeg",
+   "IMG_8849.jpeg",
+   "IMG_8876.jpeg",
+   "IMG_8860.jpeg"
+  ],
+  "before": []
+ },
+ "larimar-nice": {
+  "after": [
+   "IMG_2672.jpeg",
+   "IMG_2686.jpeg",
+   "IMG_2676.jpeg",
+   "IMG_2677.jpeg",
+   "IMG_2680.jpeg",
+   "IMG_2674.jpeg",
+   "IMG_2673.jpeg"
+  ],
+  "before": [
+   "IMG_0328.jpeg",
+   "IMG_0330.jpeg",
+   "IMG_0331.jpeg",
+   "IMG_0336.jpeg"
+  ]
+ },
+ "wow-hair-nice": {
+  "after": [
+   "IMG_2638.jpeg",
+   "IMG_2642.jpeg",
+   "IMG_2639.jpeg",
+   "IMG_2653.jpeg",
+   "IMG_2643.jpeg",
+   "IMG_2641.jpeg",
+   "IMG_2645.jpeg",
+   "IMG_2654.jpeg"
+  ],
+  "before": [
+   "IMG_8328.jpeg",
+   "IMG_8329.jpeg",
+   "IMG_8330.jpeg",
+   "IMG_8762.jpeg"
+  ]
+ },
+ "stand-bologna-2024": {
+  "after": [
+   "IMG_6542.jpeg",
+   "IMG_6565.jpeg",
+   "IMG_6571.jpeg",
+   "IMG_6575.jpeg",
+   "IMG_6566.jpeg",
+   "IMG_6578.jpeg"
+  ],
+  "before": []
+ },
+ "stand-bologna-2025": {
+  "after": [
+   "IMG_4316.jpeg",
+   "IMG_4322.jpeg",
+   "IMG_4318.jpeg",
+   "IMG_4332.jpeg",
+   "IMG_4339.jpeg",
+   "IMG_4337.jpeg",
+   "IMG_4314.jpeg",
+   "IMG_4319.jpeg",
+   "IMG_4359.jpeg",
+   "IMG_4360.jpeg"
+  ],
+  "before": []
+ },
+ "stand-bologna-2026": {
+  "after": [
+   "IMG_1124.jpeg",
+   "IMG_1123.jpeg",
+   "IMG_1125.jpeg",
+   "IMG_1144.jpeg",
+   "IMG_1122.jpeg",
+   "IMG_1146.jpeg"
+  ],
+  "before": []
+ },
+ "stand-paris-2025": {
+  "after": [
+   "IMG_4739.jpeg",
+   "IMG_4736.jpeg",
+   "IMG_4741.jpeg",
+   "IMG_4755.jpeg",
+   "IMG_4737.jpeg",
+   "IMG_4742.jpeg",
+   "IMG_4756.jpeg",
+   "IMG_4748.jpeg"
+  ],
+  "before": []
+ },
+ "stand-paris-2026": {
+  "after": [
+   "7c87ea47-6171-4a40-8c31-72084746afbb.jpg",
+   "9790d242-5f57-4618-b436-7f00722e83f0.jpg",
+   "a1b5175b-61d1-459c-bc0a-b84535477a76.jpg",
+   "b4002e84-3842-40c1-8efe-0af3a6b76c9f.jpg",
+   "IMG_1538.jpeg",
+   "b5a07df6-966d-41bb-8efc-cd2ae9e603bd.jpg",
+   "e2008c24-adc9-4fea-8b5c-843e2e094b62.jpg"
+  ],
+  "before": []
+ },
+ "stand-hong-kong-2026": {
+  "after": [
+   "be5487c6-991f-4b69-9adb-5f0f2ef80d2b.jpg",
+   "b070032f-dc21-4ee8-9b47-301ae532ec9b.jpg",
+   "d4add08f-cde4-4381-a3a8-44429b98a6a4.jpg",
+   "399e4882-2c1d-444b-8865-9f07a636da2e.jpg"
+  ],
+  "before": []
+ }
+}

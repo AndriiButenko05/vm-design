@@ -1,0 +1,147 @@
+---
+import { Picture } from 'astro:assets';
+import { t, type Locale } from '../../lib/i18n';
+import { SERVICE_PHOTOS } from '../../lib/services';
+
+interface Props {
+  locale: Locale;
+  /** Якір для посилань із футера. */
+  id?: string;
+}
+const { locale, id } = Astro.props;
+
+/**
+ * Нумерована подача за референсом reshapemc.com, який надіслала замовниця.
+ * Самі послуги взяті з її біографії, не вигадані.
+ *
+ * Фото — з теки «фото для services»: зразки в шоурумах, плани з розміткою
+ * на об'єкті, ескізи з розмірами.
+ */
+const SERVICES = [
+  {
+    title: 'Survey & measurement',
+    text: 'Measured drawings of what is actually there, before anything is proposed.',
+    img: SERVICE_PHOTOS.planOnSite,
+  },
+  {
+    title: 'Concept & spatial planning',
+    text: 'Layout, light, circulation, and the decision about which material will carry each room.',
+    img: SERVICE_PHOTOS.sketchDims,
+  },
+  {
+    title: 'Materials, furniture, lighting',
+    text: 'Chosen in showrooms and at the factories, sample against sample, not from a catalogue.',
+    img: SERVICE_PHOTOS.tileSamples,
+  },
+  {
+    title: 'Technical drawings',
+    text: 'Demolition, services, elevations and joinery — drawn in full by trusted specialists under my direction.',
+    img: SERVICE_PHOTOS.marbleSlabs,
+  },
+  {
+    title: '3D visualisation',
+    text: 'The scheme seen before it is built, so decisions are made on the screen and not on site.',
+    img: SERVICE_PHOTOS.finishSamples,
+  },
+  {
+    title: 'Implementation & supervision',
+    text: 'Contractors, makers and suppliers brought together and coordinated through to the last fitting.',
+    img: SERVICE_PHOTOS.metalSamples,
+  },
+];
+---
+
+<section class="services section" id={id}>
+  <div class="container">
+    <header class="services__head" data-reveal>
+      <p class="t-eyebrow">{t(locale, 'services.eyebrow')}</p>
+      <h2 class="t-h2">{t(locale, 'services.title')}</h2>
+    </header>
+
+    <ol class="services__list">
+      {
+        SERVICES.map((s, i) => {
+          const img = s.img;
+          return (
+            <li class="service" data-reveal style={`--reveal-delay:${(i % 2) * 90}ms`}>
+              {img && (
+                <span class="service__plate plate">
+                  <Picture
+                    formats={['avif']}
+                    fallbackFormat="webp"
+                    src={img}
+                    alt={s.title}
+                    widths={[400, 800, 1200]}
+                    sizes="(max-width: 700px) 92vw, 44vw"
+                    loading="lazy"
+                  />
+                </span>
+              )}
+              <p class="t-meta service__num">{String(i + 1).padStart(3, '0')}</p>
+              <h3 class="service__title">{s.title}</h3>
+              <p class="service__text">{s.text}</p>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .services__head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .services__head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .services__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 4rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: service;
+  }
+
+  .service__plate {
+    display: block;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--space-m);
+  }
+
+  .service__plate :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+
+  .service:hover .service__plate :global(img) {
+    transform: scale(1.02);
+  }
+
+  .service__num {
+    color: var(--accent-line);
+  }
+
+  .service__title {
+    margin-block: var(--space-xs) var(--space-s);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .service__text {
+    color: var(--fg-muted);
+    max-width: 44ch;
+  }
+
+  @media (max-width: 700px) {
+    .services__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

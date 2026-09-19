@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import { resolveLocale } from '../lib/i18n';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+---
+
+{/*
+  Форма живе секцією внизу головної та About. Ця сторінка лишається тонкою
+  обгорткою навколо того самого компонента: на неї ведуть із пошуку
+  й із навігації, і мати для цього окремий URL корисніше, ніж якір.
+*/}
+<BaseLayout
+  title="Contact — VM Design"
+  description="Start a project with Maryna Vashchenko. Interiors across the Côte d'Azur, Monaco, Italy and Germany."
+>
+  <div class="pad">
+    <ContactSection locale={locale} as="h1" />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Компенсуємо фіксовану шапку, бо вище немає жодної секції. */
+  .pad {
+    padding-top: 4rem;
+  }
+</style>

@@ -1,0 +1,140 @@
+/*
+  VM Design — дизайн-токени.
+
+  Палітра виведена, а не підібрана:
+  · --ink        виміряний із logo.png (53% пікселів знака)
+  · нейтральна шкала — та сама тепла вісь hue 30–35°, що й логотип
+  · --accent*    виміряний із фотографій проєктів (домінантна тепла смуга
+                 hue 30–35°: латунь, дуб, травертин)
+
+  Усі текстові пари перевірені на WCAG 2.1 AA (≥ 4.5:1) — див. коментарі.
+*/
+
+:root {
+  /* ─── Бренд ─────────────────────────────────────────────── */
+  --ink: #2b2a29;        /* заливка логотипа */
+  --ink-deep: #191817;   /* глибша сходинка: hero, футер */
+  --ink-raised: #34312e; /* смуга хедера над hero — на тон вище за --ink */
+  --paper: #ffffff;      /* контрформа монограми */
+
+  /* ─── Тепла нейтральна шкала (hue 30–35°, sat 3–6%) ──────── */
+  --bone: #f4f1ec;       /* фон сторінки */
+  --sand: #e8e3da;       /* чергування секцій */
+  --stone: #d3cdc2;      /* декоративні волосини (нетекстові) */
+  --slate: #5e584f;      /* другорядний текст */
+  --muted: #6e675c;      /* підписи на світлому — 4.96:1 на --bone */
+  --muted-inv: #a8a196;  /* підписи на темному  — 5.60:1 на --ink  */
+
+  /* ─── Акцент ─────────────────────────────────────────────── */
+  --accent: #6f5a41;       /* інтерактив на світлому — 5.80:1 на --bone */
+  --accent-line: #8a7255;  /* лінії та підкреслення (нетекст) */
+  --accent-inv: #b5a384;   /* інтерактив на темному  — 5.82:1 на --ink */
+
+  /* ─── Семантика ──────────────────────────────────────────── */
+  --bg: var(--bone);
+  --fg: var(--ink);
+  --fg-muted: var(--muted);
+  --link: var(--accent);
+  --rule: var(--stone);
+  --focus: var(--accent);
+
+  /* ─── Типографіка ────────────────────────────────────────── */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-text: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --step-display: clamp(2.75rem, 7.5vw, 8rem);
+  --step-h1: clamp(2.25rem, 5vw, 4rem);
+  --step-h2: clamp(1.75rem, 3.5vw, 3rem);
+  --step-h3: clamp(1.125rem, 1.4vw, 1.375rem);
+  --step-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-small: 0.875rem;
+  --step-meta: 0.75rem;
+
+  --lh-display: 0.95;
+  --lh-heading: 1.1;
+  --lh-body: 1.7;
+
+  --ls-display: -0.02em;
+  --ls-heading: 0.01em;
+  --ls-meta: 0.1em;
+  --ls-nav: 0.08em;
+
+  --measure: 68ch;
+
+  /* ─── Простір (база 8px) ─────────────────────────────────── */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 4.5rem;
+  /*
+    Відступ секції з одного боку. Між сусідніми секціями виходить удвічі
+    більше, тому значення тут навмисно скромне: 6rem давало 192 px між
+    блоками, а на високих екранах до 250 — сторінка розповзалася.
+  */
+  --section: clamp(3rem, 6vh, 4.5rem);
+
+  /* ─── Сітка ──────────────────────────────────────────────── */
+  /*
+    1720, а не 1440: на екранах від 2000 px контейнер у 1440 лишав понад
+    500 px мертвого поля з кожного боку, і сторінка читалася як порожня.
+    Довгі абзаци від цього не страждають — їх тримає --measure.
+  */
+  --container: 1720px;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --grid-gap: clamp(1rem, 2vw, 1.5rem);
+
+  /* ─── Рух ────────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 250ms;
+  --dur: 400ms;
+  --dur-slow: 700ms;
+
+  /* ─── Пропорції зображень ────────────────────────────────── */
+  --ratio-portrait: 3 / 4;
+  --ratio-tall: 4 / 5;
+  --ratio-plate: 9 / 14;   /* вертикальна плита hero та прев'ю */
+}
+
+/* Темні секції — інверсія семантики, а не окремі правила під кожен елемент. */
+.on-ink {
+  --bg: var(--ink);
+  --fg: var(--bone);
+  --fg-muted: var(--muted-inv);
+  --link: var(--accent-inv);
+  --rule: #3d3b39;
+  --focus: var(--accent-inv);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.on-ink-deep {
+  --bg: var(--ink-deep);
+  --fg: var(--bone);
+  --fg-muted: var(--muted-inv);
+  --link: var(--accent-inv);
+  --rule: #302e2c;
+  --focus: var(--accent-inv);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.on-sand {
+  --bg: var(--sand);
+  background: var(--bg);
+}
+
+/*
+  Телефон: рівно 20 px полів.
+
+  clamp(1.25rem, 5vw, 5rem) давав 20 px лише на найвужчих екранах,
+  а вже на 600 px розганявся до 30 px — на вміст лишалося менше,
+  ніж на повітря обабіч.
+*/
+@media (max-width: 700px) {
+  :root {
+    --gutter: 20px;
+  }
+}

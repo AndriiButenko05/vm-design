@@ -1,0 +1,1061 @@
+{
+ "rooms": [
+  {
+   "slug": "kitchen-living",
+   "title": "Kitchen & Living",
+   "count": 29,
+   "items": [
+    {
+     "file": "001-10-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "10 кухня-гостиная.jpg"
+    },
+    {
+     "file": "002-11-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "11 кухня-гостиная.jpg"
+    },
+    {
+     "file": "010-2-var-kuhnya-gostinaya-07.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "2 вар кухня-гостиная 07.jpg"
+    },
+    {
+     "file": "011-2-var-kuhnya-gostinaya-08.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "2 вар кухня-гостиная 08.jpg"
+    },
+    {
+     "file": "024-2-1-kuhnya-gostinaya-08.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "2,1 кухня-гостиная 08.jpg"
+    },
+    {
+     "file": "035-3-var-kuhnya-gostinaya-010.jpg",
+     "width": 1467,
+     "height": 1126,
+     "ratio": 1.3028,
+     "orientation": "landscape",
+     "colour": "#b8b8b8",
+     "source": "3 вар кухня-гостиная 010.jpg"
+    },
+    {
+     "file": "036-3-var-kuhnya-gostinaya-011.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "3 вар кухня-гостиная 011.jpg"
+    },
+    {
+     "file": "037-3-var-kuhnya-gostinaya-02.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "3 вар кухня-гостиная 02.jpg"
+    },
+    {
+     "file": "038-3-var-kuhnya-gostinaya-05.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8c8c8",
+     "source": "3 вар кухня-гостиная 05.jpg"
+    },
+    {
+     "file": "039-3-var-kuhnya-gostinaya-06.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "3 вар кухня-гостиная 06.jpg"
+    },
+    {
+     "file": "040-3-var-kuhnya-gostinaya-09.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "3 вар кухня-гостиная 09.jpg"
+    },
+    {
+     "file": "045-3-kuhnya-gostinaya-01.jpg",
+     "width": 1500,
+     "height": 1172,
+     "ratio": 1.2799,
+     "orientation": "landscape",
+     "colour": "#c8c8c8",
+     "source": "3 кухня-гостиная 01.jpg"
+    },
+    {
+     "file": "059-5-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "5 кухня-гостиная.jpg"
+    },
+    {
+     "file": "060-6-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "6 кухня-гостиная.jpg"
+    },
+    {
+     "file": "061-7-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "7 кухня-гостиная.jpg"
+    },
+    {
+     "file": "062-8-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 674,
+     "ratio": 1.8991,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "8 кухня-гостиная.jpg"
+    },
+    {
+     "file": "063-9-kuhnya-gostinaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "9 кухня-гостиная.jpg"
+    },
+    {
+     "file": "076-img4.jpg",
+     "width": 1449,
+     "height": 1800,
+     "ratio": 0.805,
+     "orientation": "portrait",
+     "colour": "#a89898",
+     "source": "img4.jpg"
+    },
+    {
+     "file": "077-img41.jpg",
+     "width": 1438,
+     "height": 1800,
+     "ratio": 0.7989,
+     "orientation": "portrait",
+     "colour": "#a89898",
+     "source": "img41.jpg"
+    },
+    {
+     "file": "078-img42.jpg",
+     "width": 1444,
+     "height": 1800,
+     "ratio": 0.8022,
+     "orientation": "portrait",
+     "colour": "#a89898",
+     "source": "img42.jpg"
+    },
+    {
+     "file": "079-img43.jpg",
+     "width": 1444,
+     "height": 1800,
+     "ratio": 0.8022,
+     "orientation": "portrait",
+     "colour": "#989888",
+     "source": "img43.jpg"
+    },
+    {
+     "file": "096-kuhnya-gostinaya-01.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "кухня-гостиная 01.jpg"
+    },
+    {
+     "file": "097-kuhnya-gostinaya-02.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#887868",
+     "source": "кухня-гостиная 02.jpg"
+    },
+    {
+     "file": "098-kuhnya-gostinaya-03.jpg",
+     "width": 1491,
+     "height": 1125,
+     "ratio": 1.3253,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "кухня-гостиная 03.jpg"
+    },
+    {
+     "file": "099-kuhnya-gostinaya-04.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#d8c8b8",
+     "source": "кухня-гостиная 04.jpg"
+    },
+    {
+     "file": "100-kuhnya-gostinaya-05.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "кухня-гостиная 05.jpg"
+    },
+    {
+     "file": "101-kuhnya-gostinaya-06.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "кухня-гостиная 06.jpg"
+    },
+    {
+     "file": "102-kuhnya-gostinaya-07.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "кухня-гостиная 07.jpg"
+    },
+    {
+     "file": "103-kuhnya-gostinaya-08.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "кухня-гостиная 08.jpg"
+    }
+   ]
+  },
+  {
+   "slug": "bedrooms",
+   "title": "Bedrooms",
+   "count": 27,
+   "items": [
+    {
+     "file": "033-28-spalnya-hozyayskaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "28 спальня хозяйская.jpg"
+    },
+    {
+     "file": "034-29-spalnya-hozyayskaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "29 спальня хозяйская.jpg"
+    },
+    {
+     "file": "041-3-var-spalnya-01.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "3 вар спальня 01.jpg"
+    },
+    {
+     "file": "042-3-var-spalnya-02.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "3 вар спальня 02.jpg"
+    },
+    {
+     "file": "043-3-var-spalnya-03.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "3 вар спальня 03.jpg"
+    },
+    {
+     "file": "050-30-spalnya-hozyayskaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "30 спальня хозяйская.jpg"
+    },
+    {
+     "file": "051-31-spalnya-hozyayskaya.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#e8e8e8",
+     "source": "31 спальня хозяйская.jpg"
+    },
+    {
+     "file": "052-32-spalnya-hozyayskaya.jpg",
+     "width": 1280,
+     "height": 571,
+     "ratio": 2.2417,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "32 спальня хозяйская.jpg"
+    },
+    {
+     "file": "053-33-spalnya-2.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "33 спальня 2.jpg"
+    },
+    {
+     "file": "054-34-spalnya-2.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#382828",
+     "source": "34 спальня 2.jpg"
+    },
+    {
+     "file": "055-35-spalnya-2.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "35 спальня 2.jpg"
+    },
+    {
+     "file": "056-36-spalnya-2.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#b89888",
+     "source": "36 спальня 2.jpg"
+    },
+    {
+     "file": "057-37-spalnya-2.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "37 спальня 2.jpg"
+    },
+    {
+     "file": "064-img-7892.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#a89898",
+     "source": "IMG_7892.jpg"
+    },
+    {
+     "file": "065-img-7893.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#a89898",
+     "source": "IMG_7893.jpg"
+    },
+    {
+     "file": "066-img-7894.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a8a8",
+     "source": "IMG_7894.jpg"
+    },
+    {
+     "file": "067-img-7939.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "IMG_7939.jpg"
+    },
+    {
+     "file": "068-img-7940.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "IMG_7940.jpg"
+    },
+    {
+     "file": "069-img-7941.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "IMG_7941.jpg"
+    },
+    {
+     "file": "070-img-7942.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "IMG_7942.jpg"
+    },
+    {
+     "file": "088-gostevaya-01.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "гостевая 01.jpg"
+    },
+    {
+     "file": "089-gostevaya-02.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "гостевая 02.jpg"
+    },
+    {
+     "file": "090-gostevaya-03.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "гостевая 03.jpg"
+    },
+    {
+     "file": "108-spalnya-01.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#f8f8f8",
+     "source": "спальня 01.jpg"
+    },
+    {
+     "file": "109-spalnya-02.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a8a8",
+     "source": "спальня 02.jpg"
+    },
+    {
+     "file": "110-spalnya-03-1.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#d8d8d8",
+     "source": "спальня 03-1.jpg"
+    },
+    {
+     "file": "111-spalnya-04.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#d8d8d8",
+     "source": "спальня 04.jpg"
+    }
+   ]
+  },
+  {
+   "slug": "bathrooms",
+   "title": "Bathrooms",
+   "count": 26,
+   "items": [
+    {
+     "file": "003-16-gostevoy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#382828",
+     "source": "16 гостевой санузел.jpg"
+    },
+    {
+     "file": "004-17-gostevoy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#282818",
+     "source": "17 гостевой санузел.jpg"
+    },
+    {
+     "file": "005-18-gostevoy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#282818",
+     "source": "18 гостевой санузел.jpg"
+    },
+    {
+     "file": "006-19-gostevoy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#383828",
+     "source": "19 гостевой санузел.jpg"
+    },
+    {
+     "file": "025-20-gostevoy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#282818",
+     "source": "20 гостевой санузел.jpg"
+    },
+    {
+     "file": "026-21-hozyayskiy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "21 хозяйский санузел.jpg"
+    },
+    {
+     "file": "027-22-hozyayskiy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#483828",
+     "source": "22 хозяйский санузел.jpg"
+    },
+    {
+     "file": "028-23-hozyayskiy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#483828",
+     "source": "23 хозяйский санузел.jpg"
+    },
+    {
+     "file": "029-24-hozyayskiy-sanuzel.jpg",
+     "width": 1280,
+     "height": 850,
+     "ratio": 1.5059,
+     "orientation": "landscape",
+     "colour": "#483828",
+     "source": "24 хозяйский санузел.jpg"
+    },
+    {
+     "file": "046-3-san-uz-master-02.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "3 сан уз мастер 02.jpg"
+    },
+    {
+     "file": "047-3-san-uz-master-03.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "3 сан уз мастер 03.jpg"
+    },
+    {
+     "file": "048-3-san-uz-master-04.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "3 сан уз мастер 04.jpg"
+    },
+    {
+     "file": "049-3-san-uz-master-05.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "3 сан уз мастер 05.jpg"
+    },
+    {
+     "file": "071-img-8437.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "IMG_8437.jpeg"
+    },
+    {
+     "file": "072-img-8438.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "IMG_8438.jpeg"
+    },
+    {
+     "file": "073-img-8439.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "IMG_8439.jpeg"
+    },
+    {
+     "file": "074-img-8440.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "IMG_8440.jpeg"
+    },
+    {
+     "file": "075-img-8441.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "IMG_8441.jpeg"
+    },
+    {
+     "file": "084-gost-sanuzel-01.jpg",
+     "width": 1129,
+     "height": 1118,
+     "ratio": 1.0098,
+     "orientation": "landscape",
+     "colour": "#c8c8b8",
+     "source": "гост санузел 01.jpg"
+    },
+    {
+     "file": "085-gost-sanuzel-02.jpg",
+     "width": 1300,
+     "height": 1118,
+     "ratio": 1.1628,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "гост санузел 02.jpg"
+    },
+    {
+     "file": "086-gost-sanuzel-03.jpg",
+     "width": 1300,
+     "height": 1118,
+     "ratio": 1.1628,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "гост санузел 03.jpg"
+    },
+    {
+     "file": "087-gost-sanuzel-04.jpg",
+     "width": 1256,
+     "height": 1118,
+     "ratio": 1.1234,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "гост санузел 04.jpg"
+    },
+    {
+     "file": "104-san-uz-detskiy-01-1.jpg",
+     "width": 1200,
+     "height": 1200,
+     "ratio": 1,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "сан уз детский 01 (1).jpg"
+    },
+    {
+     "file": "105-san-uz-detskiy-02-1.jpg",
+     "width": 1143,
+     "height": 1200,
+     "ratio": 0.9525,
+     "orientation": "portrait",
+     "colour": "#b8b8a8",
+     "source": "сан уз детский 02 (1).jpg"
+    },
+    {
+     "file": "106-san-uz-detskiy-03-1.jpg",
+     "width": 1200,
+     "height": 1200,
+     "ratio": 1,
+     "orientation": "landscape",
+     "colour": "#b8b8a8",
+     "source": "сан уз детский 03 (1).jpg"
+    },
+    {
+     "file": "107-san-uz-detskiy-04-1.jpg",
+     "width": 1194,
+     "height": 1200,
+     "ratio": 0.995,
+     "orientation": "portrait",
+     "colour": "#b8b8a8",
+     "source": "сан уз детский 04 (1).jpg"
+    }
+   ]
+  },
+  {
+   "slug": "hallways",
+   "title": "Hallways",
+   "count": 13,
+   "items": [
+    {
+     "file": "000-1-koridor.jpg",
+     "width": 1280,
+     "height": 504,
+     "ratio": 2.5397,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "1 коридор.jpg"
+    },
+    {
+     "file": "019-2-koridor-01.jpg",
+     "width": 1470,
+     "height": 1393,
+     "ratio": 1.0553,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "2 коридор 01.jpg"
+    },
+    {
+     "file": "020-2-koridor-02.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "2 коридор 02.jpg"
+    },
+    {
+     "file": "021-2-koridor-05.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "2 коридор 05.jpg"
+    },
+    {
+     "file": "022-2-koridor-06.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "2 коридор 06.jpg"
+    },
+    {
+     "file": "023-2-koridor.jpg",
+     "width": 1280,
+     "height": 720,
+     "ratio": 1.7778,
+     "orientation": "landscape",
+     "colour": "#988868",
+     "source": "2 коридор.jpg"
+    },
+    {
+     "file": "044-3-koridor.jpg",
+     "width": 1280,
+     "height": 659,
+     "ratio": 1.9423,
+     "orientation": "landscape",
+     "colour": "#281818",
+     "source": "3 коридор.jpg"
+    },
+    {
+     "file": "058-4-koridor.jpg",
+     "width": 1096,
+     "height": 720,
+     "ratio": 1.5222,
+     "orientation": "landscape",
+     "colour": "#987858",
+     "source": "4 коридор.jpg"
+    },
+    {
+     "file": "091-koridor-01.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#a89888",
+     "source": "коридор 01.jpg"
+    },
+    {
+     "file": "092-koridor-03.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#c8b8b8",
+     "source": "коридор 03.jpg"
+    },
+    {
+     "file": "093-koridor-04.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#a89888",
+     "source": "коридор 04.jpg"
+    },
+    {
+     "file": "094-koridor-05.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "коридор 05.jpg"
+    },
+    {
+     "file": "095-koridor-06.jpg",
+     "width": 1500,
+     "height": 1393,
+     "ratio": 1.0768,
+     "orientation": "landscape",
+     "colour": "#d8c8c8",
+     "source": "коридор 06.jpg"
+    }
+   ]
+  },
+  {
+   "slug": "childrens-rooms",
+   "title": "Children's Rooms",
+   "count": 8,
+   "items": [
+    {
+     "file": "015-2-komnata-sashi-01.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#a8a8a8",
+     "source": "2 комната Саши 01.jpg"
+    },
+    {
+     "file": "016-2-komnata-sashi-02.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#a8a8a8",
+     "source": "2 комната Саши 02.jpg"
+    },
+    {
+     "file": "017-2-komnata-sashi-03.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#a8a8a8",
+     "source": "2 комната Саши 03.jpg"
+    },
+    {
+     "file": "018-2-komnata-sashi-04.jpg",
+     "width": 1500,
+     "height": 1125,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#989898",
+     "source": "2 комната Саши 04.jpg"
+    },
+    {
+     "file": "080-unnamed-1.jpg",
+     "width": 1500,
+     "height": 1126,
+     "ratio": 1.3321,
+     "orientation": "landscape",
+     "colour": "#c8b8a8",
+     "source": "unnamed (1).jpg"
+    },
+    {
+     "file": "081-unnamed-2.jpg",
+     "width": 1500,
+     "height": 1126,
+     "ratio": 1.3321,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "unnamed (2).jpg"
+    },
+    {
+     "file": "082-unnamed-3.jpg",
+     "width": 1500,
+     "height": 1126,
+     "ratio": 1.3321,
+     "orientation": "landscape",
+     "colour": "#c8b8a8",
+     "source": "unnamed (3).jpg"
+    },
+    {
+     "file": "083-unnamed.jpg",
+     "width": 1500,
+     "height": 1126,
+     "ratio": 1.3321,
+     "orientation": "landscape",
+     "colour": "#c8b8a8",
+     "source": "unnamed.jpg"
+    }
+   ]
+  },
+  {
+   "slug": "dressing-rooms",
+   "title": "Dressing Rooms",
+   "count": 6,
+   "items": [
+    {
+     "file": "012-2-garderobnaya-master-02.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "2 гардеробная мастер 02.jpg"
+    },
+    {
+     "file": "013-2-garderobnaya-master-03.jpg",
+     "width": 954,
+     "height": 1050,
+     "ratio": 0.9086,
+     "orientation": "portrait",
+     "colour": "#b8a898",
+     "source": "2 гардеробная мастер 03.jpg"
+    },
+    {
+     "file": "014-2-garderobnaya-master-04.jpg",
+     "width": 1400,
+     "height": 1050,
+     "ratio": 1.3333,
+     "orientation": "landscape",
+     "colour": "#b8a898",
+     "source": "2 гардеробная мастер 04.jpg"
+    },
+    {
+     "file": "030-25-garderobnaya-s-hozyayskoy-spalni.jpg",
+     "width": 1280,
+     "height": 900,
+     "ratio": 1.4222,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "25 гардеробная с хозяйской спальни.jpg"
+    },
+    {
+     "file": "031-26-garderobnaya-s-hozyayskoy-spalni.jpg",
+     "width": 1280,
+     "height": 900,
+     "ratio": 1.4222,
+     "orientation": "landscape",
+     "colour": "#181818",
+     "source": "26 гардеробная с хозяйской спальни.jpg"
+    },
+    {
+     "file": "032-27-garderobnaya-s-hozyayskoy-spalni.jpg",
+     "width": 1280,
+     "height": 900,
+     "ratio": 1.4222,
+     "orientation": "landscape",
+     "colour": "#382828",
+     "source": "27 гардеробная с хозяйской спальни.jpg"
+    }
+   ]
+  },
+  {
+   "slug": "studies",
+   "title": "Studies",
+   "count": 3,
+   "items": [
+    {
+     "file": "007-2-var-kabinet-02.jpg",
+     "width": 1500,
+     "height": 1286,
+     "ratio": 1.1664,
+     "orientation": "landscape",
+     "colour": "#988888",
+     "source": "2 вар кабинет 02.jpg"
+    },
+    {
+     "file": "008-2-var-kabinet-03.jpg",
+     "width": 1500,
+     "height": 1286,
+     "ratio": 1.1664,
+     "orientation": "landscape",
+     "colour": "#a89898",
+     "source": "2 вар кабинет 03.jpg"
+    },
+    {
+     "file": "009-2-var-kabinet-04.jpg",
+     "width": 1500,
+     "height": 1286,
+     "ratio": 1.1664,
+     "orientation": "landscape",
+     "colour": "#888878",
+     "source": "2 вар кабинет 04.jpg"
+    }
+   ]
+  }
+ ]
+}

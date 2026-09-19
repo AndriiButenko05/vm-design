@@ -1,0 +1,323 @@
+---
+import { Picture } from 'astro:assets';
+import { slugOf, type Project } from '../../lib/projects';
+import { localePath, t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  projects: Project[];
+  /** Якір для посилань із футера. */
+  id?: string;
+}
+
+const { locale, projects, id } = Astro.props;
+
+const cities = [...new Set(projects.map((p) => p.data.city))];
+const countries = [...new Set(projects.map((p) => p.data.country))];
+
+/**
+ * Часова лінія будується з наявних років.
+ *
+ * У чотирьох роздрібних проєктів року поки немає — вони рахуються в цифрах,
+ * але на вісь не стають. Щойно замовниця дасть роки, вони з'являться самі,
+ * правити код не доведеться.
+ */
+const byYear = new Map<number, Project[]>();
+for (const p of projects) {
+  if (!p.data.year) continue;
+  const list = byYear.get(p.data.year) ?? [];
+  list.push(p);
+  byYear.set(p.data.year, list);
+}
+const years = [...byYear.entries()].sort((a, b) => a[0] - b[0]);
+
+/**
+ * Плитки мозаїки: спершу обкладинка кожного проєкту, потім добір із галерей.
+ *
+ * Проєктів одинадцять, а сітка має 3 колонки на телефоні й 4 на десктопі —
+ * при 11 плитках останній рядок лишався неповним в обох випадках.
+ * Дванадцята плитка вирівнює обидві сітки: 4×3 і 3×4.
+ *
+ * Добираємо з проєкту, у якого найбільше кадрів, — так найменше шансів
+ * поставити поруч два схожі ракурси одного простору.
+ */
+const TILES = 12;
+
+const tiles = projects.map((p) => ({ project: p, image: p.data.cover, alt: p.data.coverAlt }));
+
+if (tiles.length < TILES) {
+  const richest = [...projects].sort((a, b) => b.data.gallery.length - a.data.gallery.length);
+  for (const p of richest) {
+    if (tiles.length >= TILES) break;
+    const extra = p.data.gallery[Math.floor(p.data.gallery.length / 2)];
+    if (extra) tiles.push({ project: p, image: extra.src, alt: extra.alt });
+  }
+}
+
+const stats = [
+  { n: projects.length, label: t(locale, 'christina.projects') },
+  { n: cities.length, label: t(locale, 'christina.cities') },
+  { n: countries.length, label: t(locale, 'christina.countries') },
+];
+---
+
+<section class="ch on-ink" id={id}>
+  <div class="container">
+    <div class="ch__top">
+      <div class="ch__type" data-reveal>
+        <p class="t-eyebrow">{t(locale, 'christina.eyebrow')}</p>
+        <h2 class="ch__title t-display">{t(locale, 'christina.title')}</h2>
+        <p class="t-lead ch__text">{t(locale, 'christina.text')}</p>
+
+        <dl class="ch__stats">
+          {
+            stats.map((s) => (
+              <div>
+                <dt class="ch__stat-n">{s.n}</dt>
+                <dd class="t-meta">{s.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p class="ch__cta">
+          <a class="link" href={localePath(locale, '/christina')}>{t(locale, 'christina.cta')}</a>
+        </p>
+      </div>
+
+      {/*
+        Мозаїка: щільно й дрібно, обкладинка кожного проєкту плюс один
+        добірний кадр для рівної сітки — див. TILES вище.
+        Реєстр навмисно інший, ніж у стрічок робіт: це каталог, не карусель,
+        тому секція й далі ламає ритм сторінки, а не додає до нього п'яту стрічку.
+      */}
+      <ul class="ch__grid" data-reveal style="--reveal-delay:120ms">
+        {
+          tiles.map(({ project: p, image, alt }) => (
+            <li>
+              <a class="ch__cell" href={localePath(locale, `/projects/${slugOf(p)}`)}>
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={image}
+                  alt={alt}
+                  widths={[240, 480, 720]}
+                  sizes="(max-width: 700px) 31vw, (max-width: 900px) 23vw, 180px"
+                  loading="lazy"
+                />
+                <span class="visually-hidden">
+                  {p.data.title} — {p.data.city}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {
+      years.length > 0 && (
+        <div class="ch__line" data-reveal>
+          <ol>
+            {years.map(([year, list]) => (
+              <li>
+                <p class="ch__year">{year}</p>
+                <ul>
+                  {list.map((p) => (
+                    <li class="t-meta">{p.data.city}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .ch {
+    padding-block: var(--section);
+  }
+
+  .ch__top {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .ch__title {
+    margin-block: var(--space-s) var(--space-m);
+  }
+
+  .ch__text {
+    max-width: 44ch;
+  }
+
+  /* ─── Цифри ───────────────────────────────────────────── */
+
+  .ch__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    margin: var(--space-xl) 0 0;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .ch__stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .ch__stat-n {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    line-height: 1;
+  }
+
+  .ch__stats dd {
+    margin: 0;
+  }
+
+  .ch__cta {
+    margin-top: var(--space-l);
+  }
+
+  /* ─── Мозаїка ─────────────────────────────────────────── */
+
+  .ch__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.375rem, 0.7vw, 0.625rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ch__cell {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--rule);
+  }
+
+  .ch__cell :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /*
+      Приглушені за замовчуванням: одинадцять кольорових плиток поруч
+      перетягували б увагу з самих проєктів вище. Під курсором кадр
+      повертається до повного кольору.
+    */
+    filter: grayscale(0.35) brightness(0.82);
+    transition:
+      filter var(--dur) var(--ease),
+      transform var(--dur-slow) var(--ease);
+  }
+
+  .ch__cell:hover :global(img),
+  .ch__cell:focus-visible :global(img) {
+    filter: none;
+    transform: scale(1.06);
+  }
+
+  /* ─── Часова лінія ────────────────────────────────────── */
+
+  .ch__line {
+    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .ch__line > ol {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: var(--space-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ch__line > ol > li {
+    position: relative;
+    padding-top: var(--space-m);
+  }
+
+  /* Позначка року на осі. */
+  .ch__line > ol > li::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-inv);
+  }
+
+  .ch__year {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    line-height: 1;
+    margin-bottom: var(--space-s);
+  }
+
+  .ch__line ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ch__line ul li + li {
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .ch__top {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+
+    /* Три роки в три колонки на телефоні лишаються читабельними. */
+    .ch__line > ol {
+      gap: var(--space-s);
+    }
+  }
+
+  @media (max-width: 700px) {
+    /*
+      Три колонки, а не чотири: на телефоні плитка в чотири колонки
+      виходила близько 80 px — на такому розмірі кадру інтер'єру
+      не видно взагалі. Три дають ~112 px, це вже читабельно.
+    */
+    .ch__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    /* Відступи, розраховані на десктоп, на вузькому екрані завеликі. */
+    .ch__stats {
+      margin-top: var(--space-l);
+    }
+
+    .ch__cta {
+      margin-top: var(--space-m);
+    }
+
+    .ch__line {
+      margin-top: var(--space-l);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ch__cell:hover :global(img),
+    .ch__cell:focus-visible :global(img) {
+      transform: none;
+    }
+  }
+</style>

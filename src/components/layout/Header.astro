@@ -1,0 +1,362 @@
+---
+import { localePath, stripLocale, LOCALES, LOCALE_SHORT, t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  transparent?: boolean;
+}
+
+const { locale, transparent = false } = Astro.props;
+const bare = stripLocale(Astro.url.pathname);
+
+const nav = [
+  { key: 'nav.work', href: '/projects' },
+  { key: 'nav.renders', href: '/visualisations' },
+  { key: 'nav.about', href: '/about' },
+  { key: 'nav.contact', href: '/contact' },
+];
+
+const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/');
+---
+
+<header class="site-header" data-transparent={transparent ? '' : null}>
+  <div class="site-header__inner">
+    <a class="logo" href={localePath(locale, '/')} aria-label="VM Design — home">
+      <img
+        src="/brand/logo-light-264.png"
+        width="264"
+        height="264"
+        alt=""
+        decoding="async"
+      />
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={localePath(locale, item.href)}
+                class="site-nav__link"
+                aria-current={isCurrent(item.href) ? 'page' : null}
+              >
+                {t(locale, item.key)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="lang" aria-label="Language">
+      <ul>
+        {
+          LOCALES.map((l) => (
+            <li>
+              <a
+                href={localePath(l, bare)}
+                hreflang={l}
+                lang={l}
+                aria-current={l === locale ? 'true' : null}
+              >
+                {LOCALE_SHORT[l]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button
+      class="burger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-mobile-nav-toggle
+    >
+      <span class="visually-hidden">{t(locale, 'nav.menu')}</span>
+      <span class="burger__bar burger__bar--top" aria-hidden="true"></span>
+      <span class="burger__bar burger__bar--mid" aria-hidden="true"></span>
+      <span class="burger__bar burger__bar--bottom" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav on-ink" id="mobile-nav" hidden data-mobile-nav>
+  <nav aria-label="Primary mobile">
+    <ul>
+      {
+        nav.map((item) => (
+          <li>
+            <a href={localePath(locale, item.href)}>{t(locale, item.key)}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <ul class="mobile-nav__lang">
+    {
+      LOCALES.map((l) => (
+        <li>
+          <a href={localePath(l, bare)} hreflang={l} lang={l} aria-current={l === locale ? 'true' : null}>
+            {LOCALE_SHORT[l]}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 50;
+    background: var(--bone);
+    border-bottom: 1px solid var(--stone);
+    transition:
+      background var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  /*
+    Поверх темного hero — не прозора, а на тон світліша за нього:
+    --ink-raised (#34312e) проти --ink-deep (#191817) у hero.
+
+    Повністю прозора шапка зливалася з полем hero, і верхні 70 px
+    читалися як ще одна смуга порожнечі. Тонова сходинка обмежує
+    сторінку згори й помітно стискає відчуття пустоти,
+    не додаючи жодної нової барви поза брендовою віссю.
+  */
+  .site-header[data-transparent]:not(.is-scrolled) {
+    background: var(--ink-raised);
+    border-bottom-color: rgb(255 255 255 / 0.08);
+    color: var(--bone);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 0.75rem var(--gutter);
+  }
+
+  .logo {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--ink);
+    transition: background var(--dur) var(--ease);
+  }
+
+  /* На темному тлі диск не потрібен — знак уже білий. */
+  .site-header[data-transparent]:not(.is-scrolled) .logo {
+    background: transparent;
+  }
+
+  .logo img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .site-nav {
+    margin-inline-start: auto;
+  }
+
+  .site-nav ul,
+  .lang ul {
+    display: flex;
+    gap: var(--space-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav__link {
+    position: relative;
+    display: inline-block;
+    padding-block: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: var(--ls-nav);
+    text-transform: uppercase;
+  }
+
+  .site-nav__link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent-line);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .site-nav__link:hover::after,
+  .site-nav__link:focus-visible::after,
+  .site-nav__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .lang {
+    padding-inline-start: var(--space-m);
+    border-inline-start: 1px solid currentColor;
+    opacity: 0.75;
+  }
+
+  .lang ul {
+    gap: 0.625rem;
+  }
+
+  .lang a {
+    font-size: var(--step-meta);
+    letter-spacing: 0.06em;
+  }
+
+  .lang a[aria-current='true'] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /*
+    Смужки розставлені абсолютно, а не flex із gap.
+
+    Так їхнє положення задається одним числом і не залежить ні від порядку
+    дітей (перша дитина кнопки — прихований підпис для скрінрідера),
+    ні від того, як браузер рахує gap між однопіксельними елементами.
+    Хрестик збирається в точний центр кнопки.
+  */
+  .burger {
+    display: none;
+    position: relative;
+    margin-inline-start: auto;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .burger__bar {
+    position: absolute;
+    top: 50%;
+    right: 9px;
+    width: 26px;
+    height: 1px;
+    margin-top: -0.5px;
+    background: currentColor;
+    transition:
+      transform var(--dur) var(--ease),
+      opacity var(--dur-fast) var(--ease);
+  }
+
+  .burger__bar--top {
+    transform: translateY(-6px);
+  }
+
+  .burger__bar--bottom {
+    transform: translateY(6px);
+  }
+
+  /* Відкрито: крайні сходяться в центр і схрещуються, середня гасне. */
+  .burger[aria-expanded='true'] .burger__bar--top {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  .burger[aria-expanded='true'] .burger__bar--mid {
+    opacity: 0;
+  }
+
+  .burger[aria-expanded='true'] .burger__bar--bottom {
+    transform: translateY(0) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-2xl);
+    padding: var(--gutter);
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav nav li + li {
+    margin-top: var(--space-m);
+  }
+
+  .mobile-nav nav a {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 9vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-display);
+  }
+
+  .mobile-nav__lang {
+    display: flex;
+    gap: var(--space-m);
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+  }
+
+  .mobile-nav__lang a[aria-current='true'] {
+    color: var(--accent-inv);
+  }
+
+  /* Поява пунктів каскадом — індекс задає mobile-nav.ts. */
+  .mobile-nav[data-open] nav li,
+  .mobile-nav[data-open] .mobile-nav__lang {
+    animation: nav-in var(--dur-slow) var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms + 80ms);
+  }
+
+  @keyframes nav-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .site-nav,
+    .lang {
+      display: none;
+    }
+
+    .burger {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 801px) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav[data-open] nav li,
+    .mobile-nav[data-open] .mobile-nav__lang {
+      animation: none;
+    }
+  }
+</style>

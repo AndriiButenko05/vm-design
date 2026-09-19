@@ -1,0 +1,388 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import HeroSlider from '../../components/home/HeroSlider.astro';
+import Lightbox from '../../components/ui/Lightbox.astro';
+import BeforeAfter from '../../components/project/BeforeAfter.astro';
+import Drawings from '../../components/project/Drawings.astro';
+import { setsForProject, totalPages } from '../../lib/drawings';
+import { getProjects, slugOf } from '../../lib/projects';
+import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../lib/i18n';
+
+export async function getStaticPaths() {
+  const projects = await getProjects(DEFAULT_LOCALE);
+  return projects.map((project, i) => ({
+    params: { slug: slugOf(project) },
+    props: {
+      project,
+      // Наступний по колу — щоб перегляд не впирався в глухий кут.
+      next: projects[(i + 1) % projects.length],
+    },
+  }));
+}
+
+const { project, next } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const { Content } = await render(project);
+const drawings = setsForProject(slugOf(project));
+const drawingPages = totalPages(drawings);
+const d = project.data;
+
+/**
+ * Кадри для слайдера в шапці: обкладинка плюс галерея проєкту.
+ *
+ * Раніше тут стояв один нерухомий кадр. Обмеження в шість — далі йде
+ * повна галерея нижче, і дублювати її цілком немає сенсу.
+ */
+const heroSlides = [{ src: d.cover, alt: d.coverAlt }, ...d.gallery.map((g) => ({ src: g.src, alt: g.alt }))]
+  .slice(0, 6);
+
+/**
+ * Великі кадри для модалки — рахуються на збірці, у розмітку йде лише URL.
+ * Сам файл браузер тягне вже при відкритті, тож галерея лишається легкою.
+ */
+const fullSize = await Promise.all(
+  d.gallery.map((g) => getImage({ src: g.src, width: 1800, format: 'webp' })),
+);
+const fullSizeAvif = await Promise.all(
+  d.gallery.map((g) => getImage({ src: g.src, width: 1800, format: 'avif' })),
+);
+
+const facts = [
+  { label: t(locale, 'project.location'), value: `${d.city}, ${d.country}` },
+  { label: t(locale, 'project.brand'), value: d.brand ?? null },
+  { label: t(locale, 'project.year'), value: d.year ? String(d.year) : null },
+  { label: t(locale, 'project.area'), value: d.area ? `${d.area} m²` : null },
+  { label: t(locale, 'project.type'), value: t(locale, `type.${d.type}`) },
+].filter((f) => f.value);
+---
+
+<BaseLayout
+  title={`${d.title} — VM Design`}
+  description={d.summary}
+  transparentHeader
+>
+  <article>
+    {/* ─── Титул ──────────────────────────────────────────── */}
+    <header class="lede on-ink-deep">
+      <div class="container lede__inner">
+        <div class="lede__type">
+          <p class="t-meta">{d.city} · {t(locale, `type.${d.type}`)}{d.year ? ` · ${d.year}` : ''}</p>
+          <h1 class="t-display">{d.title}</h1>
+          <p class="t-lead">{d.summary}</p>
+        </div>
+
+        <div class="lede__plate">
+          <HeroSlider slides={heroSlides} label={d.title} />
+        </div>
+      </div>
+    </header>
+
+    {/* ─── Факти + опис ───────────────────────────────────── */}
+    <section class="section">
+      <div class="container grid">
+        <aside class="facts">
+          <dl>
+            {
+              facts.map((f) => (
+                <div class="facts__row">
+                  <dt class="t-meta">{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))
+            }
+            {/*
+              Обсяг і матеріали — суцільним рядком, а не списком у стовпчик.
+              Сім окремих рядків робили колонку фактів удвічі вищою за опис
+              поруч, і під текстом зяяла порожнеча на пів екрана.
+            */}
+            {
+              d.scope.length > 0 && (
+                <div class="facts__row">
+                  <dt class="t-meta">{t(locale, 'project.scope')}</dt>
+                  <dd>{d.scope.join(' · ')}</dd>
+                </div>
+              )
+            }
+            {
+              d.materials.length > 0 && (
+                <div class="facts__row">
+                  <dt class="t-meta">{t(locale, 'project.materials')}</dt>
+                  <dd>{d.materials.join(' · ')}</dd>
+                </div>
+              )
+            }
+          </dl>
+        </aside>
+
+        <div class="prose" data-reveal>
+          <Content />
+
+          {/*
+            Посилання на комплект креслень — одразу під описом.
+            Секція з аркушами йде далеко нижче, за галереєю, і без цього
+            посилання про неї дізнавався лише той, хто догортав до кінця.
+          */}
+          {
+            drawings.length > 0 && (
+              <p class="prose__dwg">
+                <a class="link" href="#drawings">
+                  {t(locale, 'dwg.link')} <span class="t-meta">· {drawingPages} {t(locale, 'dwg.sheets')}</span>
+                </a>
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* ─── До / після ─────────────────────────────────────── */}
+    {d.beforeAfter && <BeforeAfter locale={locale} data={d.beforeAfter} />}
+
+    {/* ─── Галерея ────────────────────────────────────────── */}
+    <section class="gallery">
+      <div class="gallery__flow">
+        {
+          d.gallery.map((item, i) => (
+            <figure class="gallery__item" data-reveal style={`--reveal-delay:${(i % 2) * 90}ms`}>
+              <button
+                type="button"
+                class="plate gallery__button"
+                data-lightbox-open
+                data-full={fullSize[i].src}
+                data-full-avif={fullSizeAvif[i].src}
+                data-alt={item.alt}
+                data-w={item.src.width}
+                data-h={item.src.height}
+                aria-label={`${item.alt} — ${t(locale, 'renders.zoom')}`}
+              >
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={item.src}
+                  alt={item.alt}
+                  widths={[480, 840, 1260]}
+                  sizes="(max-width: 700px) 92vw, (max-width: 900px) 46vw, (max-width: 1400px) 30vw, 370px"
+                  loading="lazy"
+                />
+              </button>
+            </figure>
+          ))
+        }
+      </div>
+    </section>
+
+    <Lightbox locale={locale} label={d.title} />
+
+    {/* ─── Креслення ──────────────────────────────────────── */}
+    {drawings.length > 0 && <Drawings locale={locale} sets={drawings} />}
+
+    {/* ─── Наступний ──────────────────────────────────────── */}
+    <nav class="next on-ink" aria-label="Next project">
+      <a class="container next__link" href={localePath(locale, `/projects/${slugOf(next)}`)}>
+        <span>
+          <span class="t-meta">{t(locale, 'project.next')}</span>
+          <span class="next__title t-display">{next.data.title}</span>
+        </span>
+        <span class="next__plate plate plate--portrait">
+          <Picture formats={['avif']} fallbackFormat="webp" src={next.data.cover} alt="" widths={[280, 560]} sizes="180px" loading="lazy" />
+        </span>
+      </a>
+    </nav>
+  </article>
+</BaseLayout>
+
+<script>
+  import '../../scripts/before-after';
+</script>
+
+<style>
+  .lede {
+    padding-block: 7rem var(--space-2xl);
+  }
+
+  .lede__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .lede h1 {
+    margin-block: var(--space-m) var(--space-l);
+  }
+
+  /* ─── Факти ────────────────────────────────────────────── */
+
+  .facts {
+    grid-column: span 3;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .facts dl {
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .facts__row {
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .facts dd {
+    margin: 0.25rem 0 0;
+  }
+
+  .facts ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .prose {
+    grid-column: 5 / span 7;
+  }
+
+  .prose :global(p + p) {
+    margin-top: var(--space-m);
+  }
+
+  .prose__dwg {
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .prose :global(p:first-child) {
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    line-height: 1.55;
+  }
+
+  /* ─── Галерея ──────────────────────────────────────────── */
+
+  /*
+    Повітря після смуги «до / після».
+
+    Відступ тієї секції лишається всередині її кольорового поля, а
+    галерея починалася з нуля — і верхній ряд кадрів тулився просто до
+    краю смуги. Відступ вішаємо на стик, а не на саму галерею: у
+    проєктів без кадрів «до» вище стоїть звичайна секція з власним
+    відступом, і другий такий самий зробив би між текстом і фото
+    півтора екрана порожнечі.
+
+    :global() потрібен, бо .ba належить іншому компоненту й не має
+    cid цієї сторінки — без нього селектор не знайшов би нічого.
+  */
+  :global(.ba) + .gallery {
+    padding-top: var(--section);
+  }
+
+  /*
+    Кладка в колонки, як у галереї візуалізацій.
+
+    Раніше кадри розкладалися в сітку на 12 колонок трьома розмірами —
+    full, half, detail — плюс кожен другий зсувався вниз. На папері це
+    ритм розвороту, на екрані — кадри різної ширини, розкидані з провалами
+    між ними. У колонках усі однакової ширини й пакуються щільно.
+  */
+  /*
+    Розмір кадру задають колонки, а не вужчий контейнер.
+
+    137 зі 151 кадру вертикальні, тож у двох колонках на всю ширину
+    кожен виходив близько 1500 px заввишки — один кадр на екран.
+    Спершу я звузив саму галерею до 1440 px, і кадри справді поменшали,
+    але разом із ними поїхала й ліва межа: решта сторінки стоїть на
+    контейнері 1720, і галерея почала висіти на 140 px правіше за текст
+    і за смугу «до / після» над нею. Тому ширина повернулась до спільної,
+    а зменшення тепер дає четверта колонка.
+  */
+  .gallery__flow {
+    columns: 4;
+    column-gap: clamp(1rem, 2vw, 2rem);
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .gallery__item {
+    margin: 0 0 clamp(1rem, 2vw, 2rem);
+    break-inside: avoid;
+  }
+
+  .gallery__button {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    cursor: zoom-in;
+  }
+
+  .gallery__item :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* ─── Наступний ────────────────────────────────────────── */
+
+  .next {
+    margin-top: var(--section);
+  }
+
+  .next__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-l);
+    padding-block: var(--space-2xl);
+  }
+
+  .next__title {
+    display: block;
+    margin-top: var(--space-s);
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  .next__plate {
+    width: clamp(120px, 16vw, 180px);
+    flex: none;
+  }
+
+  @media (max-width: 1400px) {
+    .gallery__flow {
+      columns: 3;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .lede__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .lede__plate {
+      max-width: 20rem;
+    }
+
+    .facts,
+    .prose {
+      grid-column: 1 / -1;
+    }
+
+    .facts {
+      position: static;
+      margin-bottom: var(--space-xl);
+    }
+
+    .gallery__flow {
+      columns: 2;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .gallery__flow {
+      columns: 1;
+    }
+  }
+</style>

@@ -1,0 +1,254 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import GeographyMap from '../components/map/GeographyMap.astro';
+import { getProjects, groupByCity } from '../lib/projects';
+import { resolveLocale, t } from '../lib/i18n';
+import { SITE } from '../lib/site';
+import portrait from '../assets/portrait.jpg';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const projects = await getProjects(locale);
+const cities = groupByCity(projects);
+
+/**
+ * Текст — авторський, із біографії, надісланої замовницею (вересень 2026).
+ * Не переказ і не переписування: змінено лише розбивку на абзаци.
+ */
+const BIO = [
+  'Maryna Vashchenko is an architect, interior designer and founder of VM Design, with over 15 years of professional experience.',
+  'After completing her architectural education in Ukraine, Maryna began her career in Kyiv. She worked on residential and commercial interiors, spa complexes and large-scale architectural projects before taking responsibility for project management, site supervision and the coordination of project implementation.',
+  'An important chapter in her professional journey began with projects involving private villas and a yacht on the French Riviera. From 2018, Maryna worked regularly between Kyiv and Nice for three years. This experience established her strong connection with the Côte d’Azur and shaped the international direction of her work.',
+  'Today, VM Design creates residential and commercial interiors across the French Riviera, Monaco, Italy and other European destinations. The studio’s primary focus is residential interior architecture and design, ranging from apartments and holiday residences to private houses and villas. Maryna’s professional experience also includes projects in Germany, Poland, Ukraine and the United States.',
+  'Maryna personally leads every project. She takes the time to understand each client’s lifestyle, tastes and individual needs, conducts site surveys and measurements, develops the design concept and spatial planning, selects furniture, lighting and materials, and coordinates the implementation process.',
+  'Technical drawings and 3D visualisations are developed by trusted specialists under her direction. When required, Maryna also brings together experienced contractors, furniture manufacturers and suppliers. Throughout the entire process, the client remains in direct contact with her and does not have to manage numerous technical and organisational matters independently.',
+  'Her approach combines precise architectural planning, contemporary elegance, carefully selected materials and close attention to the client’s individuality. Rather than imposing a predetermined aesthetic, Maryna finds the right balance between the client’s vision and her own professional experience.',
+  'The aim of every project is to create a beautiful and comfortable interior that reflects the character and way of life of its owners, while ensuring that the completed space remains as faithful as possible to the approved design concept.',
+];
+
+const PROCESS = [
+  { n: '01', title: 'Survey', text: 'Measured drawings of what is actually there, before anything is proposed.' },
+  { n: '02', title: 'Concept & planning', text: 'Layout, light and the decision about which material will carry each room.' },
+  { n: '03', title: 'Working drawings', text: 'Demolition, services, elevations and joinery, drawn in full so the site builds what was designed.' },
+  { n: '04', title: 'Author supervision', text: 'On site through to the last fitting.' },
+];
+---
+
+<BaseLayout
+  title="About — Maryna Vashchenko, VM Design"
+  description="Architect and interior designer with over 15 years of experience, working across the French Riviera, Monaco, Italy and Germany."
+>
+  <section class="lede section">
+    <div class="container grid">
+      <div class="lede__type">
+        <p class="t-eyebrow">{t(locale, 'nav.about')}</p>
+        <h1 class="t-display">Maryna<br />Vashchenko</h1>
+        <p class="t-meta lede__role">{SITE.role}</p>
+
+        {/* Її власна фраза з біографії. */}
+        <blockquote class="lede__quote">
+          <p>“For me, an interior begins not with a style, but with the person it is created for.”</p>
+        </blockquote>
+      </div>
+
+      <figure class="lede__portrait">
+        <Picture
+          src={portrait}
+          formats={['avif']}
+          fallbackFormat="webp"
+          alt={SITE.designer}
+          widths={[500, 1000]}
+          sizes="(max-width: 900px) 70vw, 34vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="bio section">
+    <div class="container grid">
+      <aside class="bio__facts">
+        <dl>
+          <div>
+            <dt class="t-meta">Experience</dt>
+            <dd>Over {SITE.facts.experienceYears} years</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Based</dt>
+            <dd>{SITE.facts.based}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Working across</dt>
+            <dd>{SITE.regions.join(' · ')}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Also worked in</dt>
+            <dd>{SITE.facts.alsoWorkedIn.join(' · ')}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Languages</dt>
+            <dd>{SITE.facts.languages.join(' · ')}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Realised</dt>
+            <dd>{projects.length} projects · {cities.length} cities</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <div class="bio__text" data-reveal>
+        {BIO.map((para, i) => <p class:list={[i === 0 && 't-lead']}>{para}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="process on-sand section">
+    <div class="container">
+      <header class="process__head" data-reveal>
+        <p class="t-eyebrow">Process</p>
+        <h2 class="t-h2">From survey to the last fitting</h2>
+      </header>
+
+      <ol class="process__list">
+        {
+          PROCESS.map((step, i) => (
+            <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="t-meta">{step.n}</span>
+              <h3 class="process__title">{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <GeographyMap locale={locale} projects={projects} />
+  <ContactSection locale={locale} />
+</BaseLayout>
+
+<style>
+  .lede {
+    padding-top: 7rem;
+  }
+
+  .lede__type {
+    grid-column: span 6;
+  }
+
+  .lede__type h1 {
+    margin-block: var(--space-m) var(--space-s);
+  }
+
+  .lede__role {
+    margin-bottom: var(--space-xl);
+  }
+
+  .lede__quote {
+    margin: 0;
+    padding-inline-start: var(--space-m);
+    border-inline-start: 1px solid var(--accent-line);
+  }
+
+  .lede__quote p {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.875rem);
+    line-height: 1.3;
+  }
+
+  .lede__portrait {
+    grid-column: 8 / span 5;
+    margin: 0;
+  }
+
+  .lede__portrait :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* ─── Біографія ───────────────────────────────────────── */
+
+  .bio__facts {
+    grid-column: span 4;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .bio__facts dl {
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .bio__facts > dl > div {
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bio__facts dd {
+    margin: 0.25rem 0 0;
+  }
+
+  .bio__text {
+    grid-column: 6 / span 7;
+  }
+
+  .bio__text p + p {
+    margin-top: var(--space-m);
+  }
+
+  /* ─── Процес ──────────────────────────────────────────── */
+
+  .process__head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .process__head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .process__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process__list li {
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .process__title {
+    margin-block: var(--space-xs) var(--space-s);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+  }
+
+  @media (max-width: 900px) {
+    .lede__type,
+    .lede__portrait,
+    .bio__facts,
+    .bio__text {
+      grid-column: 1 / -1;
+    }
+
+    .lede__portrait {
+      order: -1;
+      max-width: 18rem;
+    }
+
+    .bio__facts {
+      position: static;
+      margin-bottom: var(--space-xl);
+    }
+
+    .process__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

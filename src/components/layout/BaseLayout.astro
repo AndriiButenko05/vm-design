@@ -1,0 +1,95 @@
+---
+import '../../styles/tokens.css';
+import '../../styles/fonts.css';
+import '../../styles/base.css';
+
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { resolveLocale, stripLocale, LOCALES, localePath, t } from '../../lib/i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Прозора шапка поверх темного hero — для головної та сторінок проєктів. */
+  transparentHeader?: boolean;
+  /** Службові сторінки (пісочниця) — не в індекс і не в sitemap. */
+  noindex?: boolean;
+  ogImage?: string;
+}
+
+const { title, description, transparentHeader = false, noindex = false, ogImage } = Astro.props;
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const bare = stripLocale(Astro.url.pathname);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL(ogImage ?? '/brand/apple-touch-icon.png', Astro.site).href;
+---
+
+<html lang={locale} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    {
+      LOCALES.map((l) => (
+        <link
+          rel="alternate"
+          hreflang={l}
+          href={new URL(localePath(l, bare), Astro.site).href}
+        />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={new URL(localePath('en', bare), Astro.site).href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={og} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/brand/favicon-48.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <meta name="theme-color" content="#2b2a29" />
+
+    {/* Тільки два шрифти критичного шляху — решта сабсетів тягнеться за unicode-range. */}
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif-latin-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-tight-latin-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    {/* Знімаємо .no-js до першого малювання, щоб reveal не блимав. */}
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{t(locale, 'skip')}</a>
+    <Header locale={locale} transparent={transparentHeader} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+
+    <script>
+      import '../../scripts/reveal';
+      import '../../scripts/header';
+      import '../../scripts/mobile-nav';
+    </script>
+  </body>
+</html>

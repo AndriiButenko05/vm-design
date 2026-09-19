@@ -1,0 +1,226 @@
+---
+/**
+ * Модалка для перегляду зображень — спільна для галереї візуалізацій
+ * і галереї проєкту.
+ *
+ * Розмітка тут, а плитки-тригери лишаються на своїх сторінках: кожна
+ * позначає їх data-lightbox-open і кладе у data-full посилання на великий
+ * кадр. Скрипт зв'язує одне з одним.
+ *
+ * Нативний <dialog> сам дає пастку фокуса, закриття по Esc, підложку
+ * й повернення фокуса на плитку, з якої відкрили.
+ */
+import { t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Опис для скрінрідера — назва розділу чи проєкту. */
+  label: string;
+}
+
+const { locale, label } = Astro.props;
+---
+
+<dialog class="lb" data-lightbox aria-label={label}>
+  <button type="button" class="lb__close" data-lightbox-close aria-label={t(locale, 'renders.close')}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 L19 19 M19 5 L5 19" /></svg>
+  </button>
+
+  <button type="button" class="lb__nav lb__nav--prev" data-lightbox-prev aria-label={t(locale, 'renders.prev')}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L7 12 L15 20" /></svg>
+  </button>
+
+  {/*
+    <picture>, а не голий <img>: вибір формату робить сам браузер, тож
+    не треба ні визначати підтримку скриптом, ні тримати два шляхи в коді.
+    Скрипт лише підставляє обидві адреси, які порахувала збірка.
+  */}
+  <div class="lb__stage" data-lightbox-stage>
+    <picture>
+      <source data-lightbox-avif type="image/avif" />
+      <img data-lightbox-img alt="" />
+    </picture>
+  </div>
+
+  <button type="button" class="lb__nav lb__nav--next" data-lightbox-next aria-label={t(locale, 'renders.nextImage')}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 L17 12 L9 20" /></svg>
+  </button>
+
+  <p class="lb__counter t-meta" data-lightbox-counter></p>
+</dialog>
+
+<script>
+  import '../../scripts/lightbox';
+</script>
+
+<style>
+  /* ─── Модалка ─────────────────────────────────────────── */
+
+  /*
+    Розкладка навішується тільки на [open].
+
+    Без цього display: grid перебивав типове правило браузера
+    dialog:not([open]) { display: none } — авторський стиль завжди
+    сильніший за стиль браузера — і модалка висіла б у потоці сторінки
+    постійно, ще до жодного кліку.
+  */
+  .lb {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--ink-deep);
+    color: var(--bone);
+  }
+
+  .lb[open] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    /*
+      Рядок обмежений висотою модалки. Без цього він брав висоту вмісту,
+      кадр вилізав за низ екрана, і збоку з'являлася смуга прокрутки.
+    */
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  /*
+    Смугу ховаємо, прокрутку лишаємо: після виправлення вище кадр
+    вміщається завжди, але якщо колись не вміститься — доступ до нього
+    нікуди не подінеться.
+  */
+  .lb {
+    scrollbar-width: none;
+  }
+
+  .lb::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lb::backdrop {
+    background: rgb(12 11 10 / 0.9);
+  }
+
+  /*
+    Flex, а не grid.
+
+    У сітці неявний рядок мав розмір auto, тобто невизначену висоту —
+    і max-height: 100% на зображенні не мав до чого рахуватися, тому
+    просто ігнорувався. Кадр лишався в натуральний розмір і обрізався.
+    У flex висота контейнера визначена рядком модалки, і відсоток працює.
+  */
+  .lb__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    /* Знизу більше — там лічильник, інакше він лягав би на кадр. */
+    padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem) clamp(3rem, 7vh, 4.5rem);
+  }
+
+  /*
+    Вписується цілком і ніколи не розтягується понад власний розмір:
+    1800 px оригіналу на ширшому екрані краще лишити як є, ніж
+    інтерполювати вгору.
+  */
+  .lb__stage img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .lb__nav,
+  .lb__close {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .lb__nav:hover,
+  .lb__close:hover {
+    opacity: 1;
+  }
+
+  .lb__nav svg,
+  .lb__close svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+
+  .lb__close {
+    position: absolute;
+    top: var(--space-s);
+    right: var(--space-s);
+    z-index: 2;
+  }
+
+  .lb__counter {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-m);
+    transform: translateX(-50%);
+    margin: 0;
+  }
+
+  @media (max-width: 700px) {
+    .lb[open] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /*
+      Стрілки — внизу, обабіч лічильника.
+
+      Збоку від кадру, як на ПК, їм тут місця немає: дві колонки по 3rem
+      забрали б у фотографії майже третину ширини екрана. Тому вони
+      виходять із сітки в absolute і сідають у той самий рядок, що й
+      лічильник, — кадр лишається неторканим, а кнопки потрапляють під
+      великий палець.
+
+      Раніше їх на телефоні не було зовсім: гортати можна було лише
+      пальцем, і про цю можливість ніщо не повідомляло.
+    */
+    .lb__nav {
+      position: absolute;
+      /* 44 px — мінімальна ціль дотику; центруємо її на рядку лічильника. */
+      bottom: calc(var(--space-m) - 0.875rem);
+      z-index: 2;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid rgb(244 241 236 / 0.25);
+      border-radius: 999px;
+      opacity: 1;
+    }
+
+    .lb__nav--prev {
+      left: var(--space-m);
+    }
+
+    .lb__nav--next {
+      right: var(--space-m);
+    }
+
+    /* Запас під рядок керування, щоб кадр не впирався в кнопки. */
+    .lb__stage {
+      padding-bottom: 4.25rem;
+    }
+  }
+</style>

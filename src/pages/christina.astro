@@ -1,0 +1,296 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import HeroSlider from '../components/home/HeroSlider.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import { getProjects, slugOf, type Project } from '../lib/projects';
+import { resolveLocale, localePath, t } from '../lib/i18n';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const all = await getProjects(locale);
+
+/**
+ * Christina проходить через п'ять міст і шість виставок. Розсипані по
+ * загальному індексу, ці проєкти читаються як одинадцять окремих робіт;
+ * зібрані разом — як багаторічна програма для одного бренду.
+ * Саме поле `brand` і дозволяє зробити цю сторінку без дублювання записів.
+ */
+const christina = all.filter((p) => p.data.brand === 'Christina');
+const retail = christina.filter((p) => p.data.type === 'commercial');
+const stands = christina.filter((p) => p.data.type === 'exhibition');
+
+const countries = [...new Set(christina.map((p) => p.data.country))];
+const years = christina.map((p) => p.data.year).filter(Boolean) as number[];
+const span = years.length ? `${Math.min(...years)} — ${Math.max(...years)}` : null;
+
+const cover = retail.find((p) => slugOf(p) === 'christina-roma') ?? retail[0];
+
+/**
+ * У шапці — усі салони, а не один кадр.
+ *
+ * Сторінка починається з обіцянки «один клієнт, одинадцять проєктів»,
+ * а показувала при цьому одну фотографію. П'ять обкладинок із підписами
+ * міст цю обіцянку показують, і кожна веде на свій проєкт. Стенди
+ * лишаються нижче власною стрічкою: у них інша природа й інший строк
+ * життя, і змішувати їх із салонами в одному слайдері немає сенсу.
+ */
+const heroSlides = [cover, ...retail.filter((p) => p !== cover)].filter(Boolean).map((p) => ({
+  src: p.data.cover,
+  alt: p.data.coverAlt,
+  href: localePath(locale, `/projects/${slugOf(p)}`),
+  label: [p.data.city, p.data.year].filter(Boolean).join(' · '),
+}));
+
+const card = (p: Project) => ({
+  href: localePath(locale, `/projects/${slugOf(p)}`),
+  title: p.data.title,
+  meta: [p.data.city, p.data.year].filter(Boolean).join(' · '),
+});
+---
+
+<BaseLayout
+  title="Christina — a retail programme across five countries | VM Design"
+  description="Five retail interiors and six exhibition stands for the cosmetics brand Christina, designed by Maryna Vashchenko across France, Monaco, Italy, Germany and Hong Kong."
+  transparentHeader
+>
+  <article>
+    {/* ─── Титул ──────────────────────────────────────────── */}
+    <header class="lede on-ink-deep">
+      <div class="container lede__inner">
+        <div class="lede__type">
+          <p class="t-eyebrow">{t(locale, 'christina.eyebrow')}</p>
+          <h1 class="t-display">Christina</h1>
+          <p class="t-lead">{t(locale, 'christina.text')}</p>
+        </div>
+
+        {
+          heroSlides.length > 0 && (
+            <div class="lede__plate">
+              <HeroSlider slides={heroSlides} label="Christina" />
+            </div>
+          )
+        }
+      </div>
+    </header>
+
+    {/* ─── Цифри ──────────────────────────────────────────── */}
+    <section class="facts on-ink">
+      <dl class="container facts__grid">
+        <div>
+          <dt class="t-meta">Retail interiors</dt>
+          <dd class="facts__n">{retail.length}</dd>
+        </div>
+        <div>
+          <dt class="t-meta">Exhibition stands</dt>
+          <dd class="facts__n">{stands.length}</dd>
+        </div>
+        <div>
+          <dt class="t-meta">Countries</dt>
+          <dd class="facts__n">{countries.length}</dd>
+        </div>
+        {
+          span && (
+            <div>
+              <dt class="t-meta">Years</dt>
+              <dd class="facts__n facts__n--small">{span}</dd>
+            </div>
+          )
+        }
+      </dl>
+    </section>
+
+    {/* ─── Ритейл ─────────────────────────────────────────── */}
+    <section class="stream section">
+      <div class="container">
+        <header class="stream__head" data-reveal>
+          <p class="t-eyebrow">Retail</p>
+          <h2 class="t-h2">One brand, five rooms, five buildings</h2>
+          <p class="stream__text">
+            The same identity had to sit inside a Roman vault, a Paris courtyard, a Monaco
+            storefront, a Cannes terrace and a German street unit. What repeats is the language —
+            arched niches, backlit mirrors, one wall given to the product — not the plan.
+          </p>
+        </header>
+
+        <ul class="stream__grid">
+          {
+            retail.map((p, i) => {
+              const c = card(p);
+              return (
+                <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+                  <a href={c.href}>
+                    <span class="plate plate--tall">
+                      <Picture
+                        formats={['avif']}
+                        fallbackFormat="webp"
+                        src={p.data.cover}
+                        alt={p.data.coverAlt}
+                        widths={[400, 800, 1200]}
+                        sizes="(max-width: 700px) 92vw, 30vw"
+                        loading="lazy"
+                      />
+                    </span>
+                    <span class="stream__caption">
+                      <span class="stream__title">{c.title}</span>
+                      <span class="t-meta">{c.meta}</span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+
+    {/* ─── Стенди ─────────────────────────────────────────── */}
+    <section class="stream stream--stands on-sand section">
+      <div class="container">
+        <header class="stream__head" data-reveal>
+          <p class="t-eyebrow">Exhibitions</p>
+          <h2 class="t-h2">A brand built and dismantled in four days</h2>
+          <p class="stream__text">
+            Trade-fair stands work to a different clock than an interior: the whole thing is
+            assembled, used hard for four days and taken apart. Six of them, in Bologna, Paris
+            and Hong Kong.
+          </p>
+        </header>
+
+        <ul class="stream__grid stream__grid--wide">
+          {
+            stands.map((p, i) => {
+              const c = card(p);
+              return (
+                <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+                  <a href={c.href}>
+                    <span class="plate plate--portrait">
+                      <Picture
+                        formats={['avif']}
+                        fallbackFormat="webp"
+                        src={p.data.cover}
+                        alt={p.data.coverAlt}
+                        widths={[360, 720]}
+                        sizes="(max-width: 700px) 46vw, 22vw"
+                        loading="lazy"
+                      />
+                    </span>
+                    <span class="stream__caption">
+                      <span class="stream__title">{c.title}</span>
+                      <span class="t-meta">{p.data.city}</span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+  </article>
+
+  <ContactSection locale={locale} />
+</BaseLayout>
+
+<style>
+  .lede {
+    padding-block: 7rem var(--space-2xl);
+  }
+
+  .lede__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .lede h1 {
+    margin-block: var(--space-m) var(--space-l);
+  }
+
+
+  /* ─── Цифри ───────────────────────────────────────────── */
+
+  .facts {
+    padding-block: var(--space-2xl);
+  }
+
+  .facts__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-l);
+    /* Лише типові відступи списка: margin: 0 перебивав
+       margin-inline: auto з .container, і той тулився влівo. */
+    margin-block: 0;
+  }
+
+  .facts__n {
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    color: var(--accent-inv);
+  }
+
+  .facts__n--small {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  /* ─── Потоки ──────────────────────────────────────────── */
+
+  .stream__head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .stream__head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .stream__text {
+    margin-top: var(--space-m);
+    max-width: 58ch;
+    color: var(--fg-muted);
+  }
+
+  .stream__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stream__grid--wide {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stream__caption {
+    display: block;
+    margin-top: var(--space-s);
+  }
+
+  .stream__title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  }
+
+  @media (max-width: 900px) {
+    .lede__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .lede__plate {
+      max-width: 20rem;
+    }
+
+    .facts__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stream__grid,
+    .stream__grid--wide {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

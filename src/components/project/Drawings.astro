@@ -1,0 +1,123 @@
+---
+import { Picture } from 'astro:assets';
+import { publicSheets, totalPages, type DrawingSet } from '../../lib/drawings';
+import { localePath, t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  sets: DrawingSet[];
+}
+
+const { locale, sets } = Astro.props;
+
+const pages = await publicSheets(sets);
+const total = totalPages(sets);
+const hidden = total - pages.length;
+---
+
+{/*
+  Аркуші віддаються РАСТРОМ, а не PDF. Дві причини разом:
+
+  1. Ретуш. Прямокутник поверх тексту в PDF не прибирає сам текст — його
+     видно копіюванням. Після растеризації текстового шару не існує взагалі.
+  2. Прохання замовниці «щоб не могли скачати». Повністю це неможливо, але
+     файла, який зберігається як PDF, тут просто немає.
+
+  Роздільність 1500 px по ширині: на екрані читається, для друку в масштабі
+  чи використання як робоче креслення — ні.
+*/}
+<section class="dwg on-ink section" id="drawings">
+  <div class="container">
+    <header class="dwg__head" data-reveal>
+      <p class="t-eyebrow">{t(locale, 'dwg.eyebrow')}</p>
+      <h2 class="t-h2">{t(locale, 'dwg.title')}</h2>
+      <p class="dwg__text">{t(locale, 'dwg.text')}</p>
+    </header>
+
+    <ul class="dwg__grid">
+      {
+        pages.map((page, i) => (
+          <li data-reveal style={`--reveal-delay:${(i % 4) * 60}ms`}>
+            <span class="dwg__sheet">
+              <Picture
+                formats={['avif']}
+                fallbackFormat="webp"
+                src={page.img}
+                alt={`${page.set.title} — drawing sheet`}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 700px) 92vw, 44vw"
+                loading="lazy"
+              />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      hidden > 0 && (
+        <p class="dwg__more" data-reveal>
+          <span class="t-meta">
+            {t(locale, 'dwg.showing')} {pages.length} {t(locale, 'dwg.of')} {total}
+          </span>
+          <a class="link" href={localePath(locale, '/contact')}>
+            {t(locale, 'dwg.request')}
+          </a>
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .dwg__head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .dwg__head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .dwg__text {
+    margin-top: var(--space-m);
+    max-width: 56ch;
+    color: var(--fg-muted);
+  }
+
+  .dwg__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Аркуші білі — на темній секції їм потрібна власна підкладка. */
+  .dwg__sheet {
+    display: block;
+    background: var(--bone);
+    padding: 0.5rem;
+  }
+
+  .dwg__sheet :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .dwg__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 700px) {
+    .dwg__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

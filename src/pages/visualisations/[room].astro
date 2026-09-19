@@ -1,0 +1,242 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import Lightbox from '../../components/ui/Lightbox.astro';
+import { ROOMS, getRoom, imageFor, captionFor } from '../../lib/renders';
+import { resolveLocale, localePath, t } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return ROOMS.map((room, i) => ({
+    params: { room: room.slug },
+    props: { room, next: ROOMS[(i + 1) % ROOMS.length] },
+  }));
+}
+
+const { room, next } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+
+/**
+ * Великі кадри для модалки.
+ *
+ * Рахуються тут, на збірці, а в розмітку потрапляє лише URL: сам файл
+ * браузер тягне вже при відкритті, тож сітка лишається такою ж легкою,
+ * як була.
+ */
+const fullSources = room.items.map((item) => imageFor(room.slug, item.file));
+const full = await Promise.all(
+  fullSources.map((src) => getImage({ src, width: 1800, format: 'webp' })),
+);
+const fullAvif = await Promise.all(
+  fullSources.map((src) => getImage({ src, width: 1800, format: 'avif' })),
+);
+---
+
+<BaseLayout
+  title={`${room.title} — 3D visualisations — VM Design`}
+  description={`${room.count} interior visualisations of ${room.title.toLowerCase()} by Maryna Vashchenko.`}
+>
+  <section class="head section">
+    <div class="container">
+      <p class="t-eyebrow">
+        <a class="link" href={localePath(locale, '/visualisations')}>{t(locale, 'renders.title')}</a>
+      </p>
+      <h1 class="t-display">{room.title}</h1>
+
+      <nav class="rooms-nav" aria-label="Rooms">
+        {
+          ROOMS.map((r) => (
+            <a
+              href={localePath(locale, `/visualisations/${r.slug}`)}
+              class="rooms-nav__link"
+              aria-current={r.slug === room.slug ? 'page' : undefined}
+            >
+              {r.title} <span class="rooms-nav__n">{r.count}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  {/*
+    Рендери переважно альбомні — на відміну від фотографій об'єктів,
+    де 137 зі 151 кадру вертикальні. Тому тут сітка нормальна,
+    а не вертикальна композиція зі зсувом.
+  */}
+  <section class="grid-wrap">
+    <ul class="container renders">
+      {
+        room.items.map((item, i) => (
+          <li
+            class="render"
+            data-reveal
+            style={`--reveal-delay:${(i % 2) * 80}ms`}
+          >
+            <button
+              type="button"
+              class="render__plate"
+              style={`--placeholder:${item.colour}`}
+              data-lightbox-open
+              data-full={full[i].src}
+              data-full-avif={fullAvif[i].src}
+              data-alt={captionFor(room, i)}
+              data-w={item.width}
+              data-h={item.height}
+              aria-label={`${captionFor(room, i)} — ${t(locale, 'renders.zoom')}`}
+            >
+              <Picture
+                formats={['avif']}
+                fallbackFormat="webp"
+                src={imageFor(room.slug, item.file)}
+                alt={captionFor(room, i)}
+                widths={[560, 900, 1400]}
+                sizes="(max-width: 700px) 92vw, 46vw"
+                loading={i < 2 ? 'eager' : 'lazy'}
+              />
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <Lightbox locale={locale} label={room.title} />
+
+
+  <nav class="next on-ink" aria-label="Next room">
+    <a class="container next__link" href={localePath(locale, `/visualisations/${next.slug}`)}>
+      <span>
+        <span class="t-meta">{t(locale, 'renders.next')}</span>
+        <span class="next__title t-display">{next.title}</span>
+      </span>
+      <span class="t-meta">{next.count}</span>
+    </a>
+  </nav>
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: 7rem;
+    padding-bottom: var(--space-xl);
+  }
+
+  .head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .rooms-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .rooms-nav__link {
+    position: relative;
+    padding-block: 0.25rem;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .rooms-nav__n {
+    font-size: 0.625rem;
+    vertical-align: super;
+    opacity: 0.7;
+  }
+
+  .rooms-nav__link:hover,
+  .rooms-nav__link[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  .rooms-nav__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent-line);
+  }
+
+  .grid-wrap {
+    padding-bottom: var(--section);
+  }
+
+  /*
+    Кладка в колонки, а не сітка.
+
+    У сітці кожен рядок був заввишки як найвищий кадр у ньому, тож під
+    альбомним кадром поруч із вертикальним зяяв провал у пів екрана.
+    А щоб вертикальні не виходили завеликими, на них стояло
+    max-width: 76% — і вони ставали вужчими за сусідів та тулилися вліво.
+
+    У колонках кадри пакуються щільно й ідуть на всю ширину колонки,
+    незалежно від пропорції. Нічого не обрізається й не підганяється.
+    Порядок стає вертикальним — для галереї це прийнятно.
+  */
+  .renders {
+    columns: 2;
+    column-gap: clamp(1rem, 3vw, 2.5rem);
+    list-style: none;
+    /* Лише типові відступи списка: margin: 0 перебивав
+       margin-inline: auto з .container, і той тулився влівo. */
+    margin-block: 0;
+    padding-inline: var(--gutter);
+  }
+
+  .render {
+    /* Кадр не має розриватися між колонками. */
+    break-inside: avoid;
+    margin-bottom: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .render__plate {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    background: var(--placeholder, var(--sand));
+    cursor: zoom-in;
+  }
+
+  .render__plate :global(img) {
+    width: 100%;
+    height: auto;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+
+  .render:hover .render__plate :global(img) {
+    transform: scale(1.02);
+  }
+
+  .next {
+    margin-top: 0;
+  }
+
+  .next__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-l);
+    padding-block: var(--space-2xl);
+  }
+
+  .next__title {
+    display: block;
+    margin-top: var(--space-s);
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  @media (max-width: 700px) {
+    .renders {
+      columns: 1;
+    }
+  }
+</style>
+

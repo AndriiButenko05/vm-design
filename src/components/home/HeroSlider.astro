@@ -1,0 +1,252 @@
+---
+import { Picture } from 'astro:assets';
+
+/**
+ * Кадр слайдера.
+ *
+ * Навмисно не прив'язаний до проєкту: той самий компонент показує і добірку
+ * проєктів на головній, і галерею одного проєкту на його сторінці.
+ */
+export interface HeroSlide {
+  src: ImageMetadata;
+  alt: string;
+  /** Є посилання — кадр клікабельний; немає — просто зображення. */
+  href?: string;
+  /** Підпис під кадром. Без нього смуга з підписами не виводиться. */
+  label?: string;
+}
+
+interface Props {
+  slides: HeroSlide[];
+  /** Пауза між кадрами, мс. */
+  interval?: number;
+  /** Опис для скрінрідера. */
+  label?: string;
+}
+
+const { slides, interval = 5200, label = 'Gallery' } = Astro.props;
+
+const hasCaptions = slides.some((s) => s.label);
+---
+
+{/*
+  Слайдер першого екрана.
+
+  Кадри перекривають один одного й міняються перехресним згасанням —
+  без горизонтального зсуву. Зсув вимагав би або overflow-контейнера,
+  або трансформа на всю стрічку; згасання дає той самий ефект
+  на одному властивості opacity й не чіпає розкладку.
+
+  Автоперегортання зупиняється під курсором, при фокусі всередині,
+  на прихованій вкладці та при prefers-reduced-motion.
+*/}
+<div
+  class="slider"
+  data-hero-slider
+  data-interval={interval}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={label}
+>
+  <div class="slider__stage">
+    {
+      slides.map((slide, i) => {
+        const Tag = slide.href ? 'a' : 'div';
+        return (
+          <Tag
+            class="slider__slide"
+            href={slide.href}
+            data-slide
+            aria-hidden={i > 0 ? 'true' : null}
+            tabindex={slide.href && i > 0 ? -1 : null}
+          >
+            <Picture
+              src={slide.src}
+              formats={['avif']}
+              fallbackFormat="webp"
+              alt={slide.alt}
+              widths={[600, 1000, 1600]}
+              sizes="(max-width: 900px) 92vw, (max-width: 1800px) 34vw, 600px"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+            />
+          </Tag>
+        );
+      })
+    }
+  </div>
+
+  <div class="slider__bar">
+    {/*
+      Усі підписи лежать у одній комірці сітки один поверх одного.
+      Висота блока = висота найдовшого з них, тому перемикання кадру
+      більше не зсуває нічого нижче: «La Villa — Nice» в один рядок
+      і «Appartamento Monza — Monza» у два займають однакове місце.
+    */}
+    {
+      hasCaptions && (
+        <p class="slider__caption t-meta">
+          {slides.map((slide, i) => (
+            <span class="slider__cap" data-cap aria-hidden={i > 0 ? 'true' : null}>
+              {slide.label}
+            </span>
+          ))}
+        </p>
+      )
+    }
+
+    <div class="slider__dots" role="tablist" aria-label={label}>
+      {
+        slides.map((slide, i) => (
+          <button
+            type="button"
+            class="slider__dot"
+            data-dot
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-label={slide.label ?? `${i + 1}`}
+          >
+            <span class="slider__fill" />
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  import '../../scripts/hero-slider';
+</script>
+
+<style>
+  .slider {
+    position: relative;
+  }
+
+  .slider__stage {
+    position: relative;
+    /*
+      Портрет: вертикальний кадр заповнює перший екран по висоті
+      й урівноважує три рядки слогана.
+    */
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--placeholder, #111);
+  }
+
+  .slider__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    /* Невидимі кадри не мають перехоплювати клік. */
+    pointer-events: none;
+    transition: opacity 900ms var(--ease);
+  }
+
+  .slider__slide.is-current {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /*
+    Без JS видно перший кадр. Правило діє лише до ініціалізації:
+    інакше воно тримало б перший кадр видимим поверх усіх наступних,
+    і слайдер показував би два кадри одночасно.
+  */
+  .slider:not([data-ready]) .slider__slide:first-child {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slider__slide :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slider__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin-top: 0.875rem;
+  }
+
+  .slider__caption {
+    display: grid;
+    margin: 0;
+    max-width: none;
+  }
+
+  .slider__cap {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .slider__cap.is-current {
+    opacity: 1;
+  }
+
+  /* Без JS видно перший підпис. */
+  .slider:not([data-ready]) .slider__cap:first-child {
+    opacity: 1;
+  }
+
+  .slider__dots {
+    display: flex;
+    gap: 0.5rem;
+    flex: none;
+  }
+
+  .slider__dot {
+    width: 26px;
+    height: 16px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
+  }
+
+  /* Сама смужка — усередині, щоб зона натиску лишалась 16 px заввишки. */
+  .slider__fill {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.28;
+    transform-origin: left;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .slider__dot[aria-selected='true'] .slider__fill {
+    opacity: 1;
+    background: var(--accent-inv);
+  }
+
+  .slider__dot:hover .slider__fill {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 700px) {
+    /*
+      На телефоні риски йдуть під підпис, а не поруч: у рядок підпису
+      лишалося ~200 px, і довгі назви ламалися на два рядки.
+      На повну ширину вміщаються всі.
+    */
+    .slider__bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.625rem;
+      margin-top: 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider__slide {
+      transition: none;
+    }
+  }
+</style>
