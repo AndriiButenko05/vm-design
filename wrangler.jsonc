@@ -1,0 +1,23 @@
+{
+  // Конфігурація для Cloudflare Workers Static Assets.
+  //
+  // Сайт статичний: адаптера Astro немає, збірка — просто тека файлів.
+  // Тому тут немає ні "main", ні коду воркера: Cloudflare віддає вміст
+  // ./dist напряму зі своєї мережі, без виконання чогось на запит.
+  //
+  // Потрібен лише для потоку Workers (`wrangler deploy`). Якщо проєкт
+  // заведено як Cloudflare Pages, цей файл не використовується: там
+  // задаються "Build command" і "Build output directory", а команди
+  // деплою немає зовсім — публікує сам push у git.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vm-design",
+  "compatibility_date": "2026-09-19",
+
+  "assets": {
+    "directory": "./dist",
+
+    // Астро генерує 404.html — віддаємо саме його, інакше на неіснуючій
+    // адресі відвідувач побачить типову сторінку Cloudflare замість нашої.
+    "not_found_handling": "404-page"
+  }
+}

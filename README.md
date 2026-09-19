@@ -12,6 +12,22 @@ npm install
 npm run dev
 ```
 
+**Про `package-lock.json`.** Збірка на Cloudflare робить `npm ci` своїм
+npm 10.9.2 — змінної для іншої версії там немає. А npm 11 пише лок, який
+npm 10 вважає неузгодженим: він пропускає залежності необов'язкових
+пакетів під чужі платформи (`@img/sharp-wasm32` тягне `@emnapi/runtime`),
+і `npm ci` падає з `Missing … from lock file`.
+
+Тому лок треба оновлювати саме десятою версією:
+
+```bash
+npm i --prefix /tmp/npm10 npm@10.9.2
+node /tmp/npm10/node_modules/npm/bin/npm-cli.js install --package-lock-only
+node /tmp/npm10/node_modules/npm/bin/npm-cli.js ci --dry-run   # перевірка
+```
+
+Лок від npm 10 читається обома версіями, зворотне — ні.
+
 ## Форма контактів
 
 Листи йдуть через **Formspree** — без власного сервера й без поштових
