@@ -1,0 +1,23 @@
+{
+  // Cloudflare Workers зі статичними ассетами.
+  //
+  // "main" і код воркера тут відсутні навмисно: сайт статичний, адаптера
+  // Astro немає. Коли воркер має лише "assets", Cloudflare віддає файли
+  // напряму з мережі, не запускаючи нічого на запит — тобто поводиться
+  // так само, як Pages, і так само не витрачає ліміти на виконання.
+  //
+  // Збирає не Cloudflare, а GitHub Actions (.github/workflows/deploy.yml):
+  // кодування AVIF для ~1800 варіантів не вкладалося в тамтешні 30 хвилин,
+  // а кеш зображень не переживав npm ci. Сюди приїжджає готовий dist.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vm-design",
+  "compatibility_date": "2026-09-19",
+
+  "assets": {
+    "directory": "./dist",
+
+    // Astro генерує власну 404.html — віддаємо саме її, інакше на
+    // неіснуючій адресі буде типова сторінка Cloudflare.
+    "not_found_handling": "404-page"
+  }
+}

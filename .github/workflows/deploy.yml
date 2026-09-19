@@ -1,4 +1,4 @@
-# Збірка і публікація на Cloudflare Pages.
+# Збірка і публікація на Cloudflare Workers.
 #
 # Чому збирає GitHub, а не сам Cloudflare: кодування AVIF для ~1800
 # варіантів зображень займає близько години процесорного часу. У
@@ -59,32 +59,16 @@ jobs:
           # одному місці.
           PUBLIC_FORMSPREE_ID: ${{ secrets.PUBLIC_FORMSPREE_ID }}
 
-      # Проєкт Pages має існувати до першого деплою — wrangler його не
-      # створює сам. Крок ідемпотентний: якщо проєкт уже є, команда
-      # завершиться помилкою «вже існує», і ми її свідомо ігноруємо.
-      # Так налаштування не залежить від того, чи не забули створити
-      # проєкт руками в панелі.
-      - name: Створити проєкт Pages, якщо його немає
-        continue-on-error: true
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4'
-          command: pages project create vm-design --production-branch=main
-
-      - name: Викласти на Cloudflare Pages
+      - name: Викласти на Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Типово дія ставить wrangler 3.90 — він старший за підтримку
-          # wrangler.jsonc і поводиться інакше з аргументами pages deploy.
-          # Фіксуємо четверту гілку, щоб поведінка не залежала від того,
-          # що дія вирішить поставити цього разу.
+          # wrangler.jsonc. Фіксуємо четверту гілку, щоб поведінка не
+          # залежала від того, що дія вирішить поставити цього разу.
           wranglerVersion: '4'
-          # Тека передається аргументом, а не конфігом: файла wrangler.jsonc
-          # більше немає. Він задавав pages_build_output_dir, і разом із
-          # аргументом dist це два джерела правди для того самого — саме
-          # той випадок, коли wrangler зупиняється й просить лишити одне.
-          command: pages deploy dist --project-name=vm-design
+          # Без аргументів: назву проєкту й теку ассетів бере з
+          # wrangler.jsonc. Проєкт у Cloudflare — Worker, а не Pages,
+          # тому deploy, а не pages deploy.
+          command: deploy
