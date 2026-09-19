@@ -1,0 +1,67 @@
+# Збірка і публікація на Cloudflare Pages.
+#
+# Чому збирає GitHub, а не сам Cloudflare: кодування AVIF для ~1800
+# варіантів зображень займає близько години процесорного часу. У
+# контейнері Cloudflare з двома ядрами це впиралося в ліміт 30 хвилин,
+# і навіть коли вкладалося б — кеш зображень там не переживає npm ci,
+# тож платити довелося б за кожен деплой. Тут кеш справжній: перший
+# запуск довгий, наступні кодують лише нові кадри.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  # Дає кнопку «запустити вручну» на вкладці Actions.
+  workflow_dispatch:
+
+# Два пуші підряд не мають викладати сайт одночасно: лишаємо останній.
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # Кеш готових AVIF і WebP. Ключ прив'язаний до вмісту src/assets,
+      # тож поки фото не мінялися, збірка бере все готове.
+      #
+      # restore-keys тут не формальність: коли додається одна нова
+      # світлина, точний ключ не збігається, але часткове відновлення
+      # віддає весь попередній кеш — і кодується рівно новий кадр,
+      # а не всі 1800 заново.
+      - name: Кеш перетворених зображень
+        uses: actions/cache@v4
+        with:
+          path: .astro-cache
+          key: astro-images-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-images-
+
+      - name: Встановити залежності
+        run: npm ci
+
+      - name: Зібрати сайт
+        run: npm run build
+        env:
+          # Ключ форми Formspree. Не секрет (він видимий у розмітці),
+          # але тримається поряд з іншими, щоб конфігурація була в
+          # одному місці.
+          PUBLIC_FORMSPREE_ID: ${{ secrets.PUBLIC_FORMSPREE_ID }}
+
+      - name: Викласти на Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=vm-design

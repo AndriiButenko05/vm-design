@@ -41,3 +41,6 @@ pnpm-debug.log*
 # Python
 __pycache__/
 *.pyc
+
+# Кеш перетворених зображень Astro (винесений із node_modules)
+.astro-cache/
