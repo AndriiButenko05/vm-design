@@ -72,6 +72,9 @@ const og = new URL(ogImage ?? '/brand/apple-touch-icon.png', Astro.site).href;
       crossorigin
     />
 
+    {/* Точка для того, що потрібне лише одній сторінці. */}
+    <slot name="head" />
+
     {/* Знімаємо .no-js до першого малювання, щоб reveal не блимав. */}
     <script is:inline>
       document.documentElement.classList.remove('no-js');
