@@ -86,7 +86,12 @@ const renderItems: RailItem[] = ROOMS.map((room) => {
   <WorkBlock
     locale={locale}
     index={1}
-    anchor={"residential"}
+    {/*
+      Якір projects, а не residential: із футера «Projects» веде сюди —
+      у початок чотирьох стрічок робіт. На #residential не посилалося
+      нічого, тож окремий порожній елемент-ціль тут зайвий.
+    */}
+    anchor={"projects"}
     titleKey="type.residential"
     textKey="type.residential.text"
     href="/projects/type/residential"
