@@ -3,14 +3,13 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import ContactSection from '../components/home/ContactSection.astro';
 import GeographyMap from '../components/map/GeographyMap.astro';
-import { getProjects, groupByCity } from '../lib/projects';
+import { getProjects } from '../lib/projects';
 import { resolveLocale, t } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);
-const cities = groupByCity(projects);
 
 /**
  * Текст — авторський, із біографії, надісланої замовницею (вересень 2026).
@@ -19,7 +18,7 @@ const cities = groupByCity(projects);
 const BIO = [
   'Maryna Vashchenko is an architect, interior designer and founder of VM Design, with over 15 years of professional experience.',
   'After completing her architectural education in Ukraine, Maryna began her career in Kyiv. She worked on residential and commercial interiors, spa complexes and large-scale architectural projects before taking responsibility for project management, site supervision and the coordination of project implementation.',
-  'An important chapter in her professional journey began with projects involving private villas and a yacht on the French Riviera. From 2018, Maryna worked regularly between Kyiv and Nice for three years. This experience established her strong connection with the Côte d’Azur and shaped the international direction of her work.',
+  'An important chapter in her professional journey began with projects involving private villas and a yacht on the French Riviera. From 2018, Maryna worked regularly between Kyiv and Nice for three years. This experience established her strong connection with the French Riviera and shaped the international direction of her work.',
   'Today, VM Design creates residential and commercial interiors across the French Riviera, Monaco, Italy and other European destinations. The studio’s primary focus is residential interior architecture and design, ranging from apartments and holiday residences to private houses and villas. Maryna’s professional experience also includes projects in Germany, Poland, Ukraine and the United States.',
   'Maryna personally leads every project. She takes the time to understand each client’s lifestyle, tastes and individual needs, conducts site surveys and measurements, develops the design concept and spatial planning, selects furniture, lighting and materials, and coordinates the implementation process.',
   'Technical drawings and 3D visualisations are developed by trusted specialists under her direction. When required, Maryna also brings together experienced contractors, furniture manufacturers and suppliers. Throughout the entire process, the client remains in direct contact with her and does not have to manage numerous technical and organisational matters independently.',
@@ -37,7 +36,7 @@ const PROCESS = [
 
 <BaseLayout
   title="About — Maryna Vashchenko, VM Design"
-  description="Architect and interior designer with over 15 years of experience, working across the French Riviera, Monaco, Italy and Germany."
+  description="Architect and interior designer with over 15 years of experience, working across the French Riviera, Monaco and Italy."
 >
   <section class="lede section">
     <div class="container grid">
@@ -76,7 +75,7 @@ const PROCESS = [
             <dd>Over {SITE.facts.experienceYears} years</dd>
           </div>
           <div>
-            <dt class="t-meta">Based</dt>
+            <dt class="t-meta">Based in</dt>
             <dd>{SITE.facts.based}</dd>
           </div>
           <div>
@@ -84,17 +83,20 @@ const PROCESS = [
             <dd>{SITE.regions.join(' · ')}</dd>
           </div>
           <div>
-            <dt class="t-meta">Also worked in</dt>
-            <dd>{SITE.facts.alsoWorkedIn.join(' · ')}</dd>
+            <dt class="t-meta">International experience</dt>
+            <dd>{SITE.facts.internationalExperience.join(' · ')}</dd>
           </div>
           <div>
             <dt class="t-meta">Languages</dt>
             <dd>{SITE.facts.languages.join(' · ')}</dd>
           </div>
-          <div>
-            <dt class="t-meta">Realised</dt>
-            <dd>{projects.length} projects · {cities.length} cities</dd>
-          </div>
+          {/*
+            Рядка «Realised — N projects · M cities» тут більше немає.
+            Він рахував завантажені на сайт роботи, а читався як підсумок
+            кар'єри: «за п'ятнадцять років — сімнадцять проєктів».
+            Замовниця попросила прибрати, і має рацію — цифра applied
+            не до того, до чого здавалося.
+          */}
         </dl>
       </aside>
 
@@ -237,9 +239,9 @@ const PROCESS = [
       grid-column: 1 / -1;
     }
 
+    /* Повна ширина колонки — щоб правий край збігався з текстом. */
     .lede__portrait {
       order: -1;
-      max-width: 18rem;
     }
 
     .bio__facts {

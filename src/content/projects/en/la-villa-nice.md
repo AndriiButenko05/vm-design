@@ -33,6 +33,7 @@ gallery:
   - src: ../../../assets/projects/la-villa-nice/028-img-2528.jpg
     alt: "La Villa — marble, brass and lacquered joinery in the finished villa"
     size: half
+    material: "Calacatta marble"
   - src: ../../../assets/projects/la-villa-nice/016-img-2485.jpg
     alt: "La Villa — marble, brass and lacquered joinery in the finished villa"
     size: half
@@ -49,6 +50,7 @@ gallery:
   - src: ../../../assets/projects/la-villa-nice/022-img-2508.jpg
     alt: "La Villa — marble, brass and lacquered joinery in the finished villa"
     size: half
+    material: "Sheer curtains"
   - src: ../../../assets/projects/la-villa-nice/032-img-2553.jpg
     alt: "La Villa — marble, brass and lacquered joinery in the finished villa"
     size: half
@@ -75,6 +77,7 @@ gallery:
   - src: ../../../assets/projects/la-villa-nice/008-img-2461.jpg
     alt: "La Villa — marble, brass and lacquered joinery in the finished villa"
     size: half
+    material: "Glazed joinery"
 beforeAfter:
   mode: slider
   pairs:

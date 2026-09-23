@@ -71,9 +71,16 @@ const { locale, projects } = Astro.props;
     border-bottom: 1px solid var(--rule);
   }
 
+  /*
+    Колонка типу — 14rem, а не 10rem.
+
+    Назви категорій подовшали на прохання замовниці: замість
+    «Commercial» тепер «Commercial & Beauty Spaces». У 10rem таке
+    не вміщалося й ламалося на два рядки посеред таблиці.
+  */
   .index__row a {
     display: grid;
-    grid-template-columns: 3rem minmax(0, 1fr) 8rem 10rem 4rem;
+    grid-template-columns: 3rem minmax(0, 1fr) 8rem 14rem 4rem;
     align-items: center;
     gap: var(--space-m);
     padding-block: clamp(1rem, 2.4vw, 1.75rem);

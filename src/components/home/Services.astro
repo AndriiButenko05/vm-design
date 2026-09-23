@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import { t, type Locale } from '../../lib/i18n';
-import { SERVICE_PHOTOS } from '../../lib/services';
+import { t, type Locale, localePath } from '../../lib/i18n';
+import { SERVICES } from '../../lib/services';
 
 interface Props {
   locale: Locale;
@@ -11,44 +11,16 @@ interface Props {
 const { locale, id } = Astro.props;
 
 /**
- * Нумерована подача за референсом reshapemc.com, який надіслала замовниця.
- * Самі послуги взяті з її біографії, не вигадані.
+ * На головній — лише головні послуги.
  *
- * Фото — з теки «фото для services»: зразки в шоурумах, плани з розміткою
- * на об'єкті, ескізи з розмірами.
+ * Тут раніше стояв власний масив із етапами роботи («обмір», «концепція»,
+ * «креслення»). Замовниця вказала, що це не послуги, і надіслала справжній
+ * перелік — тепер він у lib/services.ts, спільний із /services.
+ *
+ * Консультацію вона просила не виносити в головні картки, тож фільтр за
+ * featured, а не зріз за кількістю: рішення лежить у даних, а не тут.
  */
-const SERVICES = [
-  {
-    title: 'Survey & measurement',
-    text: 'Measured drawings of what is actually there, before anything is proposed.',
-    img: SERVICE_PHOTOS.planOnSite,
-  },
-  {
-    title: 'Concept & spatial planning',
-    text: 'Layout, light, circulation, and the decision about which material will carry each room.',
-    img: SERVICE_PHOTOS.sketchDims,
-  },
-  {
-    title: 'Materials, furniture, lighting',
-    text: 'Chosen in showrooms and at the factories, sample against sample, not from a catalogue.',
-    img: SERVICE_PHOTOS.tileSamples,
-  },
-  {
-    title: 'Technical drawings',
-    text: 'Demolition, services, elevations and joinery — drawn in full by trusted specialists under my direction.',
-    img: SERVICE_PHOTOS.marbleSlabs,
-  },
-  {
-    title: '3D visualisation',
-    text: 'The scheme seen before it is built, so decisions are made on the screen and not on site.',
-    img: SERVICE_PHOTOS.finishSamples,
-  },
-  {
-    title: 'Implementation & supervision',
-    text: 'Contractors, makers and suppliers brought together and coordinated through to the last fitting.',
-    img: SERVICE_PHOTOS.metalSamples,
-  },
-];
+const featured = SERVICES.filter((s) => s.featured);
 ---
 
 <section class="services section" id={id}>
@@ -60,31 +32,43 @@ const SERVICES = [
 
     <ol class="services__list">
       {
-        SERVICES.map((s, i) => {
-          const img = s.img;
-          return (
-            <li class="service" data-reveal style={`--reveal-delay:${(i % 2) * 90}ms`}>
-              {img && (
-                <span class="service__plate plate">
-                  <Picture
-                    formats={['avif']}
-                    fallbackFormat="webp"
-                    src={img}
-                    alt={s.title}
-                    widths={[400, 800, 1200]}
-                    sizes="(max-width: 700px) 92vw, 44vw"
-                    loading="lazy"
-                  />
-                </span>
-              )}
-              <p class="t-meta service__num">{String(i + 1).padStart(3, '0')}</p>
-              <h3 class="service__title">{s.title}</h3>
-              <p class="service__text">{s.text}</p>
-            </li>
-          );
-        })
+        featured.map((s, i) => (
+          <li class="service" data-reveal style={`--reveal-delay:${(i % 2) * 90}ms`}>
+            <span class="service__plate plate">
+              <Picture
+                formats={['avif']}
+                fallbackFormat="webp"
+                src={s.image}
+                alt={s.title}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 700px) 92vw, 44vw"
+                loading="lazy"
+              />
+            </span>
+            <p class="t-meta service__num">{String(i + 1).padStart(3, '0')}</p>
+            <h3 class="service__title">{s.title}</h3>
+            <p class="service__text">{s.short}</p>
+            {/*
+              Ведемо на якір саме цієї послуги, а не просто на /services:
+              там розкритий перелік того, що входить, і користувач
+              потрапляє одразу до нього, а не шукає потрібну картку серед
+              шести. aria-label потрібен, бо шість однакових «Learn more»
+              поспіль у списку посилань скрінрідера нічого не розрізняють.
+            */}
+            <p class="service__more">
+              <a
+                class="link"
+                href={`${localePath(locale, '/services')}#${s.slug}`}
+                aria-label={`${t(locale, 'services.more')} — ${s.title}`}
+              >
+                {t(locale, 'services.more')}
+              </a>
+            </p>
+          </li>
+        ))
       }
     </ol>
+
   </div>
 </section>
 
@@ -98,13 +82,33 @@ const SERVICES = [
   }
 
   .services__list {
+    /* Проміжок між колонками — змінною, бо його ж рахує правило нижче. */
+    --col-gap: clamp(1.5rem, 4vw, 4rem);
+
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 4rem);
+    gap: clamp(2rem, 5vw, 4.5rem) var(--col-gap);
     list-style: none;
     margin: 0;
     padding: 0;
     counter-reset: service;
+  }
+
+  /*
+    Непарна остання картка стає по центру.
+
+    Головних послуг п'ять, а колонок дві — п'ята лишалася сама в лівій
+    комірці, і поруч зяяла порожня. Картка розтягується на обидві
+    колонки, але тримає ширину рівно однієї, тож у ряду з чотирьох
+    сусідів нічого не змінюється.
+
+    Селектор сам вимикається, якщо послуг стане парна кількість:
+    :nth-child(odd) тоді не збігається.
+  */
+  .services__list > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--col-gap)) / 2);
   }
 
   .service__plate {
@@ -139,9 +143,22 @@ const SERVICES = [
     max-width: 44ch;
   }
 
+  .service__more {
+    margin-top: var(--space-m);
+  }
+
   @media (max-width: 700px) {
     .services__list {
       grid-template-columns: 1fr;
+    }
+
+    /*
+      На одній колонці центрувати нічого — і головне, ширину треба
+      скинути: calc((100% - gap) / 2) зробив би останню картку вдвічі
+      вужчою за решту.
+    */
+    .services__list > li:last-child:nth-child(odd) {
+      width: auto;
     }
   }
 </style>

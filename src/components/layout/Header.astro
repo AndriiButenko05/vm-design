@@ -9,9 +9,15 @@ interface Props {
 const { locale, transparent = false } = Astro.props;
 const bare = stripLocale(Astro.url.pathname);
 
+/*
+  Services замість окремого пункту візуалізацій — на прохання замовниці:
+  «обов'язково має з'явитися Services», а візуалізації окремим пунктом
+  вона просила прибрати. Розділ /visualisations нікуди не подівся: на
+  нього веде рейка «Design Projects» на головній і посилання у футері.
+*/
 const nav = [
   { key: 'nav.work', href: '/projects' },
-  { key: 'nav.renders', href: '/visualisations' },
+  { key: 'nav.services', href: '/services' },
   { key: 'nav.about', href: '/about' },
   { key: 'nav.contact', href: '/contact' },
 ];
@@ -123,18 +129,22 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
   }
 
   /*
-    Поверх темного hero — не прозора, а на тон світліша за нього:
-    --ink-raised (#34312e) проти --ink-deep (#191817) у hero.
+    Поверх hero — світла напівпрозора смуга, а не темна.
 
-    Повністю прозора шапка зливалася з полем hero, і верхні 70 px
-    читалися як ще одна смуга порожнечі. Тонова сходинка обмежує
-    сторінку згори й помітно стискає відчуття пустоти,
-    не додаючи жодної нової барви поза брендовою віссю.
+    Раніше тут стояв --ink-raised (#34312e), і на ньому не було видно
+    диска логотипа: диск залитий --ink (#2b2a29), тобто майже тим самим
+    кольором — різниця 1.47:1, на око її немає. Плюс правило нижче
+    робило диск взагалі прозорим. Марина саме на це й показала.
+
+    Світлий фон вирішує обидва: темний диск на ньому дає 8.9:1, коло
+    читається однозначно. Напівпрозорість із розмиттям лишена навмисно —
+    шапка й далі відчувається як шар над фотографією, а не як відрізана
+    смуга, і стан is-scrolled далі має сенс: там вона стає суцільною.
   */
   .site-header[data-transparent]:not(.is-scrolled) {
-    background: var(--ink-raised);
-    border-bottom-color: rgb(255 255 255 / 0.08);
-    color: var(--bone);
+    background: rgb(244 241 236 / 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom-color: rgb(43 42 41 / 0.12);
   }
 
   .site-header__inner {
@@ -156,11 +166,6 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     border-radius: 50%;
     background: var(--ink);
     transition: background var(--dur) var(--ease);
-  }
-
-  /* На темному тлі диск не потрібен — знак уже білий. */
-  .site-header[data-transparent]:not(.is-scrolled) .logo {
-    background: transparent;
   }
 
   .logo img {

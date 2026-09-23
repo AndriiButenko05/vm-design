@@ -26,12 +26,17 @@ export function project(lon: number, lat: number): { x: number; y: number } {
  */
 export const CLUSTERS = [
   {
+    /*
+      id лишається латиницею як є: він іде в атрибути розмітки й у
+      якорі, тож перейменування нічого не дасть, крім ризику розсинхрону
+      з CSS і скриптом. Видимий підпис — поруч, у label.
+    */
     id: 'cote-dazur',
-    label: "Côte d'Azur",
+    label: 'French Riviera',
     cities: ['Nice', 'Cannes', 'Monaco', 'Saint-Paul-de-Vence'],
     /** Нижче цього масштабу показуємо кластер, вище — окремі міста. */
     splitAt: 2.4,
-    /** Масштаб і центр для швидкого переходу «Côte d'Azur». */
+    /** Масштаб і центр для швидкого переходу «French Riviera». */
     zoom: { scale: 6, lon: 7.22, lat: 43.66 },
   },
 ] as const;
@@ -67,12 +72,26 @@ function inFrame(x: number, y: number): boolean {
   return x >= 0 && x <= MAP.width && y >= 0 && y <= MAP.height;
 }
 
+/**
+ * Країни, контури яких намальовані на карті.
+ *
+ * Перевірки самих координат тут замало. Kassel лежить на 51.31°, а
+ * північна межа кадру — 51.5°, тобто формально він у рамці. Без цього
+ * списку його маркер стояв би просто на порожньому місці там, де раніше
+ * був контур Німеччини.
+ *
+ * Монако обов'язкове: у контенті це окрема країна, і без неї половина
+ * Рив'єри поїхала б у текстовий рядок.
+ */
+const MAPPED_COUNTRIES = ['France', 'Italy', 'Monaco'];
+
 export function buildMarkers(groups: CityGroup[]): {
   markers: Marker[];
   clusters: ClusterMarker[];
   /**
-   * Міста поза кадром — Гонконг лежить за 4800 px від правого краю.
-   * Малювати їх ніде, тому вони йдуть окремим текстовим рядком.
+   * Міста поза картою: Гонконг лежить за 4800 px від правого краю,
+   * Kassel — у країні, якої на карті більше немає. Малювати їх ніде,
+   * тому вони йдуть окремим текстовим рядком і не зникають зовсім.
    */
   beyond: CityGroup[];
 } {
@@ -80,7 +99,7 @@ export function buildMarkers(groups: CityGroup[]): {
 
   const markers: Marker[] = groups.flatMap((g) => {
     const { x, y } = project(g.coords.lon, g.coords.lat);
-    if (!inFrame(x, y)) {
+    if (!MAPPED_COUNTRIES.includes(g.country) || !inFrame(x, y)) {
       beyond.push(g);
       return [];
     }

@@ -1,0 +1,219 @@
+---
+/**
+ * Повний перелік послуг.
+ *
+ * Розділу не було зовсім: у меню стояли Work, Visualisations, About і
+ * Contact, а на головній — блок «What the studio does» з етапами роботи.
+ * Замовниця вказала, що це найважливіший відсутній розділ: клієнт не
+ * замовляє «етап обміру», він обирає формат співпраці.
+ *
+ * Що входить у кожну послугу — показано одразу, без розкривання: саме
+ * ці переліки й є змістом розділу, заради них сюди приходять.
+ */
+import { Picture } from 'astro:assets';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import { SERVICES } from '../lib/services';
+import { resolveLocale, t } from '../lib/i18n';
+
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+---
+
+<BaseLayout
+  title="Services — VM Design"
+  description="Interior design services by Maryna Vashchenko: full-service interior architecture, design projects, supervision, furniture and material selection, rental setup and consultation."
+>
+  <section class="head section">
+    <div class="container">
+      <p class="t-eyebrow">{t(locale, 'services.eyebrow')}</p>
+      <h1 class="t-display">{t(locale, 'services.title')}</h1>
+      <p class="t-lead head__lead">{t(locale, 'services.lead')}</p>
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="container">
+      <ol class="list__items">
+        {
+          SERVICES.map((s, i) => (
+            <li class="svc" id={s.slug} data-reveal>
+              <span class="svc__plate plate">
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={s.image}
+                  alt={s.title}
+                  widths={[400, 800, 1200]}
+                  sizes="(max-width: 900px) 92vw, 38vw"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                />
+              </span>
+
+              <div class="svc__body">
+                <p class="t-meta svc__num">{String(i + 1).padStart(3, '0')}</p>
+                <h2 class="t-h2 svc__title">{s.title}</h2>
+                <p class="svc__short">{s.short}</p>
+
+                {/*
+                  Список відкритий, без розкривання.
+
+                  Спершу тут стояв <details>: підпис, а перелік під ним
+                  ховався. Але на широкому екрані праворуч від кожної
+                  послуги лишалося півекрана порожнечі, а саме цей
+                  перелік і є змістом розділу — клієнт приходить сюди
+                  дізнатися, що входить, і змушувати його клікати шість
+                  разів немає сенсу.
+
+                  h3, а не просто підпис: у кожної послуги свій h2 вище,
+                  тож заголовок третього рівня дає скрінрідеру нормальну
+                  структуру замість плаского тексту.
+                */}
+                <div class="svc__more">
+                  <h3 class="t-meta svc__inc-title">{t(locale, 'services.includes')}</h3>
+                  <ul class="svc__includes">
+                    {s.includes.map((item) => <li>{item}</li>)}
+                  </ul>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <ContactSection locale={locale} />
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: 7rem;
+    padding-bottom: var(--space-xl);
+  }
+
+  .head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .head__lead {
+    margin-top: var(--space-l);
+    max-width: var(--measure);
+  }
+
+  .list {
+    padding-bottom: var(--section);
+  }
+
+  .list__items {
+    display: grid;
+    gap: var(--section);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .svc {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  /*
+    Кожна друга послуга дзеркалиться: кадр праворуч, текст ліворуч.
+    Порядок у розмітці лишається природним — міняється лише колонка,
+    тож і читання з клавіатури, і скрінрідер ідуть як написано.
+
+    Разом із розміщенням обов'язково перевертається і САМ ШАБЛОН колонок.
+    Інакше кадр стрибає з вузької колонки в широку через рядок: пропорція
+    лишається 4:5, але ширина різна, і фотографії виходять різного розміру.
+  */
+  .svc:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
+  }
+
+  .svc:nth-child(even) .svc__plate {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .svc:nth-child(even) .svc__body {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .svc__plate {
+    aspect-ratio: var(--ratio-tall);
+  }
+
+  .svc__num {
+    color: var(--fg-muted);
+  }
+
+  .svc__title {
+    margin-top: var(--space-xs);
+  }
+
+  .svc__short {
+    margin-top: var(--space-m);
+    max-width: 54ch;
+  }
+
+  .svc__more {
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .svc__inc-title {
+    color: var(--fg-muted);
+    font-weight: 400;
+  }
+
+  .svc__includes {
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: var(--space-l);
+  }
+
+  .svc__includes li {
+    break-inside: avoid;
+    padding-block: 0.3rem;
+    padding-inline-start: 1rem;
+    text-indent: -1rem;
+    color: var(--fg-muted);
+  }
+
+  .svc__includes li::before {
+    content: '— ';
+    color: var(--accent-line);
+  }
+
+  @media (max-width: 900px) {
+    .svc {
+      grid-template-columns: 1fr;
+    }
+
+    /* На одній колонці дзеркалити нічого: скидаємо і шаблон, і перестановку. */
+    .svc:nth-child(even) {
+      grid-template-columns: 1fr;
+    }
+
+    .svc:nth-child(even) .svc__plate,
+    .svc:nth-child(even) .svc__body {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    /* Повна ширина колонки — щоб правий край збігався з текстом. */
+    .svc__plate {
+      width: 100%;
+    }
+
+    .svc__includes {
+      columns: 1;
+    }
+  }
+</style>

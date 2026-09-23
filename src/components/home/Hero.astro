@@ -1,0 +1,200 @@
+---
+/**
+ * Перший екран: фотографія на всю ширину, слоган поверх.
+ */
+import { Picture } from 'astro:assets';
+import { t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  image: ImageMetadata;
+  /** Якір для посилань. */
+  id?: string;
+  /** Перший екран сторінки вантажиться одразу, решта — ліниво. */
+  eager?: boolean;
+}
+
+const { locale, image, id, eager = false } = Astro.props;
+---
+
+<section class="hero on-ink-deep" id={id}>
+  {/*
+    Кадр і затемнення — окремим шаром під текстом. aria-hidden, бо це
+    тло: змісту воно не несе, а озвучувати його скрінрідеру нема чого.
+  */}
+  <div class="hero__bg" aria-hidden="true">
+    <Picture
+      src={image}
+      formats={['avif']}
+      fallbackFormat="webp"
+      alt=""
+      widths={[900, 1400, 2000]}
+      sizes="100vw"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+    />
+  </div>
+
+  <div class="container hero__inner">
+    <h1 class="t-display hero__slogan">
+      <span>{t(locale, 'hero.line1')}</span>
+      <span>{t(locale, 'hero.line2')}</span>
+      <span>{t(locale, 'hero.line3')}</span>
+    </h1>
+    <p class="hero__lead t-lead">{t(locale, 'hero.lead')}</p>
+    <p class="hero__role t-meta">{t(locale, 'hero.role')}</p>
+    <p class="hero__places">{t(locale, 'hero.places')}</p>
+  </div>
+
+  <span class="hero__scroll t-meta" aria-hidden="true">{t(locale, 'hero.scroll')}</span>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: 8rem 5rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /*
+    Затемнення двома градієнтами, а не одним рівним шаром.
+
+    Кадр світлий — білі стіни й мармур дають яскравість близько 0.8,
+    і білий текст на ньому просто зникає. Рівна заливка, достатня для
+    тексту, вбила б і саму фотографію. Тому горизонтальний градієнт
+    гасить лівий край, де лежить слоган, а вертикальний прибирає верх
+    під шапку й низ під підпис прокрутки; середина праворуч лишається
+    майже недоторканою.
+
+    Значення підібрані не на око: див. scripts/check-hero-contrast.mjs —
+    він міряє яскравість по реальних пікселях кадру під текстовим блоком.
+  */
+  .hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        rgb(25 24 23 / 0.7) 0%,
+        rgb(25 24 23 / 0.56) 38%,
+        rgb(25 24 23 / 0.24) 72%,
+        rgb(25 24 23 / 0.16) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(25 24 23 / 0.35) 0%,
+        rgb(25 24 23 / 0.06) 32%,
+        rgb(25 24 23 / 0.06) 62%,
+        rgb(25 24 23 / 0.4) 100%
+      );
+  }
+
+  .hero__inner {
+    max-width: min(var(--container), 68rem);
+  }
+
+  /*
+    Кегель без nowrap і без виміряної константи.
+
+    Раніше тут стояло min(15cqi, 9rem) разом із white-space: nowrap, де
+    15cqi — виміряна ширина рядка «Your character.» саме в Instrument
+    Serif. Будь-який інший шрифт ширший, і рядок вилазив за колонку.
+    Тепер розмір заданий звичайним clamp із запасом, а кожен рядок —
+    окремий <span>: якщо якийсь шрифт виявиться ширшим за очікуване,
+    рядок перенесеться, а не поїде за край.
+  */
+  .hero__slogan {
+    font-size: clamp(2.5rem, 6.2vw, 6.25rem);
+    max-width: 18ch;
+  }
+
+  .hero__slogan span {
+    display: block;
+  }
+
+  .hero__slogan span:last-child {
+    color: var(--accent-inv);
+  }
+
+  .hero__lead {
+    margin-top: var(--space-l);
+    max-width: 34ch;
+  }
+
+  .hero__role {
+    margin-top: var(--space-xl);
+  }
+
+  .hero__places {
+    margin-top: var(--space-xs);
+    font-size: var(--step-small);
+    opacity: 0.85;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 7.5rem 4rem;
+    }
+
+    .hero__lead {
+      margin-top: var(--space-m);
+    }
+
+    .hero__role {
+      margin-top: var(--space-l);
+    }
+
+    .hero__scroll {
+      display: none;
+    }
+
+    /*
+      На телефоні градієнт рівніший і помітно сильніший.
+
+      Горизонтальний тут не працює: текст займає майже всю ширину.
+      А головне — при object-fit: cover вертикальний екран вирізає
+      з альбомного кадру центральну смугу, і там саме світла стіна зі
+      сходами. Зміряно: з десктопними значеннями слоган давав 3.04:1
+      замість 4.5. Зсув кадру вбік не рятує — ліворуч камін і мармур
+      теж світлі (перевірено для 15%, 25% і 35%), тож лишається гасити.
+      Ці значення дають 5.49:1 — той самий запас, що й на десктопі.
+    */
+    .hero__bg::after {
+      background:
+        linear-gradient(
+          to bottom,
+          rgb(25 24 23 / 0.68) 0%,
+          rgb(25 24 23 / 0.64) 35%,
+          rgb(25 24 23 / 0.62) 70%,
+          rgb(25 24 23 / 0.73) 100%
+        );
+    }
+  }
+</style>

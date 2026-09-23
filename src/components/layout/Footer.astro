@@ -15,10 +15,18 @@ const year = new Date().getFullYear();
  * сторінці, тож із проєкту чи контактів вони мають вести на головну,
  * а не шукати неіснуючий якір на поточній.
  */
+/*
+  Services звідси прибрано: з появою сторінки /services цей якір вів би
+  на блок-тизер тієї самої назви, і в футері було б два різні «Services»
+  поруч — у колонці сторінок і тут.
+*/
+/*
+  Christina звідси прибрана разом із однойменним блоком на головній:
+  якір #christina вів би в нікуди. Сторінка /christina поки лишається,
+  але посилань на неї немає — попереду рішення, чим їй бути.
+*/
 const sections = [
-  { hash: 'residential', key: 'work.residential.title' },
-  { hash: 'christina', key: 'christina.title' },
-  { hash: 'services', key: 'footer.services' },
+  { hash: 'residential', key: 'type.residential' },
   { hash: 'materials', key: 'materials.eyebrow' },
 ];
 ---
@@ -33,6 +41,9 @@ const sections = [
     <div class="footer__col">
       <p class="t-meta">{t(locale, 'contact.eyebrow')}</p>
       <p>
+        <a class="link" href={SITE.phoneHref}>{SITE.phone}</a>
+      </p>
+      <p>
         <a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </p>
       <p>
@@ -46,6 +57,11 @@ const sections = [
       <p class="t-meta">{t(locale, 'index.title')}</p>
       <ul>
         <li><a class="link" href={localePath(locale, '/projects')}>{t(locale, 'nav.work')}</a></li>
+        <li><a class="link" href={localePath(locale, '/services')}>{t(locale, 'nav.services')}</a></li>
+        {/*
+          Візуалізації лишаються тут, хоч із головного меню й прибрані:
+          розділ живий, просто не входить у чотири головні пункти.
+        */}
         <li><a class="link" href={localePath(locale, '/visualisations')}>{t(locale, 'nav.renders')}</a></li>
         <li><a class="link" href={localePath(locale, '/about')}>{t(locale, 'nav.about')}</a></li>
         <li><a class="link" href={localePath(locale, '/contact')}>{t(locale, 'nav.contact')}</a></li>

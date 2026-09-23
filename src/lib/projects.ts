@@ -20,8 +20,11 @@ export function typeFilters(locale: Locale) {
     { key: 'all', href: localePath(locale, '/projects'), label: t(locale, 'index.all') },
     ...PROJECT_TYPES.map((type) => ({
       key: type,
+      // type.* — те саме джерело, що й для бейджа проєкту та рейок
+      // на головній. Раніше фільтри читали окремий набір index.*,
+      // і він устиг розійтися з рештою.
       href: localePath(locale, `/projects/type/${type}`),
-      label: t(locale, `index.${type}`),
+      label: t(locale, `type.${type}`),
     })),
   ];
 }

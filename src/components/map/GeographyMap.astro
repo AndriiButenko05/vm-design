@@ -130,8 +130,17 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
       </div>
 
       <aside class="geo__aside">
+        {/*
+          Тільки міста з маркерами. Панель відкривається натисканням на
+          маркер, тож для міст поза картою вона лишалася б прихованою
+          назавжди — мертва розмітка, яка ще й тягне за собою обкладинки
+          проєктів. Гонконг висів так від початку, Kassel додався разом
+          із прибиранням Німеччини з карти.
+        */}
         {
-          groups.map((g) => (
+          groups
+            .filter((g) => !beyond.includes(g))
+            .map((g) => (
             <div class="city" data-city-panel={g.city.toLowerCase().replace(/\s+/g, '-')} hidden>
               <p class="t-eyebrow">
                 {g.city} · {g.country}

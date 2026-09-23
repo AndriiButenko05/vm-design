@@ -68,7 +68,13 @@ const items = await Promise.all(
           borderRadius={0.04}
           scrollEase={0.05}
           scrollSpeed={2}
-          font="400 72px 'Instrument Serif'"
+          {/*
+            Родина дублюється рядком, бо це шрифт для canvas у WebGL,
+            а не CSS: --font-display сюди не дістає. Має збігатися
+            з тим, що оголошено в fonts.css, інакше підписи мовчки
+            намалюються запасним шрифтом.
+          */}
+          font="400 72px 'Cormorant Garamond'"
         />
       </div>
     </section>

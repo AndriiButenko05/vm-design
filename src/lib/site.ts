@@ -20,19 +20,66 @@ export const SITE = {
 
   email: 'vmdesignproject@gmail.com',
 
-  instagram: '@vm_project_azur',
-  instagramUrl: 'https://www.instagram.com/vm_project_azur/',
+  /**
+   * Телефон у двох виглядах: людський для підпису і суцільний для tel:.
+   * Розділяти обов'язково — у href пробіли ламають набір на частині
+   * телефонів, а в підписі без них номер не читається.
+   */
+  phone: '+39 329 5559043',
+  phoneHref: 'tel:+393295559043',
 
-  /** Зони роботи — у hero та в контактах. */
-  regions: ["Côte d'Azur", 'Monaco', 'Italy', 'Germany'],
+  /*
+    Акаунт змінився з vm_project_azur на vm_design__studio.
+    У посиланні два підкреслення поспіль — це не помилка набору.
+
+    Адреса очищена від «?stkn=…&utm_source=qr»: це мітки переходу з
+    QR-коду з конкретної сесії, і публікувати їх на сайті нема сенсу.
+  */
+  instagram: '@vm_design__studio',
+  instagramUrl: 'https://www.instagram.com/vm_design__studio/',
+
+  /**
+   * Зони роботи — у hero та в контактах.
+   *
+   * «French Riviera», а не «Côte d'Azur»: сайт англомовний, і замовниця
+   * просила скрізь у короткому форматі саме цю назву.
+   *
+   * Germany звідси прибрана свідомо. Вона стояла нарівні з Рив'єрою,
+   * Монако та Італією, хоча це минулий досвід, а не поточна географія
+   * студії, — через це сайт обіцяв присутність, якої немає. Тепер вона
+   * у internationalExperience, серед решти країн минулих проєктів.
+   */
+  regions: ['French Riviera', 'Monaco', 'Italy'],
 
   /** Факти з біографії. Використовуються в About і в секції цифр. */
   facts: {
     experienceYears: 15,
     based: 'Nice, France',
     languages: ['English', 'French', 'Italian', 'Ukrainian', 'Russian'],
-    /** Країни поза основною географією — згадані в біографії. */
-    alsoWorkedIn: ['Poland', 'Ukraine', 'United States', 'Hong Kong'],
+    /**
+     * Уся міжнародна географія, включно з поточною.
+     *
+     * Раніше називалося alsoWorkedIn і містило лише країни ПОЗА основною
+     * географією. Замовниця попросила інший зміст: повний перелік під
+     * підписом «International experience», де Франція, Італія та Монако
+     * стоять поряд із рештою.
+     *
+     * Germany тут за її ж вказівкою («перенести з Working across у
+     * Previous international experience»). У пізнішому переліку тієї ж
+     * записки Німеччини немає — схоже, просто загубилася при передруку:
+     * Christina Kassel лежить на сайті з country: "Germany", і без неї
+     * біографія суперечила б власному портфоліо.
+     */
+    internationalExperience: [
+      'France',
+      'Italy',
+      'Monaco',
+      'Germany',
+      'Poland',
+      'Ukraine',
+      'United States',
+      'Hong Kong',
+    ],
   },
 
   /**

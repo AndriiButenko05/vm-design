@@ -4,8 +4,7 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import WorkBlock, { type RailItem } from '../components/work/WorkBlock.astro';
 import Services from '../components/home/Services.astro';
 import ContactSection from '../components/home/ContactSection.astro';
-import HeroSlider from '../components/home/HeroSlider.astro';
-import Christina from '../components/home/Christina.astro';
+import Hero from '../components/home/Hero.astro';
 import Materials from '../components/home/Materials.astro';
 import GeographyMap from '../components/map/GeographyMap.astro';
 import { getProjects, slugOf, type Project } from '../lib/projects';
@@ -13,6 +12,12 @@ import { ROOMS, coverOf, imageFor } from '../lib/renders';
 import { resolveLocale, localePath, t } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
+/*
+  Кадр першого екрана. Референс, який Марина приклала до фідбеку, — це
+  та сама вітальня La Villa: сходи із золотим світильником, камін
+  ліворуч, кухня з темним каменем праворуч.
+*/
+import heroImage from '../assets/projects/la-villa-nice/034-img-2560.jpg';
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);
@@ -40,61 +45,15 @@ const renderItems: RailItem[] = ROOMS.map((room) => {
   };
 });
 
-/**
- * Кадри першого екрана — відібрані вручну, не за featured.
- *
- * Критерій один: чи тримає кадр повний екран. Потрібні маса, контраст
- * і матеріал, тому всі п'ять вертикальні й різні за характером —
- * онікс, ліплений барельєф, зелений кварцит, біле склепіння, мармур.
- *
- * Kassel тут стояв раніше як єдиний проєкт із професійною зйомкою, але
- * технічна якість програла сюжету: бездоганно знята порожня біла зала
- * не тримає перший екран, а підсилює відчуття порожнечі.
- */
-const HERO_SLUGS = [
-  'la-villa-nice',
-  'larimar-nice',
-  'monza-apartment',
-  'christina-roma',
-  'christina-paris',
-];
-
-const heroSlides = HERO_SLUGS.map((slug) => projects.find((p) => slugOf(p) === slug))
-  .filter((p): p is Project => Boolean(p))
-  .map((p) => ({
-    src: p.data.cover,
-    alt: p.data.coverAlt,
-    href: localePath(locale, `/projects/${slugOf(p)}`),
-    label: `${p.data.title} — ${p.data.city}`,
-  }));
-
-const christina = projects.filter((p) => p.data.brand === 'Christina');
 ---
 
 <BaseLayout
   title="VM Design — Maryna Vashchenko, architect & interior designer"
-  description="Your life. Your character. Your interior. Residential and commercial interiors across the Côte d'Azur, Monaco, Italy and Germany."
+  description="Your life. Your character. Your interior. Residential and commercial interiors across the French Riviera, Monaco and Italy."
   transparentHeader
 >
   {/* ─── 1. Hero ─────────────────────────────────────────── */}
-  <section class="hero on-ink-deep" id="top">
-    <div class="container hero__inner">
-      <div class="hero__type">
-        <h1 class="t-display hero__slogan">
-          <span>{t(locale, 'hero.line1')}</span>
-          <span>{t(locale, 'hero.line2')}</span>
-          <span>{t(locale, 'hero.line3')}</span>
-        </h1>
-        <p class="hero__lead t-lead">{t(locale, 'hero.lead')}</p>
-        <p class="hero__role t-meta">{t(locale, 'hero.role')}</p>
-        <p class="hero__places">{t(locale, 'hero.places')}</p>
-      </div>
-
-      {heroSlides.length > 0 && <HeroSlider slides={heroSlides} label={t(locale, 'index.eyebrow')} />}
-    </div>
-
-    <span class="hero__scroll t-meta" aria-hidden="true">{t(locale, 'hero.scroll')}</span>
-  </section>
+  <Hero locale={locale} image={heroImage} id="top" eager />
 
   {/* ─── 2. Коротко про студію ───────────────────────────── */}
   <section class="intro section" id="studio">
@@ -128,8 +87,8 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
     locale={locale}
     index={1}
     anchor={"residential"}
-    titleKey="work.residential.title"
-    textKey="work.residential.text"
+    titleKey="type.residential"
+    textKey="type.residential.text"
     href="/projects/type/residential"
     items={byType('residential').map(toItem)}
   />
@@ -138,8 +97,8 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
     locale={locale}
     index={2}
     anchor={"commercial"}
-    titleKey="work.commercial.title"
-    textKey="work.commercial.text"
+    titleKey="type.commercial"
+    textKey="type.commercial.text"
     href="/projects/type/commercial"
     items={byType('commercial').map(toItem)}
     reverse
@@ -149,8 +108,8 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
     locale={locale}
     index={3}
     anchor={"exhibition"}
-    titleKey="work.exhibition.title"
-    textKey="work.exhibition.text"
+    titleKey="type.exhibition"
+    textKey="type.exhibition.text"
     href="/projects/type/exhibition"
     items={byType('exhibition').map(toItem)}
   />
@@ -166,19 +125,29 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
     reverse
   />
 
-  {/* ─── 4. Christina: навмисно ламає ритм блоків ─────────── */}
-  {christina.length > 0 && <Christina locale={locale} projects={christina} id="christina" />}
+  {/*
+    Блок Christina прибрано з головної.
 
-  {/* ─── 5. Services ─────────────────────────────────────── */}
+    Замовниця: з 17 проєктів 11 мають brand: "Christina", і разом із
+    окремою секцією тут сайт читався як портфоліо дизайнера одного
+    косметичного бренду, а не студії житлової архітектури.
+
+    Компонент components/home/Christina.astro лишається на місці, як і
+    сторінка /christina, — попереду рішення, які один-два салони лишити
+    окремими проєктами, а решту звести в кейс «Beauty Brand Spaces —
+    Europe». Доти просто не рендеримо.
+  */}
+
+  {/* ─── 4. Services ─────────────────────────────────────── */}
   <Services locale={locale} id="services" />
 
-  {/* ─── 6. Матеріали ────────────────────────────────────── */}
+  {/* ─── 5. Матеріали ────────────────────────────────────── */}
   <Materials locale={locale} projects={projects} id="materials" />
 
-  {/* ─── 7. Карта ────────────────────────────────────────── */}
+  {/* ─── 6. Карта ────────────────────────────────────────── */}
   <GeographyMap locale={locale} projects={projects} id="geography" />
 
-  {/* ─── 8. Контакт ──────────────────────────────────────── */}
+  {/* ─── 7. Контакт ──────────────────────────────────────── */}
   <ContactSection locale={locale} id="contact" />
 </BaseLayout>
 
@@ -187,113 +156,7 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
 </script>
 
 <style>
-  /* ─── Hero ────────────────────────────────────────────── */
-
-  .hero {
-    position: relative;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    padding-block: 6rem 4rem;
-  }
-
-  .hero__inner {
-    display: grid;
-    /*
-      1.2 / 0.8, а не 1 / 0.82: кегель слогана рахується від ширини лівої
-      колонки (див. нижче), тому кожен відсоток її ширини — це кегель.
-      Разом із ширшим --container це дає слогану +34% проти попереднього.
-    */
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    gap: clamp(2rem, 4vw, 4rem);
-    align-items: center;
-  }
-
-  /*
-    Кегель слогана рахується від ширини ЦІЄЇ колонки, а не від вікна.
-    Інакше на широких екранах «Your character.» не вміщалося й ламалося
-    на два рядки: слоган — це три речення, кожне має бути одним рядком.
-  */
-  .hero__type {
-    container-type: inline-size;
-  }
-
-  .hero__slogan {
-    /*
-      6.364em — виміряна ширина найдовшого рядка («Your character.»)
-      у Instrument Serif із поточним трекінгом. 15cqi лишає ~4% запасу
-      на різницю рендерингу між браузерами; вище підіймати не можна —
-      1 / 6.364 = 15.7cqi, і рядок почне вилазити за колонку.
-
-      Стеля 9rem, а не 6.5rem: попередня обрізала cqi ще до того, як
-      слоган упирався в ширину колонки, тож на великих екранах
-      він лишався дрібним без жодної на те причини.
-    */
-    font-size: min(15cqi, 9rem);
-    white-space: nowrap;
-  }
-
-  .hero__slogan span {
-    display: block;
-  }
-
-  .hero__slogan span:last-child {
-    color: var(--accent-inv);
-  }
-
-  .hero__lead {
-    margin-top: var(--space-l);
-    color: var(--fg-muted);
-  }
-
-  .hero__role {
-    margin-top: var(--space-xl);
-  }
-
-  .hero__places {
-    margin-top: var(--space-xs);
-    color: var(--fg-muted);
-    font-size: var(--step-small);
-  }
-
-  .hero__scroll {
-    position: absolute;
-    left: 50%;
-    bottom: 2rem;
-    transform: translateX(-50%);
-    writing-mode: vertical-rl;
-    letter-spacing: 0.2em;
-    opacity: 0.6;
-  }
-
-  @media (max-width: 900px) {
-    .hero__inner {
-      grid-template-columns: 1fr;
-      /* 6rem між текстом і кадром на телефоні читались як провал. */
-      gap: var(--space-l);
-    }
-
-    /*
-      Шапка заввишки 69 px (лого 44 + 2×12 + волосина), тож 5rem лишали
-      під нею лише 11 px — слоган майже торкався хедера.
-    */
-    .hero {
-      padding-block: 7.5rem 3rem;
-    }
-
-    /* Відступи, розраховані на десктоп, на вузькому екрані завеликі. */
-    .hero__lead {
-      margin-top: var(--space-m);
-    }
-
-    .hero__role {
-      margin-top: var(--space-l);
-    }
-
-    .hero__scroll {
-      display: none;
-    }
-  }
+  /* Стилі першого екрана живуть у components/home/Hero.astro. */
 
   /* ─── Інтро ───────────────────────────────────────────── */
 
@@ -328,9 +191,16 @@ const christina = projects.filter((p) => p.data.brand === 'Christina');
   }
 
   @media (max-width: 900px) {
+    /*
+      Портрет — на всю ширину колонки, як і текст під ним.
+
+      Тут стояло max-width: 18rem, і на телефоні виходило так: лівий
+      край фото збігався з текстом, а правий не діставав до нього
+      майже сотню пікселів. Виглядало як нерівне поле, хоч насправді
+      відступи однакові — різнилася ширина самих блоків.
+    */
     .intro__portrait {
       grid-column: 1 / -1;
-      max-width: 18rem;
     }
 
     .intro__text {

@@ -70,8 +70,9 @@ type Dict = Record<string, string>;
 
 const ui: Record<Locale, Dict> = {
   en: {
-    'nav.work': 'Work',
-    'nav.renders': 'Visualisations',
+    'nav.work': 'Projects',
+    'nav.services': 'Services',
+    'nav.renders': 'Design Projects',
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'nav.menu': 'Menu',
@@ -84,31 +85,40 @@ const ui: Record<Locale, Dict> = {
     'hero.line3': 'Your interior.',
     'hero.lead': 'Every interior is as individual as the person it is designed for.',
     'hero.role': 'Maryna Vashchenko — architect & interior designer',
-    'hero.places': "Côte d'Azur · Monaco · Italy · Germany",
+    'hero.places': 'French Riviera · Monaco · Italy',
     'hero.scroll': 'Scroll',
 
     // ─── Коротке «про мене» на головній ──────────────────────
+    /*
+      Текст авторський, від замовниці, і він свідомо переведений із
+      першої особи в третю: раніше блок починався «I am Maryna
+      Vashchenko…» і представляв людину, тепер — студію. Це те саме
+      зміщення, про яке весь її фідбек: VM Design має читатися як
+      студія інтер'єрної архітектури, а не як персональна сторінка.
+    */
     'about.eyebrow': 'The studio',
-    'about.title': 'Fifteen years of reading people before drawing rooms',
+    'about.title': 'Individual interiors, thoughtfully designed and precisely realised.',
     'about.lead':
-      'I am Maryna Vashchenko — an architect and interior designer working between the Côte d’Azur, Monaco, Italy and Germany.',
+      'VM Design is an interior architecture and design studio working across the French Riviera, Monaco and Italy, led by architect and interior designer Maryna Vashchenko.',
     'about.body':
-      'I lead every project myself: the survey, the concept, the drawings, the choice of every material, and the site until the last fitting. Clients speak to me, not to a department.',
-    'about.more': 'More about the studio',
+      'Maryna personally leads every project — from the initial site survey and spatial concept to the selection of furniture, lighting and materials, and the supervision of its implementation. A trusted team of technical specialists supports the process under her direction.',
+    'about.more': 'About the studio',
 
     // ─── Блоки робіт ─────────────────────────────────────────
-    'work.residential.title': 'Residential',
-    'work.residential.text':
-      'Private houses, villas and apartments. Full renovations that begin with a measured survey and end on site.',
-    'work.commercial.title': 'Commercial',
-    'work.commercial.text':
-      'Salons, clinics and retail across five countries — spaces that have to work every day and still look considered.',
-    'work.exhibition.title': 'Exhibitions',
-    'work.exhibition.text':
-      'Trade-fair stands in Bologna, Paris and Hong Kong: a brand built and dismantled in four days.',
-    'work.renders.title': 'Visualisations',
+    /*
+      Назви й описи категорій лежать у type.* — див. нижче.
+
+      Раніше їх було три окремі набори: index.* для фільтрів на
+      /projects, type.* для бейджа проєкту і work.*.title для рейок на
+      головній. Вони встигли розійтися ще до того, як це помітили:
+      фільтр казав «Exhibitions», бейдж — «Exhibition». Тепер джерело
+      одне, і розходитися немає чому.
+
+      Тут лишилася тільки рейка візуалізацій: це не тип проєкту.
+    */
+    'work.renders.title': 'Design Projects',
     'work.renders.text':
-      'Interiors drawn before they are built, arranged by room rather than by project.',
+      'Complete interior design projects presented through 3D visualisations and technical documentation, allowing every key decision to be developed before construction begins.',
     'work.viewAll': 'View all',
     'work.prev': 'Previous',
     'work.next': 'Next',
@@ -120,14 +130,22 @@ const ui: Record<Locale, Dict> = {
       'Five retail interiors across France, Monaco, Italy and Germany, and six exhibition stands in three countries. One brand, one designer, four years.',
     'christina.cta': 'See the programme',
     'footer.sections': 'On the site',
-    'footer.services': 'Services',
     'christina.projects': 'projects',
     'christina.cities': 'cities',
     'christina.countries': 'countries',
 
     // ─── Services ────────────────────────────────────────────
-    'services.eyebrow': 'What the studio does',
-    'services.title': 'From the first measurement to the last fitting',
+    'services.eyebrow': 'Services',
+    'services.title': 'How we can work together',
+    'services.lead':
+      'From a single consultation to a complete interior delivered and styled — each format covers a different amount of the work, so the studio fits the project rather than the other way round.',
+    /*
+      Окремого «All services» під списком немає: кожна картка веде на
+      свою послугу, і загальне посилання поруч із п'ятьма конкретними
+      нічого не додавало. Сам розділ доступний із головного меню.
+    */
+    'services.more': 'Learn more',
+    'services.includes': 'What’s included',
 
     // ─── До / після ──────────────────────────────────────────
     'ba.eyebrow': 'Before / after',
@@ -151,14 +169,17 @@ const ui: Record<Locale, Dict> = {
     'index.eyebrow': 'Selected work',
     'index.title': 'Projects',
     'index.all': 'All projects',
-    'index.residential': 'Residential',
-    'index.commercial': 'Commercial',
-    'index.exhibition': 'Exhibitions',
 
     'renders.eyebrow': '3D',
-    'renders.title': 'Visualisations',
+    'renders.title': 'Design Projects',
+    /*
+      Попередній текст стверджував, що розділ упорядкований «за кімнатою,
+      а не за проєктом — ванна є ванна, чи вона в Ніцці, чи в Римі».
+      Замовниця вказала, що це суперечить самій ідеї студії: у неї кожен
+      простір залежить від людини, архітектури й місця.
+    */
     'renders.lead':
-      'Interiors drawn before they are built. Arranged by room, not by project — a bathroom is a bathroom whether it stands in Nice or in Rome.',
+      'Complete interior design projects presented through 3D visualisations and technical documentation, allowing every key decision to be developed before construction begins.',
     'renders.images': 'images',
     'renders.rooms': 'rooms',
     'renders.next': 'Next room',
@@ -170,18 +191,23 @@ const ui: Record<Locale, Dict> = {
     'approach.eyebrow': 'Approach',
     'approach.title': 'Every space is read before it is drawn',
     'materials.eyebrow': 'Materials',
-    'materials.title': 'Stone, brass, plaster, oak',
+    'materials.title': 'Marble, wood, glass, metal, textiles',
 
     'map.eyebrow': 'Geography',
     'map.title': 'Where the work is',
     'map.hint': 'Drag to move, scroll to zoom',
     'map.reset': 'Reset view',
-    'map.riviera': "Côte d'Azur",
+    'map.riviera': 'French Riviera',
     'map.italy': 'Italy',
     'map.list': 'All locations',
     'map.projects': 'projects',
     'map.project': 'project',
-    'map.beyond': 'Beyond Europe',
+    /*
+      Було «Beyond Europe» — доки поза картою лишався сам лише Гонконг.
+      Тепер туди ж потрапив Kassel, а він у Європі, тож попередній підпис
+      став би просто неправдою.
+    */
+    'map.beyond': 'Also in',
 
     'contact.eyebrow': 'Contact',
     'contact.title': 'Start a project',
@@ -204,9 +230,20 @@ const ui: Record<Locale, Dict> = {
     'project.materials': 'Materials',
     'project.next': 'Next project',
     'project.view': 'View project',
+    /*
+      Єдине джерело назв категорій: фільтри на /projects, заголовок
+      /projects/type/*, бейдж проєкту, підпис на карті й рейки головної
+      читають саме ці ключі. Тексти — авторські, від замовниці.
+    */
     'type.residential': 'Residential',
-    'type.commercial': 'Commercial',
-    'type.exhibition': 'Exhibition',
+    'type.residential.text':
+      'Private houses, villas and apartments — from new-build interiors to complete renovations. Each project is developed around the client’s lifestyle, the architecture of the property and the character of its location.',
+    'type.commercial': 'Commercial & Beauty Spaces',
+    'type.commercial.text':
+      'Beauty spaces, retail interiors, offices and showrooms designed around the client journey, operational needs and the identity of the brand.',
+    'type.exhibition': 'Exhibition Design',
+    'type.exhibition.text':
+      'Exhibition stands and temporary spaces that translate a brand into a clear, memorable spatial experience.',
   },
 
   // Перекладів ще немає. Порожній словник — не помилка: t() падає

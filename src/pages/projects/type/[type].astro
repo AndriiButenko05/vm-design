@@ -20,16 +20,25 @@ const { type, projects } = Astro.props;
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 
 const filters = typeFilters(locale);
+
+const label = t(locale, `type.${type}`);
+
+/*
+  Опис категорії — авторський текст замовниці, той самий, що в рейці
+  на головній. Раніше тут стояли склейки «<назва> projects — VM Design»
+  і «<назва> interiors by Maryna Vashchenko»; з новими назвами вони
+  ламаються: «Exhibition Design interiors by Maryna Vashchenko» —
+  не речення. Тому назва йде окремо, а опис береться готовим.
+*/
+const intro = t(locale, `type.${type}.text`);
 ---
 
-<BaseLayout
-  title={`${t(locale, `type.${type}`)} projects — VM Design`}
-  description={`${t(locale, `type.${type}`)} interiors by Maryna Vashchenko.`}
->
+<BaseLayout title={`${label} — VM Design`} description={intro}>
   <section class="head section">
     <div class="container">
       <p class="t-eyebrow">{t(locale, 'index.eyebrow')}</p>
-      <h1 class="t-display">{t(locale, `type.${type}`)}</h1>
+      <h1 class="t-display">{label}</h1>
+      <p class="t-lead head__intro">{intro}</p>
 
       <nav class="filters" aria-label="Filter projects">
         {
@@ -89,6 +98,11 @@ const filters = typeFilters(locale);
 
   .head .t-eyebrow {
     margin-bottom: var(--space-s);
+  }
+
+  .head__intro {
+    margin-top: var(--space-m);
+    max-width: var(--measure);
   }
 
   .filters {
