@@ -1,168 +1,122 @@
 import mapData from '../data/map.json';
-import eastData from '../data/map-east.json';
 import type { CityGroup } from './projects';
 
-export const MAP = mapData;
-
 /**
- * Другий аркуш — Польща й Україна. Окремою картою, яку кнопка під
- * основною ставить на її місце: вписати їх у кадр Франції та Італії
- * означало б стиснути Рив'єру в точку. Див. scripts/build-map.mjs.
+ * Карта — кілька окремих аркушів, кожен під свій масштаб:
+ * Французька Рив'єра, Франція, Італія, Польща й Україна. Під картою вони
+ * перемикаються вкладками; геометрію готує scripts/build-map.mjs.
+ *
+ * Раніше була одна карта Франції та Італії з зумом. На масштабі Рив'єри
+ * контури розсипалися на сходинки, а міста в радіусі 40 км злипалися в
+ * кластер, який треба було розкривати. Окремий аркуш показує їх одразу
+ * — з назвами біля точок.
  */
-export const MAP_EAST = eastData;
 
-type MapData = { width: number; view: { lonMin: number; lonMax: number; latMax: number } };
+export type SheetId = keyof typeof mapData;
 
-/**
- * Та сама проєкція Меркатора, що у scripts/build-map.mjs.
- * Тримаємо її тут, щоб маркери сідали точно на згенеровану геометрію.
- */
-const mercY = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
+export type SheetGeometry = (typeof mapData)[SheetId];
 
-function projector(map: MapData) {
-  const y0 = mercY(map.view.latMax);
-  const scale = map.width / (map.view.lonMax - map.view.lonMin);
-  return (lon: number, lat: number): { x: number; y: number } => ({
-    x: +((lon - map.view.lonMin) * scale).toFixed(2),
-    y: +((y0 - mercY(lat)) * (180 / Math.PI) * scale).toFixed(2),
-  });
-}
-
-export const project = projector(MAP);
-const projectEast = projector(MAP_EAST);
-
-/**
- * Ніцца, Канни, Монако й Сен-Поль-де-Ванс вміщаються в ~40 км — на оглядовому
- * масштабі це ~27 px, тобто чотири маркери в одну пляму. Тому вони згортаються
- * в один кластер, який розкладається при наближенні.
- */
-export const CLUSTERS = [
-  {
-    /*
-      id лишається латиницею як є: він іде в атрибути розмітки й у
-      якорі, тож перейменування нічого не дасть, крім ризику розсинхрону
-      з CSS і скриптом. Видимий підпис — поруч, у label.
-    */
-    id: 'cote-dazur',
-    label: 'French Riviera',
-    cities: ['Nice', 'Cannes', 'Monaco', 'Saint-Paul-de-Vence'],
-    /** Нижче цього масштабу показуємо кластер, вище — окремі міста. */
-    splitAt: 2.4,
-    /** Масштаб і центр для швидкого переходу «French Riviera». */
-    zoom: { scale: 6, lon: 7.22, lat: 43.66 },
-  },
-] as const;
-
-export const QUICK_VIEWS = [
-  { id: 'reset', labelKey: 'map.reset', scale: 1, lon: 6.75, lat: 43.75 },
-  { id: 'riviera', labelKey: 'map.riviera', scale: 6, lon: 7.22, lat: 43.66 },
-  { id: 'italy', labelKey: 'map.italy', scale: 2.4, lon: 11.5, lat: 43.5 },
-] as const;
+/** Бік, з якого стоїть підпис точки. */
+export type LabelSide = 'right' | 'left' | 'top';
 
 export type Marker = {
   id: string;
   label: string;
-  country: string;
   x: number;
   y: number;
   count: number;
-  /** Місто входить у кластер — на оглядовому масштабі ховається. */
-  clustered: string | null;
+  side: LabelSide;
+  /** Точка-посилання на інший аркуш (Рив'єра на карті Франції). */
+  goto?: SheetId;
 };
 
-export type ClusterMarker = {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  count: number;
-  splitAt: number;
+export type Sheet = {
+  id: SheetId;
+  labelKey: string;
+  geometry: SheetGeometry;
+  markers: Marker[];
+  /** Міста аркуша з їхніми проєктами — для панелі праворуч. */
+  groups: CityGroup[];
 };
 
-/** Чи потрапляє точка в кадр карти. */
-function inFrame(x: number, y: number): boolean {
-  return x >= 0 && x <= MAP.width && y >= 0 && y <= MAP.height;
-}
+/** Міста Рив'єри: на карті Франції вони згортаються в одну точку. */
+const RIVIERA = ['Nice', 'Cannes', 'Monaco', 'Saint-Paul-de-Vence'];
+
+/** Порядок вкладок; перша відкрита одразу. */
+const ORDER: { id: SheetId; labelKey: string; has: (g: CityGroup) => boolean }[] = [
+  { id: 'riviera', labelKey: 'map.riviera', has: (g) => RIVIERA.includes(g.city) },
+  { id: 'france', labelKey: 'map.france', has: (g) => g.country === 'France' && !RIVIERA.includes(g.city) },
+  { id: 'italy', labelKey: 'map.italy', has: (g) => g.country === 'Italy' },
+  { id: 'east', labelKey: 'map.east', has: (g) => g.country === 'Poland' || g.country === 'Ukraine' },
+];
 
 /**
- * Країни, контури яких намальовані на карті.
- *
- * Перевірки самих координат тут замало. Kassel лежить на 51.31°, а
- * північна межа кадру — 51.5°, тобто формально він у рамці. Без цього
- * списку його маркер стояв би просто на порожньому місці там, де раніше
- * був контур Німеччини.
- *
- * Монако обов'язкове: у контенті це окрема країна, і без неї половина
- * Рив'єри поїхала б у текстовий рядок.
+ * Підписи, яким праворуч тісно. Saint-Paul-de-Vence стоїть на одній
+ * широті з Ніццою за 12 км — довгий підпис праворуч ліг би на її точку,
+ * а зверху впирався в неї кінцем.
+ * Точка Рив'єри на карті Франції — біля правого краю кадру.
  */
-const MAPPED_COUNTRIES = ['France', 'Italy', 'Monaco'];
+const SIDES: Record<string, LabelSide> = {
+  'Saint-Paul-de-Vence': 'left',
+  'French Riviera': 'left',
+};
 
-/** Країни другого аркуша. */
-const EAST_COUNTRIES = ['Poland', 'Ukraine'];
+/** Та сама проєкція Меркатора, що у scripts/build-map.mjs. */
+const mercY = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
 
-export function buildMarkers(groups: CityGroup[]): {
-  markers: Marker[];
-  /** Маркери аркуша «Польща й Україна». */
-  eastMarkers: Marker[];
-  clusters: ClusterMarker[];
-  /**
-   * Міста поза картою: Гонконг лежить за 4800 px від правого краю,
-   * Kassel — у країні, якої на карті більше немає. Малювати їх ніде,
-   * тому вони йдуть окремим текстовим рядком і не зникають зовсім.
-   */
+function projector(g: SheetGeometry) {
+  const y0 = mercY(g.view.latMax);
+  const scale = g.width / (g.view.lonMax - g.view.lonMin);
+  return (lon: number, lat: number) => ({
+    x: +((lon - g.view.lonMin) * scale).toFixed(2),
+    y: +((y0 - mercY(lat)) * (180 / Math.PI) * scale).toFixed(2),
+  });
+}
+
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+
+export function buildSheets(
+  groups: CityGroup[],
+  rivieraLabel: string,
+): {
+  sheets: Sheet[];
+  /** Міста поза всіма аркушами (Kassel, Гонконг) — окремим рядком тексту. */
   beyond: CityGroup[];
 } {
-  const beyond: CityGroup[] = [];
-  const eastMarkers: Marker[] = [];
+  const sheets: Sheet[] = ORDER.map(({ id, labelKey, has }) => {
+    const geometry = mapData[id];
+    const project = projector(geometry);
+    const own = groups.filter(has);
+    const markers: Marker[] = own.map((g) => ({
+      id: slug(g.city),
+      label: g.city,
+      ...project(g.coords.lon, g.coords.lat),
+      count: g.projects.length,
+      side: SIDES[g.city] ?? 'right',
+    }));
 
-  const markers: Marker[] = groups.flatMap((g) => {
-    if (EAST_COUNTRIES.includes(g.country)) {
-      const p = projectEast(g.coords.lon, g.coords.lat);
-      eastMarkers.push({
-        id: g.city.toLowerCase().replace(/\s+/g, '-'),
-        label: g.city,
-        country: g.country,
-        x: p.x,
-        y: p.y,
-        count: g.projects.length,
-        clustered: null,
-      });
-      return [];
+    // На карті Франції Рив'єра — одна точка, що відкриває її вкладку.
+    if (id === 'france') {
+      const riv = groups.filter((g) => RIVIERA.includes(g.city));
+      if (riv.length) {
+        const lon = riv.reduce((s, g) => s + g.coords.lon, 0) / riv.length;
+        const lat = riv.reduce((s, g) => s + g.coords.lat, 0) / riv.length;
+        markers.push({
+          id: 'to-riviera',
+          label: rivieraLabel,
+          ...project(lon, lat),
+          count: riv.reduce((s, g) => s + g.projects.length, 0),
+          side: SIDES['French Riviera'],
+          goto: 'riviera',
+        });
+      }
     }
 
-    const { x, y } = project(g.coords.lon, g.coords.lat);
-    if (!MAPPED_COUNTRIES.includes(g.country) || !inFrame(x, y)) {
-      beyond.push(g);
-      return [];
-    }
-    const cluster = CLUSTERS.find((c) => (c.cities as readonly string[]).includes(g.city));
-    return [
-      {
-        id: g.city.toLowerCase().replace(/\s+/g, '-'),
-        label: g.city,
-        country: g.country,
-        x,
-        y,
-        count: g.projects.length,
-        clustered: cluster?.id ?? null,
-      },
-    ];
-  });
+    return { id, labelKey, geometry, markers, groups: own };
+  }).filter((s) => s.groups.length > 0);
 
-  const clusters: ClusterMarker[] = CLUSTERS.flatMap((c) => {
-    const members = markers.filter((m) => m.clustered === c.id);
-    if (members.length < 2) return [];
-    return [
-      {
-        id: c.id,
-        label: c.label,
-        x: +(members.reduce((s, m) => s + m.x, 0) / members.length).toFixed(2),
-        y: +(members.reduce((s, m) => s + m.y, 0) / members.length).toFixed(2),
-        count: members.reduce((s, m) => s + m.count, 0),
-        splitAt: c.splitAt,
-      },
-    ];
-  });
-
-  return { markers, eastMarkers, clusters, beyond };
+  const placed = new Set(sheets.flatMap((s) => s.groups));
+  return { sheets, beyond: groups.filter((g) => !placed.has(g)) };
 }
+
+export { slug as cityId };

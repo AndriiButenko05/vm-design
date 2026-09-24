@@ -58,7 +58,13 @@ const heroIsTall = !heroIsRow && !isWide(heroItems[0]);
 const typeLabel = t(locale, `type.${d.type}`);
 const intro = [typeLabel, `${d.city}, ${d.country}`, d.year ? String(d.year) : null].filter(Boolean).join(' · ');
 
-/** Факти лівої колонки. Services — список, кожна послуга окремим рядком. */
+/**
+ * Факти лівої колонки. Services — список, кожна послуга окремим рядком.
+ *
+ * Materials прибрано на прохання замовниці: з ним колонка фактів була
+ * довшою за опис, і під текстом праворуч лишалася порожня діра. Поле в
+ * контенті лишається — матеріали названо в самих описах.
+ */
 const facts: { label: string; value: string | string[] }[] = [
   { label: t(locale, 'project.location'), value: `${d.city}, ${d.country}` },
   { label: t(locale, 'project.brand'), value: d.brand ?? '' },
@@ -66,7 +72,6 @@ const facts: { label: string; value: string | string[] }[] = [
   { label: t(locale, 'project.area'), value: d.area ? `${d.area} m²` : '' },
   { label: t(locale, 'project.kind'), value: typeLabel },
   { label: t(locale, 'project.services'), value: d.scope },
-  { label: t(locale, 'project.materials'), value: d.materials },
 ].filter((f) => f.value.length > 0);
 
 /*

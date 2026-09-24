@@ -338,7 +338,7 @@ a:hover > .plate > picture > img,
 
 .page-intro__title {
   font-family: var(--font-subhead);
-  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-size: clamp(2.75rem, 7vw, 5.25rem); /* −20%: назва проєкту читалась завеликою */
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.025em;

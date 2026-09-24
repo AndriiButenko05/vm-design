@@ -3,9 +3,14 @@
  *
  *   node scripts/build-map.mjs
  *
- * Тягне Natural Earth (50 m), лишає Францію, Італію та Монако,
- * підсвічує адміністративні регіони, де є реалізовані проєкти,
- * спрощує контури й пише src/data/map.json.
+ * Пише src/data/map.json — кілька окремих карт («аркушів»), кожна під
+ * свій масштаб: Французька Рив'єра, Франція, Італія, Польща й Україна.
+ * Під картою вони перемикаються вкладками.
+ *
+ * Раніше була одна карта Франції та Італії з зумом. На масштабі Рив'єри
+ * вона розпадалася на сходинки: контури бралися з Natural Earth 50 m,
+ * розрахованого на всю Європу. Тепер кожен аркуш малюється з джерела
+ * тієї детальності, яка йому потрібна, і зум не потрібен зовсім.
  *
  * Запускається вручну, не під час збірки сайту: результат комітиться.
  * Так у рантаймі немає ані завантажень, ані обчислень — лише готові path.
@@ -18,12 +23,6 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'src/data/map.json');
 const CACHE = path.join(ROOT, '.image-cache');
 
-/**
- * Контури країн — Natural Earth 50 m.
- * Регіони — спеціалізовані джерела: у наборі admin-1 від Natural Earth
- * на 50 m Франції та Італії просто немає, а версія 10 m важить 39 МБ.
- * Ці два файли разом дають 4 МБ і точнішу геометрію.
- */
 const SRC = {
   countries:
     'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson',
@@ -40,83 +39,47 @@ const SRC = {
   regionsUA: 'https://raw.githubusercontent.com/EugeneBorshch/ukraine_geojson/master/UA_FULL_Ukraine.geojson',
 };
 
-/**
- * Кадр карти: Франція та Італія.
- *
- * Німеччину прибрано разом із нею з усього позиціонування: вона стояла
- * нарівні з Рив'єрою, Монако й Італією, хоча це минулий досвід. Раніше
- * північну межу тримали на 54°, щоб умістити Kassel (51.3°) — тепер
- * досить 51.5°, рівно під північний край Франції. Карта від цього стала
- * щільнішою: зникла порожня смуга над Францією.
- *
- * Сам проєкт у Kassel нікуди не дівся — він переходить у текстовий
- * рядок міст поза картою, там само, де Гонконг. Див. MAPPED_COUNTRIES
- * у src/lib/map.ts.
- */
-const VIEW = { lonMin: -5.5, lonMax: 19.0, latMin: 36.0, latMax: 51.5 };
 const WIDTH = 1000;
 
-/** Регіони, де є реалізовані проєкти. Ключ — те, що виводиться в підказці карти. */
-const HIGHLIGHT = [
-  { key: 'paca', label: "Provence-Alpes-Côte d'Azur", match: ['provencealpescotedazur'] },
-  { key: 'idf', label: 'Île-de-France', match: ['iledefrance'] },
-  { key: 'lombardia', label: 'Lombardia', match: ['lombardia', 'lombardy'] },
-  { key: 'lazio', label: 'Lazio', match: ['lazio', 'latium'] },
-  // Bologna — три виставкові стенди, тож регіон теж підсвічуємо.
-  { key: 'emiliaromagna', label: 'Emilia-Romagna', match: ['emiliaromagna'] },
-];
-
 /**
- * Німеччина малюється лише контуром: набору регіонів для неї немає,
- * а тягнути ще одне джерело заради однієї підсвітки не варто.
+ * Висота всіх аркушів однакова: вони міняються місцями в одній рамці, і
+ * різна висота смикала б сторінку. Тому для кожного задаються довготи й
+ * центральна широта, а межі по широті добираються під цю висоту.
  */
+const HEIGHT = 883.5;
 
 // ─── Проєкція (Меркатор) ───────────────────────────────────────
 
 const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
 const invMercY = (y) => ((2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180) / Math.PI;
 
-/** Кадр карти: межі в градусах → висота полотна й функція проєкції. */
-function frame(view) {
-  const Y0 = mercY(view.latMax);
-  const Y1 = mercY(view.latMin);
-  const scale = WIDTH / (view.lonMax - view.lonMin);
-  const height = +((Y0 - Y1) * (180 / Math.PI) * scale).toFixed(2);
-  const project = ([lon, lat]) => [(lon - view.lonMin) * scale, (Y0 - mercY(lat)) * (180 / Math.PI) * scale];
-  return { view, height, project };
-}
-
-const MAIN = frame(VIEW);
-
-/*
-  Другий аркуш — Польща й Україна. Окремою картою, а не ширшим кадром
-  основної: від Ніцци до Києва 2000 км, і Рив'єра з трьома містами
-  стиснулася б у точку.
-
-  Пропорції — ті самі, що в основного кадру: аркуші міняються місцями в
-  одній рамці, і різна висота смикала б сторінку. Тому задаються лише
-  довготи й центр, а широти добираються під висоту основної карти.
-*/
-function eastView() {
-  const lonMin = 12.5;
-  const lonMax = 41.5;
-  const centre = mercY(49.6);
-  const half = ((MAIN.height / (WIDTH / (lonMax - lonMin))) * (Math.PI / 180)) / 2;
-  return {
+/** Кадр аркуша: довготи й центральна широта → межі, висота, проєкція. */
+function frame(lonMin, lonMax, latCentre) {
+  const scale = WIDTH / (lonMax - lonMin);
+  const half = ((HEIGHT / scale) * (Math.PI / 180)) / 2;
+  const c = mercY(latCentre);
+  const view = {
     lonMin,
     lonMax,
-    latMin: +invMercY(centre - half).toFixed(3),
-    latMax: +invMercY(centre + half).toFixed(3),
+    latMin: +invMercY(c - half).toFixed(4),
+    latMax: +invMercY(c + half).toFixed(4),
   };
+  const Y0 = mercY(view.latMax);
+  const project = ([lon, lat]) => [(lon - lonMin) * scale, (Y0 - mercY(lat)) * (180 / Math.PI) * scale];
+  return { view, height: HEIGHT, project };
 }
 
-const EAST = frame(eastView());
-const OUT_EAST = path.join(ROOT, 'src/data/map-east.json');
-
-const HIGHLIGHT_EAST = [
-  { key: 'mazowieckie', label: 'Mazowieckie', match: ['mazowieckie'] },
-  { key: 'kyivska', label: 'Kyiv Oblast', match: ['kievoblast', 'kyivoblast'] },
-];
+/*
+  Кадри аркушів. Рив'єра — від Канн до італійського кордону; Франція — з
+  Корсикою; Італія — з Сицилією й Сардинією; схід — Польща й Україна з
+  Кримом.
+*/
+const FRAMES = {
+  riviera: frame(6.7, 7.7, 43.66),
+  france: frame(-6.5, 11.0, 46.3),
+  italy: frame(3.5, 21.5, 41.6),
+  east: frame(12.5, 41.5, 49.6),
+};
 
 // ─── Спрощення (Дуглас — Пекер) ────────────────────────────────
 
@@ -205,7 +168,7 @@ function encodePath(points) {
   return d + 'Z';
 }
 
-function toPath(geometry, tolerance, fr = MAIN) {
+function toPath(geometry, tolerance, fr) {
   const polygons =
     geometry.type === 'Polygon' ? [geometry.coordinates]
     : geometry.type === 'MultiPolygon' ? geometry.coordinates
@@ -219,6 +182,14 @@ function toPath(geometry, tolerance, fr = MAIN) {
       const inFrame = pts.some(([x, y]) => x > -60 && x < WIDTH + 60 && y > -60 && y < fr.height + 60);
       if (!inFrame) continue;
 
+      /*
+        Точки за рамкою притискаються до неї (з запасом 20 px, щоб край
+        лишався невидимим). Регіон PACA тягнеться далеко за кадр Рив'єри,
+        і без цього його контур за рамкою важив утричі більше за видимий.
+        Притиснуті точки лягають на пряму, і спрощення їх прибирає.
+      */
+      const P = 20;
+      pts = pts.map(([x, y]) => [Math.min(WIDTH + P, Math.max(-P, x)), Math.min(fr.height + P, Math.max(-P, y))]);
       pts = simplify(pts, tolerance);
       if (pts.length < 3 || ringArea(pts) < MIN_RING_AREA) continue;
 
@@ -241,8 +212,11 @@ function dissolve(features) {
   const edges = new Map();
   for (const f of features) {
     const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-    for (const poly of polys) {
-      const r = poly[0];
+    // Усі кільця, не лише перше: у цих даних острови й материк лежать
+    // кільцями одного Polygon, і в Одеської, Миколаївської та Херсонської
+    // областей материк — не перше кільце. З poly[0] пропадало все
+    // південне узбережжя.
+    for (const r of polys.flat()) {
       for (let i = 0; i < r.length - 1; i++) {
         const a = key(r[i]);
         const b = key(r[i + 1]);
@@ -315,78 +289,95 @@ async function main() {
   const countries = await load('countries', SRC.countries);
   const regionsFR = await load('regions-fr', SRC.regionsFR);
   const regionsIT = await load('regions-it', SRC.regionsIT);
-
-  const byIso = (iso) =>
-    countries.features.find((f) => f.properties.ISO_A2 === iso || f.properties.ISO_A2_EH === iso);
-
-  const out = {
-    viewBox: `0 0 ${WIDTH} ${MAIN.height}`,
-    width: WIDTH,
-    height: MAIN.height,
-    view: VIEW,
-    countries: {},
-    regions: {},
-  };
-
-  for (const [iso, key] of [['FR', 'france'], ['IT', 'italy']]) {
-    const f = byIso(iso);
-    if (!f) throw new Error(`не знайшов країну ${iso}`);
-    out.countries[key] = toPath(f.geometry, 0.6);
-    console.log(`  ${key.padEnd(8)} ${out.countries[key].length} симв.`);
-  }
-
-  // Різні джерела називають поле по-різному: nom (FR), reg_name (IT).
-  const regionName = (p) => p.nom ?? p.reg_name ?? p.name ?? p.NAME;
-
-  for (const collection of [regionsFR, regionsIT]) {
-    for (const f of collection.features) {
-      const n = norm(regionName(f.properties));
-      const hit = HIGHLIGHT.find((h) => h.match.includes(n));
-      if (!hit) continue;
-      out.regions[hit.key] = { label: hit.label, d: toPath(f.geometry, 0.35) };
-      console.log(`  регіон   ${hit.label}`);
-    }
-  }
-
-  const missing = HIGHLIGHT.filter((h) => !out.regions[h.key]);
-  if (missing.length) console.warn('  ! не знайшов регіони:', missing.map((m) => m.label).join(', '));
-
-  await fs.writeFile(OUT, JSON.stringify(out, null, 1) + '\n');
-  const kb = ((await fs.stat(OUT)).size / 1024).toFixed(0);
-  console.log(`\n  ${path.relative(ROOT, OUT)} — ${kb} KB, viewBox ${out.viewBox}`);
-
-  // ─── Другий аркуш: Польща й Україна ───
   const regionsPL = await load('regions-pl', SRC.regionsPL);
   const regionsUA = await load('regions-ua', SRC.regionsUA);
 
-  const east = {
-    viewBox: `0 0 ${WIDTH} ${EAST.height}`,
+  const byIso = (iso) =>
+    countries.features.find((f) => f.properties.ISO_A2 === iso || f.properties.ISO_A2_EH === iso);
+  const find = (collection, name, test) => {
+    const f = collection.features.find((x) => norm(name(x.properties)) === norm(test));
+    if (!f) throw new Error(`не знайшов ${test}`);
+    return f;
+  };
+  const frName = (p) => p.nom;
+  const itName = (p) => p.reg_name;
+  const plName = (p) => p.nazwa;
+  const uaName = (p) => p['name:en'];
+
+  /**
+   * Аркуш: контури (outline — лише лінія) і підсвічені регіони (region —
+   * заливка), обидва — масиви {key, label?, d}.
+   */
+  const sheet = (fr, outline, regions) => ({
+    viewBox: `0 0 ${WIDTH} ${fr.height}`,
     width: WIDTH,
-    height: EAST.height,
-    view: EAST.view,
-    countries: {
-      poland: toPath(byIso('PL').geometry, 0.6, EAST),
-      ukraine: toPath(dissolve(regionsUA.features), 0.6, EAST),
-    },
-    regions: {},
+    height: fr.height,
+    view: fr.view,
+    outline: outline.map(([key, geometry, tol]) => ({ key, d: toPath(geometry, tol, fr) })),
+    regions: regions.map(([key, label, geometry, tol]) => ({ key, label, d: toPath(geometry, tol, fr) })),
+  });
+
+  const R = FRAMES.riviera;
+  const F = FRAMES.france;
+  const I = FRAMES.italy;
+  const E = FRAMES.east;
+
+  const out = {
+    /*
+      Рив'єра: суша — регіон PACA і Лігурія (береги детальні, на відміну
+      від Natural Earth). Монако — проміжок між ними на узбережжі.
+    */
+    riviera: sheet(
+      R,
+      [
+        ['paca', find(regionsFR, frName, "Provence-Alpes-Côte d'Azur").geometry, 0.8],
+        ['liguria', find(regionsIT, itName, 'Liguria').geometry, 0.8],
+        ['piemonte', find(regionsIT, itName, 'Piemonte').geometry, 0.8],
+      ],
+      // Регіони не підсвічуються: на такому масштабі департамент займає
+      // майже весь кадр, і межа з Варом лягала темною виїмкою. Суша
+      // натомість злегка залита (див. GeographyMap.astro).
+      [],
+    ),
+    france: sheet(
+      F,
+      [['france', byIso('FR').geometry, 0.6]],
+      [
+        ['idf', 'Île-de-France', find(regionsFR, frName, 'Île-de-France').geometry, 0.35],
+        ['paca', "Provence-Alpes-Côte d'Azur", find(regionsFR, frName, "Provence-Alpes-Côte d'Azur").geometry, 0.35],
+      ],
+    ),
+    italy: sheet(
+      I,
+      [['italy', byIso('IT').geometry, 0.6]],
+      [
+        ['lombardia', 'Lombardia', find(regionsIT, itName, 'Lombardia').geometry, 0.35],
+        // Bologna — три виставкові стенди, тож регіон теж підсвічуємо.
+        ['emiliaromagna', 'Emilia-Romagna', find(regionsIT, itName, 'Emilia-Romagna').geometry, 0.35],
+        ['lazio', 'Lazio', find(regionsIT, itName, 'Lazio').geometry, 0.35],
+      ],
+    ),
+    east: sheet(
+      E,
+      [
+        ['poland', byIso('PL').geometry, 0.6],
+        ['ukraine', dissolve(regionsUA.features), 0.6],
+      ],
+      [
+        ['mazowieckie', 'Mazowieckie', find(regionsPL, plName, 'mazowieckie').geometry, 0.35],
+        ['kyivska', 'Kyiv Oblast', find(regionsUA, uaName, 'Kiev Oblast').geometry, 0.35],
+      ],
+    ),
   };
 
-  const nameEast = (p) => p['name:en'] ?? p.nazwa ?? p.name;
-  for (const collection of [regionsPL, regionsUA]) {
-    for (const f of collection.features) {
-      const n = norm(nameEast(f.properties));
-      const hit = HIGHLIGHT_EAST.find((h) => h.match.includes(n));
-      if (!hit) continue;
-      east.regions[hit.key] = { label: hit.label, d: toPath(f.geometry, 0.35, EAST) };
-      console.log(`  регіон   ${hit.label}`);
-    }
+  for (const [id, s] of Object.entries(out)) {
+    const size = JSON.stringify(s).length;
+    console.log(`  ${id.padEnd(8)} ${(size / 1024).toFixed(1)} KB`);
   }
-  const missingEast = HIGHLIGHT_EAST.filter((h) => !east.regions[h.key]);
-  if (missingEast.length) console.warn('  ! не знайшов регіони:', missingEast.map((m) => m.label).join(', '));
 
-  await fs.writeFile(OUT_EAST, JSON.stringify(east, null, 1) + '\n');
-  const kbE = ((await fs.stat(OUT_EAST)).size / 1024).toFixed(0);
-  console.log(`  ${path.relative(ROOT, OUT_EAST)} — ${kbE} KB, viewBox ${east.viewBox}`);
+  await fs.writeFile(OUT, JSON.stringify(out, null, 1) + '\n');
+  const kb = ((await fs.stat(OUT)).size / 1024).toFixed(0);
+  console.log(`\n  ${path.relative(ROOT, OUT)} — ${kb} KB`);
 }
 
 main().catch((e) => {

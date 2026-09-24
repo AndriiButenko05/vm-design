@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { MAP, MAP_EAST, buildMarkers, QUICK_VIEWS, CLUSTERS, project } from '../../lib/map';
+import { buildSheets, cityId } from '../../lib/map';
 import { groupByCity, slugOf, type Project } from '../../lib/projects';
 import { localePath, t, type Locale } from '../../lib/i18n';
 
@@ -14,15 +14,22 @@ interface Props {
 const { locale, projects, id } = Astro.props;
 
 const groups = groupByCity(projects);
-const { markers, eastMarkers, clusters, beyond } = buildMarkers(groups);
-const splitAt = CLUSTERS[0].splitAt;
-
-const quick = QUICK_VIEWS.map((v) => ({ ...v, ...project(v.lon, v.lat) }));
+const { sheets, beyond } = buildSheets(groups, t(locale, 'map.riviera'));
 
 const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
+const countLabel = (n: number) => `${n} ${t(locale, n === 1 ? 'map.project' : 'map.projects')}`;
+const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.projects.length, 0);
 ---
 
-<section class="geo on-ink-deep section" id={id} data-map data-map-width={MAP.width} data-map-height={MAP.height} data-split-at={splitAt}>
+{/*
+  Кілька карт-аркушів замість однієї з зумом: Рив'єра, Франція, Італія,
+  Польща й Україна. Вкладки під картою перемикають аркуш, натиск на
+  місто не веде на проєкт, а показує праворуч проєкти цього міста.
+
+  Без JS видно перший аркуш і перелік його міст — решта аркушів лишається
+  прихованою, але всі проєкти й так доступні з розділу Projects.
+*/}
+<section class="geo on-ink-deep section" id={id} data-map>
   <div class="container">
     <header class="geo__head" data-reveal>
       <p class="t-eyebrow">{t(locale, 'map.eyebrow')}</p>
@@ -30,200 +37,88 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     </header>
 
     <div class="geo__body">
-      <div class="geo__figure" data-reveal style={`--map-ratio:${MAP.width / MAP.height}`}>
-        <svg
-          data-map-sheet="main"
-          viewBox={MAP.viewBox}
-          role="img"
-          aria-label={`Map of France and Italy showing ${projects.length} completed projects in ${groups.length} cities`}
-          tabindex="0"
-        >
-          <g data-map-viewport>
-            {/* Підсвічені адміністративні регіони, де є реалізовані проєкти. */}
-            <g class="geo__regions">
-              {
-                Object.entries(MAP.regions).map(([key, region]) => (
-                  <path d={region.d} data-region={key}>
-                    <title>{region.label}</title>
-                  </path>
-                ))
-              }
-            </g>
-
-            <g class="geo__outline">
-              {Object.entries(MAP.countries).map(([key, d]) => <path d={d} data-country={key} />)}
-            </g>
-
-            <g class="geo__markers">
-              {
-                clusters.map((c) => (
-                  <g
-                    class="marker marker--cluster"
-                    data-marker={c.id}
-                    transform={`translate(${c.x} ${c.y})`}
-                  >
-                    <g class="marker__scale" data-marker-scale>
-                      <circle class="marker__hit" r="18" />
-                      <circle class="marker__halo" r="18" />
-                      <circle class="marker__dot" r="7" />
-                      <text class="marker__count" y="4">{c.count}</text>
-                      <text class="marker__label" x="26" y="5">{c.label}</text>
-                    </g>
-                  </g>
-                ))
-              }
-
-              {
-                markers.map((m) => {
-                  const group = groups.find((g) => g.city === m.label)!;
-                  const single = group.projects.length === 1 ? group.projects[0] : null;
-                  const Tag = single ? 'a' : 'g';
-                  return (
-                    <g
-                      class:list={['marker', m.clustered && 'marker--in-cluster']}
-                      data-marker={m.id}
-                      data-in-cluster={m.clustered}
-                      transform={`translate(${m.x} ${m.y})`}
-                    >
-                      <Tag
-                        class="marker__scale"
-                        data-marker-scale
-                        href={single ? localePath(locale, `/projects/${slugOf(single)}`) : undefined}
-                        tabindex={single ? undefined : '0'}
-                        role={single ? undefined : 'button'}
-                        aria-label={`${m.label} — ${m.count} ${t(locale, m.count === 1 ? 'map.project' : 'map.projects')}`}
-                      >
-                        <circle class="marker__hit" r="16" />
-                        <circle class="marker__halo" r="16" />
-                        <circle class="marker__dot" r="6" />
-                        <text class="marker__label" x="22" y="5">{m.label}</text>
-                      </Tag>
-                    </g>
-                  );
-                })
-              }
-            </g>
-          </g>
-        </svg>
-
-        {/*
-          Другий аркуш — Польща й Україна. Статичний: два міста на всю
-          карту, наближати тут нічого. Ставиться на місце основного
-          кнопкою під картою.
-        */}
+      <div class="geo__figure" data-reveal style={`--map-ratio:${sheets[0].geometry.width / sheets[0].geometry.height}`}>
         {
-          eastMarkers.length > 0 && (
+          sheets.map((sheet, i) => (
             <svg
-              data-map-sheet="east"
-              viewBox={MAP_EAST.viewBox}
+              data-map-sheet={sheet.id}
+              viewBox={sheet.geometry.viewBox}
               role="img"
-              aria-label={`Map of Poland and Ukraine showing projects in ${eastMarkers.map((m) => m.label).join(' and ')}`}
-              hidden
+              aria-label={`${t(locale, sheet.labelKey)} — ${sheet.groups.map((g) => g.city).join(', ')}`}
+              hidden={i > 0}
             >
               <g class="geo__regions">
-                {Object.entries(MAP_EAST.regions).map(([key, region]) => (
-                  <path d={region.d} data-region={key}>
-                    <title>{region.label}</title>
+                {sheet.geometry.regions.map((r) => (
+                  <path d={r.d} data-region={r.key}>
+                    <title>{r.label}</title>
                   </path>
                 ))}
               </g>
               <g class="geo__outline">
-                {Object.entries(MAP_EAST.countries).map(([key, d]) => <path d={d} data-country={key} />)}
+                {sheet.geometry.outline.map((o) => (
+                  <path d={o.d} data-country={o.key} />
+                ))}
               </g>
               <g class="geo__markers">
-                {eastMarkers.map((m) => {
-                  const group = groups.find((g) => g.city === m.label)!;
-                  const single = group.projects.length === 1 ? group.projects[0] : null;
-                  const Tag = single ? 'a' : 'g';
-                  return (
-                    <g class="marker" data-marker={m.id} transform={`translate(${m.x} ${m.y})`}>
-                      <Tag
-                        class="marker__scale"
-                        href={single ? localePath(locale, `/projects/${slugOf(single)}`) : undefined}
-                        tabindex={single ? undefined : '0'}
-                        role={single ? undefined : 'button'}
-                        aria-label={`${m.label} — ${m.count} ${t(locale, m.count === 1 ? 'map.project' : 'map.projects')}`}
-                      >
-                        <circle class="marker__hit" r="16" />
-                        <circle class="marker__halo" r="16" />
-                        <circle class="marker__dot" r="6" />
-                        <text class="marker__label" x="22" y="5">{m.label}</text>
-                      </Tag>
-                    </g>
-                  );
-                })}
+                {sheet.markers.map((m) => (
+                  <g
+                    class:list={['marker', `marker--${m.side}`, m.goto && 'marker--goto']}
+                    data-marker={m.id}
+                    data-goto={m.goto}
+                    transform={`translate(${m.x} ${m.y})`}
+                    role="button"
+                    tabindex="0"
+                    aria-label={`${m.label} — ${countLabel(m.count)}`}
+                  >
+                    <circle class="marker__hit" r="22" />
+                    <circle class="marker__halo" r="20" />
+                    <circle class="marker__dot" r={m.goto ? 11 : 7} />
+                    {m.goto && (
+                      <text class="marker__count" y="4.5">
+                        {m.count}
+                      </text>
+                    )}
+                    <text
+                      class="marker__label"
+                      x={m.side === 'right' ? 18 : m.side === 'left' ? -18 : 0}
+                      y={m.side === 'top' ? -18 : 6}
+                    >
+                      {m.label}
+                    </text>
+                  </g>
+                ))}
               </g>
             </svg>
-          )
+          ))
         }
 
-        <div class="geo__controls">
+        <div class="geo__controls" role="tablist" aria-label={t(locale, 'map.eyebrow')}>
           {
-            quick.map((v) => (
-              <button
-                type="button"
-                data-map-view
-                data-scale={v.scale}
-                data-x={v.x}
-                data-y={v.y}
-                aria-current={v.id === 'reset' ? 'true' : undefined}
-              >
-                {t(locale, v.labelKey)}
+            sheets.map((sheet, i) => (
+              <button type="button" role="tab" data-map-tab={sheet.id} aria-selected={i === 0 ? 'true' : 'false'}>
+                {t(locale, sheet.labelKey)}
               </button>
             ))
           }
-          {
-            eastMarkers.length > 0 && (
-              <button type="button" data-map-sheet-btn="east">
-                {t(locale, 'map.east')}
-              </button>
-            )
-          }
-          <span class="geo__zoom">
-            <button type="button" data-map-zoom="-1" aria-label="Zoom out">−</button>
-            <button type="button" data-map-zoom="1" aria-label="Zoom in">+</button>
-          </span>
         </div>
-
-        <p class="geo__hint t-meta">{t(locale, 'map.hint')}</p>
       </div>
 
-      <aside class="geo__aside">
-        {/*
-          Тільки міста з маркерами. Панель відкривається натисканням на
-          маркер, тож для міст поза картою вона лишалася б прихованою
-          назавжди — мертва розмітка, яка ще й тягне за собою обкладинки
-          проєктів. Гонконг висів так від початку, Kassel додався разом
-          із прибиранням Німеччини з карти.
-        */}
+      <aside class="geo__aside" aria-live="polite">
+        {/* Перелік міст аркуша — видно, доки не вибрано місто. */}
         {
-          groups
-            .filter((g) => !beyond.includes(g))
-            .map((g) => (
-            <div class="city" data-city-panel={g.city.toLowerCase().replace(/\s+/g, '-')} hidden>
+          sheets.map((sheet, i) => (
+            <div class="geo__list" data-sheet-panel={sheet.id} hidden={i > 0}>
               <p class="t-eyebrow">
-                {g.city} · {g.country}
+                {t(locale, sheet.labelKey)} · {countLabel(total(sheet))}
               </p>
               <ul>
-                {g.projects.map((p) => (
+                {sheet.groups.map((g) => (
                   <li>
-                    <a class="city__link" href={localePath(locale, `/projects/${slugOf(p)}`)}>
-                      <span class="city__plate plate">
-                        <Picture
-                          formats={['avif']}
-                          fallbackFormat="webp"
-                          src={p.data.cover}
-                          alt=""
-                          widths={[160, 320]}
-                          sizes="80px"
-                          loading="lazy"
-                        />
-                      </span>
-                      <span>
-                        <span class="city__title">{p.data.title}</span>
-                        <span class="t-meta">{typeLabel(p)}</span>
-                      </span>
-                    </a>
+                    <button type="button" class="geo__city-btn" data-city={cityId(g.city)}>
+                      <span class="geo__city">{g.city}</span>
+                      <span class="geo__sep" aria-hidden="true" />
+                      <span class="t-meta">{countLabel(g.projects.length)}</span>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -231,34 +126,52 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
           ))
         }
 
-        {/* Джерело правди для скрінрідерів і для випадку без JS. */}
-        <div class="geo__list">
-          <p class="t-eyebrow">{t(locale, 'map.list')}</p>
-          <ul>
-            {
-              groups
-                .filter((g) => !beyond.includes(g))
-                .map((g) => (
-                  <li>
-                    <span class="geo__city">{g.city}</span>
-                    <span class="geo__sep" aria-hidden="true"></span>
-                    <span class="t-meta">
-                      {g.projects.length} {t(locale, g.projects.length === 1 ? 'map.project' : 'map.projects')}
-                    </span>
-                  </li>
-                ))
-            }
-          </ul>
+        {/* Проєкти міста — після натиску на точку чи на назву в переліку. */}
+        {
+          sheets.flatMap((sheet) =>
+            sheet.groups.map((g) => (
+              <div class="city" data-city-panel={cityId(g.city)} data-sheet={sheet.id} hidden>
+                <button type="button" class="city__back t-meta" data-city-back>
+                  ← {t(locale, sheet.labelKey)}
+                </button>
+                <p class="t-eyebrow">
+                  {g.city} · {g.country}
+                </p>
+                <ul>
+                  {g.projects.map((p) => (
+                    <li>
+                      <a class="city__link" href={localePath(locale, `/projects/${slugOf(p)}`)}>
+                        <span class="city__plate plate">
+                          <Picture
+                            formats={['avif']}
+                            fallbackFormat="webp"
+                            src={p.data.cover}
+                            alt=""
+                            widths={[160, 320]}
+                            sizes="80px"
+                            loading="lazy"
+                          />
+                        </span>
+                        <span>
+                          <span class="city__title">{p.data.title}</span>
+                          <span class="t-meta">{typeLabel(p)}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )),
+          )
+        }
 
-          {/* Поза європейським кадром — показуємо текстом, а не тягнемо світову карту. */}
-          {
-            beyond.length > 0 && (
-              <p class="geo__beyond t-meta">
-                {t(locale, 'map.beyond')}: {beyond.map((g) => g.city).join(' · ')}
-              </p>
-            )
-          }
-        </div>
+        {
+          beyond.length > 0 && (
+            <p class="geo__beyond t-meta">
+              {t(locale, 'map.beyond')}: {beyond.map((g) => g.city).join(' · ')}
+            </p>
+          )
+        }
       </aside>
     </div>
   </div>
@@ -279,32 +192,20 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
 
   .geo__body {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-columns: minmax(0, 1fr) 320px;
     gap: var(--space-xl);
     align-items: start;
   }
 
   /*
-    Висота карти задається явно й дорівнює приблизно висоті правої колонки.
-
-    Кадр карти майже квадратний (1000 × 1052), тож при width: 100% і
-    height: auto вона розтягувалася на всю ширину колонки — понад 1100 px
-    заввишки, тоді як перелік міст поруч закінчувався на 560. Тепер ведуча
-    величина — висота, а ширина рахується з пропорції кадру, тому порожніх
-    полів обабіч не лишається.
-  */
-  /*
-    Ширину блока задає сама карта, а не колонка.
-
-    Так під картою опиняються рівно її кнопки, а не розтягнуті на всю
-    ширину колонки, і весь блок стає по центру. Інакше карта тулилася
-    ліворуч, а керування розповзалося на 1200 px поруч із нею.
+    Ширину блока задає сама карта: під нею рівно її вкладки, і весь блок
+    стоїть по центру колонки. Висота всіх аркушів однакова (так їх
+    зібрано), тож перемикання нічого не зсуває.
   */
   .geo__figure {
-    position: relative;
     --map-h: clamp(340px, 54vh, 640px);
     width: 100%;
-    max-width: calc(var(--map-h) * var(--map-ratio, 0.95));
+    max-width: calc(var(--map-h) * var(--map-ratio, 1.13));
     margin-inline: auto;
   }
 
@@ -312,27 +213,11 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     display: block;
     width: 100%;
     height: var(--map-h);
-    touch-action: none;
-    cursor: grab;
   }
 
   /* У SVG атрибут hidden сам не ховає — а display: block вище й поготів. */
   .geo__figure svg[hidden] {
     display: none;
-  }
-
-  /* Другий аркуш статичний: курсор-«рука» й зум там нічого не роблять. */
-  .geo__figure svg[data-map-sheet='east'] {
-    cursor: default;
-  }
-
-  [data-sheet='east'] .geo__zoom,
-  [data-sheet='east'] .geo__hint {
-    visibility: hidden;
-  }
-
-  .geo__figure svg.is-grabbing {
-    cursor: grabbing;
   }
 
   .geo__regions path {
@@ -341,45 +226,34 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     stroke: var(--accent-line);
     stroke-opacity: 0.4;
     stroke-width: 0.5;
-    transition: fill-opacity var(--dur) var(--ease);
+  }
+
+  /*
+    На Рив'єрі суша займає пів кадру й без заливки не відрізнялася б від
+    моря: лише берегова лінія. Легка заливка всієї суші, без виділення
+    регіонів.
+  */
+  [data-map-sheet='riviera'] .geo__outline path {
+    fill: var(--accent-line);
+    fill-opacity: 0.1;
   }
 
   .geo__outline path {
     fill: none;
     stroke: var(--muted-inv);
-    stroke-opacity: 0.45;
+    stroke-opacity: 0.5;
     stroke-width: 1.1;
     vector-effect: non-scaling-stroke;
   }
 
-  /* ─── Маркери ─────────────────────────────────────────── */
+  /* ─── Точки ───────────────────────────────────────────── */
 
-  /*
-    Контрмасштаб маркера робить скрипт атрибутом transform, а не CSS.
-
-    Раніше тут стояло transform: scale(var(--marker-scale)) з
-    transform-box: fill-box і transform-origin: center — і масштабування
-    йшло навколо центру рамки групи. А в групі, крім кружечків у нулі
-    координат, лежить ще й підпис міста зі зсувом x=22, тож центр рамки
-    опинявся далеко праворуч від самої точки. При наближенні маркер
-    відʼїжджав від свого міста — і то по-різному, бо назви різної
-    довжини: «Saint-Paul-de-Vence» тягнула сильніше за «Nice».
-
-    Атрибут transform у SVG рахується від власного початку координат
-    елемента, тобто рівно від точки міста. Ніяких reference box.
-  */
-  .marker__scale {
+  .marker {
     cursor: pointer;
+    outline: none;
   }
 
-  /*
-    Ціль дотику: прозоре коло, яке ловить палець.
-
-    Прозора заливка — не none, тож коло лишається «пофарбованим» і
-    приймає події, хоча його не видно. Окремий елемент потрібен тому,
-    що ореол при активному стані проявляється на 22% — розтягнути до
-    розміру пальця можна саме невидиме коло, а не його.
-  */
+  /* Прозоре коло ловить палець: сама точка замала для дотику. */
   .marker__hit {
     fill: #0000;
     pointer-events: all;
@@ -395,95 +269,79 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     fill: var(--accent-inv);
     stroke: var(--ink-deep);
     stroke-width: 1.5;
-    transition: r var(--dur) var(--ease);
   }
 
   .marker__count {
     fill: var(--ink-deep);
     font-family: var(--font-text);
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 600;
     text-anchor: middle;
+    pointer-events: none;
   }
 
+  /* Назва міста видна завжди — карта читається без наведення. */
   .marker__label {
     fill: var(--bone);
     font-family: var(--font-text);
-    font-size: 13px;
+    font-size: 19px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    opacity: 0;
+    opacity: 0.75;
     transition: opacity var(--dur) var(--ease);
-    pointer-events: none;
+  }
+
+  .marker--left .marker__label {
+    text-anchor: end;
+  }
+
+  .marker--top .marker__label {
+    text-anchor: middle;
   }
 
   .marker:hover .marker__halo,
-  .marker.is-active .marker__halo,
-  .marker__scale:focus-visible .marker__halo {
-    fill-opacity: 0.22;
+  .marker:focus-visible .marker__halo,
+  .marker.is-active .marker__halo {
+    fill-opacity: 0.25;
   }
 
   .marker:hover .marker__label,
-  .marker.is-active .marker__label,
-  .marker__scale:focus-visible .marker__label {
+  .marker:focus-visible .marker__label,
+  .marker.is-active .marker__label {
     opacity: 1;
   }
 
-  .marker--cluster .marker__dot {
-    r: 11;
-  }
-
   /*
-    На дотику маркер більший — і видимо, і на дотик.
-
-    Карту вписано у viewBox завширшки 1000 одиниць, а на телефоні вона
-    займає близько 350 px: одна одиниця — третина пікселя. Крапка r=6
-    виходила завширшки чотири пікселі, а ціль — одинадцять, при
-    рекомендованих сорока чотирьох. Тому тут крапка вдвічі більша, а
-    невидиме коло під нею — 44 px упоперек, як радить рекомендація
-    щодо цілей дотику.
-
-    Розміри лишаються в одиницях viewBox: контрмасштаб маркера тримає
-    їх сталими на екрані за будь-якого наближення.
+    На вузькому екрані карта займає ~350 px на 1000 одиниць viewBox:
+    підпис у 19 одиниць вийшов би в шість пікселів. Тут усе вдвічі більше.
   */
-  @media (pointer: coarse) {
-    .marker__hit {
-      r: 62;
+  @media (max-width: 700px) {
+    .marker__label {
+      font-size: 34px;
     }
 
     .marker__dot {
-      r: 10;
+      r: 11;
     }
 
-    .marker__halo {
-      r: 26;
-    }
-
-    .marker--cluster .marker__dot {
-      r: 15;
+    .marker--goto .marker__dot {
+      r: 16;
     }
 
     .marker__count {
-      font-size: 15px;
+      font-size: 16px;
     }
 
-    .marker__label {
-      font-size: 26px;
+    .marker__hit {
+      r: 50;
+    }
+
+    .marker__halo {
+      r: 28;
     }
   }
 
-  /* Кластер і його міста міняються місцями за масштабом. */
-  [data-split='false'] .marker--in-cluster,
-  [data-split='true'] .marker--cluster {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  [data-split] .marker {
-    transition: opacity var(--dur) var(--ease);
-  }
-
-  /* ─── Керування ───────────────────────────────────────── */
+  /* ─── Вкладки ─────────────────────────────────────────── */
 
   .geo__controls {
     display: flex;
@@ -508,35 +366,12 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
   }
 
   .geo__controls button:hover,
-  .geo__controls button[aria-current='true'] {
+  .geo__controls button[aria-selected='true'] {
     border-color: var(--accent-inv);
     color: var(--accent-inv);
   }
 
-  .geo__zoom {
-    display: flex;
-    gap: 0.375rem;
-    margin-inline-start: auto;
-  }
-
-  .geo__zoom button {
-    width: 2.25rem;
-    padding-inline: 0;
-    font-size: 1rem;
-  }
-
-  .geo__hint {
-    margin-top: var(--space-s);
-  }
-
-  /* Підказка про перетягування безглузда без вказівника. */
-  @media (hover: none) {
-    .geo__hint {
-      display: none;
-    }
-  }
-
-  /* ─── Панель міста ────────────────────────────────────── */
+  /* ─── Панель праворуч ─────────────────────────────────── */
 
   .geo__aside {
     position: sticky;
@@ -549,6 +384,47 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     list-style: none;
     margin: var(--space-s) 0 0;
     padding: 0;
+  }
+
+  .geo__list li + li {
+    margin-top: 0.125rem;
+  }
+
+  .geo__city-btn {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.375rem 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .geo__city-btn:hover .geo__city,
+  .geo__city-btn:focus-visible .geo__city {
+    color: var(--accent-inv);
+  }
+
+  .geo__sep {
+    flex: 1;
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .city__back {
+    margin-bottom: var(--space-s);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted-inv);
+    cursor: pointer;
+  }
+
+  .city__back:hover {
+    color: var(--accent-inv);
   }
 
   .city li + li {
@@ -572,35 +448,12 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     font-size: 1.125rem;
   }
 
-  .geo__list {
-    margin-top: var(--space-l);
-    padding-top: var(--space-l);
-    border-top: 1px solid var(--rule);
-  }
-
-  .geo__list li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    padding-block: 0.375rem;
-  }
-
   .geo__beyond {
-    margin-top: var(--space-m);
+    margin-top: var(--space-l);
     padding-top: var(--space-s);
     border-top: 1px solid var(--rule);
   }
 
-  .geo__sep {
-    flex: 1;
-    border-bottom: 1px dotted var(--rule);
-  }
-
-  /*
-    На широкому екрані карта більша: там вона ділить рядок із переліком
-    міст, і місця під неї вистачає. Телефонне значення лишається як було —
-    у колонці карта й так на всю доступну ширину.
-  */
   @media (min-width: 901px) {
     .geo__figure {
       --map-h: clamp(420px, 62vh, 760px);

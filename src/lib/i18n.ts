@@ -138,6 +138,11 @@ const ui: Record<Locale, Dict> = {
       свою послугу, і загальне посилання поруч із п'ятьма конкретними
       нічого не додавало. Сам розділ доступний із головного меню.
     */
+    // Сторінка /services — власний заголовок і лід від замовниці. Блок на
+    // головній лишається з services.title / services.lead.
+    'services.page.title': 'From first idea to final detail.',
+    'services.page.lead':
+      'Whether you need a single consultation or support throughout the entire project, our services are tailored to your space, your priorities and the level of involvement you need.',
     'services.more': 'Learn more',
     'services.includes': 'What’s included',
 
@@ -195,12 +200,10 @@ const ui: Record<Locale, Dict> = {
 
     'map.eyebrow': 'Geography',
     'map.title': 'Where the work is',
-    'map.hint': 'Drag to move, scroll to zoom',
-    'map.reset': 'Reset view',
     'map.riviera': 'French Riviera',
+    'map.france': 'France',
     'map.italy': 'Italy',
     'map.east': 'Poland & Ukraine',
-    'map.list': 'All locations',
     'map.projects': 'projects',
     'map.project': 'project',
     /*
@@ -244,10 +247,10 @@ const ui: Record<Locale, Dict> = {
       'Private houses, villas and apartments — from new-build interiors to complete renovations. Each project is developed around the client’s lifestyle, the architecture of the property and the character of its location.',
     'type.commercial': 'Commercial & Beauty Spaces',
     'type.commercial.text':
-      'Beauty spaces, retail interiors, offices and showrooms designed around the client journey, operational needs and the identity of the brand.',
+      'Beauty salons and spaces designed around the people who work in them and the clients they welcome. Thoughtful planning supports everyday routines, while each interior expresses the identity of its brand.',
     'type.exhibition': 'Exhibition Design',
     'type.exhibition.text':
-      'Exhibition stands and temporary spaces that translate a brand into a clear, memorable spatial experience.',
+      'Exhibition stands designed to present a brand with clarity and impact. Each project brings together the visual concept, the needs of the venue and the practical details of installation.',
   },
 
   // Перекладів ще немає. Порожній словник — не помилка: t() падає

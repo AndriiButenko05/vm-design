@@ -67,22 +67,14 @@ export async function getProjects(
 
   return [...bySlug.values()]
     .filter((p) => includeDrafts || !p.data.draft)
-    .sort((a, b) => stageOf(a) - stageOf(b) || a.data.order - b.data.order);
+    .sort((a, b) => a.data.order - b.data.order);
 }
 
-/**
- * Спершу реалізовані проєкти з фото, далі ті, що є лише в 3D, у кінці —
- * лише креслення. Так попросила замовниця: у стрічці обкладинка-креслення
- * поруч із фотографіями виглядала недобудовою.
- *
- * Рахується з вмісту, а не задається руками: щойно проєкт отримає фото,
- * він сам підніметься вище. Усередині групи порядок — за order.
- */
-function stageOf(p: Project): number {
-  if (p.data.gallery.length > 0) return 0;
-  if (p.data.renders.length > 0) return 1;
-  return 2;
-}
+/*
+  Порядок — рівно той, що задала замовниця (поле order). Раніше проєкти
+  лише з кресленнями автоматично відсувалися в кінець; вона надіслала
+  власну послідовність, де вони чергуються з фото, — її й тримаємо.
+*/
 
 export async function getFeatured(locale: Locale = DEFAULT_LOCALE): Promise<Project[]> {
   return (await getProjects(locale)).filter((p) => p.data.featured);

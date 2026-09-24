@@ -1,45 +1,49 @@
 ---
-title: "Wow Hair"
+title: "Wow Hair Salon in Nice"
 city: "Nice"
 country: "France"
 type: commercial
 scope:
-  - "Concept design"
-  - "Space planning"
-  - "Custom furniture"
+  - "Interior design"
+  - "Drawings"
+  - "Salon furniture sourcing in Italy"
+  - "Design supervision"
 materials:
-  - "Oak flooring"
-  - "Oval backlit mirror"
-  - "Textured art panels"
-  - "Dusty rose upholstery"
-summary: "A small hair salon built on three things: oak, oval light and a single warm pink."
+  - "Light finishes"
+  - "Pink styling chairs"
+  - "Illuminated mirrors"
+  - "Mosaic artwork"
+summary: "A bright hair extension salon in central Nice with pink styling chairs, illuminated mirrors and a shimmering mosaic."
+heroCaption: "Hair extension salon · Interior design"
+card: "Hair extension salon · Central Nice, France · 2026"
+year: 2026
 cover: ../../../assets/projects/wow-hair-nice/000-img-2638.jpg
-coverAlt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+coverAlt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: false
-order: 8
-todo: "Потрібні рік, площа, авторський текст."
+order: 13
+todo: "Тексти й назва — від Марини. Потрібна площа."
 gallery:
   - src: ../../../assets/projects/wow-hair-nice/003-img-2642.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: full
   - src: ../../../assets/projects/wow-hair-nice/001-img-2639.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
   - src: ../../../assets/projects/wow-hair-nice/006-img-2653.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
   - src: ../../../assets/projects/wow-hair-nice/004-img-2643.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
   - src: ../../../assets/projects/wow-hair-nice/002-img-2641.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: detail
   - src: ../../../assets/projects/wow-hair-nice/005-img-2645.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
   - src: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
-    alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
 beforeAfter:
   pairs:
@@ -57,17 +61,17 @@ beforeAfter:
       caption: "Works in progress towards the rear"
   images:
     - src: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg
-      alt: "Wow Hair — the empty unit before the works"
+      alt: "Wow Hair Salon in Nice — the empty unit before the works"
     - src: ../../../assets/projects/wow-hair-nice/011-img-8329.jpg
-      alt: "Wow Hair — the empty unit before the works"
+      alt: "Wow Hair Salon in Nice — the empty unit before the works"
     - src: ../../../assets/projects/wow-hair-nice/012-img-8330.jpg
-      alt: "Wow Hair — the empty unit before the works"
+      alt: "Wow Hair Salon in Nice — the empty unit before the works"
     - src: ../../../assets/projects/wow-hair-nice/013-img-8762.jpg
-      alt: "Wow Hair — the empty unit before the works"
+      alt: "Wow Hair Salon in Nice — the empty unit before the works"
 ---
 
-A compact street-level salon, worked out at the scale of a single wall.
+Wow Hair is a hair extension salon in central Nice, designed as a bright and welcoming space with a touch of glamour.
 
-Oval backlit mirrors are hung free of any joinery, which keeps the wall reading as wall. The floor is oak laid the long way to stretch the room. Upholstery is one warm dusty rose, repeated exactly, with no second accent anywhere.
+High ceilings and light finishes create a sense of openness, while pink styling chairs and large illuminated mirrors bring personality to the interior. A shimmering mosaic artwork adds a distinctive focal point.
 
-Textured monochrome panels break up the remaining wall without adding another colour.
+The project was developed by Maryna Vashchenko in close collaboration with the client. Together, they visited a factory in Italy to select professional salon furniture. Maryna was responsible for the interior design and drawings, and personally supervised the project throughout its implementation.

@@ -1,49 +1,52 @@
 ---
-title: "Larimar"
+title: "Larimar Beauty Salon"
 city: "Nice"
 country: "France"
 type: commercial
 area: 66.52
 scope:
-  - "Concept design"
   - "Space planning"
-  - "Bespoke relief panel"
-  - "Custom furniture"
+  - "Interior design"
+  - "Technical drawings"
+  - "Furniture & material selection"
+  - "Design supervision"
 materials:
-  - "Sculpted plaster relief"
-  - "Blue-green quartzite"
-  - "Bouclé"
-  - "Arched backlit mirror"
-summary: "A sculpted relief runs the length of the wall and gives the salon its face."
+  - "Soft neutral palette"
+  - "Backlit arched mirrors"
+  - "Portrait mural"
+summary: "A beauty salon in central Nice, replanned around styling, manicure and pedicure areas and two private treatment rooms."
+heroCaption: "Beauty salon · Interior design & supervision"
+card: "Beauty salon · Central Nice, France · 2026"
+year: 2026
 cover: ../../../assets/projects/larimar-nice/007-img-2672.jpg
-coverAlt: "Larimar — the sculpted plaster face behind the styling stations"
+coverAlt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
 hero:
   - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
-order: 7
+order: 11
 drawingsPreview: ["003", "004", "002"]
-todo: "Потрібні рік і авторський текст. Площа 66.52 m² — з legenda креслень (16.02.2026; до робіт 69.1). Уточнити авторство барельєфа."
+todo: "Тексти й назва — від Марини. Площа 66.52 m² — з legenda креслень (16.02.2026; до робіт 69.1)."
 gallery:
   - src: ../../../assets/projects/larimar-nice/013-img-2686.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: full
   - src: ../../../assets/projects/larimar-nice/010-img-2676.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: half
   - src: ../../../assets/projects/larimar-nice/011-img-2677.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: half
   - src: ../../../assets/projects/larimar-nice/012-img-2680.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: half
   - src: ../../../assets/projects/larimar-nice/009-img-2674.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: detail
     material: "Sculpted plaster"
   - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
-    alt: "Larimar — the sculpted plaster face behind the styling stations"
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: half
 beforeAfter:
   pairs:
@@ -61,17 +64,19 @@ beforeAfter:
       caption: "The pillar wall and the relief mural"
   images:
     - src: ../../../assets/projects/larimar-nice/000-img-0328.jpg
-      alt: "Larimar — the unit during fit-out, joinery going in"
+      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
     - src: ../../../assets/projects/larimar-nice/002-img-0330.jpg
-      alt: "Larimar — the unit during fit-out, joinery going in"
+      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
     - src: ../../../assets/projects/larimar-nice/003-img-0331.jpg
-      alt: "Larimar — the unit during fit-out, joinery going in"
+      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
     - src: ../../../assets/projects/larimar-nice/004-img-0336.jpg
-      alt: "Larimar — the unit during fit-out, joinery going in"
+      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
 ---
 
-A hand-sculpted plaster relief runs behind the styling stations: a face, several metres across, with hair that becomes the texture of the wall.
+Larimar Beauty Salon opened in a renovated space in central Nice.
 
-Everything else is set up to let it read. Arched backlit mirrors echo the curve, the seating is bouclé in the same sand tone as the plaster, and the stations are dark and low so the eye stays up.
+The existing premises were replanned to accommodate hair styling and manicure stations, a separate pedicure area and two private treatment rooms. Each area has its own purpose, while remaining part of a cohesive space designed around the professionals who work there.
 
-In the treatment room a slab of blue-green quartzite provides the one shift in colour.
+A soft neutral palette gives the salon a calm atmosphere. Backlit arched mirrors define the styling area, while the large portrait mural lends the interior its distinctive character.
+
+Maryna Vashchenko led the project from planning to completion. She developed the interior design and technical drawings, selected furnishings and materials, and provided design supervision throughout the renovation.
