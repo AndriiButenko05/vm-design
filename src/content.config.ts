@@ -13,7 +13,7 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       city: z.string(),
-      country: z.enum(['France', 'Italy', 'Monaco', 'Germany', 'Hong Kong']),
+      country: z.enum(['France', 'Italy', 'Monaco', 'Germany', 'Ukraine', 'Hong Kong']),
 
       /**
        * residential  приватне житло
@@ -61,25 +61,48 @@ const projects = defineCollection({
              * де жодного матеріалу не видно, і в секції вони були зайві.
              */
             material: z.string().optional(),
+
+            /**
+             * Підпис під кадром у галереї — назва приміщення: «The kitchen».
+             * Без нього береться material, а без обох підпису немає.
+             */
+            caption: z.string().optional(),
           }),
         )
         .default([]),
 
       /**
+       * 3D-візуалізації проєкту. Показуються окремим блоком на сторінці
+       * проєкту, а не окремим розділом сайту — так попросила замовниця.
+       * Якщо в матеріалах проєкту 3D немає, поле просто порожнє.
+       * Проєкт, який не дійшов до реалізації (Варшава), може складатися
+       * лише з 3D: тоді gallery порожня.
+       */
+      renders: z
+        .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
+        .default([]),
+
+      /** Рядок під головним кадром: «Private villa · Interior architecture & design». */
+      heroCaption: z.string().optional(),
+
+      /**
        * Кадри стану до робіт.
        *
-       * mode вирішує подачу:
-       *   slider — повзунок-витирач; вимагає, щоб «до» і «після»
-       *            були зняті з ОДНІЄЇ точки, інакше картинка стрибає
-       *   pair   — два кадри поруч; чесно працює за будь-якого кадрування
+       * pairs — порівняння повзунком, гортаються стрілками. Ракурс «до» і
+       *         «після» не мусить збігатися: замовниця хоче показати
+       *         прогрес, а не точну накладку. Кадр «після» беремо того ж
+       *         приміщення, найближчий за точкою зйомки.
+       * images — усі кадри «до». Ті, що не пішли в пари, показуються в
+       *         блоці «Процес» під галереєю.
        *
-       * pairs заповнюється лише для mode: 'slider'.
+       * mode лишився зі старої подачі (slider / pair) і більше ні на що
+       * не впливає. Поле не прибираємо, щоб старі файли проходили схему.
        */
       beforeAfter: z
         .object({
-          mode: z.enum(['slider', 'pair']).default('pair'),
+          mode: z.enum(['slider', 'pair']).optional(),
           images: z
-            .array(z.object({ src: image(), alt: z.string() }))
+            .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
             .default([]),
           pairs: z
             .array(

@@ -59,7 +59,22 @@ gallery:
     alt: "Christina Cannes — arched niches and lit oval mirrors along the salon"
     size: half
 beforeAfter:
-  mode: pair
+  pairs:
+    - before: ../../../assets/projects/christina-cannes/008-img-5094.jpg
+      after: ../../../assets/projects/christina-cannes/026-img-8077.jpg
+      caption: "The front room, now the salon floor"
+    - before: ../../../assets/projects/christina-cannes/012-img-5115.jpg
+      after: ../../../assets/projects/christina-cannes/020-img-8022.jpg
+      caption: "The windows onto the street"
+    - before: ../../../assets/projects/christina-cannes/013-img-5118.jpg
+      after: ../../../assets/projects/christina-cannes/025-img-8071.jpg
+      caption: "The length of the salon"
+    - before: ../../../assets/projects/christina-cannes/014-img-5119.jpg
+      after: ../../../assets/projects/christina-cannes/000-3e0b524b-f6ad-42bc-8e9c-7b4c844d9046.jpg
+      caption: "The inner room, now the treatment cabin"
+    - before: ../../../assets/projects/christina-cannes/011-img-5105.jpg
+      after: ../../../assets/projects/christina-cannes/018-img-7999.jpg
+      caption: "The back room, now the second cabin"
   images:
     - src: ../../../assets/projects/christina-cannes/008-img-5094.jpg
       alt: "Christina Cannes — the bare rooms before the fit-out"

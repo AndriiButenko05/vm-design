@@ -41,7 +41,19 @@ gallery:
     alt: "Larimar — the sculpted plaster face behind the styling stations"
     size: half
 beforeAfter:
-  mode: pair
+  pairs:
+    - before: ../../../assets/projects/larimar-nice/000-img-0328.jpg
+      after: ../../../assets/projects/larimar-nice/009-img-2674.jpg
+      caption: "The salon floor, now the mirror stations"
+    - before: ../../../assets/projects/larimar-nice/002-img-0330.jpg
+      after: ../../../assets/projects/larimar-nice/008-img-2673.jpg
+      caption: "The rear wall, now the manicure bar"
+    - before: ../../../assets/projects/larimar-nice/003-img-0331.jpg
+      after: ../../../assets/projects/larimar-nice/011-img-2677.jpg
+      caption: "Towards the shopfront"
+    - before: ../../../assets/projects/larimar-nice/004-img-0336.jpg
+      after: ../../../assets/projects/larimar-nice/007-img-2672.jpg
+      caption: "The pillar wall and the relief mural"
   images:
     - src: ../../../assets/projects/larimar-nice/000-img-0328.jpg
       alt: "Larimar — the unit during fit-out, joinery going in"

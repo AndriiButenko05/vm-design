@@ -72,7 +72,6 @@ const ui: Record<Locale, Dict> = {
   en: {
     'nav.work': 'Projects',
     'nav.services': 'Services',
-    'nav.renders': 'Design Projects',
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'nav.menu': 'Menu',
@@ -113,12 +112,7 @@ const ui: Record<Locale, Dict> = {
       головній. Вони встигли розійтися ще до того, як це помітили:
       фільтр казав «Exhibitions», бейдж — «Exhibition». Тепер джерело
       одне, і розходитися немає чому.
-
-      Тут лишилася тільки рейка візуалізацій: це не тип проєкту.
     */
-    'work.renders.title': 'Design Projects',
-    'work.renders.text':
-      'Complete interior design projects presented through 3D visualisations and technical documentation, allowing every key decision to be developed before construction begins.',
     'work.viewAll': 'View all',
     'work.prev': 'Previous',
     'work.next': 'Next',
@@ -152,8 +146,27 @@ const ui: Record<Locale, Dict> = {
     'ba.before': 'Before',
     'ba.after': 'After',
     'ba.drag': 'Drag to compare',
-    'ba.frames': 'frames',
-    'ba.frame': 'frame',
+    'ba.title': 'The transformation',
+    'ba.hint': 'Move the handle to compare the space during renovation and after completion.',
+    'ba.prev': 'Previous comparison',
+    'ba.next': 'Next comparison',
+
+    // ─── Галерея проєкту ─────────────────────────────────────
+    'gallery.eyebrow': 'Completed interior',
+    'gallery.title': 'Explore the project',
+    'gallery.prev': 'Previous photo',
+    'gallery.next': 'Next photo',
+
+    // ─── 3D проєкту ──────────────────────────────────────────
+    'renders3d.eyebrow': '3D visualisation',
+    'renders3d.title': 'The design in 3D',
+
+    // ─── Процес ──────────────────────────────────────────────
+    'process.eyebrow': 'Behind the project',
+    'process.title': 'From construction to completion',
+    'process.summary':
+      'The transformation began with a substantial renovation. See the site before the finished interior took shape.',
+    'process.toggle': 'View the process',
 
     // ─── Креслення ───────────────────────────────────────────
     'dwg.eyebrow': 'Documentation',
@@ -170,19 +183,7 @@ const ui: Record<Locale, Dict> = {
     'index.title': 'Projects',
     'index.all': 'All projects',
 
-    'renders.eyebrow': '3D',
-    'renders.title': 'Design Projects',
-    /*
-      Попередній текст стверджував, що розділ упорядкований «за кімнатою,
-      а не за проєктом — ванна є ванна, чи вона в Ніцці, чи в Римі».
-      Замовниця вказала, що це суперечить самій ідеї студії: у неї кожен
-      простір залежить від людини, архітектури й місця.
-    */
-    'renders.lead':
-      'Complete interior design projects presented through 3D visualisations and technical documentation, allowing every key decision to be developed before construction begins.',
-    'renders.images': 'images',
-    'renders.rooms': 'rooms',
-    'renders.next': 'Next room',
+    // Спільні підписи модалки й кнопок збільшення.
     'renders.zoom': 'open larger',
     'renders.close': 'Close',
     'renders.prev': 'Previous image',
@@ -227,6 +228,9 @@ const ui: Record<Locale, Dict> = {
     'project.type': 'Type',
     'project.brand': 'Client',
     'project.scope': 'Scope',
+    'project.services': 'Services',
+    'project.kind': 'Project',
+    'project.about': 'The project',
     'project.materials': 'Materials',
     'project.next': 'Next project',
     'project.view': 'View project',

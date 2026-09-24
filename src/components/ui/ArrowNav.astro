@@ -1,0 +1,76 @@
+---
+/**
+ * Стрілки «назад / вперед» із лічильником між ними — як у макеті
+ * сторінки проєкту. Самі по собі нічого не гортають: скрипт каруселі
+ * знаходить кнопки за data-nav-prev / data-nav-next і пише в data-nav-count.
+ */
+interface Props {
+  total: number;
+  prevLabel: string;
+  nextLabel: string;
+}
+
+const { total, prevLabel, nextLabel } = Astro.props;
+---
+
+<div class="arrows">
+  <button type="button" class="arrows__btn" data-nav-prev aria-label={prevLabel} disabled>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 6 L8 12 L14 18" /></svg>
+  </button>
+  <span class="arrows__count" data-nav-count aria-live="polite">1 / {total}</span>
+  <button type="button" class="arrows__btn" data-nav-next aria-label={nextLabel} disabled={total < 2}>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 6 L16 12 L10 18" /></svg>
+  </button>
+</div>
+
+<style>
+  .arrows {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: none;
+  }
+
+  .arrows__btn {
+    display: grid;
+    place-items: center;
+    width: 2.625rem;
+    height: 2.625rem;
+    padding: 0;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    background: none;
+    color: var(--fg);
+    cursor: pointer;
+    transition:
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+
+  .arrows__btn svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .arrows__btn:hover:not(:disabled) {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+
+  .arrows__btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .arrows__count {
+    min-width: 2.75rem;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+</style>

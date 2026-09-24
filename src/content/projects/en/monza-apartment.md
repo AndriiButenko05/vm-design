@@ -59,11 +59,25 @@ gallery:
     alt: "Appartamento Monza — green quartzite against matte lacquer and a black worktop"
     size: half
 beforeAfter:
-  mode: slider
   pairs:
     - before: ../../../assets/projects/monza-apartment/030-img-7034.jpg
       after: ../../../assets/projects/monza-apartment/010-img-0451.jpg
       caption: "The galley kitchen, from patterned tile to a single run of quartzite"
+    - before: ../../../assets/projects/monza-apartment/024-img-7018.jpg
+      after: ../../../assets/projects/monza-apartment/021-img-0477.jpg
+      caption: "The kitchen towards the balcony"
+    - before: ../../../assets/projects/monza-apartment/029-img-7033.jpg
+      after: ../../../assets/projects/monza-apartment/023-img-0487.jpg
+      caption: "The kitchen, cabinetry to the ceiling"
+    - before: ../../../assets/projects/monza-apartment/032-img-7036.jpg
+      after: ../../../assets/projects/monza-apartment/012-img-0458.jpg
+      caption: "The kitchen towards the hallway"
+    - before: ../../../assets/projects/monza-apartment/031-img-7035.jpg
+      after: ../../../assets/projects/monza-apartment/016-img-0465.jpg
+      caption: "The breakfast corner by the window"
+    - before: ../../../assets/projects/monza-apartment/025-img-7019.jpg
+      after: ../../../assets/projects/monza-apartment/000-img-0421.jpg
+      caption: "The bathroom, now clad in green onyx"
   images:
     - src: ../../../assets/projects/monza-apartment/024-img-7018.jpg
       alt: "Appartamento Monza — the original 1970s interior before the renovation"

@@ -24,17 +24,25 @@ const UA =
   а курсив display-шрифту не використовується в жодному правилі —
   в Instrument Serif він тягнувся даремно.
 */
-const FAMILIES = [
-  ['Cormorant+Garamond:wght@400', 'cormorant-garamond'],
-  ['Inter+Tight:wght@300..600', 'inter-tight'],
-];
+/*
+  Spectral — шрифт заголовків, його обрала замовниця. Cormorant лишився
+  тільки в слогані першого екрана головної. Spectral 400 — звичайні
+  заголовки, 500 — титул і підзаголовки сторінки проєкту, як у макеті.
 
-/** latin + latin-ext покривають EN, IT та FR. Кирилиця й грека не потрібні. */
-const KEEP = new Set(['latin', 'latin-ext']);
+  Кирилицю тягнемо лише для Spectral: серед локалей є ru та uk, а
+  підзаголовки — перше, що там побачать кирилицею. Для решти родин
+  набір сабсетів не змінюється.
+*/
+const LATIN = ['latin', 'latin-ext'];
+const FAMILIES = [
+  ['Cormorant+Garamond:wght@400', 'cormorant-garamond', LATIN],
+  ['Inter+Tight:wght@300..600', 'inter-tight', LATIN],
+  ['Spectral:wght@400;500', 'spectral', [...LATIN, 'cyrillic', 'cyrillic-ext']],
+];
 
 let css =
   '/* Локальні шрифти. Згенеровано scripts/fetch-fonts.mjs — не редагувати вручну.\n' +
-  '   Сабсети: latin + latin-ext (достатньо для EN / IT / FR). */\n\n';
+  '   Сабсети: latin + latin-ext; для Spectral ще cyrillic + cyrillic-ext. */\n\n';
 
 const FONT_DIR = path.join(ROOT, 'public/fonts');
 
@@ -49,7 +57,8 @@ for (const f of await fs.readdir(FONT_DIR)) {
   if (f.endsWith('.woff2')) await fs.rm(path.join(FONT_DIR, f));
 }
 
-for (const [query, slug] of FAMILIES) {
+for (const [query, slug, subsets] of FAMILIES) {
+  const keep = new Set(subsets);
   const res = await fetch(`https://fonts.googleapis.com/css2?family=${query}&display=swap`, {
     headers: { 'User-Agent': UA },
   });
@@ -58,7 +67,7 @@ for (const [query, slug] of FAMILIES) {
 
   for (const block of source.split('/*').slice(1)) {
     const subset = block.slice(0, block.indexOf('*/')).trim();
-    if (!KEEP.has(subset)) continue;
+    if (!keep.has(subset)) continue;
 
     const face = '@font-face' + block.slice(block.indexOf('@font-face') + 10, block.lastIndexOf('}') + 1);
     const url = face.match(/url\((https:[^)]+\.woff2)\)/)?.[1];

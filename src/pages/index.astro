@@ -8,7 +8,6 @@ import Hero from '../components/home/Hero.astro';
 import Materials from '../components/home/Materials.astro';
 import GeographyMap from '../components/map/GeographyMap.astro';
 import { getProjects, slugOf, type Project } from '../lib/projects';
-import { ROOMS, coverOf, imageFor } from '../lib/renders';
 import { resolveLocale, localePath, t } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
@@ -33,18 +32,6 @@ const toItem = (p: Project): RailItem => ({
   alt: p.data.coverAlt,
 });
 
-/** Розділ 3D → елемент стрічки. Той самий компонент, інші дані. */
-const renderItems: RailItem[] = ROOMS.map((room) => {
-  const cover = coverOf(room);
-  return {
-    href: `/visualisations/${room.slug}`,
-    title: room.title,
-    meta: `${room.count}`,
-    image: imageFor(room.slug, cover.file),
-    alt: `${room.title} — interior visualisation`,
-  };
-});
-
 ---
 
 <BaseLayout
@@ -52,26 +39,8 @@ const renderItems: RailItem[] = ROOMS.map((room) => {
   description="Your life. Your character. Your interior. Residential and commercial interiors across the French Riviera, Monaco and Italy."
   transparentHeader
 >
-  {/*
-    ТИМЧАСОВО: проба шрифтів на заголовках.
-
-    Кожна секція головної отримує свою антикву й підпис із її назвою,
-    щоб замовниця могла назвати конкретну, а не «оту, третю згори».
-    Усі кандидати щільніші за Cormorant: скарга була саме на надто
-    крихке й театральне накреслення.
-
-    Cormorant лишається на першому й останньому екрані як точка
-    відліку — щоб було з чим порівнювати.
-
-    Прибрати разом із цими посиланнями, коли шрифт оберуть.
-  */}
-  <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
-  <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    slot="head"
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Lora:wght@400&family=Libre+Baskerville:wght@400&family=Newsreader:wght@400&family=Source+Serif+4:wght@400&family=Crimson+Pro:wght@400&family=Literata:wght@400&family=EB+Garamond:wght@400&family=Spectral:wght@400&display=swap"
-  />
+  {/* Cormorant тепер лише в слогані першого екрана — тож і підвантажуємо його тільки тут. */}
+  <link slot="head" rel="preload" href="/fonts/cormorant-garamond-400-latin-normal.woff2" as="font" type="font/woff2" crossorigin />
 
   {/* ─── 1. Hero ─────────────────────────────────────────── */}
   <Hero locale={locale} image={heroImage} id="top" eager />
@@ -140,16 +109,11 @@ const renderItems: RailItem[] = ROOMS.map((room) => {
     items={byType('exhibition').map(toItem)}
   />
 
-  <WorkBlock
-    locale={locale}
-    index={4}
-    anchor={"renders"}
-    titleKey="work.renders.title"
-    textKey="work.renders.text"
-    href="/visualisations"
-    items={renderItems}
-    reverse
-  />
+  {/*
+    Окремої рейки 3D більше немає: замовниця не хоче виділяти
+    візуалізації в розділ. Вони тепер частина проєктів, до яких
+    належать, — блок «3D» на сторінці проєкту.
+  */}
 
   {/*
     Блок Christina прибрано з головної.
@@ -180,62 +144,6 @@ const renderItems: RailItem[] = ROOMS.map((room) => {
 <script>
   import '../scripts/swiper';
 </script>
-
-{/*
-  ТИМЧАСОВО: проба шрифтів.
-
-  is:global тому, що заголовки лежать у різних компонентах — Hero,
-  WorkBlock, Services, Materials, GeographyMap, ContactSection.
-  Локальні стилі сторінки туди не дістають.
-
-  Перевизначаємо саму змінну --font-display на секції: вона успадковується,
-  тож заголовок усередині переодягається без жодної правки в компонентах.
-*/}
-<style is:global>
-  #studio { --font-display: 'Lora', Georgia, serif; }
-  #projects { --font-display: 'Libre Baskerville', Georgia, serif; }
-  #commercial { --font-display: 'Newsreader', Georgia, serif; }
-  #exhibition { --font-display: 'Source Serif 4', Georgia, serif; }
-  #renders { --font-display: 'Crimson Pro', Georgia, serif; }
-  #services { --font-display: 'Literata', Georgia, serif; }
-  #materials { --font-display: 'EB Garamond', Georgia, serif; }
-  #geography { --font-display: 'Spectral', Georgia, serif; }
-
-  /* Підпис над кожним заголовком — інакше не назвати, який саме сподобався. */
-  #top h1::before,
-  #studio h2::before,
-  #projects h2::before,
-  #commercial h2::before,
-  #exhibition h2::before,
-  #renders h2::before,
-  #services h2::before,
-  #materials h2::before,
-  #geography h2::before,
-  #contact h2::before {
-    display: block;
-    margin-bottom: 0.6rem;
-    font-family: var(--font-text);
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    /* currentColor, бо секції чергуються світлими й темними. */
-    color: currentColor;
-    opacity: 0.6;
-  }
-
-  #top h1::before { content: '1 · Cormorant Garamond — нинішній'; }
-  #studio h2::before { content: '2 · Lora'; }
-  #projects h2::before { content: '3 · Libre Baskerville'; }
-  #commercial h2::before { content: '4 · Newsreader'; }
-  #exhibition h2::before { content: '5 · Source Serif 4'; }
-  #renders h2::before { content: '6 · Crimson Pro'; }
-  #services h2::before { content: '7 · Literata'; }
-  #materials h2::before { content: '8 · EB Garamond'; }
-  #geography h2::before { content: '9 · Spectral'; }
-  #contact h2::before { content: '10 · Cormorant Garamond — нинішній'; }
-</style>
 
 <style>
   /* Стилі першого екрана живуть у components/home/Hero.astro. */

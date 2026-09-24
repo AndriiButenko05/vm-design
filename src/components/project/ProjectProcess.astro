@@ -1,0 +1,162 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Кадри «до», що не пішли в пари порівняння. */
+  images: { src: ImageMetadata; alt: string; caption?: string }[];
+}
+
+const { locale, images } = Astro.props;
+
+const fullSize = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1800, format: 'webp' })));
+const fullSizeAvif = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1800, format: 'avif' })));
+---
+
+{/*
+  Знімки будівництва — під розгорткою, як у макеті. Це документальний
+  матеріал, а не основна подача: хто хоче бачити процес, розкриває його,
+  решта сторінки від нього не важчає. Кадри всередині <details> браузер
+  не вантажить, поки блок закритий (loading="lazy" + display: none).
+*/}
+<section class="process section on-sand">
+  <div class="container">
+    <p class="t-eyebrow">{t(locale, 'process.eyebrow')}</p>
+    <h2 class="t-subhead">{t(locale, 'process.title')}</h2>
+    <p class="process__summary">{t(locale, 'process.summary')}</p>
+
+    <details class="process__details">
+      <summary class="process__toggle">{t(locale, 'process.toggle')}</summary>
+
+      <ul class="process__grid">
+        {
+          images.map((img, i) => (
+            <li>
+              <figure>
+                <button
+                  type="button"
+                  class="process__frame"
+                  data-lightbox-open
+                  data-lightbox-group="process"
+                  data-full={fullSize[i].src}
+                  data-full-avif={fullSizeAvif[i].src}
+                  data-alt={img.alt}
+                  data-w={img.src.width}
+                  data-h={img.src.height}
+                  aria-label={`${img.alt} — ${t(locale, 'renders.zoom')}`}
+                >
+                  <Picture
+                    formats={['avif']}
+                    fallbackFormat="webp"
+                    src={img.src}
+                    alt={img.alt}
+                    widths={[480, 840]}
+                    sizes="(max-width: 700px) 92vw, 45vw"
+                    loading="lazy"
+                  />
+                </button>
+                {img.caption && <figcaption>{img.caption}</figcaption>}
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
+  </div>
+</section>
+
+<style>
+  .process .t-eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .process__summary {
+    max-width: 60ch;
+    margin: var(--space-s) 0 var(--space-l);
+    color: var(--fg-muted);
+  }
+
+  .process__details {
+    border-top: 1px solid var(--rule);
+  }
+
+  .process__toggle {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-block: 1.125rem;
+    list-style: none;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .process__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .process__toggle::after {
+    content: '+';
+    font-size: 1.25rem;
+    line-height: 0.7;
+  }
+
+  .process__details[open] .process__toggle::after {
+    content: '−';
+  }
+
+  .process__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+    margin: 0;
+    padding: 0 0 var(--space-m);
+    list-style: none;
+  }
+
+  .process__grid figure {
+    margin: 0;
+  }
+
+  .process__frame {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: var(--stone);
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+
+  .process__frame :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+
+  .process__frame:hover :global(img),
+  .process__frame:focus-visible :global(img) {
+    transform: scale(1.03);
+  }
+
+  .process__grid figcaption {
+    margin-top: 0.5rem;
+    font-size: var(--step-small);
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 700px) {
+    .process__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process__frame :global(img) {
+      aspect-ratio: auto;
+    }
+  }
+</style>

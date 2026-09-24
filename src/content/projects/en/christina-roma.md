@@ -67,11 +67,28 @@ gallery:
     alt: "Christina Roma — the restored vault with oval mirrors and sculptural seating"
     size: half
 beforeAfter:
-  mode: slider
   pairs:
     - before: ../../../assets/projects/christina-roma/004-img-1488.jpg
       after: ../../../assets/projects/christina-roma/031-img-9684.jpg
       caption: "The arched shopfront, before and after"
+    - before: ../../../assets/projects/christina-roma/024-img-8180.jpg
+      after: ../../../assets/projects/christina-roma/035-img-9749.jpg
+      caption: "The entrance arch from inside"
+    - before: ../../../assets/projects/christina-roma/007-img-3270.jpg
+      after: ../../../assets/projects/christina-roma/040-img-9769.jpg
+      caption: "The front vault"
+    - before: ../../../assets/projects/christina-roma/006-img-3266.jpg
+      after: ../../../assets/projects/christina-roma/037-img-9765.jpg
+      caption: "The vault towards the treatment bays"
+    - before: ../../../assets/projects/christina-roma/011-img-4113.jpg
+      after: ../../../assets/projects/christina-roma/036-img-9764.jpg
+      caption: "The side wall, now the product shelving"
+    - before: ../../../assets/projects/christina-roma/000-7529f732-d9ef-4375-a00a-49adb3e138b2.jpg
+      after: ../../../assets/projects/christina-roma/052-img-9790.jpg
+      caption: "The stripped wall behind the shelving"
+    - before: ../../../assets/projects/christina-roma/008-img-3343.jpg
+      after: ../../../assets/projects/christina-roma/043-img-9776.jpg
+      caption: "The rear doorway, now the curtained bay"
     - before: ../../../assets/projects/christina-roma/012-img-4114.jpg
       after: ../../../assets/projects/christina-roma/045-img-9781.jpg
       caption: "The rear vault, from stripped plaster to the finished treatment bay"

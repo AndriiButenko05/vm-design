@@ -42,7 +42,19 @@ gallery:
     alt: "Wow Hair — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
 beforeAfter:
-  mode: pair
+  pairs:
+    - before: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg
+      after: ../../../assets/projects/wow-hair-nice/002-img-2641.jpg
+      caption: "The empty unit and the finished salon"
+    - before: ../../../assets/projects/wow-hair-nice/011-img-8329.jpg
+      after: ../../../assets/projects/wow-hair-nice/005-img-2645.jpg
+      caption: "The rear wall under the mezzanine"
+    - before: ../../../assets/projects/wow-hair-nice/012-img-8330.jpg
+      after: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
+      caption: "The long wall, now the styling stations"
+    - before: ../../../assets/projects/wow-hair-nice/013-img-8762.jpg
+      after: ../../../assets/projects/wow-hair-nice/000-img-2638.jpg
+      caption: "Works in progress towards the rear"
   images:
     - src: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg
       alt: "Wow Hair — the empty unit before the works"

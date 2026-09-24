@@ -1,0 +1,174 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import ArrowNav from '../ui/ArrowNav.astro';
+import { t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  items: { src: ImageMetadata; alt: string; caption?: string; material?: string }[];
+  /** Надрядковий підпис і заголовок блоку — галерея й 3D різняться лише ними. */
+  eyebrow?: string;
+  title?: string;
+  /** Група модалки: кадри гортаються лише в межах свого блоку. */
+  group?: string;
+}
+
+const { locale, items, group } = Astro.props;
+const eyebrow = Astro.props.eyebrow ?? t(locale, 'gallery.eyebrow');
+const title = Astro.props.title ?? t(locale, 'gallery.title');
+
+/** Підпис кадру — назва приміщення, а без неї матеріал. */
+const captionOf = (item: (typeof items)[number]) => item.caption ?? item.material ?? '';
+
+/**
+ * Великі кадри для модалки — рахуються на збірці, у розмітку йде лише URL.
+ * Сам файл браузер тягне вже при відкритті.
+ */
+const fullSize = await Promise.all(items.map((g) => getImage({ src: g.src, width: 1800, format: 'webp' })));
+const fullSizeAvif = await Promise.all(items.map((g) => getImage({ src: g.src, width: 1800, format: 'avif' })));
+---
+
+{/*
+  Один кадр за раз, як у макеті: кадр цілком (contain) у рамці сталої
+  висоти, під ним підпис і стрілки. Кладка в колонки показувала все одразу,
+  але кожен кадр виходив дрібним, а вертикальні — поруч із горизонтальними
+  — рваним ритмом. Тут кожен кадр займає всю сцену.
+
+  Клік по кадру відкриває той самий Lightbox, що й раніше.
+*/}
+<section class="pg section">
+  <div class="container">
+    <header class="pg__head" data-reveal>
+      <p class="t-eyebrow">{eyebrow}</p>
+      <h2 class="t-subhead">{title}</h2>
+    </header>
+
+    <div
+      class="pg__carousel"
+      data-carousel
+      data-carousel-swipe
+      data-reveal
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={title}
+    >
+      <div class="pg__frame">
+        {
+          items.map((item, i) => (
+            <button
+              type="button"
+              class="pg__slide"
+              data-carousel-slide
+              data-caption={captionOf(item)}
+              hidden={i > 0}
+              data-lightbox-open
+              data-lightbox-group={group}
+              data-full={fullSize[i].src}
+              data-full-avif={fullSizeAvif[i].src}
+              data-alt={item.alt}
+              data-w={item.src.width}
+              data-h={item.src.height}
+              aria-label={`${item.alt} — ${t(locale, 'renders.zoom')}`}
+            >
+              <Picture
+                formats={['avif']}
+                fallbackFormat="webp"
+                src={item.src}
+                alt={item.alt}
+                widths={[600, 1000, 1500]}
+                sizes="(max-width: 900px) 92vw, 80vw"
+                loading="lazy"
+              />
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="pg__bar">
+        <p class="pg__caption" data-carousel-caption>{items[0] ? captionOf(items[0]) : ''}</p>
+        {
+          items.length > 1 && (
+            <ArrowNav total={items.length} prevLabel={t(locale, 'gallery.prev')} nextLabel={t(locale, 'gallery.next')} />
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/carousel';
+</script>
+
+<style>
+  .pg__head {
+    margin-bottom: var(--space-l);
+  }
+
+  .pg__head .t-eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  /*
+    Рамка сталої висоти: гортання не зсуває нічого нижче, хоч серед кадрів
+    є і вертикальні, і горизонтальні. pan-y — щоб горизонтальний свайп
+    дістався скрипту, а вертикальний і далі гортав сторінку.
+  */
+  .pg__frame {
+    display: grid;
+    height: clamp(355px, 58vw, 640px);
+    background: var(--sand);
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  .pg__slide {
+    grid-area: 1 / 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  .pg__slide :global(picture) {
+    display: contents;
+  }
+
+  .pg__slide :global(img) {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .pg__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pg__caption {
+    margin: 0;
+    font-size: var(--step-small);
+    color: var(--fg-muted);
+  }
+
+  .pg__carousel:not([data-carousel-ready]) :global(.arrows) {
+    visibility: hidden;
+  }
+
+  @media (max-width: 700px) {
+    .pg__frame {
+      height: 420px;
+    }
+  }
+</style>

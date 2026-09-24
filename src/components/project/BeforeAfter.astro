@@ -1,276 +1,168 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import ArrowNav from '../ui/ArrowNav.astro';
 import { t, type Locale } from '../../lib/i18n';
 import type { Project } from '../../lib/projects';
 
 interface Props {
   locale: Locale;
-  data: NonNullable<Project['data']['beforeAfter']>;
+  pairs: NonNullable<Project['data']['beforeAfter']>['pairs'];
 }
 
-const { locale, data } = Astro.props;
-
-/**
- * slider працює лише тоді, коли «до» і «після» зняті з однієї точки —
- * інакше при перетягуванні картинка стрибає і виглядає зламано.
- * Тому режим задається в контенті, а не вгадується тут.
- */
-const isSlider = data.mode === 'slider' && data.pairs.length > 0;
-
-/**
- * Кадри, що вже показані у слайдері, у сітці не повторюємо.
- * Решту показуємо під ним: у режимі slider вони інакше просто
- * лежали б у збірці, ніде не з'являючись.
- */
-/*
-  Порівнюємо рядки-адреси, а не об'єкти.
-
-  pair.before — це ImageMetadata, і .src у ньому вже рядок. А в images
-  елемент має вигляд { src: ImageMetadata, alt }, тобто img.src — сам
-  об'єкт, і його .src — рядок. Раніше тут у множину клали рядки, а
-  шукали об'єкт: збігу не було ніколи, і кадр, уже показаний у слайдері,
-  ще раз з'являвся нижче.
-*/
-const usedInPairs = new Set(data.pairs.flatMap((p) => [p.before.src, p.after.src]));
-const rest = data.images.filter((img) => !usedInPairs.has(img.src.src));
+const { locale, pairs } = Astro.props;
 
 /**
  * Пропорція кадру береться з самої пари, а не задається наперед.
  *
- * Фіксовані 3/4 на телефоні і 16/10 на десктопі різали альбомний кадр
- * по боках, а вертикальний — згори й знизу. Що гірше, «до» і «після»
- * рідко мають однакову пропорцію: у La Villa це 4:3 проти 16:9. При
- * object-fit: cover кожен обрізався б по-своєму, і лінія сходів
- * розійшлася б рівно на стику витирання. Середнє арифметичне двох
- * пропорцій лишає обидва кадри майже неторканими.
+ * «До» і «після» рідко мають однакову пропорцію: у La Villa це 4:3 проти
+ * 16:9. Середнє арифметичне двох пропорцій лишає обидва кадри майже
+ * неторканими, а object-fit: cover добирає решту.
+ *
+ * Ракурси в парах можуть не збігатися — так і задумано: замовниця хоче
+ * показати, як змінилося приміщення, а не точну накладку двох знімків.
  */
-const stageRatio = (pair: (typeof data.pairs)[number]) =>
+const stageRatio = (pair: (typeof pairs)[number]) =>
   (pair.before.width / pair.before.height + pair.after.width / pair.after.height) / 2;
 
-/** Кадри стрічки: ті, що не пішли в слайдер. */
-const strip = isSlider ? rest : data.images;
-
-/**
- * Великі кадри для модалки — рахуються на збірці, у розмітку йде лише URL.
- * Сам файл браузер тягне вже при відкритті, тож стрічка лишається легкою.
- */
-const fullSize = await Promise.all(
-  strip.map((img) => getImage({ src: img.src, width: 1800, format: 'webp' })),
-);
-const fullSizeAvif = await Promise.all(
-  strip.map((img) => getImage({ src: img.src, width: 1800, format: 'avif' })),
-);
+const multiple = pairs.length > 1;
 ---
 
 <section class="ba section">
   <div class="container">
     <header class="ba__head" data-reveal>
       <p class="t-eyebrow">{t(locale, 'ba.eyebrow')}</p>
+      <h2 class="t-subhead">{t(locale, 'ba.title')}</h2>
     </header>
 
-    {
-      isSlider && (
-        <div class="ba__sliders">
-          {data.pairs.map((pair, i) => (
-            <figure
-              class="slider"
-              data-ba
-              data-reveal
-              style={`--ar:${stageRatio(pair).toFixed(4)};--reveal-delay:${i * 90}ms`}
-            >
-              <div class="slider__stage">
-                <span class="slider__layer slider__layer--after">
-                  <Picture
-                    formats={['avif']}
-                    fallbackFormat="webp"
-                    src={pair.after}
-                    alt={`${t(locale, 'ba.after')} — ${pair.caption ?? ''}`}
-                    widths={[600, 1000, 1500]}
-                    sizes="(max-width: 900px) 92vw, 70vw"
-                    loading="lazy"
-                  />
-                </span>
-                <span class="slider__layer slider__layer--before">
-                  <Picture
-                    formats={['avif']}
-                    fallbackFormat="webp"
-                    src={pair.before}
-                    alt={`${t(locale, 'ba.before')} — ${pair.caption ?? ''}`}
-                    widths={[600, 1000, 1500]}
-                    sizes="(max-width: 900px) 92vw, 70vw"
-                    loading="lazy"
-                  />
-                </span>
-
-                <span class="slider__handle" aria-hidden="true" />
-
-                <label class="visually-hidden" for={`ba-${i}`}>
-                  {t(locale, 'ba.drag')}
-                </label>
-                <input
-                  id={`ba-${i}`}
-                  class="slider__range"
-                  type="range"
-                  min="0"
-                  max="100"
-                  value="50"
-                  step="0.1"
+    <div
+      class="ba__carousel"
+      data-carousel
+      data-ba-carousel
+      data-reveal
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={t(locale, 'ba.title')}
+    >
+      {
+        pairs.map((pair, i) => (
+          <figure
+            class="slider"
+            data-ba
+            data-carousel-slide
+            data-caption={pair.caption ?? ''}
+            hidden={i > 0}
+            aria-label={`${i + 1} / ${pairs.length}`}
+            style={`--ar:${stageRatio(pair).toFixed(4)}`}
+          >
+            <div class="slider__stage">
+              <span class="slider__layer slider__layer--after">
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={pair.after}
+                  alt={`${t(locale, 'ba.after')}${pair.caption ? ` — ${pair.caption}` : ''}`}
+                  widths={[600, 1000, 1500]}
+                  sizes="(max-width: 900px) 92vw, 70vw"
+                  loading="lazy"
                 />
+              </span>
+              <span class="slider__layer slider__layer--before">
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={pair.before}
+                  alt={`${t(locale, 'ba.before')}${pair.caption ? ` — ${pair.caption}` : ''}`}
+                  widths={[600, 1000, 1500]}
+                  sizes="(max-width: 900px) 92vw, 70vw"
+                  loading="lazy"
+                />
+              </span>
 
-                <span class="slider__tag slider__tag--before">{t(locale, 'ba.before')}</span>
-                <span class="slider__tag slider__tag--after">{t(locale, 'ba.after')}</span>
-              </div>
-              {pair.caption && <figcaption class="t-meta">{pair.caption}</figcaption>}
-            </figure>
-          ))}
-        </div>
-      )
-    }
+              <span class="slider__handle" aria-hidden="true" />
 
-    {
-      /*
-        Решта кадрів «до» — стрічкою, а не сіткою на всю ширину.
+              <label class="visually-hidden" for={`ba-${i}`}>
+                {t(locale, 'ba.drag')}
+              </label>
+              <input
+                id={`ba-${i}`}
+                class="slider__range"
+                type="range"
+                min="0"
+                max="100"
+                value="50"
+                step="0.1"
+              />
 
-        Ракурси в них не збігаються з готовими, тож порівняння з них
-        не зробиш. Це матеріал документальний: свідчення, з чого все
-        починалося. У сітці по чверті екрана кожен вони важили стільки
-        ж, скільки готові інтер'єри, і підпис BEFORE повторювався під
-        кожним. У стрічці однакової висоти вони читаються як контактний
-        аркуш — один підпис на весь набір, повний розмір у модалці.
-      */
-      strip.length > 0 && (
-        <div class:list={['ba__strip', isSlider && 'ba__strip--after-slider']} data-reveal>
-          <p class="t-meta ba__count">
-            {t(locale, 'ba.before')} · {strip.length}{' '}
-            {t(locale, strip.length === 1 ? 'ba.frame' : 'ba.frames')}
-          </p>
+              <span class="slider__tag slider__tag--before">{t(locale, 'ba.before')}</span>
+              <span class="slider__tag slider__tag--after">{t(locale, 'ba.after')}</span>
+            </div>
+          </figure>
+        ))
+      }
 
-          <ul class="ba__rail">
-            {strip.map((img, i) => (
-              <li>
-                <button
-                  type="button"
-                  class="ba__frame"
-                  data-lightbox-open
-                  data-lightbox-group="before"
-                  data-full={fullSize[i].src}
-                  data-full-avif={fullSizeAvif[i].src}
-                  data-alt={img.alt}
-                  data-w={img.src.width}
-                  data-h={img.src.height}
-                  aria-label={`${img.alt} — ${t(locale, 'renders.zoom')}`}
-                  style={`--frame-ar:${(img.src.width / img.src.height).toFixed(4)}`}
-                >
-                  <Picture formats={['avif']} fallbackFormat="webp" src={img.src} alt={img.alt} widths={[300, 600]} sizes="240px" loading="lazy" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+      <div class="ba__bar">
+        <p class="ba__caption" data-carousel-caption>{pairs[0]?.caption}</p>
+        {multiple && <ArrowNav total={pairs.length} prevLabel={t(locale, 'ba.prev')} nextLabel={t(locale, 'ba.next')} />}
+      </div>
+      <p class="ba__hint">{t(locale, 'ba.hint')}</p>
+    </div>
   </div>
 </section>
 
-<style>
-  .ba {
-    background: var(--sand);
-  }
+<script>
+  import '../../scripts/carousel';
+  import '../../scripts/before-after';
+</script>
 
+<style>
   .ba__head {
     margin-bottom: var(--space-l);
   }
 
-  /* ─── Стрічка кадрів «до» ──────────────────────────────── */
-
-  .ba__strip--after-slider {
-    margin-top: var(--space-2xl);
+  .ba__head .t-eyebrow {
+    margin-bottom: 0.75rem;
   }
 
-  /*
-    Стрічка стоїть по центру смуги, як і слайдер над нею.
+  /* ─── Підпис, стрілки, підказка ────────────────────────── */
 
-    width: fit-content дає блоку рівно ту ширину, яку займають кадри,
-    і тоді margin-inline: auto його центрує. Коли кадрів більше, ніж
-    вміщається, max-width: 100% обриває ширину по доступній, блок
-    перестає бути вужчим за смугу — і стрічка просто гортається від
-    початку. Через це ж тут не годиться justify-content: center:
-    у скролпорті він зрізав би початок стрічки, і перший кадр став би
-    недосяжним.
-  */
-  .ba__strip {
-    width: fit-content;
-    max-width: 100%;
-    margin-inline: auto;
-  }
-
-  .ba__count {
-    margin: 0 0 var(--space-s);
-    text-align: center;
-  }
-
-  .ba__rail {
+  .ba__bar {
     display: flex;
-    gap: var(--space-s);
-    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin-top: var(--space-s);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ba__caption {
     margin: 0;
-    padding: 0;
-    max-width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
+    font-size: var(--step-small);
+    color: var(--fg-muted);
   }
 
-  .ba__rail::-webkit-scrollbar {
-    display: none;
+  .ba__hint {
+    margin: 0.625rem 0 0;
+    font-size: var(--step-meta);
+    color: var(--fg-muted);
   }
 
-  .ba__rail li {
-    flex: none;
-    scroll-snap-align: start;
+  /* Стрілки без JS нічого не гортають — ховаємо до ініціалізації. */
+  .ba__carousel:not([data-carousel-ready]) :global(.arrows) {
+    visibility: hidden;
   }
+
+  /* ─── Повзунок ─────────────────────────────────────────── */
 
   /*
-    Висота однакова, ширина — за пропорцією кадру. Так нічого не
-    обрізається: серед знімків будівництва є і вертикальні, і альбомні,
-    і кадр телефоном упоперек.
+    Висота сцени однакова для всіх пар (до 78vh), ширина — за пропорцією
+    пари. Так при гортанні не стрибає все, що нижче: змінюється лише
+    ширина кадру. Вертикальна пара на широкому екрані інакше виросла б
+    на два екрани заввишки.
   */
-  .ba__frame {
-    display: block;
-    height: clamp(150px, 20vh, 220px);
-    aspect-ratio: var(--frame-ar, 1);
-    padding: 0;
-    border: 0;
-    background: var(--stone);
-    cursor: zoom-in;
-    overflow: hidden;
-  }
-
-  .ba__frame :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--dur-slow) var(--ease);
-  }
-
-  .ba__frame:hover :global(img),
-  .ba__frame:focus-visible :global(img) {
-    transform: scale(1.03);
-  }
-
-  /* ─── Режим slider ─────────────────────────────────────── */
-
-  .ba__sliders {
-    display: grid;
-    gap: var(--space-xl);
-  }
-
   .slider {
-    /* Вертикальна пара на широкому екрані інакше виросла б на два
-       екрани заввишки — обмежуємо саме ширину, щоб пропорція вціліла. */
     width: 100%;
-    max-width: calc(78vh * var(--ar, 1));
+    max-width: calc(min(78vh, 760px) * var(--ar, 1));
     margin: 0 auto;
   }
 
@@ -278,7 +170,7 @@ const fullSizeAvif = await Promise.all(
     position: relative;
     overflow: hidden;
     aspect-ratio: var(--ar, 1);
-    background: var(--ink);
+    background: var(--sand);
   }
 
   .slider__layer {
@@ -290,6 +182,7 @@ const fullSizeAvif = await Promise.all(
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
   }
 
   /* «До» лежить зверху і обрізається праворуч за положенням повзунка. */
@@ -303,23 +196,30 @@ const fullSizeAvif = await Promise.all(
     bottom: 0;
     left: var(--pos, 50%);
     width: 2px;
-    background: var(--bone);
+    background: var(--paper);
+    box-shadow: 0 0 3px rgb(25 24 23 / 0.45);
     transform: translateX(-1px);
     pointer-events: none;
   }
 
+  /* Кружок зі стрілками обабіч — як у макеті. */
   .slider__handle::after {
-    content: '';
+    content: '‹ ›';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 2.75rem;
-    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
     transform: translate(-50%, -50%);
-    border: 2px solid var(--bone);
     border-radius: 50%;
-    background: rgb(43 42 41 / 0.35);
-    backdrop-filter: blur(2px);
+    background: var(--bone);
+    color: var(--ink);
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    box-shadow: 0 2px 8px rgb(25 24 23 / 0.25);
   }
 
   /* Нативний range розтягнуто на весь кадр і зроблено невидимим:
@@ -352,30 +252,33 @@ const fullSizeAvif = await Promise.all(
   }
 
   .slider__range:focus-visible {
-    outline: 2px solid var(--accent-inv);
+    outline: 2px solid var(--accent);
     outline-offset: -4px;
   }
 
   .slider__tag {
     position: absolute;
-    bottom: var(--space-s);
+    bottom: 0.75rem;
+    padding: 0.375rem 0.625rem;
+    background: var(--bone);
+    color: var(--ink);
     font-size: var(--step-meta);
     letter-spacing: var(--ls-meta);
     text-transform: uppercase;
-    color: var(--bone);
-    text-shadow: 0 1px 6px rgb(25 24 23 / 0.7);
     pointer-events: none;
   }
 
   .slider__tag--before {
-    left: var(--space-s);
+    left: 0.75rem;
   }
 
   .slider__tag--after {
-    right: var(--space-s);
+    right: 0.75rem;
   }
 
-  .slider figcaption {
-    margin-top: var(--space-s);
+  @media (max-width: 700px) {
+    .ba__bar {
+      align-items: flex-start;
+    }
   }
 </style>

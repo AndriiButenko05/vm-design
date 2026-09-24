@@ -140,8 +140,14 @@ const PROCESS = [
     grid-column: span 6;
   }
 
+  /*
+    Spectral у верхньому регістрі ширший за Cormorant: «VASHCHENKO» на
+    повному --step-display упиралося в портрет поруч. Ліміт у vw тримає
+    слово в межах своєї половини сітки на будь-якій ширині.
+  */
   .lede__type h1 {
     margin-block: var(--space-m) var(--space-s);
+    font-size: clamp(2.75rem, 6.4vw, 7rem);
   }
 
   .lede__role {

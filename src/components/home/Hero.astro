@@ -121,6 +121,8 @@ const { locale, image, id, eager = false } = Astro.props;
     рядок перенесеться, а не поїде за край.
   */
   .hero__slogan {
+    /* Єдине місце, де лишився Cormorant, — решта заголовків у Spectral. */
+    font-family: var(--font-hero);
     font-size: clamp(2.5rem, 6.2vw, 6.25rem);
     max-width: 18ch;
   }

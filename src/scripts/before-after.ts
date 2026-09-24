@@ -25,3 +25,16 @@ for (const box of document.querySelectorAll<HTMLElement>('[data-ba]')) {
   apply();
   box.setAttribute('data-ba-ready', '');
 }
+
+/*
+  Пари гортаються каруселлю (scripts/carousel.ts). Кожна нова пара
+  починається з лінії посередині, а не там, де її лишили в попередній.
+*/
+for (const root of document.querySelectorAll<HTMLElement>('[data-ba-carousel]')) {
+  root.addEventListener('carousel:change', () => {
+    for (const range of root.querySelectorAll<HTMLInputElement>('input[type="range"]')) {
+      range.value = '50';
+      range.dispatchEvent(new Event('input'));
+    }
+  });
+}

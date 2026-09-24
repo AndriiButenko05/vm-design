@@ -60,11 +60,22 @@ gallery:
     alt: "Christina Kassel — the finished salon: oak floor, product wall and backlit round mirrors"
     size: half
 beforeAfter:
-  mode: slider
   pairs:
     - before: ../../../assets/projects/christina-kassel/020-img-9867.jpg
       after: ../../../assets/projects/christina-kassel/003-christina-kassel-13.jpg
       caption: "The empty unit and the finished salon, from the same corner"
+    - before: ../../../assets/projects/christina-kassel/021-img-9868.jpg
+      after: ../../../assets/projects/christina-kassel/002-christina-kassel-12.jpg
+      caption: "The feature wall, now the product display"
+    - before: ../../../assets/projects/christina-kassel/018-img-9858.jpg
+      after: ../../../assets/projects/christina-kassel/006-christina-kassel-16.jpg
+      caption: "The shopfront from inside"
+    - before: ../../../assets/projects/christina-kassel/023-img-9875.jpg
+      after: ../../../assets/projects/christina-kassel/005-christina-kassel-15.jpg
+      caption: "The long wall of the salon"
+    - before: ../../../assets/projects/christina-kassel/019-img-9862.jpg
+      after: ../../../assets/projects/christina-kassel/012-christina-kassel-3-1.jpg
+      caption: "The entrance, now the reception"
   images:
     - src: ../../../assets/projects/christina-kassel/020-img-9867.jpg
       alt: "Christina Kassel — the empty unit before fit-out"
