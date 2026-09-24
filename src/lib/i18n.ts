@@ -169,15 +169,14 @@ const ui: Record<Locale, Dict> = {
     'process.toggle': 'View the process',
 
     // ─── Креслення ───────────────────────────────────────────
-    'dwg.eyebrow': 'Documentation',
-    'dwg.title': 'Drawn in full before it is built',
+    'dwg.eyebrow': 'Design project',
+    'dwg.title': 'The drawings',
     'dwg.text':
-      'Survey, demolition, services, elevations and joinery — a complete working set, so the site builds what was designed rather than what was improvised.',
-    'dwg.showing': 'Showing',
-    'dwg.of': 'of',
-    'dwg.request': 'Request the full set',
-    'dwg.link': 'See the drawings',
+      'Survey, demolition, layout, services and elevations — the full set of drawings the project is built from.',
+    'dwg.sheet': 'drawing sheet',
     'dwg.sheets': 'sheets',
+    'dwg.all': 'View all drawings',
+    'dwg.back': 'Back to the project',
 
     'index.eyebrow': 'Selected work',
     'index.title': 'Projects',
@@ -200,6 +199,7 @@ const ui: Record<Locale, Dict> = {
     'map.reset': 'Reset view',
     'map.riviera': 'French Riviera',
     'map.italy': 'Italy',
+    'map.east': 'Poland & Ukraine',
     'map.list': 'All locations',
     'map.projects': 'projects',
     'map.project': 'project',

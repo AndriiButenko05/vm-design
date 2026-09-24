@@ -15,7 +15,7 @@ const MIN_SCALE = 1;
 const MAX_SCALE = 14;
 
 const root = document.querySelector<HTMLElement>('[data-map]');
-const svg = root?.querySelector<SVGSVGElement>('svg');
+const svg = root?.querySelector<SVGSVGElement>('svg[data-map-sheet="main"]');
 const viewport = root?.querySelector<SVGGElement>('[data-map-viewport]');
 
 if (root && svg && viewport) {
@@ -25,7 +25,8 @@ if (root && svg && viewport) {
   const view: View = { scale: 1, x: 0, y: 0 };
   let frame = 0;
 
-  const markerScales = root.querySelectorAll<SVGElement>('[data-marker-scale]');
+  // Лише основного аркуша: другий не масштабується, контрмасштаб йому не потрібен.
+  const markerScales = svg.querySelectorAll<SVGElement>('[data-marker-scale]');
 
   /** Не даємо «загубити» карту: край кадру не заходить усередину в'юпорта. */
   function clamp() {
@@ -177,12 +178,26 @@ if (root && svg && viewport) {
     schedule();
   }
 
+  // ─── Аркуші: основний і «Польща й Україна» ──────────────────
+
+  const sheets = root.querySelectorAll<SVGSVGElement>('[data-map-sheet]');
+  const tabs = root.querySelectorAll<HTMLButtonElement>('[data-map-view], [data-map-sheet-btn]');
+
+  function showSheet(name: string, active: HTMLButtonElement) {
+    sheets.forEach((s) => s.toggleAttribute('hidden', s.dataset.mapSheet !== name));
+    root!.dataset.sheet = name;
+    tabs.forEach((b) => (b === active ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+  }
+
   root.querySelectorAll<HTMLButtonElement>('[data-map-view]').forEach((btn) => {
     btn.addEventListener('click', () => {
+      showSheet('main', btn);
       goTo(Number(btn.dataset.scale), Number(btn.dataset.x), Number(btn.dataset.y));
-      root.querySelectorAll('[data-map-view]').forEach((b) => b.removeAttribute('aria-current'));
-      btn.setAttribute('aria-current', 'true');
     });
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('[data-map-sheet-btn]').forEach((btn) => {
+    btn.addEventListener('click', () => showSheet(btn.dataset.mapSheetBtn!, btn));
   });
 
   root.querySelectorAll<HTMLButtonElement>('[data-map-zoom]').forEach((btn) => {

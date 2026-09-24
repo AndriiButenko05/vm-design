@@ -18,6 +18,13 @@ materials:
 summary: "A salon off a Paris courtyard, where the building’s own stone is left exposed."
 cover: ../../../assets/projects/christina-paris/005-img-1496.jpg
 coverAlt: "Christina Paris — round mirrors and pedestal stations against exposed Paris limestone"
+hero:
+  - src: ../../../assets/projects/christina-paris/014-img-1547.jpg
+    alt: "Christina Paris — round mirrors and pedestal stations against exposed Paris limestone"
+  - src: ../../../assets/projects/christina-paris/011-img-1531.jpg
+    alt: "Christina Paris — round mirrors and pedestal stations against exposed Paris limestone"
+  - src: ../../../assets/projects/christina-paris/016-img-1549.jpg
+    alt: "Christina Paris — round mirrors and pedestal stations against exposed Paris limestone"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: true
 order: 5

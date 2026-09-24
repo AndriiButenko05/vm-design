@@ -18,9 +18,17 @@ materials:
 summary: "A derelict vaulted shop in Rome, brought back as an all-white salon."
 cover: ../../../assets/projects/christina-roma/035-img-9749.jpg
 coverAlt: "Christina Roma — the restored vault with oval mirrors and sculptural seating"
+hero:
+  - src: ../../../assets/projects/christina-roma/035-img-9749.jpg
+    alt: "Christina Roma — the restored vault with oval mirrors and sculptural seating"
+  - src: ../../../assets/projects/christina-roma/040-img-9769.jpg
+    alt: "Christina Roma — the restored vault with oval mirrors and sculptural seating"
+  - src: ../../../assets/projects/christina-roma/045-img-9781.jpg
+    alt: "Christina Roma — the restored vault with oval mirrors and sculptural seating"
 coords: { lat: 41.9028, lon: 12.4964 }
 featured: true
 order: 2
+drawingsPreview: ["004", "005", "007"]
 todo: "Рік із назви PDF — підтвердити."
 gallery:
   - src: ../../../assets/projects/christina-roma/036-img-9764.jpg

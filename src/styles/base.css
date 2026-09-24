@@ -321,3 +321,25 @@ a:hover > .plate > picture > img,
 [id] {
   scroll-margin-top: 5.5rem;
 }
+
+/*
+  Титул сторінки проєкту: рядок-надпис і велика назва Spectral.
+  Спільний для сторінки проєкту й переглядача креслень — щоб другий
+  виглядав продовженням першого, а не окремим сайтом.
+*/
+.page-intro {
+  padding-top: clamp(7rem, 12vw, 9rem);
+  padding-bottom: var(--space-m);
+}
+
+.page-intro .t-eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.page-intro__title {
+  font-family: var(--font-subhead);
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}

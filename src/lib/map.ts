@@ -1,7 +1,17 @@
 import mapData from '../data/map.json';
+import eastData from '../data/map-east.json';
 import type { CityGroup } from './projects';
 
 export const MAP = mapData;
+
+/**
+ * Другий аркуш — Польща й Україна. Окремою картою, яку кнопка під
+ * основною ставить на її місце: вписати їх у кадр Франції та Італії
+ * означало б стиснути Рив'єру в точку. Див. scripts/build-map.mjs.
+ */
+export const MAP_EAST = eastData;
+
+type MapData = { width: number; view: { lonMin: number; lonMax: number; latMax: number } };
 
 /**
  * Та сама проєкція Меркатора, що у scripts/build-map.mjs.
@@ -9,15 +19,17 @@ export const MAP = mapData;
  */
 const mercY = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
 
-const Y0 = mercY(MAP.view.latMax);
-const SCALE = MAP.width / (MAP.view.lonMax - MAP.view.lonMin);
-
-export function project(lon: number, lat: number): { x: number; y: number } {
-  return {
-    x: +((lon - MAP.view.lonMin) * SCALE).toFixed(2),
-    y: +((Y0 - mercY(lat)) * (180 / Math.PI) * SCALE).toFixed(2),
-  };
+function projector(map: MapData) {
+  const y0 = mercY(map.view.latMax);
+  const scale = map.width / (map.view.lonMax - map.view.lonMin);
+  return (lon: number, lat: number): { x: number; y: number } => ({
+    x: +((lon - map.view.lonMin) * scale).toFixed(2),
+    y: +((y0 - mercY(lat)) * (180 / Math.PI) * scale).toFixed(2),
+  });
 }
+
+export const project = projector(MAP);
+const projectEast = projector(MAP_EAST);
 
 /**
  * Ніцца, Канни, Монако й Сен-Поль-де-Ванс вміщаються в ~40 км — на оглядовому
@@ -85,8 +97,13 @@ function inFrame(x: number, y: number): boolean {
  */
 const MAPPED_COUNTRIES = ['France', 'Italy', 'Monaco'];
 
+/** Країни другого аркуша. */
+const EAST_COUNTRIES = ['Poland', 'Ukraine'];
+
 export function buildMarkers(groups: CityGroup[]): {
   markers: Marker[];
+  /** Маркери аркуша «Польща й Україна». */
+  eastMarkers: Marker[];
   clusters: ClusterMarker[];
   /**
    * Міста поза картою: Гонконг лежить за 4800 px від правого краю,
@@ -96,8 +113,23 @@ export function buildMarkers(groups: CityGroup[]): {
   beyond: CityGroup[];
 } {
   const beyond: CityGroup[] = [];
+  const eastMarkers: Marker[] = [];
 
   const markers: Marker[] = groups.flatMap((g) => {
+    if (EAST_COUNTRIES.includes(g.country)) {
+      const p = projectEast(g.coords.lon, g.coords.lat);
+      eastMarkers.push({
+        id: g.city.toLowerCase().replace(/\s+/g, '-'),
+        label: g.city,
+        country: g.country,
+        x: p.x,
+        y: p.y,
+        count: g.projects.length,
+        clustered: null,
+      });
+      return [];
+    }
+
     const { x, y } = project(g.coords.lon, g.coords.lat);
     if (!MAPPED_COUNTRIES.includes(g.country) || !inFrame(x, y)) {
       beyond.push(g);
@@ -132,5 +164,5 @@ export function buildMarkers(groups: CityGroup[]): {
     ];
   });
 
-  return { markers, clusters, beyond };
+  return { markers, eastMarkers, clusters, beyond };
 }

@@ -78,10 +78,7 @@ const intro = t(locale, `type.${type}.text`);
             </span>
             <span class="work__caption">
               <span class="work__title">{p.data.title}</span>
-              <span class="t-meta">
-                {p.data.city}
-                {p.data.year ? ` · ${p.data.year}` : ''}
-              </span>
+              <span class="t-meta">{p.data.card ?? [p.data.city, p.data.year].filter(Boolean).join(' · ')}</span>
             </span>
           </a>
         ))

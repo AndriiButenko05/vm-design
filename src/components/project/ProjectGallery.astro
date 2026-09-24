@@ -139,7 +139,14 @@ const fullSizeAvif = await Promise.all(items.map((g) => getImage({ src: g.src, w
     display: contents;
   }
 
+  /*
+    Кадр — сам елемент сітки (picture має display: contents), а в елемента
+    сітки min-height: auto дорівнює висоті вмісту й перемагає max-height.
+    Без обнулення вертикальний кадр виростав на всю висоту й різався рамкою.
+  */
   .pg__slide :global(img) {
+    min-width: 0;
+    min-height: 0;
     max-width: 100%;
     max-height: 100%;
     width: auto;

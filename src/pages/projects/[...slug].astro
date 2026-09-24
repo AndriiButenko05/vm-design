@@ -6,6 +6,8 @@ import Lightbox from '../../components/ui/Lightbox.astro';
 import BeforeAfter from '../../components/project/BeforeAfter.astro';
 import ProjectGallery from '../../components/project/ProjectGallery.astro';
 import ProjectProcess from '../../components/project/ProjectProcess.astro';
+import Drawings from '../../components/project/Drawings.astro';
+import { setsForProject } from '../../lib/drawings';
 import { getProjects, slugOf } from '../../lib/projects';
 import { resolveLocale, t, DEFAULT_LOCALE } from '../../lib/i18n';
 
@@ -13,9 +15,8 @@ import { resolveLocale, t, DEFAULT_LOCALE } from '../../lib/i18n';
   Сторінка зібрана за макетом замовниці: титул, один широкий кадр,
   факти й опис, порівняння «до / після», галерея по кадру, процес.
 
-  Креслення й «Наступний проєкт» у макеті немає — їх прибрано, поки
-  замовниця не вирішить, чи повертати. Компоненти (project/Drawings.astro,
-  lib/drawings.ts) лишаються в коді.
+  Креслення — після галереї: два-три аркуші й кнопка на весь комплект
+  у PDF. «Наступного проєкту» в макеті немає, його прибрано.
 */
 
 export async function getStaticPaths() {
@@ -32,15 +33,27 @@ const { Content } = await render(project);
 const d = project.data;
 
 /*
-  Головний кадр — широкий, на всю ширину, як у макеті. Обкладинки
-  здебільшого вертикальні (так їх зручно ставити в прев'ю), і на всю
-  ширину такий кадр довелося б різати до смужки. Тому беремо перший
-  горизонтальний кадр з обкладинки чи галереї, а якщо таких немає —
-  обкладинку, вписану цілком у бежеве поле.
+  Головний кадр — великий, на всю ширину, як у макеті, і бажано головного
+  приміщення. Порядок вибору:
+
+  1. hero з frontmatter — кадри, обрані руками (найнадійніше: код не
+     знає, де на фото вітальня, а де ванна);
+  2. перший горизонтальний кадр з обкладинки, галереї чи 3D;
+  3. якщо горизонтальних немає зовсім (проєкти, зняті на телефон) —
+     перші три вертикальні в ряд. Один вертикальний кадр у бежевому полі
+     займав би третину ширини й виглядав дрібно.
 */
 const heroCandidates = [{ src: d.cover, alt: d.coverAlt }, ...d.gallery, ...d.renders];
-const hero = heroCandidates.find((c) => c.src.width > c.src.height) ?? heroCandidates[0];
-const heroIsWide = hero.src.width > hero.src.height;
+const isWide = (c: { src: ImageMetadata }) => c.src.width > c.src.height;
+const firstWide = heroCandidates.find(isWide);
+const uniqueCandidates = [...new Map(heroCandidates.map((c) => [c.src.src, c])).values()];
+const heroItems: { src: ImageMetadata; alt: string }[] = d.hero?.length
+  ? d.hero
+  : firstWide
+    ? [firstWide]
+    : uniqueCandidates.slice(0, 3);
+const heroIsRow = heroItems.length > 1;
+const heroIsTall = !heroIsRow && !isWide(heroItems[0]);
 
 const typeLabel = t(locale, `type.${d.type}`);
 const intro = [typeLabel, `${d.city}, ${d.country}`, d.year ? String(d.year) : null].filter(Boolean).join(' · ');
@@ -63,6 +76,9 @@ const facts: { label: string; value: string | string[] }[] = [
   Розгортка закрита за замовчуванням, тож повтор не обтяжує сторінку.
 */
 const pairs = d.beforeAfter?.pairs ?? [];
+
+const slug = slugOf(project);
+const drawingSets = setsForProject(slug);
 const processImages = d.beforeAfter?.images ?? [];
 ---
 
@@ -71,23 +87,44 @@ const processImages = d.beforeAfter?.images ?? [];
 
   <article class="project">
     {/* ─── Титул ──────────────────────────────────────────── */}
-    <header class="container intro">
+    <header class="container page-intro">
       <p class="t-eyebrow">{intro}</p>
-      <h1 class="intro__title">{d.title}</h1>
+      <h1 class="page-intro__title">{d.title}</h1>
     </header>
 
     {/* ─── Головний кадр ──────────────────────────────────── */}
-    <figure class:list={['container hero', !heroIsWide && 'hero--tall']}>
-      <Picture
-        formats={['avif']}
-        fallbackFormat="webp"
-        src={hero.src}
-        alt={hero.alt}
-        widths={[800, 1280, 1800, 2400]}
-        sizes="(max-width: 1720px) 92vw, 1560px"
-        loading="eager"
-        fetchpriority="high"
-      />
+    <figure class:list={['container hero', heroIsTall && 'hero--tall', heroIsRow && 'hero--row']}>
+      {
+        heroIsRow ? (
+          <div class="hero__row">
+            {heroItems.map((item, i) => (
+              <div class="hero__cell" style={`--r:${(item.src.width / item.src.height).toFixed(4)}`}>
+                <Picture
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  src={item.src}
+                  alt={item.alt}
+                  widths={[500, 800, 1200]}
+                  sizes="(max-width: 700px) 92vw, 34vw"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Picture
+            formats={['avif']}
+            fallbackFormat="webp"
+            src={heroItems[0].src}
+            alt={heroItems[0].alt}
+            widths={[800, 1280, 1800, 2400]}
+            sizes="(max-width: 1720px) 92vw, 1560px"
+            loading="eager"
+            fetchpriority="high"
+          />
+        )
+      }
       {d.heroCaption && <figcaption class="t-meta">{d.heroCaption}</figcaption>}
     </figure>
 
@@ -142,6 +179,9 @@ const processImages = d.beforeAfter?.images ?? [];
       )
     }
 
+    {/* ─── Креслення ──────────────────────────────────────── */}
+    {drawingSets.length > 0 && <Drawings locale={locale} project={slug} sets={drawingSets} picks={d.drawingsPreview} />}
+
     {/* ─── Процес ─────────────────────────────────────────── */}
     {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} />}
 
@@ -150,25 +190,6 @@ const processImages = d.beforeAfter?.images ?? [];
 </BaseLayout>
 
 <style>
-  /* ─── Титул ────────────────────────────────────────────── */
-
-  .intro {
-    padding-top: clamp(7rem, 12vw, 9rem);
-    padding-bottom: var(--space-m);
-  }
-
-  .intro .t-eyebrow {
-    margin-bottom: 0.75rem;
-  }
-
-  .intro__title {
-    font-family: var(--font-subhead);
-    font-size: clamp(3.5rem, 9vw, 6.5rem);
-    font-weight: 500;
-    line-height: 1.04;
-    letter-spacing: -0.025em;
-  }
-
   /* ─── Головний кадр ────────────────────────────────────── */
 
   .hero {
@@ -197,6 +218,46 @@ const processImages = d.beforeAfter?.images ?? [];
     max-width: 100%;
     height: min(82vh, 760px);
     object-fit: contain;
+  }
+
+  /*
+    Два-три вертикальні кадри в ряд. Ширина комірки пропорційна
+    співвідношенню сторін кадру (flex-grow = w/h), тож усі кадри виходять
+    однієї висоти й разом заповнюють ширину без обрізання.
+  */
+  .hero__row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /*
+    Кадри з телефона бувають 9:16 — у повну висоту ряд не влазив би
+    в перший екран. Висота обмежена, кадр заповнює комірку (cover) і
+    втрачає лише трохи згори й знизу.
+  */
+  .hero__cell {
+    flex: var(--r) 1 0;
+    min-width: 0;
+    aspect-ratio: var(--r);
+    max-height: min(78vh, 720px);
+  }
+
+  .hero--row :global(picture) {
+    display: contents;
+  }
+
+  .hero--row :global(img) {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+  }
+
+  /* На телефоні ряд з трьох вийшов би дрібним — лишаємо перший кадр. */
+  @media (max-width: 700px) {
+    .hero__cell + .hero__cell {
+      display: none;
+    }
   }
 
   .hero figcaption {

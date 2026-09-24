@@ -2,7 +2,7 @@
  "sets": [
   {
    "slug": "villa-nice",
-   "title": "Villa à Nice",
+   "title": "Villa in Nice",
    "project": "la-villa-nice",
    "pages": [
     {
@@ -645,7 +645,7 @@
   },
   {
    "slug": "monza",
-   "title": "Appartamento Monza",
+   "title": "Apartment in Milan",
    "project": "monza-apartment",
    "pages": [
     {
@@ -734,7 +734,7 @@
   },
   {
    "slug": "nice-verdi",
-   "title": "Appartement rue Verdi",
+   "title": "Apartment in Nice",
    "project": "nice-verdi-apartment",
    "pages": [
     {
@@ -838,8 +838,8 @@
   },
   {
    "slug": "saint-paul-1",
-   "title": "Saint-Paul-de-Vence I",
-   "project": "saint-paul-de-vence",
+   "title": "Terrace Apartment in Saint-Paul-de-Vence",
+   "project": "saint-paul-de-vence-terrace",
    "pages": [
     {
      "file": "001.jpg",
@@ -902,8 +902,8 @@
   },
   {
    "slug": "saint-paul-2",
-   "title": "Saint-Paul-de-Vence II",
-   "project": "saint-paul-de-vence",
+   "title": "Apartment in Saint-Paul-de-Vence · 58 m²",
+   "project": "saint-paul-de-vence-58",
    "pages": [
     {
      "file": "001.jpg",
@@ -966,8 +966,8 @@
   },
   {
    "slug": "saint-paul-3",
-   "title": "Saint-Paul-de-Vence III",
-   "project": "saint-paul-de-vence",
+   "title": "Apartment in Saint-Paul-de-Vence · 51 m²",
+   "project": "saint-paul-de-vence-51",
    "pages": [
     {
      "file": "001.jpg",
@@ -1027,6 +1027,54 @@
    ],
    "count": 11,
    "redactions": 20
+  },
+  {
+   "slug": "larimar",
+   "title": "Larimar",
+   "project": "larimar-nice",
+   "pages": [
+    {
+     "file": "001.jpg",
+     "width": 1500,
+     "height": 1061
+    },
+    {
+     "file": "002.jpg",
+     "width": 1500,
+     "height": 1061
+    },
+    {
+     "file": "003.jpg",
+     "width": 1500,
+     "height": 1061
+    },
+    {
+     "file": "004.jpg",
+     "width": 1500,
+     "height": 1061
+    }
+   ],
+   "count": 4,
+   "redactions": 8
+  },
+  {
+   "slug": "warsaw",
+   "title": "Penthouse in Warsaw",
+   "project": "warsaw-powisle",
+   "pages": [
+    {
+     "file": "001.jpg",
+     "width": 1500,
+     "height": 1133
+    },
+    {
+     "file": "002.jpg",
+     "width": 1500,
+     "height": 1036
+    }
+   ],
+   "count": 2,
+   "redactions": 0
   }
  ]
 }

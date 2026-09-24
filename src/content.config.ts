@@ -13,7 +13,7 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       city: z.string(),
-      country: z.enum(['France', 'Italy', 'Monaco', 'Germany', 'Ukraine', 'Hong Kong']),
+      country: z.enum(['France', 'Italy', 'Monaco', 'Germany', 'Poland', 'Ukraine', 'Hong Kong']),
 
       /**
        * residential  приватне житло
@@ -36,6 +36,14 @@ const projects = defineCollection({
       materials: z.array(z.string()).default([]),
 
       summary: z.string(),
+
+      /**
+       * Рядок під назвою на картці проєкту — авторський, від замовниці:
+       * «Nice, France · 2025 · Complete villa renovation». Порядок частин
+       * у неї різний від проєкту до проєкту, тому рядок береться як є.
+       * Без нього картка показує «місто · рік».
+       */
+      card: z.string().optional(),
 
       cover: image(),
       coverAlt: z.string(),
@@ -81,6 +89,26 @@ const projects = defineCollection({
       renders: z
         .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
         .default([]),
+
+      /**
+       * Які аркуші креслень показати на сторінці: ["007", "008", "003"].
+       * Самі комплекти прив'язані до проєкту в src/data/drawings.json;
+       * тут лише вибір двох-трьох найвиразніших. Без поля — перші після
+       * обкладинки.
+       */
+      drawingsPreview: z.array(z.string()).optional(),
+
+      /**
+       * Головний кадр сторінки проєкту — головне приміщення, а не випадкова
+       * обкладинка (у Monza нею була ванна). Один горизонтальний кадр іде
+       * на всю ширину; два-три вертикальні стають у ряд — так проєкти,
+       * зняті лише вертикально на телефон, теж отримують великий перший
+       * екран. Без поля кадр обирається автоматично.
+       */
+      hero: z
+        .array(z.object({ src: image(), alt: z.string() }))
+        .max(3)
+        .optional(),
 
       /** Рядок під головним кадром: «Private villa · Interior architecture & design». */
       heroCaption: z.string().optional(),

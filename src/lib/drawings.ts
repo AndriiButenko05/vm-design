@@ -16,15 +16,6 @@ export type DrawingSet = {
   redactions: number;
 };
 
-/**
- * Скільки аркушів показуємо публічно.
- *
- * Повні комплекти — це 193 сторінки робочої документації: рівень деталізації,
- * який конкуренту цікавіший, ніж клієнту. Тому за замовчуванням іде вибірка,
- * а повний комплект — за запитом через форму. Рішення замовниці ще чекаємо;
- * щоб показати все, достатньо підняти це число.
- */
-export const PUBLIC_PAGES = 8;
 
 /**
  * Глоб НЕ eager.
@@ -63,22 +54,57 @@ export type ResolvedSheet = {
   set: DrawingSet;
 };
 
-/**
- * Публічна вибірка аркушів по всіх комплектах проєкту.
- *
- * Вибірку беремо з КОЖНОГО комплекту окремо: інакше проєкт із трьох квартир
- * показав би вісім аркушів першої, а дві інші не з'явилися б зовсім.
- */
-export async function publicSheets(sets: DrawingSet[]): Promise<ResolvedSheet[]> {
+/** Усі аркуші всіх комплектів проєкту, по порядку — для переглядача. */
+export async function allSheets(sets: DrawingSet[]): Promise<ResolvedSheet[]> {
   const out: ResolvedSheet[] = [];
-
   for (const set of sets) {
-    for (const page of set.pages.slice(0, PUBLIC_PAGES)) {
+    for (const page of set.pages) {
       const load = byKey.get(`${set.slug}/${page.file}`);
-      if (!load) continue;
-      out.push({ img: (await load()).default, set });
+      if (load) out.push({ img: (await load()).default, set });
     }
   }
-
   return out;
+}
+
+/** Скільки аркушів показуємо на сторінці проєкту до кнопки «усі креслення». */
+export const PREVIEW_COUNT = 3;
+
+/**
+ * Два-три аркуші для сторінки проєкту.
+ *
+ * picks — номери аркушів із frontmatter (drawingsPreview: ["007", "008"]):
+ * найвиразніші аркуші в кожному комплекті різні, і вгадувати їх кодом
+ * гірше, ніж назвати руками. Без picks беруться перші аркуші після
+ * обкладинки — у всіх комплектах це обмірний план і демонтаж.
+ */
+export async function previewSheets(sets: DrawingSet[], picks?: string[]): Promise<ResolvedSheet[]> {
+  const files = picks?.length
+    ? picks.map((p) => `${p.replace(/\.jpg$/, '')}.jpg`)
+    : null;
+
+  const chosen: { set: DrawingSet; file: string }[] = [];
+  for (const set of sets) {
+    const available = set.pages.map((p) => p.file);
+    const wanted = files ? available.filter((f) => files.includes(f)) : available.slice(1);
+    // порядок — як у picks, а не як у комплекті
+    if (files) wanted.sort((a, b) => files.indexOf(a) - files.indexOf(b));
+    for (const file of wanted) chosen.push({ set, file });
+  }
+
+  const out: ResolvedSheet[] = [];
+  for (const { set, file } of chosen.slice(0, PREVIEW_COUNT)) {
+    const load = byKey.get(`${set.slug}/${file}`);
+    if (load) out.push({ img: (await load()).default, set });
+  }
+  return out;
+}
+
+/**
+ * Переглядач повного комплекту — /drawings/<проєкт>.
+ *
+ * Сторінка з аркушами-картинками, а не PDF: замовниця попросила, щоб
+ * комплект не можна було скачати одним файлом.
+ */
+export function viewerPath(project: string): string {
+  return `/drawings/${project}`;
 }

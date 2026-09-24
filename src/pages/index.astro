@@ -27,7 +27,7 @@ const byType = (type: Project['data']['type']) => projects.filter((p) => p.data.
 const toItem = (p: Project): RailItem => ({
   href: `/projects/${slugOf(p)}`,
   title: p.data.title,
-  meta: [p.data.city, p.data.year].filter(Boolean).join(' · '),
+  meta: p.data.card ?? [p.data.city, p.data.year].filter(Boolean).join(' · '),
   image: p.data.cover,
   alt: p.data.coverAlt,
 });

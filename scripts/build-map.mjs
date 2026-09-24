@@ -30,6 +30,14 @@ const SRC = {
   regionsFR: 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson',
   regionsIT:
     'https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits_IT_regions.geojson',
+  regionsPL:
+    'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/master/wojewodztwa/wojewodztwa-min.geojson',
+  /*
+    Україна — з набору областей, а не з Natural Earth: там за
+    замовчуванням Крим відрізано від України. Контур країни складається
+    з самих областей (див. dissolve), тож Крим на карті український.
+  */
+  regionsUA: 'https://raw.githubusercontent.com/EugeneBorshch/ukraine_geojson/master/UA_FULL_Ukraine.geojson',
 };
 
 /**
@@ -66,17 +74,49 @@ const HIGHLIGHT = [
 // ─── Проєкція (Меркатор) ───────────────────────────────────────
 
 const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
+const invMercY = (y) => ((2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180) / Math.PI;
 
-const Y0 = mercY(VIEW.latMax);
-const Y1 = mercY(VIEW.latMin);
-const SCALE = WIDTH / (VIEW.lonMax - VIEW.lonMin);
-const HEIGHT = +((Y0 - Y1) * (180 / Math.PI) * SCALE).toFixed(2);
-
-function project([lon, lat]) {
-  const x = (lon - VIEW.lonMin) * SCALE;
-  const y = (Y0 - mercY(lat)) * (180 / Math.PI) * SCALE;
-  return [x, y];
+/** Кадр карти: межі в градусах → висота полотна й функція проєкції. */
+function frame(view) {
+  const Y0 = mercY(view.latMax);
+  const Y1 = mercY(view.latMin);
+  const scale = WIDTH / (view.lonMax - view.lonMin);
+  const height = +((Y0 - Y1) * (180 / Math.PI) * scale).toFixed(2);
+  const project = ([lon, lat]) => [(lon - view.lonMin) * scale, (Y0 - mercY(lat)) * (180 / Math.PI) * scale];
+  return { view, height, project };
 }
+
+const MAIN = frame(VIEW);
+
+/*
+  Другий аркуш — Польща й Україна. Окремою картою, а не ширшим кадром
+  основної: від Ніцци до Києва 2000 км, і Рив'єра з трьома містами
+  стиснулася б у точку.
+
+  Пропорції — ті самі, що в основного кадру: аркуші міняються місцями в
+  одній рамці, і різна висота смикала б сторінку. Тому задаються лише
+  довготи й центр, а широти добираються під висоту основної карти.
+*/
+function eastView() {
+  const lonMin = 12.5;
+  const lonMax = 41.5;
+  const centre = mercY(49.6);
+  const half = ((MAIN.height / (WIDTH / (lonMax - lonMin))) * (Math.PI / 180)) / 2;
+  return {
+    lonMin,
+    lonMax,
+    latMin: +invMercY(centre - half).toFixed(3),
+    latMax: +invMercY(centre + half).toFixed(3),
+  };
+}
+
+const EAST = frame(eastView());
+const OUT_EAST = path.join(ROOT, 'src/data/map-east.json');
+
+const HIGHLIGHT_EAST = [
+  { key: 'mazowieckie', label: 'Mazowieckie', match: ['mazowieckie'] },
+  { key: 'kyivska', label: 'Kyiv Oblast', match: ['kievoblast', 'kyivoblast'] },
+];
 
 // ─── Спрощення (Дуглас — Пекер) ────────────────────────────────
 
@@ -165,7 +205,7 @@ function encodePath(points) {
   return d + 'Z';
 }
 
-function toPath(geometry, tolerance) {
+function toPath(geometry, tolerance, fr = MAIN) {
   const polygons =
     geometry.type === 'Polygon' ? [geometry.coordinates]
     : geometry.type === 'MultiPolygon' ? geometry.coordinates
@@ -174,9 +214,9 @@ function toPath(geometry, tolerance) {
   const parts = [];
   for (const polygon of polygons) {
     for (const ring of polygon) {
-      let pts = ring.map(project);
+      let pts = ring.map(fr.project);
       // Поза кадром — не малюємо (заморські території Франції тощо).
-      const inFrame = pts.some(([x, y]) => x > -60 && x < WIDTH + 60 && y > -60 && y < HEIGHT + 60);
+      const inFrame = pts.some(([x, y]) => x > -60 && x < WIDTH + 60 && y > -60 && y < fr.height + 60);
       if (!inFrame) continue;
 
       pts = simplify(pts, tolerance);
@@ -186,6 +226,64 @@ function toPath(geometry, tolerance) {
     }
   }
   return parts.join('');
+}
+
+/**
+ * Зовнішній контур країни з її областей.
+ *
+ * Спільний кордон двох областей складається з тих самих вузлів (дані з
+ * OpenStreetMap), тож кожне його ребро трапляється двічі. Ребра, що
+ * трапилися один раз, — зовнішня межа; з них і збираються кільця.
+ * Бібліотека для об'єднання полігонів тут зайва.
+ */
+function dissolve(features) {
+  const key = (p) => `${p[0].toFixed(6)},${p[1].toFixed(6)}`;
+  const edges = new Map();
+  for (const f of features) {
+    const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    for (const poly of polys) {
+      const r = poly[0];
+      for (let i = 0; i < r.length - 1; i++) {
+        const a = key(r[i]);
+        const b = key(r[i + 1]);
+        if (a === b) continue;
+        const k = a < b ? `${a}|${b}` : `${b}|${a}`;
+        edges.set(k, (edges.get(k) ?? 0) + 1);
+      }
+    }
+  }
+
+  const adj = new Map();
+  for (const [k, n] of edges) {
+    if (n !== 1) continue;
+    const [a, b] = k.split('|');
+    if (!adj.has(a)) adj.set(a, []);
+    if (!adj.has(b)) adj.set(b, []);
+    adj.get(a).push(b);
+    adj.get(b).push(a);
+  }
+
+  const used = new Set();
+  const rings = [];
+  for (const start of adj.keys()) {
+    let prev = null;
+    let cur = start;
+    const ring = [];
+    for (;;) {
+      ring.push(cur.split(',').map(Number));
+      const next = adj.get(cur).find((n) => n !== prev && !used.has(cur < n ? `${cur}|${n}` : `${n}|${cur}`));
+      if (!next) break;
+      used.add(cur < next ? `${cur}|${next}` : `${next}|${cur}`);
+      prev = cur;
+      cur = next;
+      if (cur === start) {
+        ring.push(cur.split(',').map(Number));
+        break;
+      }
+    }
+    if (ring.length > 3) rings.push([ring]);
+  }
+  return { type: 'MultiPolygon', coordinates: rings };
 }
 
 // ─── Завантаження з кешем ──────────────────────────────────────
@@ -222,9 +320,9 @@ async function main() {
     countries.features.find((f) => f.properties.ISO_A2 === iso || f.properties.ISO_A2_EH === iso);
 
   const out = {
-    viewBox: `0 0 ${WIDTH} ${HEIGHT}`,
+    viewBox: `0 0 ${WIDTH} ${MAIN.height}`,
     width: WIDTH,
-    height: HEIGHT,
+    height: MAIN.height,
     view: VIEW,
     countries: {},
     regions: {},
@@ -256,6 +354,39 @@ async function main() {
   await fs.writeFile(OUT, JSON.stringify(out, null, 1) + '\n');
   const kb = ((await fs.stat(OUT)).size / 1024).toFixed(0);
   console.log(`\n  ${path.relative(ROOT, OUT)} — ${kb} KB, viewBox ${out.viewBox}`);
+
+  // ─── Другий аркуш: Польща й Україна ───
+  const regionsPL = await load('regions-pl', SRC.regionsPL);
+  const regionsUA = await load('regions-ua', SRC.regionsUA);
+
+  const east = {
+    viewBox: `0 0 ${WIDTH} ${EAST.height}`,
+    width: WIDTH,
+    height: EAST.height,
+    view: EAST.view,
+    countries: {
+      poland: toPath(byIso('PL').geometry, 0.6, EAST),
+      ukraine: toPath(dissolve(regionsUA.features), 0.6, EAST),
+    },
+    regions: {},
+  };
+
+  const nameEast = (p) => p['name:en'] ?? p.nazwa ?? p.name;
+  for (const collection of [regionsPL, regionsUA]) {
+    for (const f of collection.features) {
+      const n = norm(nameEast(f.properties));
+      const hit = HIGHLIGHT_EAST.find((h) => h.match.includes(n));
+      if (!hit) continue;
+      east.regions[hit.key] = { label: hit.label, d: toPath(f.geometry, 0.35, EAST) };
+      console.log(`  регіон   ${hit.label}`);
+    }
+  }
+  const missingEast = HIGHLIGHT_EAST.filter((h) => !east.regions[h.key]);
+  if (missingEast.length) console.warn('  ! не знайшов регіони:', missingEast.map((m) => m.label).join(', '));
+
+  await fs.writeFile(OUT_EAST, JSON.stringify(east, null, 1) + '\n');
+  const kbE = ((await fs.stat(OUT_EAST)).size / 1024).toFixed(0);
+  console.log(`  ${path.relative(ROOT, OUT_EAST)} — ${kbE} KB, viewBox ${east.viewBox}`);
 }
 
 main().catch((e) => {

@@ -25,8 +25,18 @@ export default defineConfig({
     fallback: { fr: 'en', it: 'en', ru: 'en', uk: 'en' },
   },
 
+  /*
+    Saint-Paul-de-Vence був одним проєктом із трьох квартир; замовниця
+    розділила їх на три окремі. Старе посилання веде на першу — з терасою.
+  */
+  redirects: {
+    '/projects/saint-paul-de-vence': '/projects/saint-paul-de-vence-terrace',
+  },
+
   integrations: [
     sitemap({
+      // Переглядач креслень — noindex, у карті сайту йому теж не місце.
+      filter: (page) => !page.includes('/drawings/'),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', fr: 'fr', it: 'it', ru: 'ru', uk: 'uk' },

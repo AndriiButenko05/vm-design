@@ -14,6 +14,13 @@ materials:
 summary: "A compact Monaco salon with arched mirrors and a curved timber reception."
 cover: ../../../assets/projects/christina-monaco/012-img-9407.jpg
 coverAlt: "Christina Monaco — arched backlit mirrors above the stations, curved timber reception"
+hero:
+  - src: ../../../assets/projects/christina-monaco/011-img-9402.jpg
+    alt: "Christina Monaco — arched backlit mirrors above the stations, curved timber reception"
+  - src: ../../../assets/projects/christina-monaco/008-img-8876.jpg
+    alt: "Christina Monaco — arched backlit mirrors above the stations, curved timber reception"
+  - src: ../../../assets/projects/christina-monaco/013-img-9408.jpg
+    alt: "Christina Monaco — arched backlit mirrors above the stations, curved timber reception"
 coords: { lat: 43.7384, lon: 7.4246 }
 featured: false
 order: 9

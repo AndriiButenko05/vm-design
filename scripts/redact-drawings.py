@@ -20,21 +20,18 @@ import sys
 import unicodedata
 
 import pypdfium2 as pdfium
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, ".source", "Project Marina new", "Project PDF")
 OUT = os.path.join(ROOT, "src", "assets", "drawings")
 
-# Повні комплекти лежать ПОЗА src/: усе, що Astro бачить у src/assets,
-# він копіює у збірку — навіть те, на що немає жодного посилання.
-# Через це 137 непублічних аркушів давали ~24 МБ мертвої ваги в dist.
-FULL = os.path.join(ROOT, ".drawings-full")
-
-# Скільки аркушів кожного комплекту йде на сайт. Має збігатися
-# з PUBLIC_PAGES у src/lib/drawings.ts.
-PUBLIC_PAGES = 8
 MANIFEST = os.path.join(ROOT, "src", "data", "drawings.json")
+
+# Усі аркуші лежать у src/assets: сайт показує комплект повністю — два-три
+# на сторінці проєкту, решту в переглядачі /drawings/<проєкт>. PDF на сайт
+# не йде зовсім: замовниця попросила, щоб креслення не можна було скачати
+# одним файлом.
 
 # Ширина сторінки на виході. Досить, щоб читати розміри на екрані,
 # замало, щоб роздрукувати в масштабі й використати як робоче креслення.
@@ -75,6 +72,15 @@ SETS = [(s["file"], s["slug"], s["label"], s["project"]) for s in _cfg["sets"]]
 
 # Контроль: цих рядків не має лишитися у жодній зоні, що НЕ зафарбована.
 FORBIDDEN = _cfg["forbidden"]
+
+# Латки по растру — для того, чого немає в текстовому шарі і що контроль
+# витоку не бачить: адреса, вшита в картинку обкладинки, людина на фото.
+#   {"slug": ..., "page": 1, "box": [x0, y0, x1, y1], "mode": "fill" | "blur"}
+# box — у пікселях вихідного растра (ширина TARGET_WIDTH).
+#   fill — заповнює рамку, інтерполюючи між рядком над нею і під нею:
+#          на небі чи рівній стіні напис просто зникає.
+#   blur — сильне розмиття, для облич.
+PATCHES = _cfg.get("patches", [])
 
 if not FORBIDDEN:
     sys.exit("У redaction.json порожній forbidden — контроль витоку був би фікцією.")
@@ -227,6 +233,31 @@ def redaction_boxes(textpage, w0, h0, rot):
     return boxes
 
 
+def apply_patch(img, box, mode):
+    x0, y0, x1, y1 = (int(round(v)) for v in box)
+    if mode == "blur":
+        # Розмиття з м'яким краєм: жорсткий прямокутник кидається в око
+        # сильніше, ніж те, що він ховає. Ядро маски — сама рамка,
+        # розмита межа виходить назовні, тож обличчя всередині лишається
+        # нерозпізнаним повністю.
+        feather = max(6, (x1 - x0) // 6)
+        blurred = img.filter(ImageFilter.GaussianBlur(radius=max(10, (x1 - x0) // 6)))
+        mask = Image.new("L", img.size, 0)
+        ImageDraw.Draw(mask).rectangle([x0, y0, x1, y1], fill=255)
+        mask = mask.filter(ImageFilter.GaussianBlur(radius=feather / 2))
+        ImageDraw.Draw(mask).rectangle([x0, y0, x1, y1], fill=255)
+        img.paste(blurred, (0, 0), mask)
+        return
+    px = img.load()
+    h = y1 - y0
+    for x in range(x0, x1):
+        top = px[x, y0 - 1]
+        bot = px[x, y1]
+        for y in range(y0, y1):
+            t = (y - y0 + 0.5) / h
+            px[x, y] = tuple(round(a + (b - a) * t) for a, b in zip(top, bot))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry", action="store_true", help="показати, що буде зафарбовано")
@@ -252,10 +283,8 @@ def main():
         n_pages = len(doc) if not args.limit else min(len(doc), args.limit)
 
         dest_dir = os.path.join(OUT, slug)
-        full_dir = os.path.join(FULL, slug)
         if not args.dry:
             os.makedirs(dest_dir, exist_ok=True)
-            os.makedirs(full_dir, exist_ok=True)
 
         pages = []
         redactions = 0
@@ -280,7 +309,9 @@ def main():
             # Контроль витоку: чи все знайдене справді потрапило в зони.
             # Пробіли прибираємо з обох боків — у зібраному рядку їх немає,
             # бо символи-пробіли не мають рамки й відсіюються раніше.
-            squash = lambda s: re.sub(r"\s+", "", s).upper()
+            # Те саме буває з підкресленням: у «Alla_beautynice» на одному
+            # з аркушів Larimar воно без рамки, і значення збирається злитно.
+            squash = lambda s: re.sub(r"[\s_]+", "", s).upper()
             page_text = tp.get_text_range()
             covered = squash(" ".join(b["value"] for b in boxes))
             for pat in FORBIDDEN:
@@ -303,11 +334,12 @@ def main():
                     fill=(255, 255, 255),
                 )
 
+            for patch in PATCHES:
+                if patch["slug"] == slug and patch["page"] == i + 1:
+                    apply_patch(img, patch["box"], patch.get("mode", "fill"))
+
             name = f"{i + 1:03d}.jpg"
-            # Перші PUBLIC_PAGES — у src/assets (потраплять на сайт),
-            # решта — у .drawings-full для надсилання за запитом.
-            target = dest_dir if i < PUBLIC_PAGES else full_dir
-            img.save(os.path.join(target, name), quality=82, optimize=True, progressive=True)
+            img.save(os.path.join(dest_dir, name), quality=82, optimize=True, progressive=True)
             pages.append({"file": name, "width": img.width, "height": img.height})
 
         grand_redactions += redactions

@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import { SETS, setsForProject, allSheets } from '../../lib/drawings';
+import { getProjects, slugOf } from '../../lib/projects';
+import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../lib/i18n';
+
+/*
+  Переглядач повного комплекту креслень. Відкривається з блоку креслень
+  на сторінці проєкту в новій вкладці.
+
+  Замість PDF — сторінка з аркушами-картинками: замовниця попросила, щоб
+  комплект не можна було скачати. Цілком цього не заборониш (що браузер
+  показав, те можна зберегти), але тут немає ні файлу, ні кнопки
+  завантаження, ні контекстного меню на аркушах. Дані замовників на
+  аркушах уже зафарбовано — див. scripts/redact-drawings.py.
+
+  noindex: робочу документацію не треба віддавати пошуковикам.
+*/
+
+export async function getStaticPaths() {
+  const projects = await getProjects(DEFAULT_LOCALE);
+  const withSets = new Set(SETS.map((s) => s.project).filter(Boolean));
+  return projects
+    .filter((p) => withSets.has(slugOf(p)))
+    .map((project) => ({ params: { project: slugOf(project) }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const slug = slugOf(project);
+const sheets = await allSheets(setsForProject(slug));
+const title = project.data.title;
+---
+
+<BaseLayout title={`${title} — ${t(locale, 'dwg.title')} — VM Design`} description={project.data.summary} noindex>
+  <article class="viewer">
+    <header class="container page-intro viewer__head">
+      <p class="t-eyebrow">{t(locale, 'dwg.eyebrow')} · {sheets.length} {t(locale, 'dwg.sheets')}</p>
+      <h1 class="page-intro__title">{title}</h1>
+      <a class="link" href={localePath(locale, `/projects/${slug}`)}>← {t(locale, 'dwg.back')}</a>
+    </header>
+
+    <ol class="container viewer__sheets" data-protect>
+      {
+        sheets.map((sheet, i) => (
+          <li>
+            <Image
+              src={sheet.img}
+              alt={`${title} — ${t(locale, 'dwg.sheet')} ${i + 1}`}
+              widths={[900, 1500]}
+              sizes="(max-width: 1720px) 92vw, 1560px"
+              format="webp"
+              loading={i < 2 ? 'eager' : 'lazy'}
+              draggable="false"
+              class:list={[sheet.img.height > sheet.img.width && 'is-tall']}
+            />
+            <span class="viewer__num t-meta">{i + 1} / {sheets.length}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</BaseLayout>
+
+<script>
+  // Без контекстного меню й перетягування на аркушах: «Зберегти
+  // зображення як…» — найпростіший спосіб забрати аркуш, його й прибираємо.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-protect]')) {
+    root.addEventListener('contextmenu', (e) => e.preventDefault());
+    root.addEventListener('dragstart', (e) => e.preventDefault());
+  }
+</script>
+
+<style>
+  .viewer__head .link {
+    display: inline-block;
+    margin-top: var(--space-s);
+  }
+
+  .viewer__sheets {
+    display: grid;
+    gap: var(--space-l);
+    margin: 0 auto;
+    padding-bottom: var(--space-xl);
+    list-style: none;
+  }
+
+  .viewer__sheets li {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  /* Горизонтальний аркуш — на всю ширину, як головний кадр проєкту. */
+  .viewer__sheets :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.08);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Вертикальний (Roma) на всю ширину був би на два екрани — вписуємо в один. */
+  .viewer__sheets :global(img.is-tall) {
+    width: auto;
+    max-width: 100%;
+    max-height: 92vh;
+  }
+
+  .viewer__num {
+    color: var(--fg-muted);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { MAP, buildMarkers, QUICK_VIEWS, CLUSTERS, project } from '../../lib/map';
+import { MAP, MAP_EAST, buildMarkers, QUICK_VIEWS, CLUSTERS, project } from '../../lib/map';
 import { groupByCity, slugOf, type Project } from '../../lib/projects';
 import { localePath, t, type Locale } from '../../lib/i18n';
 
@@ -14,7 +14,7 @@ interface Props {
 const { locale, projects, id } = Astro.props;
 
 const groups = groupByCity(projects);
-const { markers, clusters, beyond } = buildMarkers(groups);
+const { markers, eastMarkers, clusters, beyond } = buildMarkers(groups);
 const splitAt = CLUSTERS[0].splitAt;
 
 const quick = QUICK_VIEWS.map((v) => ({ ...v, ...project(v.lon, v.lat) }));
@@ -32,6 +32,7 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     <div class="geo__body">
       <div class="geo__figure" data-reveal style={`--map-ratio:${MAP.width / MAP.height}`}>
         <svg
+          data-map-sheet="main"
           viewBox={MAP.viewBox}
           role="img"
           aria-label={`Map of France and Italy showing ${projects.length} completed projects in ${groups.length} cities`}
@@ -105,6 +106,57 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
           </g>
         </svg>
 
+        {/*
+          Другий аркуш — Польща й Україна. Статичний: два міста на всю
+          карту, наближати тут нічого. Ставиться на місце основного
+          кнопкою під картою.
+        */}
+        {
+          eastMarkers.length > 0 && (
+            <svg
+              data-map-sheet="east"
+              viewBox={MAP_EAST.viewBox}
+              role="img"
+              aria-label={`Map of Poland and Ukraine showing projects in ${eastMarkers.map((m) => m.label).join(' and ')}`}
+              hidden
+            >
+              <g class="geo__regions">
+                {Object.entries(MAP_EAST.regions).map(([key, region]) => (
+                  <path d={region.d} data-region={key}>
+                    <title>{region.label}</title>
+                  </path>
+                ))}
+              </g>
+              <g class="geo__outline">
+                {Object.entries(MAP_EAST.countries).map(([key, d]) => <path d={d} data-country={key} />)}
+              </g>
+              <g class="geo__markers">
+                {eastMarkers.map((m) => {
+                  const group = groups.find((g) => g.city === m.label)!;
+                  const single = group.projects.length === 1 ? group.projects[0] : null;
+                  const Tag = single ? 'a' : 'g';
+                  return (
+                    <g class="marker" data-marker={m.id} transform={`translate(${m.x} ${m.y})`}>
+                      <Tag
+                        class="marker__scale"
+                        href={single ? localePath(locale, `/projects/${slugOf(single)}`) : undefined}
+                        tabindex={single ? undefined : '0'}
+                        role={single ? undefined : 'button'}
+                        aria-label={`${m.label} — ${m.count} ${t(locale, m.count === 1 ? 'map.project' : 'map.projects')}`}
+                      >
+                        <circle class="marker__hit" r="16" />
+                        <circle class="marker__halo" r="16" />
+                        <circle class="marker__dot" r="6" />
+                        <text class="marker__label" x="22" y="5">{m.label}</text>
+                      </Tag>
+                    </g>
+                  );
+                })}
+              </g>
+            </svg>
+          )
+        }
+
         <div class="geo__controls">
           {
             quick.map((v) => (
@@ -119,6 +171,13 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
                 {t(locale, v.labelKey)}
               </button>
             ))
+          }
+          {
+            eastMarkers.length > 0 && (
+              <button type="button" data-map-sheet-btn="east">
+                {t(locale, 'map.east')}
+              </button>
+            )
           }
           <span class="geo__zoom">
             <button type="button" data-map-zoom="-1" aria-label="Zoom out">−</button>
@@ -255,6 +314,21 @@ const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
     height: var(--map-h);
     touch-action: none;
     cursor: grab;
+  }
+
+  /* У SVG атрибут hidden сам не ховає — а display: block вище й поготів. */
+  .geo__figure svg[hidden] {
+    display: none;
+  }
+
+  /* Другий аркуш статичний: курсор-«рука» й зум там нічого не роблять. */
+  .geo__figure svg[data-map-sheet='east'] {
+    cursor: default;
+  }
+
+  [data-sheet='east'] .geo__zoom,
+  [data-sheet='east'] .geo__hint {
+    visibility: hidden;
   }
 
   .geo__figure svg.is-grabbing {

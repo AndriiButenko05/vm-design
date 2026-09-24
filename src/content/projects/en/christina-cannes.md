@@ -17,6 +17,13 @@ materials:
 summary: "Arched niches turn the product wall into the architecture of the room."
 cover: ../../../assets/projects/christina-cannes/019-img-8005.jpg
 coverAlt: "Christina Cannes — arched niches and lit oval mirrors along the salon"
+hero:
+  - src: ../../../assets/projects/christina-cannes/026-img-8077.jpg
+    alt: "Christina Cannes — arched niches and lit oval mirrors along the salon"
+  - src: ../../../assets/projects/christina-cannes/025-img-8071.jpg
+    alt: "Christina Cannes — arched niches and lit oval mirrors along the salon"
+  - src: ../../../assets/projects/christina-cannes/020-img-8022.jpg
+    alt: "Christina Cannes — arched niches and lit oval mirrors along the salon"
 coords: { lat: 43.5528, lon: 7.0174 }
 featured: false
 order: 6

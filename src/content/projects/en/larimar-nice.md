@@ -3,6 +3,7 @@ title: "Larimar"
 city: "Nice"
 country: "France"
 type: commercial
+area: 66.52
 scope:
   - "Concept design"
   - "Space planning"
@@ -16,10 +17,14 @@ materials:
 summary: "A sculpted relief runs the length of the wall and gives the salon its face."
 cover: ../../../assets/projects/larimar-nice/007-img-2672.jpg
 coverAlt: "Larimar — the sculpted plaster face behind the styling stations"
+hero:
+  - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
+    alt: "Larimar — the sculpted plaster face behind the styling stations"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
 order: 7
-todo: "Потрібні рік, площа, авторський текст. Уточнити авторство барельєфа."
+drawingsPreview: ["003", "004", "002"]
+todo: "Потрібні рік і авторський текст. Площа 66.52 m² — з legenda креслень (16.02.2026; до робіт 69.1). Уточнити авторство барельєфа."
 gallery:
   - src: ../../../assets/projects/larimar-nice/013-img-2686.jpg
     alt: "Larimar — the sculpted plaster face behind the styling stations"
