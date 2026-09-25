@@ -1,8 +1,3 @@
-/**
- * Порядок тут = порядок у перемикачі, і він відповідає реальним ринкам:
- * англійська як база, далі Лазурний берег та Італія, далі клієнтська база.
- * Переклади доливаються по одному — доки їх немає, працює фолбек на EN.
- */
 export const LOCALES = ['en', 'fr', 'it', 'ru', 'uk'] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
@@ -15,7 +10,6 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   uk: 'Українська',
 };
 
-/** Короткий підпис у перемикачі мов. */
 export const LOCALE_SHORT: Record<Locale, string> = {
   en: 'EN',
   fr: 'FR',
@@ -28,38 +22,22 @@ export function isLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value);
 }
 
-/**
- * Будує шлях із урахуванням локалі.
- * EN — без префікса (/about), решта — з ним (/it/about).
- */
 export function localePath(locale: Locale, pathname = '/'): string {
   const clean = '/' + pathname.replace(/^\/+/, '');
   if (locale === DEFAULT_LOCALE) return clean === '/' ? '/' : clean.replace(/\/$/, '');
   return `/${locale}${clean === '/' ? '' : clean.replace(/\/$/, '')}`;
 }
 
-/** Витягує локаль з URL сторінки. */
 export function localeFromUrl(url: URL): Locale {
   const first = url.pathname.split('/').filter(Boolean)[0];
   return first && isLocale(first) ? first : DEFAULT_LOCALE;
 }
 
-/**
- * Поточна локаль сторінки.
- *
- * Береться з Astro.currentLocale, а не з URL: при fallbackType 'rewrite'
- * сторінка /it/about рендериться з англійського маршруту, тож
- * Astro.url.pathname там дорівнює '/about' і локаль по ньому не визначити.
- */
 export function resolveLocale(currentLocale: string | undefined, url: URL): Locale {
   if (currentLocale && isLocale(currentLocale)) return currentLocale;
   return localeFromUrl(url);
 }
 
-/**
- * Прибирає префікс локалі — щоб перемикач мов вів на ТУ САМУ сторінку,
- * а не на головну (типова помилка мультимовних сайтів).
- */
 export function stripLocale(pathname: string): string {
   const parts = pathname.split('/').filter(Boolean);
   if (parts.length && isLocale(parts[0])) parts.shift();
@@ -78,7 +56,6 @@ const ui: Record<Locale, Dict> = {
     'nav.close': 'Close',
     'skip': 'Skip to content',
 
-    // Слоган замовниці — він, а не назва дисципліни, відкриває сайт.
     'hero.line1': 'Your life.',
     'hero.line2': 'Your character.',
     'hero.line3': 'Your interior.',
@@ -87,14 +64,6 @@ const ui: Record<Locale, Dict> = {
     'hero.places': 'French Riviera · Monaco · Italy',
     'hero.scroll': 'Scroll',
 
-    // ─── Коротке «про мене» на головній ──────────────────────
-    /*
-      Текст авторський, від замовниці, і він свідомо переведений із
-      першої особи в третю: раніше блок починався «I am Maryna
-      Vashchenko…» і представляв людину, тепер — студію. Це те саме
-      зміщення, про яке весь її фідбек: VM Design має читатися як
-      студія інтер'єрної архітектури, а не як персональна сторінка.
-    */
     'about.eyebrow': 'The studio',
     'about.title': 'Individual interiors, thoughtfully designed and precisely realised.',
     'about.lead':
@@ -103,21 +72,10 @@ const ui: Record<Locale, Dict> = {
       'Maryna personally leads every project — from the initial site survey and spatial concept to the selection of furniture, lighting and materials, and the supervision of its implementation. A trusted team of technical specialists supports the process under her direction.',
     'about.more': 'About the studio',
 
-    // ─── Блоки робіт ─────────────────────────────────────────
-    /*
-      Назви й описи категорій лежать у type.* — див. нижче.
-
-      Раніше їх було три окремі набори: index.* для фільтрів на
-      /projects, type.* для бейджа проєкту і work.*.title для рейок на
-      головній. Вони встигли розійтися ще до того, як це помітили:
-      фільтр казав «Exhibitions», бейдж — «Exhibition». Тепер джерело
-      одне, і розходитися немає чому.
-    */
     'work.viewAll': 'View all',
     'work.prev': 'Previous',
     'work.next': 'Next',
 
-    // ─── Christina ───────────────────────────────────────────
     'christina.eyebrow': 'One client, eleven projects',
     'christina.title': 'Christina',
     'christina.text':
@@ -128,25 +86,16 @@ const ui: Record<Locale, Dict> = {
     'christina.cities': 'cities',
     'christina.countries': 'countries',
 
-    // ─── Services ────────────────────────────────────────────
     'services.eyebrow': 'Services',
     'services.title': 'How we can work together',
     'services.lead':
       'From a single consultation to a complete interior delivered and styled — each format covers a different amount of the work, so the studio fits the project rather than the other way round.',
-    /*
-      Окремого «All services» під списком немає: кожна картка веде на
-      свою послугу, і загальне посилання поруч із п'ятьма конкретними
-      нічого не додавало. Сам розділ доступний із головного меню.
-    */
-    // Сторінка /services — власний заголовок і лід від замовниці. Блок на
-    // головній лишається з services.title / services.lead.
     'services.page.title': 'From first idea to final detail.',
     'services.page.lead':
       'Whether you need a single consultation or support throughout the entire project, our services are tailored to your space, your priorities and the level of involvement you need.',
     'services.more': 'Learn more',
     'services.includes': 'What’s included',
 
-    // ─── До / після ──────────────────────────────────────────
     'ba.eyebrow': 'Before / after',
     'ba.before': 'Before',
     'ba.after': 'After',
@@ -156,24 +105,20 @@ const ui: Record<Locale, Dict> = {
     'ba.prev': 'Previous comparison',
     'ba.next': 'Next comparison',
 
-    // ─── Галерея проєкту ─────────────────────────────────────
     'gallery.eyebrow': 'Completed interior',
     'gallery.title': 'Explore the project',
     'gallery.prev': 'Previous photo',
     'gallery.next': 'Next photo',
 
-    // ─── 3D проєкту ──────────────────────────────────────────
     'renders3d.eyebrow': '3D visualisation',
     'renders3d.title': 'The design in 3D',
 
-    // ─── Процес ──────────────────────────────────────────────
     'process.eyebrow': 'Behind the project',
     'process.title': 'From construction to completion',
     'process.summary':
       'The transformation began with a substantial renovation. See the site before the finished interior took shape.',
     'process.toggle': 'View the process',
 
-    // ─── Креслення ───────────────────────────────────────────
     'dwg.eyebrow': 'Design project',
     'dwg.title': 'The drawings',
     'dwg.text':
@@ -187,7 +132,6 @@ const ui: Record<Locale, Dict> = {
     'index.title': 'Projects',
     'index.all': 'All projects',
 
-    // Спільні підписи модалки й кнопок збільшення.
     'renders.zoom': 'open larger',
     'renders.close': 'Close',
     'renders.prev': 'Previous image',
@@ -206,18 +150,13 @@ const ui: Record<Locale, Dict> = {
     'map.east': 'Poland & Ukraine',
     'map.projects': 'projects',
     'map.project': 'project',
-    /*
-      Було «Beyond Europe» — доки поза картою лишався сам лише Гонконг.
-      Тепер туди ж потрапив Kassel, а він у Європі, тож попередній підпис
-      став би просто неправдою.
-    */
     'map.beyond': 'Also in',
 
     'contact.eyebrow': 'Contact',
     'contact.title': 'Start a project',
     'contact.name': 'Name',
     'contact.email': 'Email',
-    'contact.type': 'Project type',
+    'contact.type': 'Service',
     'contact.message': 'Message',
     'contact.send': 'Send message',
     'contact.lead': 'Tell me about the space and how you want to live in it.',
@@ -237,11 +176,6 @@ const ui: Record<Locale, Dict> = {
     'project.materials': 'Materials',
     'project.next': 'Next project',
     'project.view': 'View project',
-    /*
-      Єдине джерело назв категорій: фільтри на /projects, заголовок
-      /projects/type/*, бейдж проєкту, підпис на карті й рейки головної
-      читають саме ці ключі. Тексти — авторські, від замовниці.
-    */
     'type.residential': 'Residential',
     'type.residential.text':
       'Private houses, villas and apartments — from new-build interiors to complete renovations. Each project is developed around the client’s lifestyle, the architecture of the property and the character of its location.',
@@ -253,9 +187,6 @@ const ui: Record<Locale, Dict> = {
       'Exhibition stands designed to present a brand with clarity and impact. Each project brings together the visual concept, the needs of the venue and the practical details of installation.',
   },
 
-  // Перекладів ще немає. Порожній словник — не помилка: t() падає
-  // на англійський рядок, тому /fr, /it, /ru, /uk вже робочі сторінки.
-  // Доливаємо мову по одній, у порядку LOCALES.
   fr: {},
   it: {},
   ru: {},
@@ -266,7 +197,6 @@ export function t(locale: Locale, key: string): string {
   return ui[locale]?.[key] ?? ui[DEFAULT_LOCALE][key] ?? key;
 }
 
-/** Зручний хелпер: const _ = translator(locale); _('nav.work') */
 export function translator(locale: Locale) {
   return (key: string) => t(locale, key);
 }

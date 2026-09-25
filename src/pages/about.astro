@@ -11,10 +11,6 @@ import portrait from '../assets/portrait.jpg';
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);
 
-/**
- * Текст — авторський, із біографії, надісланої замовницею (вересень 2026).
- * Не переказ і не переписування: змінено лише розбивку на абзаци.
- */
 const BIO = [
   'Maryna Vashchenko is an architect, interior designer and founder of VM Design, with over 15 years of professional experience.',
   'After completing her architectural education in Ukraine, Maryna began her career in Kyiv. She worked on residential and commercial interiors, spa complexes and large-scale architectural projects before taking responsibility for project management, site supervision and the coordination of project implementation.',
@@ -45,7 +41,6 @@ const PROCESS = [
         <h1 class="t-display">Maryna<br />Vashchenko</h1>
         <p class="t-meta lede__role">{SITE.role}</p>
 
-        {/* Її власна фраза з біографії. */}
         <blockquote class="lede__quote">
           <p>“For me, an interior begins not with a style, but with the person it is created for.”</p>
         </blockquote>
@@ -90,13 +85,6 @@ const PROCESS = [
             <dt class="t-meta">Languages</dt>
             <dd>{SITE.facts.languages.join(' · ')}</dd>
           </div>
-          {/*
-            Рядка «Realised — N projects · M cities» тут більше немає.
-            Він рахував завантажені на сайт роботи, а читався як підсумок
-            кар'єри: «за п'ятнадцять років — сімнадцять проєктів».
-            Замовниця попросила прибрати, і має рацію — цифра applied
-            не до того, до чого здавалося.
-          */}
         </dl>
       </aside>
 
@@ -140,11 +128,6 @@ const PROCESS = [
     grid-column: span 6;
   }
 
-  /*
-    Spectral у верхньому регістрі ширший за Cormorant: «VASHCHENKO» на
-    повному --step-display упиралося в портрет поруч. Ліміт у vw тримає
-    слово в межах своєї половини сітки на будь-якій ширині.
-  */
   .lede__type h1 {
     margin-block: var(--space-m) var(--space-s);
     font-size: clamp(2.75rem, 6.4vw, 7rem);
@@ -176,8 +159,6 @@ const PROCESS = [
     height: auto;
   }
 
-  /* ─── Біографія ───────────────────────────────────────── */
-
   .bio__facts {
     grid-column: span 4;
     position: sticky;
@@ -206,8 +187,6 @@ const PROCESS = [
   .bio__text p + p {
     margin-top: var(--space-m);
   }
-
-  /* ─── Процес ──────────────────────────────────────────── */
 
   .process__head {
     margin-bottom: var(--space-xl);
@@ -245,7 +224,6 @@ const PROCESS = [
       grid-column: 1 / -1;
     }
 
-    /* Повна ширина колонки — щоб правий край збігався з текстом. */
     .lede__portrait {
       order: -1;
     }

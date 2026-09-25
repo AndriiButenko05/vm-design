@@ -1,17 +1,3 @@
-/**
- * Контраст білого тексту на затемненому кадрі першого екрана.
- *
- * Кадр світлий — білі стіни й мармур. На око здається, що градієнта
- * «начебто достатньо», але підпис при цьому може не діставати до 4.5:1.
- * Тому рахуємо по реальних пікселях: беремо кадр, накладаємо ту саму
- * формулу градієнта, що в Hero.astro, і міряємо найгірший піксель
- * у прямокутнику, де насправді лежить текст.
- *
- *   node scripts/check-hero-contrast.mjs
- *
- * Виходить з ненульовим кодом, якщо контраст нижчий за поріг, —
- * щоб це не можна було проґавити.
- */
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,23 +8,16 @@ const sharp = require('sharp');
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const IMAGE = path.join(ROOT, 'src/assets/projects/la-villa-nice/034-img-2560.jpg');
 
-/** Колір скриму — --ink-deep. Має збігатися з Hero.astro. */
 const SCRIM = { r: 25, g: 24, b: 23 };
 
-/** Поріг WCAG AA для великого тексту — 3:1, для звичайного — 4.5:1. */
 const THRESHOLD = 4.5;
 
-/**
- * Зони, де лежить текст, у частках від кадру.
- * Слоган і підписи тиснуться до лівого краю й вертикально по центру.
- */
 const ZONES = [
   { name: 'слоган', x0: 0.05, x1: 0.5, y0: 0.3, y1: 0.58 },
   { name: 'підводка', x0: 0.05, x1: 0.42, y0: 0.58, y1: 0.68 },
   { name: 'роль і міста', x0: 0.05, x1: 0.4, y0: 0.72, y1: 0.82 },
 ];
 
-/** Горизонтальний шар градієнта з Hero.astro. */
 function alphaX(t) {
   const stops = [
     [0, 0.7],
@@ -49,7 +28,6 @@ function alphaX(t) {
   return interpolate(stops, t);
 }
 
-/** Вертикальний шар. */
 function alphaY(t) {
   const stops = [
     [0, 0.35],
@@ -72,7 +50,6 @@ function interpolate(stops, t) {
   return stops[stops.length - 1][1];
 }
 
-/** Відносна яскравість за WCAG. */
 function luminance(r, g, b) {
   const f = (c) => {
     const s = c / 255;
@@ -81,10 +58,6 @@ function luminance(r, g, b) {
   return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
 }
 
-/**
- * Мобільний градієнт — рівніший і сильніший, бо при object-fit: cover
- * вертикальний екран вирізає центральну смугу кадру, а вона світла.
- */
 function alphaMobile(t) {
   return interpolate(
     [
@@ -97,7 +70,6 @@ function alphaMobile(t) {
   );
 }
 
-/** Найгірший контраст білого в зоні. Повертає {ratio, at}. */
 function worstInZone(data, W, H, channels, zone, alphas) {
   let worst = Infinity;
   let at = null;
@@ -109,7 +81,6 @@ function worstInZone(data, W, H, channels, zone, alphas) {
       let g = data[i + 1];
       let b = data[i + 2];
 
-      // Шари накладаються один на одного, як у CSS.
       for (const a of alphas(x / W, y / H)) {
         r = r * (1 - a) + SCRIM.r * a;
         g = g * (1 - a) + SCRIM.g * a;
@@ -147,21 +118,13 @@ async function check(title, pipeline, alphas, zones) {
 
 console.log(`Кадр: ${path.basename(IMAGE)}, поріг ${THRESHOLD}:1\n`);
 
-// Десктоп: кадр майже не обрізається, працюють обидва градієнти.
 await check(
   'Десктоп',
-  // Рахувати по 2000 px немає потреби: градієнт плавний, а мінімум
-  // шукаємо по зоні, не по одному пікселю.
   sharp(IMAGE).resize({ width: 600 }),
   (x, y) => [alphaY(y), alphaX(x)],
   ZONES,
 );
 
-/*
-  Телефон: 390×844, object-fit: cover обрізає альбомний кадр до
-  центральної вертикальної смуги. Саме цей випадок провалювався,
-  поки градієнт був спільний із десктопним.
-*/
 const VW = 390;
 const VH = 844;
 const meta = await sharp(IMAGE).metadata();
@@ -180,7 +143,6 @@ await check(
       height: VH,
     }),
   (_x, y) => [alphaMobile(y)],
-  // На вузькому екрані текст займає майже всю ширину.
   ZONES.map((z) => ({ ...z, x0: 0.05, x1: 0.95 })),
 );
 

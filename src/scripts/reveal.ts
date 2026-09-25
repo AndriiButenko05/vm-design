@@ -1,5 +1,3 @@
-/** Поява блоків при скролі. Один спостерігач, відписка після спрацювання. */
-
 const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
 if (items.length && 'IntersectionObserver' in window) {
   const io = new IntersectionObserver(

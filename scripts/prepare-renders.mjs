@@ -1,19 +1,3 @@
-/**
- * Готує 3D-візуалізації до збірки.
- *
- *   node scripts/prepare-renders.mjs
- *
- * На відміну від реалізованих проєктів, візуалізації замовниця просила
- * НЕ ділити за об'єктами — лише за типом приміщення (як розділ AMBIENTI
- * у Pistore Marmi, який вона надіслала як референс).
- *
- * Тип визначається з імені файлу: замовниця іменувала їх російською
- * («кухня-гостиная», «гостевой санузел»). Кадри без змістовної назви
- * (IMG_*, unnamed) розкладені вручну після перегляду — див. BY_FILENAME.
- *
- * Пише src/assets/renders/<room>/ і src/data/renders.json.
- */
-
 import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -25,7 +9,6 @@ const MANIFEST = path.join(ROOT, 'src', 'data', 'renders.json');
 
 const MAX_EDGE = 1800;
 
-/** Розділи. Порядок тут = порядок на сторінці. */
 export const ROOMS = [
   { slug: 'kitchen-living', title: 'Kitchen & Living' },
   { slug: 'bedrooms', title: 'Bedrooms' },
@@ -36,10 +19,6 @@ export const ROOMS = [
   { slug: 'studies', title: 'Studies' },
 ];
 
-/**
- * Кадри без змістовного імені — розкладені після візуального перегляду.
- * Ключ — початок імені файлу.
- */
 const BY_FILENAME = [
   [/^IMG_(789[234]|793[9]|794[012])/i, 'bedrooms'],
   [/^IMG_84(3[789]|4[01])/i, 'bathrooms'],
@@ -47,10 +26,6 @@ const BY_FILENAME = [
   [/^unnamed/i, 'childrens-rooms'],
 ];
 
-/**
- * Правила за змістом імені. Порядок важливий:
- * «сан уз детский» — це санвузол, а не дитяча, тому санвузол перевіряється раніше.
- */
 const BY_KEYWORD = [
   [/сан\s*уз|санузел/i, 'bathrooms'],
   [/гардеробн/i, 'dressing-rooms'],
@@ -67,7 +42,6 @@ function classify(file) {
   return null;
 }
 
-/** Латинський slug із кириличного імені — для назв файлів на диску. */
 function slugify(name, index) {
   const map = {
     а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z',
@@ -113,7 +87,6 @@ async function main() {
 
     await pipeline
       .resize({ width: MAX_EDGE, height: MAX_EDGE, fit: 'inside', withoutEnlargement: true })
-      // Без .withMetadata() — метадані рендерів теж не тягнемо у продакшн.
       .jpeg({ quality: 86, mozjpeg: true })
       .toFile(dest);
 
@@ -127,7 +100,6 @@ async function main() {
       ratio: +(out.width / out.height).toFixed(4),
       orientation: out.height > out.width ? 'portrait' : 'landscape',
       colour: `#${hex(dominant.r)}${hex(dominant.g)}${hex(dominant.b)}`,
-      // Прибирає з підпису службові номери, лишає зміст.
       source: file,
     });
   }

@@ -4,10 +4,6 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import { getProjects, slugOf, PROJECT_TYPES, typeFilters } from '../../../lib/projects';
 import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../../lib/i18n';
 
-/**
- * Фільтр як окремі статичні маршрути: /projects/type/residential.
- * Нуль JS, індексовані URL, працює з кнопкою «назад».
- */
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
   return PROJECT_TYPES.map((type) => ({
@@ -23,13 +19,6 @@ const filters = typeFilters(locale);
 
 const label = t(locale, `type.${type}`);
 
-/*
-  Опис категорії — авторський текст замовниці, той самий, що в рейці
-  на головній. Раніше тут стояли склейки «<назва> projects — VM Design»
-  і «<назва> interiors by Maryna Vashchenko»; з новими назвами вони
-  ламаються: «Exhibition Design interiors by Maryna Vashchenko» —
-  не речення. Тому назва йде окремо, а опис береться готовим.
-*/
 const intro = t(locale, `type.${type}.text`);
 ---
 
@@ -145,15 +134,6 @@ const intro = t(locale, `type.${type}.text`);
     gap: clamp(1.5rem, 5vw, 5rem);
   }
 
-  /*
-    Висота плитки задається явно, а не пропорцією.
-
-    Пропорція 4/5 прив'язувала висоту до ширини колонки: на контейнері
-    1720 px це давало кадри понад 1000 px заввишки. Плюс обкладинки бувають
-    і вертикальні, і альбомні, тож при вільній висоті вони виходили різними.
-    Фіксована висота робить усі плитки однаковими, а object-fit: cover
-    підганяє будь-яку пропорцію.
-  */
   .work__item .plate {
     aspect-ratio: auto;
     height: clamp(320px, 46vh, 560px);

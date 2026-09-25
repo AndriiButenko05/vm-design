@@ -1,5 +1,3 @@
-/** Прозора шапка над hero стає непрозорою після прокрутки. */
-
 const header = document.querySelector<HTMLElement>('.site-header[data-transparent]');
 if (header) {
   const sentinel = document.createElement('div');

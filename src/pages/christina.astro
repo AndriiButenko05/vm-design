@@ -9,12 +9,6 @@ import { resolveLocale, localePath, t } from '../lib/i18n';
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const all = await getProjects(locale);
 
-/**
- * Christina проходить через п'ять міст і шість виставок. Розсипані по
- * загальному індексу, ці проєкти читаються як одинадцять окремих робіт;
- * зібрані разом — як багаторічна програма для одного бренду.
- * Саме поле `brand` і дозволяє зробити цю сторінку без дублювання записів.
- */
 const christina = all.filter((p) => p.data.brand === 'Christina');
 const retail = christina.filter((p) => p.data.type === 'commercial');
 const stands = christina.filter((p) => p.data.type === 'exhibition');
@@ -25,15 +19,6 @@ const span = years.length ? `${Math.min(...years)} — ${Math.max(...years)}` : 
 
 const cover = retail.find((p) => slugOf(p) === 'christina-roma') ?? retail[0];
 
-/**
- * У шапці — усі салони, а не один кадр.
- *
- * Сторінка починається з обіцянки «один клієнт, одинадцять проєктів»,
- * а показувала при цьому одну фотографію. П'ять обкладинок із підписами
- * міст цю обіцянку показують, і кожна веде на свій проєкт. Стенди
- * лишаються нижче власною стрічкою: у них інша природа й інший строк
- * життя, і змішувати їх із салонами в одному слайдері немає сенсу.
- */
 const heroSlides = [cover, ...retail.filter((p) => p !== cover)].filter(Boolean).map((p) => ({
   src: p.data.cover,
   alt: p.data.coverAlt,
@@ -54,7 +39,6 @@ const card = (p: Project) => ({
   transparentHeader
 >
   <article>
-    {/* ─── Титул ──────────────────────────────────────────── */}
     <header class="lede on-ink-deep">
       <div class="container lede__inner">
         <div class="lede__type">
@@ -73,7 +57,6 @@ const card = (p: Project) => ({
       </div>
     </header>
 
-    {/* ─── Цифри ──────────────────────────────────────────── */}
     <section class="facts on-ink">
       <dl class="container facts__grid">
         <div>
@@ -99,7 +82,6 @@ const card = (p: Project) => ({
       </dl>
     </section>
 
-    {/* ─── Ритейл ─────────────────────────────────────────── */}
     <section class="stream section">
       <div class="container">
         <header class="stream__head" data-reveal>
@@ -143,7 +125,6 @@ const card = (p: Project) => ({
       </div>
     </section>
 
-    {/* ─── Стенди ─────────────────────────────────────────── */}
     <section class="stream stream--stands on-sand section">
       <div class="container">
         <header class="stream__head" data-reveal>
@@ -208,8 +189,6 @@ const card = (p: Project) => ({
   }
 
 
-  /* ─── Цифри ───────────────────────────────────────────── */
-
   .facts {
     padding-block: var(--space-2xl);
   }
@@ -218,8 +197,6 @@ const card = (p: Project) => ({
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-l);
-    /* Лише типові відступи списка: margin: 0 перебивав
-       margin-inline: auto з .container, і той тулився влівo. */
     margin-block: 0;
   }
 
@@ -234,8 +211,6 @@ const card = (p: Project) => ({
   .facts__n--small {
     font-size: clamp(1.5rem, 3vw, 2.25rem);
   }
-
-  /* ─── Потоки ──────────────────────────────────────────── */
 
   .stream__head {
     margin-bottom: var(--space-xl);
@@ -280,7 +255,6 @@ const card = (p: Project) => ({
       grid-template-columns: 1fr;
     }
 
-    /* Повна ширина колонки — щоб правий край збігався з текстом. */
     .lede__plate {
       width: 100%;
     }

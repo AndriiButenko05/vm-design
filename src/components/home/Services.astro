@@ -5,21 +5,10 @@ import { SERVICES } from '../../lib/services';
 
 interface Props {
   locale: Locale;
-  /** Якір для посилань із футера. */
   id?: string;
 }
 const { locale, id } = Astro.props;
 
-/**
- * На головній — лише головні послуги.
- *
- * Тут раніше стояв власний масив із етапами роботи («обмір», «концепція»,
- * «креслення»). Замовниця вказала, що це не послуги, і надіслала справжній
- * перелік — тепер він у lib/services.ts, спільний із /services.
- *
- * Консультацію вона просила не виносити в головні картки, тож фільтр за
- * featured, а не зріз за кількістю: рішення лежить у даних, а не тут.
- */
 const featured = SERVICES.filter((s) => s.featured);
 ---
 
@@ -48,13 +37,6 @@ const featured = SERVICES.filter((s) => s.featured);
             <p class="t-meta service__num">{String(i + 1).padStart(3, '0')}</p>
             <h3 class="service__title">{s.title}</h3>
             <p class="service__text">{s.short}</p>
-            {/*
-              Ведемо на якір саме цієї послуги, а не просто на /services:
-              там розкритий перелік того, що входить, і користувач
-              потрапляє одразу до нього, а не шукає потрібну картку серед
-              шести. aria-label потрібен, бо шість однакових «Learn more»
-              поспіль у списку посилань скрінрідера нічого не розрізняють.
-            */}
             <p class="service__more">
               <a
                 class="link"
@@ -82,7 +64,6 @@ const featured = SERVICES.filter((s) => s.featured);
   }
 
   .services__list {
-    /* Проміжок між колонками — змінною, бо його ж рахує правило нижче. */
     --col-gap: clamp(1.5rem, 4vw, 4rem);
 
     display: grid;
@@ -94,17 +75,6 @@ const featured = SERVICES.filter((s) => s.featured);
     counter-reset: service;
   }
 
-  /*
-    Непарна остання картка стає по центру.
-
-    Головних послуг п'ять, а колонок дві — п'ята лишалася сама в лівій
-    комірці, і поруч зяяла порожня. Картка розтягується на обидві
-    колонки, але тримає ширину рівно однієї, тож у ряду з чотирьох
-    сусідів нічого не змінюється.
-
-    Селектор сам вимикається, якщо послуг стане парна кількість:
-    :nth-child(odd) тоді не збігається.
-  */
   .services__list > li:last-child:nth-child(odd) {
     grid-column: 1 / -1;
     justify-self: center;
@@ -152,11 +122,6 @@ const featured = SERVICES.filter((s) => s.featured);
       grid-template-columns: 1fr;
     }
 
-    /*
-      На одній колонці центрувати нічого — і головне, ширину треба
-      скинути: calc((100% - gap) / 2) зробив би останню картку вдвічі
-      вужчою за решту.
-    */
     .services__list > li:last-child:nth-child(odd) {
       width: auto;
     }

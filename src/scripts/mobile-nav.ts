@@ -1,10 +1,3 @@
-/**
- * Мобільне меню: overlay, пастка фокуса, Esc, блокування скролу.
- *
- * Свідомо не CSS-хак на <details>: без пастки фокуса й Esc
- * меню недоступне з клавіатури та для скрінрідерів.
- */
-
 const toggle = document.querySelector<HTMLButtonElement>('[data-mobile-nav-toggle]');
 const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
 
@@ -14,7 +7,6 @@ if (toggle && panel) {
       (el) => el.offsetParent !== null,
     );
 
-  // Індекси для каскадної появи пунктів.
   panel.querySelectorAll<HTMLElement>('nav li').forEach((li, i) => {
     li.style.setProperty('--i', String(i));
   });
@@ -33,7 +25,6 @@ if (toggle && panel) {
 
   toggle.addEventListener('click', () => setOpen(!open));
 
-  // Перехід за посиланням закриває меню (важливо для якірних та SPA-переходів).
   panel.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) setOpen(false);
   });
@@ -62,7 +53,6 @@ if (toggle && panel) {
     }
   });
 
-  // Повернення на desktop із відкритим меню не має лишати сторінку заблокованою.
   matchMedia('(min-width: 801px)').addEventListener('change', (e) => {
     if (e.matches && open) setOpen(false);
   });

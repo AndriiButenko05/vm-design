@@ -1,37 +1,17 @@
 ---
-/**
- * Секція «Матеріали» на головній.
- *
- * Замість смуги з горизонтальною прокруткою — WebGL-стрічка по дузі.
- * Обрана замовником саме тому, що однаково тримає і телефон, і десктоп:
- * плитка сама вписує будь-яку пропорцію кадру, тож підганяти світлини
- * під однаковий формат не треба.
- */
 import { getImage } from 'astro:assets';
-import CircularGallery from './CircularGallery.tsx';
+import './CircularGallery.css';
 import { t, type Locale } from '../../lib/i18n';
 import type { Project } from '../../lib/projects';
 
 interface Props {
   locale: Locale;
   projects: Project[];
-  /** Якір для посилань із футера. */
   id?: string;
 }
 
 const { locale, projects, id } = Astro.props;
 
-/**
- * Беремо кадри з полем material — тобто ті, де матеріал справді видно,
- * і його можна назвати.
- *
- * Раніше тут був фільтр за size: detail, і в стрічку потрапляли загальні
- * плани виставкових стендів, де жодного матеріалу немає. Секція називалася
- * «Матеріали», а підписані були проєкти — тобто вона нічого не повідомляла.
- *
- * Компонент дублює список задля безшовної петлі, тож у відеопам'яті
- * опиняється вдвічі більше текстур — звідси й обмеження.
- */
 const MAX = 14;
 
 const picked = projects
@@ -42,7 +22,6 @@ const picked = projects
   )
   .slice(0, MAX);
 
-/** Компонент приймає URL рядком, тому проганяємо через getImage(). */
 const items = await Promise.all(
   picked.map(async ({ frame }) => {
     const img = await getImage({ src: frame.src, width: 800, format: 'webp' });
@@ -60,33 +39,45 @@ const items = await Promise.all(
       </div>
 
       <div class="materials__stage">
-        <CircularGallery
-          client:visible
-          items={items}
-          bend={2}
-          textColor="#2b2a29"
-          borderRadius={0.04}
-          scrollEase={0.05}
-          scrollSpeed={2}
-          {/*
-            Родина дублюється рядком, бо це шрифт для canvas у WebGL,
-            а не CSS: --font-display сюди не дістає. Має збігатися
-            з тим, що оголошено в fonts.css, інакше підписи мовчки
-            намалюються запасним шрифтом.
-          */}
-          font="400 72px 'Spectral'"
-        />
+        <div
+          class="circular-gallery"
+          data-circular-gallery
+          data-config={JSON.stringify({
+            items,
+            bend: 2,
+            textColor: '#2b2a29',
+            borderRadius: 0.04,
+            scrollEase: 0.05,
+            scrollSpeed: 2,
+            font: "400 72px 'Spectral'",
+          })}
+          tabindex="0"
+          role="region"
+          aria-label="Circular image gallery. Use Left and Right Arrow keys to navigate."
+        ></div>
       </div>
     </section>
   )
 }
 
+<script>
+  const el = document.querySelector<HTMLElement>('[data-circular-gallery]');
+  if (el) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        import('../../scripts/circular-gallery').then(({ mountCircularGallery }) =>
+          mountCircularGallery(el, JSON.parse(el.dataset.config!)),
+        );
+      },
+      { rootMargin: '200px' },
+    );
+    io.observe(el);
+  }
+</script>
+
 <style>
-  /*
-    Без відступу знизу: полотно галереї само по собі має запас зверху —
-    плитки стоять по центру сцени, а дуга опускає крайні ще нижче.
-    Разом із --space-xl це давало провал у 64 px поверх наявного.
-  */
   .materials__head {
     margin-bottom: 0;
   }
@@ -95,11 +86,6 @@ const items = await Promise.all(
     margin-bottom: var(--space-s);
   }
 
-  /*
-    Полотну потрібна задана висота — воно не міряється вмістом.
-    На всю ширину вікна, без контейнера: дуга читається лише тоді,
-    коли крайні плитки встигають піти за край екрана.
-  */
   .materials__stage {
     position: relative;
     height: clamp(360px, 46vh, 560px);

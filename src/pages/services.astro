@@ -1,15 +1,4 @@
 ---
-/**
- * Повний перелік послуг.
- *
- * Розділу не було зовсім: у меню стояли Work, Visualisations, About і
- * Contact, а на головній — блок «What the studio does» з етапами роботи.
- * Замовниця вказала, що це найважливіший відсутній розділ: клієнт не
- * замовляє «етап обміру», він обирає формат співпраці.
- *
- * Що входить у кожну послугу — показано одразу, без розкривання: саме
- * ці переліки й є змістом розділу, заради них сюди приходять.
- */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import ContactSection from '../components/home/ContactSection.astro';
@@ -54,20 +43,6 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
                 <h2 class="t-h2 svc__title">{s.title}</h2>
                 <p class="svc__short">{s.short}</p>
 
-                {/*
-                  Список відкритий, без розкривання.
-
-                  Спершу тут стояв <details>: підпис, а перелік під ним
-                  ховався. Але на широкому екрані праворуч від кожної
-                  послуги лишалося півекрана порожнечі, а саме цей
-                  перелік і є змістом розділу — клієнт приходить сюди
-                  дізнатися, що входить, і змушувати його клікати шість
-                  разів немає сенсу.
-
-                  h3, а не просто підпис: у кожної послуги свій h2 вище,
-                  тож заголовок третього рівня дає скрінрідеру нормальну
-                  структуру замість плаского тексту.
-                */}
                 <div class="svc__more">
                   <h3 class="t-meta svc__inc-title">{t(locale, 'services.includes')}</h3>
                   <ul class="svc__includes">
@@ -119,15 +94,6 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
     align-items: start;
   }
 
-  /*
-    Кожна друга послуга дзеркалиться: кадр праворуч, текст ліворуч.
-    Порядок у розмітці лишається природним — міняється лише колонка,
-    тож і читання з клавіатури, і скрінрідер ідуть як написано.
-
-    Разом із розміщенням обов'язково перевертається і САМ ШАБЛОН колонок.
-    Інакше кадр стрибає з вузької колонки в широку через рядок: пропорція
-    лишається 4:5, але ширина різна, і фотографії виходять різного розміру.
-  */
   .svc:nth-child(even) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
   }
@@ -196,7 +162,6 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
       grid-template-columns: 1fr;
     }
 
-    /* На одній колонці дзеркалити нічого: скидаємо і шаблон, і перестановку. */
     .svc:nth-child(even) {
       grid-template-columns: 1fr;
     }
@@ -207,7 +172,6 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
       grid-row: auto;
     }
 
-    /* Повна ширина колонки — щоб правий край збігався з текстом. */
     .svc__plate {
       width: 100%;
     }

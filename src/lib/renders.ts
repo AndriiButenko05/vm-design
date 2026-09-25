@@ -17,10 +17,6 @@ export type Room = {
   items: RenderItem[];
 };
 
-/**
- * Зображення підтягуються через import.meta.glob, бо в маніфесті лише імена файлів.
- * eager: true — це build-time імпорт, у клієнтський бандл нічого не потрапляє.
- */
 const files = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/renders/**/*.jpg',
   { eager: true },
@@ -28,7 +24,6 @@ const files = import.meta.glob<{ default: ImageMetadata }>(
 
 const byKey = new Map<string, ImageMetadata>();
 for (const [p, mod] of Object.entries(files)) {
-  // '../assets/renders/bedrooms/007-32-spalnya.jpg' -> 'bedrooms/007-32-spalnya.jpg'
   const key = p.split('/renders/')[1];
   byKey.set(key, mod.default);
 }
@@ -47,20 +42,10 @@ export function getRoom(slug: string): Room | undefined {
 
 export const TOTAL_RENDERS = ROOMS.reduce((n, r) => n + r.count, 0);
 
-/**
- * Обкладинка розділу — перший горизонтальний кадр.
- * Рендери переважно альбомні (103 зі 112), і саме вони добре тримають
- * картку розділу; вертикальні лишаємо для самої галереї.
- */
 export function coverOf(room: Room): RenderItem {
   return room.items.find((i) => i.orientation === 'landscape') ?? room.items[0];
 }
 
-/**
- * Підпис під кадром у галереї. Замовниця іменувала файли російською
- * («2 вар кухня-гостиная 03»), тому в інтерфейс це не виводимо —
- * лишається назва розділу та порядковий номер.
- */
 export function captionFor(room: Room, index: number): string {
   return `${room.title} — ${String(index + 1).padStart(2, '0')}`;
 }

@@ -7,7 +7,6 @@ interface Props {
   locale: Locale;
   project: string;
   sets: DrawingSet[];
-  /** Номери аркушів для прев'ю з frontmatter — drawingsPreview. */
   picks?: string[];
 }
 
@@ -16,26 +15,12 @@ const { locale, project, sets, picks } = Astro.props;
 const sheets = await previewSheets(sets, picks);
 const total = totalPages(sets);
 
-/*
-  Кнопка на весь комплект — лише коли в ньому є щось понад показане.
-  У Варшави два плани, і обидва вже на сторінці: переглядач не додав би
-  нічого, а кнопка обіцяла б більше, ніж є.
-*/
 const hasMore = total > sheets.length;
 
 const full = await Promise.all(sheets.map((s) => getImage({ src: s.img, width: 1500, format: 'webp' })));
 const fullAvif = await Promise.all(sheets.map((s) => getImage({ src: s.img, width: 1500, format: 'avif' })));
 ---
 
-{/*
-  Два-три аркуші на сторінці й кнопка на весь комплект — переглядач
-  /drawings/<проєкт> у новій вкладці. Так попросила замовниця: хто хоче
-  глибше, відкриває все, решта бачить рівень документації з першого погляду.
-  Саме переглядач, а не PDF: комплект не має скачуватися одним файлом.
-
-  Аркуші — растри, де дані замовника вже зафарбовано
-  (scripts/redact-drawings.py).
-*/}
 <section class="dwg section">
   <div class="container">
     <header class="dwg__head" data-reveal>
@@ -113,10 +98,6 @@ const fullAvif = await Promise.all(sheets.map((s) => getImage({ src: s.img, widt
     list-style: none;
   }
 
-  /*
-    Аркуші бувають і горизонтальні (A3), і вертикальні (Roma). Рамка
-    однакова для всіх, аркуш вписується цілком — інакше ряд рвався б.
-  */
   .dwg__sheet {
     display: grid;
     place-items: center;

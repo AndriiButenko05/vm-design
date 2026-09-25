@@ -11,12 +11,6 @@ interface Props {
 const { locale, projects } = Astro.props;
 ---
 
-{/*
-  Не сітка карток, а покажчик — як у каталозі виставки.
-  Прев'ю відкривається вертикальною плитою: 137 зі 151 кадру
-  в партії вертикальні, тож портретне прев'ю тут не компроміс,
-  а форма, що збігається з матеріалом.
-*/}
 <div class="index" data-index>
   <ol class="index__rows">
     {
@@ -29,7 +23,6 @@ const { locale, projects } = Astro.props;
             <span class="index__meta index__meta--type t-meta">{t(locale, `type.${p.data.type}`)}</span>
             <span class="index__meta index__meta--year t-meta">{p.data.year ?? ''}</span>
 
-            {/* Плитка всередині рядка — вона ж прев'ю на вузьких екранах. */}
             <span class="index__inline plate plate--portrait" style={`--placeholder:${'#2b2a29'}`}>
               <Picture formats={['avif']} fallbackFormat="webp" src={p.data.cover} alt="" widths={[280, 560]} sizes="140px" loading="lazy" />
             </span>
@@ -39,7 +32,6 @@ const { locale, projects } = Astro.props;
     }
   </ol>
 
-  {/* Прев'ю для вказівника. Приховане від скрінрідерів — дублює текст рядка. */}
   <div class="index__preview" aria-hidden="true" data-index-preview>
     {
       projects.map((p) => (
@@ -71,13 +63,6 @@ const { locale, projects } = Astro.props;
     border-bottom: 1px solid var(--rule);
   }
 
-  /*
-    Колонка типу — 14rem, а не 10rem.
-
-    Назви категорій подовшали на прохання замовниці: замість
-    «Commercial» тепер «Commercial & Beauty Spaces». У 10rem таке
-    не вміщалося й ламалося на два рядки посеред таблиці.
-  */
   .index__row a {
     display: grid;
     grid-template-columns: 3rem minmax(0, 1fr) 8rem 14rem 4rem;
@@ -103,7 +88,6 @@ const { locale, projects } = Astro.props;
     letter-spacing: var(--ls-display);
   }
 
-  /* Плитка в рядку потрібна лише там, де немає вказівника. */
   .index__inline {
     display: none;
   }
@@ -139,7 +123,6 @@ const { locale, projects } = Astro.props;
     object-fit: cover;
   }
 
-  /* Прев'ю має сенс лише за наявності вказівника та місця. */
   @media (max-width: 1100px), (hover: none) {
     .index__preview {
       display: none;

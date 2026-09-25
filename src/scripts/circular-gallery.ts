@@ -1,7 +1,4 @@
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
-import { useEffect, useRef } from 'react';
-
-import './CircularGallery.css';
 
 type GL = Renderer['gl'];
 
@@ -26,102 +23,14 @@ function autoBind(instance: any): void {
   });
 }
 
-const DEFAULT_FONT = 'bold 30px Figtree';
-// Figtree is not guaranteed to be available on the host page, so the component
-// loads it on demand whenever the default font is used.
-const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
-
-function deriveFontFamilyFromUrl(url: string): string {
-  const fileName = (url.split('/').pop() || 'custom-font').split('?')[0];
-  const base = fileName.replace(/\.(woff2?|ttf|otf|eot)$/i, '');
-  return base.replace(/[^a-zA-Z0-9-_ ]/g, '').trim() || 'CircularGalleryFont';
-}
-
-async function loadFontFromStylesheet(url: string): Promise<string> {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to fetch font stylesheet (${response.status})`);
-  const cssText = await response.text();
-  const faceBlocks = cssText.match(/@font-face\s*{[^}]*}/g) || [];
-  let family: string | null = null;
-  const fontFaces: FontFace[] = [];
-  for (const block of faceBlocks) {
-    const familyMatch = block.match(/font-family:\s*['"]?([^;'"]+)['"]?/);
-    const urlMatch = block.match(/url\(\s*['"]?([^'")]+)['"]?\s*\)/);
-    if (!familyMatch || !urlMatch) continue;
-    family = familyMatch[1].trim();
-    const descriptors: FontFaceDescriptors = {};
-    const weightMatch = block.match(/font-weight:\s*([^;]+);/);
-    const styleMatch = block.match(/font-style:\s*([^;]+);/);
-    const rangeMatch = block.match(/unicode-range:\s*([^;]+);/);
-    if (weightMatch) descriptors.weight = weightMatch[1].trim();
-    if (styleMatch) descriptors.style = styleMatch[1].trim();
-    if (rangeMatch) descriptors.unicodeRange = rangeMatch[1].trim();
-    fontFaces.push(new FontFace(family, `url(${urlMatch[1]})`, descriptors));
-  }
-  if (!family) throw new Error('No @font-face rule found in the stylesheet');
-  await Promise.allSettled(
-    fontFaces.map(async face => {
-      await face.load();
-      document.fonts.add(face);
-    })
-  );
-  return family;
-}
-
-async function loadFontFromFile(url: string): Promise<string> {
-  const family = deriveFontFamilyFromUrl(url);
-  const fontFace = new FontFace(family, `url(${url})`);
-  await fontFace.load();
-  document.fonts.add(fontFace);
-  return family;
-}
-
-async function loadCustomFont(fontUrl: string): Promise<string> {
-  const isStylesheet = fontUrl.includes('fonts.googleapis.com') || /\.css(\?.*)?$/i.test(fontUrl);
-  return isStylesheet ? loadFontFromStylesheet(fontUrl) : loadFontFromFile(fontUrl);
-}
-
-// Loads `fontUrl` (a stylesheet such as a Google Fonts URL, or a direct font
-// file) and returns a canvas-ready font string that keeps the size/weight from
-// `font` but swaps in the freshly loaded family. Falls back to `font` on error.
-/** Скільки чекати на шрифт, перш ніж малювати запасним. */
 const FONT_WAIT_MS = 1200;
 
-async function resolveFont(font: string, fontUrl?: string): Promise<string> {
-  // Use the bundled Figtree stylesheet when the caller relies on the default
-  // font, otherwise honor the explicit `fontUrl`.
-  const effectiveUrl = fontUrl || (font === DEFAULT_FONT ? DEFAULT_FONT_URL : null);
-  if (!effectiveUrl) {
-    // A custom family was supplied without a URL – make sure it is ready (in
-    // case the host page declares it) before we draw it to the canvas,
-    // otherwise the first paint silently falls back to a system font.
-    if (document.fonts && document.fonts.load) {
-      try {
-        await document.fonts.load(font);
-        await document.fonts.ready;
-      } catch {
-        // Ignore – fall back to whatever the browser provides.
-      }
-    }
-    return font;
-  }
+async function resolveFont(font: string): Promise<string> {
   try {
-    const family = await loadCustomFont(effectiveUrl);
-    const sizeMatch = font.match(/^\s*(.*?\d+px)/);
-    const prefix = sizeMatch ? sizeMatch[1].trim() : 'bold 30px';
-    const resolved = `${prefix} "${family}"`;
-    if (document.fonts && document.fonts.load) {
-      try {
-        await document.fonts.load(resolved);
-      } catch {
-        // Ignore – we still attempt to render with the requested font.
-      }
-    }
-    return resolved;
-  } catch (error) {
-    console.error('CircularGallery: unable to load font from', fontUrl, error);
-    return font;
-  }
+    await document.fonts.load(font);
+    await document.fonts.ready;
+  } catch {}
+  return font;
 }
 
 function getFontSize(font: string): number {
@@ -222,16 +131,9 @@ class Title {
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
 
-    // 0.24, а не 0.15: підпис — це назва матеріалу, головний зміст секції.
     let textHeightScaled = this.plane.scale.y * 0.24;
     let textWidthScaled = textHeightScaled * aspect;
 
-    /*
-      Ширина підпису залежить від довжини тексту, і сама по собі нічим
-      не обмежена: «Backlit oak shelving» ставав ширшим за плитку й
-      налазив на сусідні. Тому довгі назви стискаються до ширини плитки,
-      а короткі лишаються на повному кеглі.
-    */
     const maxWidth = this.plane.scale.x * 0.92;
     if (textWidthScaled > maxWidth) {
       textHeightScaled *= maxWidth / textWidthScaled;
@@ -269,7 +171,6 @@ interface MediaProps {
   textColor: string;
   borderRadius?: number;
   font?: string;
-  /** Текстура прийшла — потрібен ще один кадр, навіть якщо стрічка стоїть. */
   onLoad?: () => void;
 }
 
@@ -459,7 +360,6 @@ class Media {
     }
 
     this.speed = scroll.current - scroll.last;
-    // Коливання шейдера живе лише під час руху — див. App.update().
     if (animate) this.program.uniforms.uTime.value += 0.04;
     this.program.uniforms.uSpeed.value = this.speed;
 
@@ -538,11 +438,6 @@ class App {
   isDown: boolean = false;
   start: number = 0;
 
-  /* ── Наші доповнення до вихідного компонента ───────────────────────
-     needsRender — намалювати ще один кадр, навіть коли стрічка стоїть
-     (прийшла текстура, змінився розмір).
-     visible     — галерея в полі зору; поза ним цикл зупиняється зовсім.
-     io          — спостерігач, що це визначає.                        */
   needsRender: boolean = true;
   visible: boolean = true;
   io?: IntersectionObserver;
@@ -554,7 +449,7 @@ class App {
       bend = 1,
       textColor = '#ffffff',
       borderRadius = 0,
-      font = 'bold 30px Figtree',
+      font = '30px serif',
       scrollSpeed = 2,
       scrollEase = 0.05
     }: AppConfig
@@ -609,57 +504,7 @@ class App {
     borderRadius: number,
     font: string
   ) {
-    const defaultItems = [
-      {
-        image: `https://picsum.photos/seed/1/800/600?grayscale`,
-        text: 'Bridge'
-      },
-      {
-        image: `https://picsum.photos/seed/2/800/600?grayscale`,
-        text: 'Desk Setup'
-      },
-      {
-        image: `https://picsum.photos/seed/3/800/600?grayscale`,
-        text: 'Waterfall'
-      },
-      {
-        image: `https://picsum.photos/seed/4/800/600?grayscale`,
-        text: 'Strawberries'
-      },
-      {
-        image: `https://picsum.photos/seed/5/800/600?grayscale`,
-        text: 'Deep Diving'
-      },
-      {
-        image: `https://picsum.photos/seed/16/800/600?grayscale`,
-        text: 'Train Track'
-      },
-      {
-        image: `https://picsum.photos/seed/17/800/600?grayscale`,
-        text: 'Santorini'
-      },
-      {
-        image: `https://picsum.photos/seed/8/800/600?grayscale`,
-        text: 'Blurry Lights'
-      },
-      {
-        image: `https://picsum.photos/seed/9/800/600?grayscale`,
-        text: 'New York'
-      },
-      {
-        image: `https://picsum.photos/seed/10/800/600?grayscale`,
-        text: 'Good Boy'
-      },
-      {
-        image: `https://picsum.photos/seed/21/800/600?grayscale`,
-        text: 'Coastline'
-      },
-      {
-        image: `https://picsum.photos/seed/12/800/600?grayscale`,
-        text: 'Palm Trees'
-      }
-    ];
-    const galleryItems = items && items.length ? items : defaultItems;
+    const galleryItems = items ?? [];
     this.mediasImages = galleryItems.concat(galleryItems);
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
@@ -702,14 +547,6 @@ class App {
     this.onCheck();
   }
 
-  /**
-   * Колесо споживається лише по горизонталі.
-   *
-   * У вихідному компоненті обробник висів на window і ловив deltaY, тож
-   * прокрутка колесом У БУДЬ-ЯКОМУ місці сторінки крутила галерею, а над
-   * самою галереєю сторінка переставала гортатися. Тепер вертикаль
-   * завжди дістається сторінці, горизонталь (трекпад) — галереї.
-   */
   onWheel(e: Event) {
     const wheelEvent = e as WheelEvent;
     if (Math.abs(wheelEvent.deltaX) <= Math.abs(wheelEvent.deltaY)) return;
@@ -764,17 +601,6 @@ class App {
     this.needsRender = true;
   }
 
-  /**
-   * Малюємо лише коли є що малювати.
-   *
-   * У вихідному компоненті цикл крутився вічно: шейдер має власне
-   * коливання від uTime, тож навіть нерухома галерея безперервно
-   * вантажила відеокарту. На головній сторінці, яку тримають відкритою,
-   * це просто зайво з'їдало батарею.
-   *
-   * Тепер спокійна стрічка нерухома, а брижі з'являються під час
-   * перетягування — тобто саме тоді, коли вони й читаються як відгук.
-   */
   update() {
     this.raf = window.requestAnimationFrame(this.update.bind(this));
 
@@ -793,7 +619,6 @@ class App {
     this.needsRender = false;
   }
 
-  /** Поза полем зору цикл зупиняється зовсім. */
   play() {
     if (this.raf) return;
     this.needsRender = true;
@@ -813,11 +638,6 @@ class App {
     this.boundOnTouchUp = this.onTouchUp.bind(this);
     this.boundOnKeyDown = this.onKeyDown.bind(this);
 
-    /*
-      Усе, крім resize, висить на контейнері, а не на window.
-      У вихідному компоненті було навпаки, тож галерея реагувала
-      на рухи миші й колесо по всій сторінці.
-    */
     window.addEventListener('resize', this.boundOnResize);
     this.container.addEventListener('wheel', this.boundOnWheel, { passive: false });
     this.container.addEventListener('pointerdown', this.boundOnTouchDown as EventListener);
@@ -855,90 +675,34 @@ class App {
   }
 }
 
-interface CircularGalleryProps {
-  items?: { image: string; text: string }[];
-  bend?: number;
-  textColor?: string;
-  borderRadius?: number;
-  font?: string;
-  fontUrl?: string;
-  scrollSpeed?: number;
-  scrollEase?: number;
-}
+export type GalleryConfig = AppConfig & { font: string };
 
-export default function CircularGallery({
-  items,
-  bend = 3,
-  textColor = '#ffffff',
-  borderRadius = 0.05,
-  font = 'bold 30px Figtree',
-  fontUrl,
-  scrollSpeed = 2,
-  scrollEase = 0.05
-}: CircularGalleryProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!containerRef.current) return;
-    let app: App | undefined;
-    let isMounted = true;
-    /* Галерею запустили запасним шрифтом — коли приїде свій, перемалювати. */
-    let startedWithFallback = false;
+export function mountCircularGallery(container: HTMLElement, config: GalleryConfig): () => void {
+  let app: App | undefined;
+  let alive = true;
+  let startedWithFallback = false;
 
-    const start = (resolvedFont: string) => {
-      if (!isMounted || !containerRef.current) return;
-      app?.destroy();
-      app = new App(containerRef.current, {
-        items,
-        bend,
-        textColor,
-        borderRadius,
-        font: resolvedFont,
-        scrollSpeed,
-        scrollEase
-      });
-    };
+  const start = (font: string) => {
+    if (!alive) return;
+    app?.destroy();
+    app = new App(container, { ...config, font });
+  };
 
-    /*
-      ── Наша правка ───────────────────────────────────────────────
-      Шрифт чекаємо, але не нескінченно.
+  const timer = window.setTimeout(() => {
+    if (!alive || app) return;
+    startedWithFallback = true;
+    start(config.font);
+  }, FONT_WAIT_MS);
 
-      resolveFont() без fontUrl робить await document.fonts.ready, і до
-      виконання тієї обіцянки App не створювався зовсім — секція лишалася
-      просто порожньою. А document.fonts.ready виконується лише після
-      того, як документ догрузився: на сторінці, що ще тягне сотні
-      зображень, вона висить рівно стільки ж. У розробці, де кожен кадр
-      кодується на вимогу, це десятки секунд порожнього місця.
+  resolveFont(config.font).then((font) => {
+    window.clearTimeout(timer);
+    if (!alive) return;
+    if (!app || startedWithFallback) start(font);
+  });
 
-      Тепер чекаємо щонайбільше FONT_WAIT, потім малюємо тим, що є.
-      Підписи — це текстури з canvas, тож коли шрифт доїде, галерея
-      просто перезбирається з правильним накресленням.
-    */
-    const ready = resolveFont(font, fontUrl);
-    const timer = window.setTimeout(() => {
-      if (!isMounted || app) return;
-      startedWithFallback = true;
-      start(font);
-    }, FONT_WAIT_MS);
-
-    ready.then(resolvedFont => {
-      window.clearTimeout(timer);
-      if (!isMounted) return;
-      if (!app || startedWithFallback) start(resolvedFont);
-    });
-
-    return () => {
-      isMounted = false;
-      window.clearTimeout(timer);
-      if (app) app.destroy();
-    };
-  }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase]);
-  return (
-    <div
-      className="circular-gallery"
-      ref={containerRef}
-      tabIndex={0}
-      role="region"
-      aria-label="Circular image gallery. Use Left and Right Arrow keys to navigate."
-    />
-  );
+  return () => {
+    alive = false;
+    window.clearTimeout(timer);
+    app?.destroy();
+  };
 }

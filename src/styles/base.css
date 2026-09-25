@@ -1,5 +1,3 @@
-/* VM Design — базові стилі: reset, типографіка, фокус, рух. */
-
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -31,23 +29,6 @@ video {
   max-width: 100%;
 }
 
-/*
-  <picture> прибираємо з розкладки зовсім.
-
-  Це лише обгортка для вибору формату — малює кадр <img> усередині неї.
-  Поки вона була блоком із власною висотою за вмістом, будь-яке
-  height: 100% на зображенні рахувалося від неї, а не від плитки: під
-  фотографією лишалася смуга фону. Спливло це одразу в десятку
-  компонентів, щойно <Image> скрізь замінили на <Picture>.
-
-  display: contents прибирає коробку, і зображення знову стає дитям
-  того контейнера, під який писалися стилі. На вибір формату це не
-  впливає: він відбувається на рівні ресурсу, а не розкладки.
-
-  Увага: селектори працюють по дереву документа, а не по коробках, —
-  .plate > img так і не знайде зображення всередині <picture>, тож
-  шлях через > picture > img нижче лишається потрібним.
-*/
 picture {
   display: contents;
 }
@@ -56,8 +37,6 @@ input,
 button,
 textarea,
 select { font: inherit; color: inherit; }
-
-/* ─── Типографіка ─────────────────────────────────────────── */
 
 h1, h2, h3, h4 {
   font-weight: 400;
@@ -86,7 +65,6 @@ h1, h2, h3, h4 {
   letter-spacing: var(--ls-heading);
 }
 
-/* Підзаголовки — Spectral, як у макеті сторінки проєкту. */
 .t-subhead {
   font-family: var(--font-subhead);
   font-size: clamp(1.9375rem, 4.5vw, 3rem);
@@ -103,7 +81,6 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
 }
 
-/* Надрядковий підпис — «око» секції. */
 .t-eyebrow {
   font-family: var(--font-text);
   font-size: var(--step-meta);
@@ -128,8 +105,6 @@ h1, h2, h3, h4 {
 
 p { max-width: var(--measure); }
 
-/* ─── Посилання ───────────────────────────────────────────── */
-
 a { color: inherit; text-decoration: none; }
 
 .link {
@@ -153,8 +128,6 @@ a { color: inherit; text-decoration: none; }
 .link:hover::after,
 .link:focus-visible::after { transform: scaleX(1); }
 
-/* ─── Фокус ───────────────────────────────────────────────── */
-
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
@@ -175,8 +148,6 @@ a { color: inherit; text-decoration: none; }
 
 .skip-link:focus-visible { transform: translateY(0); }
 
-/* ─── Розкладка ───────────────────────────────────────────── */
-
 .container {
   width: 100%;
   max-width: var(--container);
@@ -186,14 +157,6 @@ a { color: inherit; text-decoration: none; }
 
 .section { padding-block: var(--section); }
 
-/*
-  Списки теж бувають контейнерами (<ul class="container …">). Їхні власні
-  правила зазвичай містять margin: 0, щоб зняти типові відступи списка, —
-  і разом з ними знімають margin-inline: auto, після чого контейнер
-  перестає центруватись і тулиться до лівого краю. Ця пара селекторів
-  специфічніша за одинарний клас, тому центрування лишається навіть коли
-  у правилі компонента стоїть margin: 0.
-*/
 ul.container,
 ol.container,
 dl.container {
@@ -215,17 +178,10 @@ dl.container {
   border-top: 1px solid var(--rule);
 }
 
-/*
-  Будь-яке авторське правило з display перебиває [hidden] із UA-стилів —
-  і елемент лишається на екрані попри атрибут. Саме так мобільне меню
-  (.mobile-nav { display: flex }) постійно перекривало сторінку на телефоні.
-  Одне глобальне правило знімає цей клас помилок назавжди.
-*/
 [hidden] {
   display: none !important;
 }
 
-/* Для скрінрідерів — але не для очей. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -237,14 +193,7 @@ dl.container {
   border: 0;
 }
 
-/* ─── Медіа ───────────────────────────────────────────────── */
-
 .plate {
-  /*
-    display: block обов'язковий: .plate — це <span>, а інлайновий елемент
-    ігнорує і height, і aspect-ratio. Через це плитки брали розмір із
-    самого зображення й виходили різної висоти, хоч пропорція й була задана.
-  */
   display: block;
   position: relative;
   overflow: hidden;
@@ -263,18 +212,10 @@ dl.container {
 .plate--tall     { aspect-ratio: var(--ratio-tall); }
 .plate--hero     { aspect-ratio: var(--ratio-plate); }
 
-/*
-  Обидва варіанти шляху: <Image> дає img прямим нащадком плити,
-  <Picture> ховає його ще на рівень глибше, в <picture>. Без другої
-  пари селекторів наближення при наведенні тихо зникло б усюди,
-  де стоїть <Picture>.
-*/
 a:hover > .plate > img,
 a:hover > .plate > picture > img,
 .plate-link:hover .plate > img,
 .plate-link:hover .plate > picture > img { transform: scale(1.03); }
-
-/* ─── Поява при скролі ────────────────────────────────────── */
 
 [data-reveal] {
   opacity: 0;
@@ -290,10 +231,7 @@ a:hover > .plate > picture > img,
   transform: none;
 }
 
-/* Без JS вміст має бути видимим за замовчуванням. */
 .no-js [data-reveal] { opacity: 1; transform: none; }
-
-/* ─── Повага до налаштувань руху ──────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -310,23 +248,10 @@ a:hover > .plate > picture > img,
   [data-reveal] { opacity: 1; transform: none; }
 }
 
-/*
-  Якірні переходи: шапка фіксована й перекрила б верх цілі, тому та
-  зупиняється нижче за її висоту.
-
-  Не лише для section: на /services ціллю є <li> кожної послуги —
-  туди веде «Learn more» з головної. Тож правило на будь-який елемент
-  з id, інакше заголовок послуги ховався б під шапкою.
-*/
 [id] {
   scroll-margin-top: 5.5rem;
 }
 
-/*
-  Титул сторінки проєкту: рядок-надпис і велика назва Spectral.
-  Спільний для сторінки проєкту й переглядача креслень — щоб другий
-  виглядав продовженням першого, а не окремим сайтом.
-*/
 .page-intro {
   padding-top: clamp(7rem, 12vw, 9rem);
   padding-bottom: var(--space-m);
@@ -338,7 +263,7 @@ a:hover > .plate > picture > img,
 
 .page-intro__title {
   font-family: var(--font-subhead);
-  font-size: clamp(2.75rem, 7vw, 5.25rem); /* −20%: назва проєкту читалась завеликою */
+  font-size: clamp(2.75rem, 7vw, 5.25rem);
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.025em;

@@ -5,19 +5,6 @@ import { SETS, setsForProject, allSheets } from '../../lib/drawings';
 import { getProjects, slugOf } from '../../lib/projects';
 import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../lib/i18n';
 
-/*
-  Переглядач повного комплекту креслень. Відкривається з блоку креслень
-  на сторінці проєкту в новій вкладці.
-
-  Замість PDF — сторінка з аркушами-картинками: замовниця попросила, щоб
-  комплект не можна було скачати. Цілком цього не заборониш (що браузер
-  показав, те можна зберегти), але тут немає ні файлу, ні кнопки
-  завантаження, ні контекстного меню на аркушах. Дані замовників на
-  аркушах уже зафарбовано — див. scripts/redact-drawings.py.
-
-  noindex: робочу документацію не треба віддавати пошуковикам.
-*/
-
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
   const withSets = new Set(SETS.map((s) => s.project).filter(Boolean));
@@ -64,8 +51,6 @@ const title = project.data.title;
 </BaseLayout>
 
 <script>
-  // Без контекстного меню й перетягування на аркушах: «Зберегти
-  // зображення як…» — найпростіший спосіб забрати аркуш, його й прибираємо.
   for (const root of document.querySelectorAll<HTMLElement>('[data-protect]')) {
     root.addEventListener('contextmenu', (e) => e.preventDefault());
     root.addEventListener('dragstart', (e) => e.preventDefault());
@@ -92,7 +77,6 @@ const title = project.data.title;
     justify-items: center;
   }
 
-  /* Горизонтальний аркуш — на всю ширину, як головний кадр проєкту. */
   .viewer__sheets :global(img) {
     display: block;
     width: 100%;
@@ -104,7 +88,6 @@ const title = project.data.title;
     -webkit-touch-callout: none;
   }
 
-  /* Вертикальний (Roma) на всю ширину був би на два екрани — вписуємо в один. */
   .viewer__sheets :global(img.is-tall) {
     width: auto;
     max-width: 100%;

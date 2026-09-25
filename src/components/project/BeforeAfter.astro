@@ -11,16 +11,6 @@ interface Props {
 
 const { locale, pairs } = Astro.props;
 
-/**
- * Пропорція кадру береться з самої пари, а не задається наперед.
- *
- * «До» і «після» рідко мають однакову пропорцію: у La Villa це 4:3 проти
- * 16:9. Середнє арифметичне двох пропорцій лишає обидва кадри майже
- * неторканими, а object-fit: cover добирає решту.
- *
- * Ракурси в парах можуть не збігатися — так і задумано: замовниця хоче
- * показати, як змінилося приміщення, а не точну накладку двох знімків.
- */
 const stageRatio = (pair: (typeof pairs)[number]) =>
   (pair.before.width / pair.before.height + pair.after.width / pair.after.height) / 2;
 
@@ -123,8 +113,6 @@ const multiple = pairs.length > 1;
     margin-bottom: 0.75rem;
   }
 
-  /* ─── Підпис, стрілки, підказка ────────────────────────── */
-
   .ba__bar {
     display: flex;
     align-items: center;
@@ -147,19 +135,10 @@ const multiple = pairs.length > 1;
     color: var(--fg-muted);
   }
 
-  /* Стрілки без JS нічого не гортають — ховаємо до ініціалізації. */
   .ba__carousel:not([data-carousel-ready]) :global(.arrows) {
     visibility: hidden;
   }
 
-  /* ─── Повзунок ─────────────────────────────────────────── */
-
-  /*
-    Висота сцени однакова для всіх пар (до 78vh), ширина — за пропорцією
-    пари. Так при гортанні не стрибає все, що нижче: змінюється лише
-    ширина кадру. Вертикальна пара на широкому екрані інакше виросла б
-    на два екрани заввишки.
-  */
   .slider {
     width: 100%;
     max-width: calc(min(78vh, 760px) * var(--ar, 1));
@@ -185,7 +164,6 @@ const multiple = pairs.length > 1;
     object-position: center;
   }
 
-  /* «До» лежить зверху і обрізається праворуч за положенням повзунка. */
   .slider__layer--before {
     clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0);
   }
@@ -202,7 +180,6 @@ const multiple = pairs.length > 1;
     pointer-events: none;
   }
 
-  /* Кружок зі стрілками обабіч — як у макеті. */
   .slider__handle::after {
     content: '‹ ›';
     position: absolute;
@@ -222,8 +199,6 @@ const multiple = pairs.length > 1;
     box-shadow: 0 2px 8px rgb(25 24 23 / 0.25);
   }
 
-  /* Нативний range розтягнуто на весь кадр і зроблено невидимим:
-     він лишається реальним елементом керування, а видимою є смуга вище. */
   .slider__range {
     position: absolute;
     inset: 0;

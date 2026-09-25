@@ -1,16 +1,3 @@
-/**
- * Аркуші для звірки пар «до / після».
- *
- *   node scripts/pairing-sheet.mjs
- *
- * Навіщо: слайдер працює лише тоді, коли обидва кадри зняті з однієї точки.
- * Автоматично цього не визначити — треба, щоб автор проєкту вказав пари.
- * Скрипт кладе поруч усі кадри «до» й усі «після» з номерами, щоб замовниця
- * могла просто написати «12 → 35».
- *
- * Результат — по одному PNG на проєкт у scratchpad, готовий до пересилання.
- */
-
 import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -24,7 +11,6 @@ const PAD = 8;
 const LABEL = 26;
 const COLS = 5;
 
-/** Підпис робимо картинкою, щоб не тягнути шрифти в sharp. */
 function labelSvg(text, width) {
   const safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   return Buffer.from(

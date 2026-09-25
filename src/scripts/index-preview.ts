@@ -1,10 +1,3 @@
-/**
- * Прев'ю проєкту при наведенні на рядок покажчика.
- *
- * Прив'язується лише там, де є вказівник і достатньо місця —
- * на дотику плитка вже вбудована в сам рядок.
- */
-
 const index = document.querySelector<HTMLElement>('[data-index]');
 const preview = index?.querySelector<HTMLElement>('[data-index-preview]');
 
@@ -33,7 +26,6 @@ if (index && preview && matchMedia('(hover: hover) and (min-width: 1101px)').mat
     if (!index.contains(e.relatedTarget as Node)) show(null);
   });
 
-  // Прев'ю слідує за курсором по вертикалі, лишаючись у межах покажчика.
   let frame = 0;
   let targetY = 0;
 

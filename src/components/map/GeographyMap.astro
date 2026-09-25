@@ -7,7 +7,6 @@ import { localePath, t, type Locale } from '../../lib/i18n';
 interface Props {
   locale: Locale;
   projects: Project[];
-  /** Якір для посилань із футера. */
   id?: string;
 }
 
@@ -21,14 +20,6 @@ const countLabel = (n: number) => `${n} ${t(locale, n === 1 ? 'map.project' : 'm
 const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.projects.length, 0);
 ---
 
-{/*
-  Кілька карт-аркушів замість однієї з зумом: Рив'єра, Франція, Італія,
-  Польща й Україна. Вкладки під картою перемикають аркуш, натиск на
-  місто не веде на проєкт, а показує праворуч проєкти цього міста.
-
-  Без JS видно перший аркуш і перелік його міст — решта аркушів лишається
-  прихованою, але всі проєкти й так доступні з розділу Projects.
-*/}
 <section class="geo on-ink-deep section" id={id} data-map>
   <div class="container">
     <header class="geo__head" data-reveal>
@@ -104,7 +95,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
       </div>
 
       <aside class="geo__aside" aria-live="polite">
-        {/* Перелік міст аркуша — видно, доки не вибрано місто. */}
         {
           sheets.map((sheet, i) => (
             <div class="geo__list" data-sheet-panel={sheet.id} hidden={i > 0}>
@@ -126,7 +116,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
           ))
         }
 
-        {/* Проєкти міста — після натиску на точку чи на назву в переліку. */}
         {
           sheets.flatMap((sheet) =>
             sheet.groups.map((g) => (
@@ -197,11 +186,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     align-items: start;
   }
 
-  /*
-    Ширину блока задає сама карта: під нею рівно її вкладки, і весь блок
-    стоїть по центру колонки. Висота всіх аркушів однакова (так їх
-    зібрано), тож перемикання нічого не зсуває.
-  */
   .geo__figure {
     --map-h: clamp(340px, 54vh, 640px);
     width: 100%;
@@ -215,7 +199,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     height: var(--map-h);
   }
 
-  /* У SVG атрибут hidden сам не ховає — а display: block вище й поготів. */
   .geo__figure svg[hidden] {
     display: none;
   }
@@ -228,11 +211,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     stroke-width: 0.5;
   }
 
-  /*
-    На Рив'єрі суша займає пів кадру й без заливки не відрізнялася б від
-    моря: лише берегова лінія. Легка заливка всієї суші, без виділення
-    регіонів.
-  */
   [data-map-sheet='riviera'] .geo__outline path {
     fill: var(--accent-line);
     fill-opacity: 0.1;
@@ -246,14 +224,11 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     vector-effect: non-scaling-stroke;
   }
 
-  /* ─── Точки ───────────────────────────────────────────── */
-
   .marker {
     cursor: pointer;
     outline: none;
   }
 
-  /* Прозоре коло ловить палець: сама точка замала для дотику. */
   .marker__hit {
     fill: #0000;
     pointer-events: all;
@@ -280,7 +255,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     pointer-events: none;
   }
 
-  /* Назва міста видна завжди — карта читається без наведення. */
   .marker__label {
     fill: var(--bone);
     font-family: var(--font-text);
@@ -311,10 +285,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     opacity: 1;
   }
 
-  /*
-    На вузькому екрані карта займає ~350 px на 1000 одиниць viewBox:
-    підпис у 19 одиниць вийшов би в шість пікселів. Тут усе вдвічі більше.
-  */
   @media (max-width: 700px) {
     .marker__label {
       font-size: 34px;
@@ -340,8 +310,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
       r: 28;
     }
   }
-
-  /* ─── Вкладки ─────────────────────────────────────────── */
 
   .geo__controls {
     display: flex;
@@ -370,8 +338,6 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
     border-color: var(--accent-inv);
     color: var(--accent-inv);
   }
-
-  /* ─── Панель праворуч ─────────────────────────────────── */
 
   .geo__aside {
     position: sticky;

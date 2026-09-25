@@ -6,10 +6,8 @@ import { t, type Locale } from '../../lib/i18n';
 interface Props {
   locale: Locale;
   items: { src: ImageMetadata; alt: string; caption?: string; material?: string }[];
-  /** Надрядковий підпис і заголовок блоку — галерея й 3D різняться лише ними. */
   eyebrow?: string;
   title?: string;
-  /** Група модалки: кадри гортаються лише в межах свого блоку. */
   group?: string;
 }
 
@@ -17,25 +15,12 @@ const { locale, items, group } = Astro.props;
 const eyebrow = Astro.props.eyebrow ?? t(locale, 'gallery.eyebrow');
 const title = Astro.props.title ?? t(locale, 'gallery.title');
 
-/** Підпис кадру — назва приміщення, а без неї матеріал. */
 const captionOf = (item: (typeof items)[number]) => item.caption ?? item.material ?? '';
 
-/**
- * Великі кадри для модалки — рахуються на збірці, у розмітку йде лише URL.
- * Сам файл браузер тягне вже при відкритті.
- */
 const fullSize = await Promise.all(items.map((g) => getImage({ src: g.src, width: 1800, format: 'webp' })));
 const fullSizeAvif = await Promise.all(items.map((g) => getImage({ src: g.src, width: 1800, format: 'avif' })));
 ---
 
-{/*
-  Один кадр за раз, як у макеті: кадр цілком (contain) у рамці сталої
-  висоти, під ним підпис і стрілки. Кладка в колонки показувала все одразу,
-  але кожен кадр виходив дрібним, а вертикальні — поруч із горизонтальними
-  — рваним ритмом. Тут кожен кадр займає всю сцену.
-
-  Клік по кадру відкриває той самий Lightbox, що й раніше.
-*/}
 <section class="pg section">
   <div class="container">
     <header class="pg__head" data-reveal>
@@ -109,11 +94,6 @@ const fullSizeAvif = await Promise.all(items.map((g) => getImage({ src: g.src, w
     margin-bottom: 0.75rem;
   }
 
-  /*
-    Рамка сталої висоти: гортання не зсуває нічого нижче, хоч серед кадрів
-    є і вертикальні, і горизонтальні. pan-y — щоб горизонтальний свайп
-    дістався скрипту, а вертикальний і далі гортав сторінку.
-  */
   .pg__frame {
     display: grid;
     height: clamp(355px, 58vw, 640px);
@@ -139,11 +119,6 @@ const fullSizeAvif = await Promise.all(items.map((g) => getImage({ src: g.src, w
     display: contents;
   }
 
-  /*
-    Кадр — сам елемент сітки (picture має display: contents), а в елемента
-    сітки min-height: auto дорівнює висоті вмісту й перемагає max-height.
-    Без обнулення вертикальний кадр виростав на всю висоту й різався рамкою.
-  */
   .pg__slide :global(img) {
     min-width: 0;
     min-height: 0;

@@ -1,12 +1,3 @@
-/**
- * Слайдер першого екрана.
- *
- * Автоперегортання з перехресним згасанням. Зупиняється, коли воно
- * заважає або марне: під курсором, при фокусі всередині, на прихованій
- * вкладці та при prefers-reduced-motion — автокарусель без паузи
- * це класична пастка доступності, а не прикраса.
- */
-
 const root = document.querySelector<HTMLElement>('[data-hero-slider]');
 
 if (root) {
@@ -29,9 +20,6 @@ if (root) {
         const on = i === n;
         slide.classList.toggle('is-current', on);
 
-        // Прихований кадр не має бути ні читаним, ні досяжним по Tab.
-        // Саме setAttribute, а не toggleAttribute: той ставить aria-hidden="",
-        // а порожнє значення ARIA трактує як відсутній атрибут.
         if (on) {
           slide.removeAttribute('aria-hidden');
           slide.removeAttribute('tabindex');
@@ -72,8 +60,6 @@ if (root) {
     dots.forEach((dot, i) =>
       dot.addEventListener('click', () => {
         show(i);
-        // Після ручного вибору відлік починається заново, інакше
-        // наступний кадр міг би змінитися вже за частку секунди.
         start();
       }),
     );
@@ -88,7 +74,6 @@ if (root) {
     document.addEventListener('visibilitychange', start);
     calm.addEventListener('change', start);
 
-    // data-ready знімає no-JS правило, яке тримало перший кадр видимим.
     slides[0].classList.add('is-current');
     caps[0]?.classList.add('is-current');
     root.dataset.ready = '';

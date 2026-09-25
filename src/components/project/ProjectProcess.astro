@@ -4,7 +4,6 @@ import { t, type Locale } from '../../lib/i18n';
 
 interface Props {
   locale: Locale;
-  /** Кадри «до», що не пішли в пари порівняння. */
   images: { src: ImageMetadata; alt: string; caption?: string }[];
 }
 
@@ -14,12 +13,6 @@ const fullSize = await Promise.all(images.map((img) => getImage({ src: img.src, 
 const fullSizeAvif = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1800, format: 'avif' })));
 ---
 
-{/*
-  Знімки будівництва — під розгорткою, як у макеті. Це документальний
-  матеріал, а не основна подача: хто хоче бачити процес, розкриває його,
-  решта сторінки від нього не важчає. Кадри всередині <details> браузер
-  не вантажить, поки блок закритий (loading="lazy" + display: none).
-*/}
 <section class="process section on-sand">
   <div class="container">
     <p class="t-eyebrow">{t(locale, 'process.eyebrow')}</p>

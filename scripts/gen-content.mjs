@@ -1,16 +1,3 @@
-/**
- * Генерує контент-файли проєктів із маніфесту й курації.
- *
- *   node scripts/gen-content.mjs
- *
- * Переписує src/content/projects/en/*.md. Після того, як Maryna пришле
- * свої тексти й метадані, редагуємо .md напряму, а скрипт більше не запускаємо.
- *
- * Альт-тексти поки узагальнені на рівні проєкту («Christina Roma — styling
- * stations under the restored vault»), а не унікальні на кожен кадр.
- * Це точно описує зміст і не вигадує деталей; уточнення — окремим проходом.
- */
-
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -55,7 +42,6 @@ The house came to the studio as a shell: pink plaster, exposed services, rubble 
     featured: true,
     order: 2,
     alt: { after: 'the restored vault with oval mirrors and sculptural seating', before: 'the vaulted shell before restoration, plaster stripped to the brick' },
-    // Єдина пара, знята з однієї точки, — тому єдина, що йде слайдером.
     sliderPairs: [
       { before: 'IMG_1488.jpeg', after: 'IMG_9684.jpeg', caption: 'The arched shopfront, before and after' },
     ],
@@ -206,7 +192,6 @@ Textured monochrome panels break up the remaining wall without adding another co
 Arched backlit mirrors set the rhythm along the product wall; a curved reception in warm timber breaks the whiteness at the entrance. A cluster of glass pendants marks the centre of the room.`,
   },
 
-  // ─── Виставкові стенди ─────────────────────────────────────────
   {
     slug: 'stand-bologna-2025',
     title: 'Bologna 2025',
@@ -315,9 +300,6 @@ The floor is magenta, the counters white, and the campaign portrait carries the 
     body: `A compact stand for the Asian market, planned around a single round display table.`,
   },
 
-  // ─── Проєкти, від яких лишилася тільки документація ─────────────
-  // Фотографій немає, але комплекти креслень повні. Обкладинкою стає
-  // сам аркуш: це чесно показує, що саме є, і не вдає фотозйомку.
   {
     slug: 'nice-verdi-apartment',
     title: 'Appartement rue Verdi',
@@ -365,7 +347,6 @@ await fs.mkdir(OUT, { recursive: true });
 const drawings = JSON.parse(await fs.readFile(path.join(ROOT, 'src/data/drawings.json'), 'utf8'));
 
 for (const p of P) {
-  // Проєкт без фото: беремо аркуші креслень як обкладинку та галерею.
   if (p.drawingsOnly) {
     const sets = drawings.sets.filter((s) => s.project === p.drawingsOnly);
     const sheets = sets.flatMap((s) => s.pages.slice(0, 3).map((pg) => `${s.slug}/${pg.file}`));
@@ -419,7 +400,6 @@ for (const p of P) {
 
   const [cover, ...rest] = after;
 
-  // Ритм галереї: перший на всю ширину, далі пари, кожен п'ятий — деталь.
   const gallery = rest
     .map((it, i) => {
       const size = i === 0 ? 'full' : (i + 1) % 5 === 0 ? 'detail' : 'half';
@@ -427,11 +407,8 @@ for (const p of P) {
     })
     .join('\n');
 
-  /** Файл на диску за початковим іменем кадру. */
   const bySource = (name) => items.find((i) => i.source === name)?.file;
 
-  // Слайдер вмикається лише там, де пара явно вказана в P: він вимагає
-  // однакового ракурсу, а це видно тільки очима.
   const pairs = (p.sliderPairs ?? [])
     .map((pr) => ({ before: bySource(pr.before), after: bySource(pr.after), caption: pr.caption }))
     .filter((pr) => pr.before && pr.after);
@@ -489,7 +466,6 @@ for (const p of P) {
   );
 }
 
-// Прибираємо файли проєктів, яких більше немає в наборі.
 const want = new Set(P.map((p) => `${p.slug}.md`));
 for (const f of await fs.readdir(OUT)) {
   if (!want.has(f)) {

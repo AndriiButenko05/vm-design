@@ -1,18 +1,3 @@
-/**
- * Власний випадний список для поля «тип проєкту».
- *
- * Нативний <select> не стилізується: сам список малює операційна система,
- * і CSS туди не дістає — звідси синя підсвітка й системні шрифти посеред
- * темної форми.
- *
- * Тому розмітка лишається нативною, а скрипт її замінює:
- *   без JS — звичайний робочий <select>;
- *   з JS   — кнопка та listbox, які виглядають як решта полів.
- *
- * Значення живе в тому самому <select>, тож форма надсилається однаково
- * в обох випадках, і нічого не треба міняти на боці обробника.
- */
-
 for (const field of document.querySelectorAll<HTMLElement>('[data-select]')) {
   const select = field.querySelector('select');
   const label = field.querySelector('label');
@@ -60,8 +45,6 @@ for (const field of document.querySelectorAll<HTMLElement>('[data-select]')) {
     return li;
   });
 
-  // Нативний список більше не показуємо, але він лишається джерелом значення
-  // і далі надсилається разом із формою.
   select.hidden = true;
   select.setAttribute('tabindex', '-1');
   select.setAttribute('aria-hidden', 'true');
@@ -82,7 +65,6 @@ for (const field of document.querySelectorAll<HTMLElement>('[data-select]')) {
     select!.selectedIndex = i;
     value.textContent = options[i].text;
     items.forEach((li, n) => li.setAttribute('aria-selected', String(n === i)));
-    // Подія потрібна, якщо колись з'явиться валідація чи аналітика.
     select!.dispatchEvent(new Event('change', { bubbles: true }));
     setOpen(false);
     button.focus();

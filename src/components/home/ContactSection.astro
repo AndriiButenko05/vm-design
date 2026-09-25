@@ -2,32 +2,18 @@
 import { Picture } from 'astro:assets';
 import { t, type Locale } from '../../lib/i18n';
 import { SITE } from '../../lib/site';
-import { CONTACT_BACKDROP } from '../../lib/services';
+import { CONTACT_BACKDROP, SERVICES } from '../../lib/services';
 
 interface Props {
   locale: Locale;
-  /** Якір для посилань із футера. */
   id?: string;
-  /**
-   * Рівень заголовка. На головній і About секція йде після h1 сторінки,
-   * тож h2; на /contact вона єдина, і тоді заголовок має бути h1 —
-   * інакше сторінка лишається без головного заголовка.
-   */
   as?: 'h1' | 'h2';
 }
 const { locale, as: Heading = 'h2', id = 'contact' } = Astro.props;
 
-/**
- * Фон — Лазурний берег із теки services: горизонтальний кадр для десктопа,
- * вертикальний для телефона. Перемикання робить <picture> через media,
- * тому це нуль JS і браузер вантажить лише потрібний файл.
- *
- * Обидва кадри яскраві (небо й море), тому поверх іде темний scrim —
- * без нього білий текст і поля форми не пройдуть за контрастом.
- */
 const { wide, tall } = CONTACT_BACKDROP;
 
-const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial space', 'Exhibition stand', 'Other'];
+const serviceOptions = [...SERVICES.map((s) => s.title), 'Other'];
 ---
 
 <section class="contact on-ink-deep" id={id}>
@@ -50,12 +36,6 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
             fallbackFormat="webp"
             src={tall}
             alt=""
-            {/*
-              Слот вертикальний, а кадр альбомний: із 3600×2025 після
-              обрізки до портрета лишається ~1140 px по ширині. Саме тому
-              тут великі значення — 900 px давали майже дворазове
-              розтягнення на телефоні з потрійною щільністю.
-            */}
             widths={[900, 1400, 2000]}
             sizes="100vw"
             loading="lazy"
@@ -96,15 +76,6 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
       </dl>
     </div>
 
-    {/*
-      Звичайний POST на Formspree: без JS форма надсилається і приземляє
-      на їхню сторінку. Скрипт перехоплює submit і показує статус на місці,
-      бо власний «дякую»-екран у безкоштовному плані недоступний.
-
-      Адреса дублюється в data-endpoint навмисно: form.action у DOM
-      повертає адресу поточної сторінки, коли атрибута немає, тож
-      відрізнити «не налаштовано» від «налаштовано» по ньому неможливо.
-    */}
     <form
       class="form"
       method="POST"
@@ -113,9 +84,7 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
       data-endpoint={SITE.formAction}
       data-reveal
     >
-      {/* Тема листа в пошті Марини — інакше Formspree ставить свою. */}
       <input type="hidden" name="_subject" value="VM Design — new enquiry from the website" />
-      {/* Пастка для ботів: люди цього поля не бачать і не заповнюють. */}
       <div class="form__trap" aria-hidden="true">
         <label for="company">Company</label>
         <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off" />
@@ -131,15 +100,10 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
         <input type="email" id="email" name="email" required autocomplete="email" />
       </div>
 
-      {/*
-        Розмітка лишається нативною: без JS це звичайний робочий <select>.
-        scripts/select.ts підміняє його на власний listbox, бо системний
-        випадний список не стилізується — його малює операційна система.
-      */}
       <div class="form__field form__field--select" data-select>
         <label for="type">{t(locale, 'contact.type')}</label>
-        <select id="type" name="projectType">
-          {projectTypes.map((p) => <option value={p}>{p}</option>)}
+        <select id="type" name="service">
+          {serviceOptions.map((o) => <option value={o}>{o}</option>)}
         </select>
       </div>
 
@@ -186,20 +150,9 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /*
-      Кадри моря й неба надто яскраві: найсвітліший піксель дає L≈0.7,
-      і підписи полів форми (--muted-inv) виходили на 1.57:1 — провал.
-      Гасимо саме зображення, а не тільки накладаємо темряву: так контраст
-      проходить AA, і при цьому фото лишається помітнішим, ніж під
-      суцільним затемненням 0.9.
-    */
     filter: brightness(0.4);
   }
 
-  /*
-    Затемнення поверх приглушеного фото. Перевірено на обох кадрах:
-    у найгіршій точці --bone дає 11.5:1, --muted-inv 4.7:1 — обидва AA.
-  */
   .contact__bg::after {
     content: '';
     position: absolute;
@@ -294,30 +247,13 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
   }
 
   .form__field textarea {
-    /* Куточок для розтягування ламав підкреслення поля й тут не потрібен:
-       висоти в п'ять рядків вистачає, довший текст просто прокручується. */
     resize: none;
   }
 
-  /* Поки JS не відпрацював — нативний select виглядає як решта полів. */
   .form__field select option {
     background: var(--ink-deep);
     color: var(--bone);
   }
-
-  /* ─── Власний випадний список ─────────────────────────── */
-
-  /*
-    Селектори загорнуті в :global().
-
-    Стилі компонента скоповані, і Astro проставляє data-astro-cid лише
-    елементам із шаблону. Кнопку та список створює scripts/select.ts уже
-    в браузері, тож цього атрибута в них немає — скоповані правила
-    у них не влучали взагалі, і поле лишалося зовсім нестилізованим.
-
-    Прив'язку зберігає батьківський .form__field--select: він у шаблоні,
-    отже cid має, і правила діють лише всередині цього поля.
-  */
 
   .form__field--select {
     position: relative;
@@ -362,10 +298,6 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
     transform: rotate(180deg);
   }
 
-  /*
-    Список непрозорий: секція стоїть на фотографії, і напівпрозоре тло
-    зробило б підписи нечитабельними.
-  */
   .form__field--select :global(.sel__list) {
     position: absolute;
     inset-inline: 0;
@@ -378,20 +310,13 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
     border: 1px solid var(--rule);
     box-shadow: 0 18px 50px -24px rgb(0 0 0 / 0.8);
 
-    /*
-      20rem, а не 15: п'ять наявних пунктів займають ~15.8rem, тож смуга
-      прокрутки з'являлася там, де могла б не з'являтися взагалі.
-      Обмеження лишається на випадок довшого списку.
-    */
-    max-height: min(60vh, 20rem);
+    max-height: min(60vh, 24rem);
     overflow-y: auto;
 
-    /* Стандартна властивість: Firefox і Chrome від 121. */
     scrollbar-width: thin;
     scrollbar-color: rgb(255 255 255 / 0.22) transparent;
   }
 
-  /* WebKit і старіші Chromium — те саме через власні псевдоелементи. */
   .form__field--select :global(.sel__list::-webkit-scrollbar) {
     width: 6px;
   }
@@ -408,7 +333,6 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
     background: rgb(255 255 255 / 0.36);
   }
 
-  /* Явно, а не покладаючись на стиль браузера для [hidden]. */
   .form__field--select :global(.sel__list[hidden]) {
     display: none;
   }
@@ -425,11 +349,6 @@ const projectTypes = ['Private residence', 'Apartment renovation', 'Commercial s
 
   .form__field--select :global(.sel__option[aria-selected='true']) {
     color: var(--accent-inv);
-  }
-
-  .form__field--select :global(.sel__option[aria-selected='true'])::after {
-    content: '·';
-    margin-inline-start: 0.5rem;
   }
 
   .form__submit {

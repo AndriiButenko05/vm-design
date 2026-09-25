@@ -1,26 +1,16 @@
 ---
 import { Picture } from 'astro:assets';
 
-/**
- * Кадр слайдера.
- *
- * Навмисно не прив'язаний до проєкту: той самий компонент показує і добірку
- * проєктів на головній, і галерею одного проєкту на його сторінці.
- */
 export interface HeroSlide {
   src: ImageMetadata;
   alt: string;
-  /** Є посилання — кадр клікабельний; немає — просто зображення. */
   href?: string;
-  /** Підпис під кадром. Без нього смуга з підписами не виводиться. */
   label?: string;
 }
 
 interface Props {
   slides: HeroSlide[];
-  /** Пауза між кадрами, мс. */
   interval?: number;
-  /** Опис для скрінрідера. */
   label?: string;
 }
 
@@ -29,17 +19,6 @@ const { slides, interval = 5200, label = 'Gallery' } = Astro.props;
 const hasCaptions = slides.some((s) => s.label);
 ---
 
-{/*
-  Слайдер першого екрана.
-
-  Кадри перекривають один одного й міняються перехресним згасанням —
-  без горизонтального зсуву. Зсув вимагав би або overflow-контейнера,
-  або трансформа на всю стрічку; згасання дає той самий ефект
-  на одному властивості opacity й не чіпає розкладку.
-
-  Автоперегортання зупиняється під курсором, при фокусі всередині,
-  на прихованій вкладці та при prefers-reduced-motion.
-*/}
 <div
   class="slider"
   data-hero-slider
@@ -77,12 +56,6 @@ const hasCaptions = slides.some((s) => s.label);
   </div>
 
   <div class="slider__bar">
-    {/*
-      Усі підписи лежать у одній комірці сітки один поверх одного.
-      Висота блока = висота найдовшого з них, тому перемикання кадру
-      більше не зсуває нічого нижче: «La Villa — Nice» в один рядок
-      і «Appartamento Monza — Monza» у два займають однакове місце.
-    */}
     {
       hasCaptions && (
         <p class="slider__caption t-meta">
@@ -125,10 +98,6 @@ const hasCaptions = slides.some((s) => s.label);
 
   .slider__stage {
     position: relative;
-    /*
-      Портрет: вертикальний кадр заповнює перший екран по висоті
-      й урівноважує три рядки слогана.
-    */
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background: var(--placeholder, #111);
@@ -138,7 +107,6 @@ const hasCaptions = slides.some((s) => s.label);
     position: absolute;
     inset: 0;
     opacity: 0;
-    /* Невидимі кадри не мають перехоплювати клік. */
     pointer-events: none;
     transition: opacity 900ms var(--ease);
   }
@@ -148,11 +116,6 @@ const hasCaptions = slides.some((s) => s.label);
     pointer-events: auto;
   }
 
-  /*
-    Без JS видно перший кадр. Правило діє лише до ініціалізації:
-    інакше воно тримало б перший кадр видимим поверх усіх наступних,
-    і слайдер показував би два кадри одночасно.
-  */
   .slider:not([data-ready]) .slider__slide:first-child {
     opacity: 1;
     pointer-events: auto;
@@ -189,7 +152,6 @@ const hasCaptions = slides.some((s) => s.label);
     opacity: 1;
   }
 
-  /* Без JS видно перший підпис. */
   .slider:not([data-ready]) .slider__cap:first-child {
     opacity: 1;
   }
@@ -211,7 +173,6 @@ const hasCaptions = slides.some((s) => s.label);
     align-items: center;
   }
 
-  /* Сама смужка — усередині, щоб зона натиску лишалась 16 px заввишки. */
   .slider__fill {
     display: block;
     height: 2px;
@@ -231,11 +192,6 @@ const hasCaptions = slides.some((s) => s.label);
   }
 
   @media (max-width: 700px) {
-    /*
-      На телефоні риски йдуть під підпис, а не поруч: у рядок підпису
-      лишалося ~200 px, і довгі назви ламалися на два рядки.
-      На повну ширину вміщаються всі.
-    */
     .slider__bar {
       flex-direction: column;
       align-items: flex-start;

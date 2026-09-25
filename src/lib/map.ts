@@ -1,22 +1,10 @@
 import mapData from '../data/map.json';
 import type { CityGroup } from './projects';
 
-/**
- * Карта — кілька окремих аркушів, кожен під свій масштаб:
- * Французька Рив'єра, Франція, Італія, Польща й Україна. Під картою вони
- * перемикаються вкладками; геометрію готує scripts/build-map.mjs.
- *
- * Раніше була одна карта Франції та Італії з зумом. На масштабі Рив'єри
- * контури розсипалися на сходинки, а міста в радіусі 40 км злипалися в
- * кластер, який треба було розкривати. Окремий аркуш показує їх одразу
- * — з назвами біля точок.
- */
-
 export type SheetId = keyof typeof mapData;
 
 export type SheetGeometry = (typeof mapData)[SheetId];
 
-/** Бік, з якого стоїть підпис точки. */
 export type LabelSide = 'right' | 'left' | 'top';
 
 export type Marker = {
@@ -26,7 +14,6 @@ export type Marker = {
   y: number;
   count: number;
   side: LabelSide;
-  /** Точка-посилання на інший аркуш (Рив'єра на карті Франції). */
   goto?: SheetId;
 };
 
@@ -35,14 +22,11 @@ export type Sheet = {
   labelKey: string;
   geometry: SheetGeometry;
   markers: Marker[];
-  /** Міста аркуша з їхніми проєктами — для панелі праворуч. */
   groups: CityGroup[];
 };
 
-/** Міста Рив'єри: на карті Франції вони згортаються в одну точку. */
 const RIVIERA = ['Nice', 'Cannes', 'Monaco', 'Saint-Paul-de-Vence'];
 
-/** Порядок вкладок; перша відкрита одразу. */
 const ORDER: { id: SheetId; labelKey: string; has: (g: CityGroup) => boolean }[] = [
   { id: 'riviera', labelKey: 'map.riviera', has: (g) => RIVIERA.includes(g.city) },
   { id: 'france', labelKey: 'map.france', has: (g) => g.country === 'France' && !RIVIERA.includes(g.city) },
@@ -50,18 +34,11 @@ const ORDER: { id: SheetId; labelKey: string; has: (g: CityGroup) => boolean }[]
   { id: 'east', labelKey: 'map.east', has: (g) => g.country === 'Poland' || g.country === 'Ukraine' },
 ];
 
-/**
- * Підписи, яким праворуч тісно. Saint-Paul-de-Vence стоїть на одній
- * широті з Ніццою за 12 км — довгий підпис праворуч ліг би на її точку,
- * а зверху впирався в неї кінцем.
- * Точка Рив'єри на карті Франції — біля правого краю кадру.
- */
 const SIDES: Record<string, LabelSide> = {
   'Saint-Paul-de-Vence': 'left',
   'French Riviera': 'left',
 };
 
-/** Та сама проєкція Меркатора, що у scripts/build-map.mjs. */
 const mercY = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
 
 function projector(g: SheetGeometry) {
@@ -80,7 +57,6 @@ export function buildSheets(
   rivieraLabel: string,
 ): {
   sheets: Sheet[];
-  /** Міста поза всіма аркушами (Kassel, Гонконг) — окремим рядком тексту. */
   beyond: CityGroup[];
 } {
   const sheets: Sheet[] = ORDER.map(({ id, labelKey, has }) => {
@@ -95,7 +71,6 @@ export function buildSheets(
       side: SIDES[g.city] ?? 'right',
     }));
 
-    // На карті Франції Рив'єра — одна точка, що відкриває її вкладку.
     if (id === 'france') {
       const riv = groups.filter((g) => RIVIERA.includes(g.city));
       if (riv.length) {

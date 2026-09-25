@@ -11,14 +11,6 @@ import { setsForProject } from '../../lib/drawings';
 import { getProjects, slugOf } from '../../lib/projects';
 import { resolveLocale, t, DEFAULT_LOCALE } from '../../lib/i18n';
 
-/*
-  Сторінка зібрана за макетом замовниці: титул, один широкий кадр,
-  факти й опис, порівняння «до / після», галерея по кадру, процес.
-
-  Креслення — після галереї: два-три аркуші й кнопка на весь комплект
-  у PDF. «Наступного проєкту» в макеті немає, його прибрано.
-*/
-
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
   return projects.map((project) => ({
@@ -32,17 +24,6 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const { Content } = await render(project);
 const d = project.data;
 
-/*
-  Головний кадр — великий, на всю ширину, як у макеті, і бажано головного
-  приміщення. Порядок вибору:
-
-  1. hero з frontmatter — кадри, обрані руками (найнадійніше: код не
-     знає, де на фото вітальня, а де ванна);
-  2. перший горизонтальний кадр з обкладинки, галереї чи 3D;
-  3. якщо горизонтальних немає зовсім (проєкти, зняті на телефон) —
-     перші три вертикальні в ряд. Один вертикальний кадр у бежевому полі
-     займав би третину ширини й виглядав дрібно.
-*/
 const heroCandidates = [{ src: d.cover, alt: d.coverAlt }, ...d.gallery, ...d.renders];
 const isWide = (c: { src: ImageMetadata }) => c.src.width > c.src.height;
 const firstWide = heroCandidates.find(isWide);
@@ -58,13 +39,6 @@ const heroIsTall = !heroIsRow && !isWide(heroItems[0]);
 const typeLabel = t(locale, `type.${d.type}`);
 const intro = [typeLabel, `${d.city}, ${d.country}`, d.year ? String(d.year) : null].filter(Boolean).join(' · ');
 
-/**
- * Факти лівої колонки. Services — список, кожна послуга окремим рядком.
- *
- * Materials прибрано на прохання замовниці: з ним колонка фактів була
- * довшою за опис, і під текстом праворуч лишалася порожня діра. Поле в
- * контенті лишається — матеріали названо в самих описах.
- */
 const facts: { label: string; value: string | string[] }[] = [
   { label: t(locale, 'project.location'), value: `${d.city}, ${d.country}` },
   { label: t(locale, 'project.brand'), value: d.brand ?? '' },
@@ -74,12 +48,6 @@ const facts: { label: string; value: string | string[] }[] = [
   { label: t(locale, 'project.services'), value: d.scope },
 ].filter((f) => f.value.length > 0);
 
-/*
-  Кадри «до» працюють двічі. У порівнянні кожен стоїть у парі з готовим
-  приміщенням і гортається по одному. У «Процесі» вони ж лежать сіткою
-  під розгорткою: там весь стан будівництва видно одним поглядом.
-  Розгортка закрита за замовчуванням, тож повтор не обтяжує сторінку.
-*/
 const pairs = d.beforeAfter?.pairs ?? [];
 
 const slug = slugOf(project);
@@ -91,13 +59,11 @@ const processImages = d.beforeAfter?.images ?? [];
   <link slot="head" rel="preload" href="/fonts/spectral-500-latin-normal.woff2" as="font" type="font/woff2" crossorigin />
 
   <article class="project">
-    {/* ─── Титул ──────────────────────────────────────────── */}
     <header class="container page-intro">
       <p class="t-eyebrow">{intro}</p>
       <h1 class="page-intro__title">{d.title}</h1>
     </header>
 
-    {/* ─── Головний кадр ──────────────────────────────────── */}
     <figure class:list={['container hero', heroIsTall && 'hero--tall', heroIsRow && 'hero--row']}>
       {
         heroIsRow ? (
@@ -133,7 +99,6 @@ const processImages = d.beforeAfter?.images ?? [];
       {d.heroCaption && <figcaption class="t-meta">{d.heroCaption}</figcaption>}
     </figure>
 
-    {/* ─── Факти + опис ───────────────────────────────────── */}
     <section class="section">
       <div class="container grid story">
         <aside class="facts">
@@ -165,13 +130,10 @@ const processImages = d.beforeAfter?.images ?? [];
       </div>
     </section>
 
-    {/* ─── До / після ─────────────────────────────────────── */}
     {pairs.length > 0 && <BeforeAfter locale={locale} pairs={pairs} />}
 
-    {/* ─── Галерея ────────────────────────────────────────── */}
     {d.gallery.length > 0 && <ProjectGallery locale={locale} items={d.gallery} />}
 
-    {/* ─── 3D ─────────────────────────────────────────────── */}
     {
       d.renders.length > 0 && (
         <ProjectGallery
@@ -184,10 +146,8 @@ const processImages = d.beforeAfter?.images ?? [];
       )
     }
 
-    {/* ─── Креслення ──────────────────────────────────────── */}
     {drawingSets.length > 0 && <Drawings locale={locale} project={slug} sets={drawingSets} picks={d.drawingsPreview} />}
 
-    {/* ─── Процес ─────────────────────────────────────────── */}
     {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} />}
 
     <Lightbox locale={locale} label={d.title} />
@@ -195,8 +155,6 @@ const processImages = d.beforeAfter?.images ?? [];
 </BaseLayout>
 
 <style>
-  /* ─── Головний кадр ────────────────────────────────────── */
-
   .hero {
     margin-block: 0;
   }
@@ -210,14 +168,12 @@ const processImages = d.beforeAfter?.images ?? [];
     background: var(--sand);
   }
 
-  /* Вертикальний кадр — цілком, у бежевому полі, без обрізання. */
   .hero--tall :global(picture) {
     display: flex;
     justify-content: center;
     background: var(--sand);
   }
 
-  /* Висота — прямо на кадрі: відсоток від батька тут не резолвився б. */
   .hero--tall :global(img) {
     width: auto;
     max-width: 100%;
@@ -225,21 +181,11 @@ const processImages = d.beforeAfter?.images ?? [];
     object-fit: contain;
   }
 
-  /*
-    Два-три вертикальні кадри в ряд. Ширина комірки пропорційна
-    співвідношенню сторін кадру (flex-grow = w/h), тож усі кадри виходять
-    однієї висоти й разом заповнюють ширину без обрізання.
-  */
   .hero__row {
     display: flex;
     gap: 0.5rem;
   }
 
-  /*
-    Кадри з телефона бувають 9:16 — у повну висоту ряд не влазив би
-    в перший екран. Висота обмежена, кадр заповнює комірку (cover) і
-    втрачає лише трохи згори й знизу.
-  */
   .hero__cell {
     flex: var(--r) 1 0;
     min-width: 0;
@@ -258,7 +204,6 @@ const processImages = d.beforeAfter?.images ?? [];
     object-fit: cover;
   }
 
-  /* На телефоні ряд з трьох вийшов би дрібним — лишаємо перший кадр. */
   @media (max-width: 700px) {
     .hero__cell + .hero__cell {
       display: none;
@@ -268,8 +213,6 @@ const processImages = d.beforeAfter?.images ?? [];
   .hero figcaption {
     padding-block: 0.625rem;
   }
-
-  /* ─── Факти ────────────────────────────────────────────── */
 
   .story {
     align-items: start;
@@ -301,8 +244,6 @@ const processImages = d.beforeAfter?.images ?? [];
     font-size: var(--step-small);
   }
 
-  /* ─── Опис ─────────────────────────────────────────────── */
-
   .prose {
     grid-column: 6 / span 7;
   }
@@ -311,7 +252,6 @@ const processImages = d.beforeAfter?.images ?? [];
     margin-bottom: 0.75rem;
   }
 
-  /* Перший абзац — лід Spectral, як у макеті; решта — тихіша. */
   .prose :global(p:not(.prose__eyebrow)) {
     color: var(--fg-muted);
   }

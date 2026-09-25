@@ -1,21 +1,3 @@
-/**
- * Готує SVG-геометрію для секції Geography.
- *
- *   node scripts/build-map.mjs
- *
- * Пише src/data/map.json — кілька окремих карт («аркушів»), кожна під
- * свій масштаб: Французька Рив'єра, Франція, Італія, Польща й Україна.
- * Під картою вони перемикаються вкладками.
- *
- * Раніше була одна карта Франції та Італії з зумом. На масштабі Рив'єри
- * вона розпадалася на сходинки: контури бралися з Natural Earth 50 m,
- * розрахованого на всю Європу. Тепер кожен аркуш малюється з джерела
- * тієї детальності, яка йому потрібна, і зум не потрібен зовсім.
- *
- * Запускається вручну, не під час збірки сайту: результат комітиться.
- * Так у рантаймі немає ані завантажень, ані обчислень — лише готові path.
- */
-
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -31,29 +13,16 @@ const SRC = {
     'https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits_IT_regions.geojson',
   regionsPL:
     'https://raw.githubusercontent.com/ppatrzyk/polska-geojson/master/wojewodztwa/wojewodztwa-min.geojson',
-  /*
-    Україна — з набору областей, а не з Natural Earth: там за
-    замовчуванням Крим відрізано від України. Контур країни складається
-    з самих областей (див. dissolve), тож Крим на карті український.
-  */
   regionsUA: 'https://raw.githubusercontent.com/EugeneBorshch/ukraine_geojson/master/UA_FULL_Ukraine.geojson',
 };
 
 const WIDTH = 1000;
 
-/**
- * Висота всіх аркушів однакова: вони міняються місцями в одній рамці, і
- * різна висота смикала б сторінку. Тому для кожного задаються довготи й
- * центральна широта, а межі по широті добираються під цю висоту.
- */
 const HEIGHT = 883.5;
-
-// ─── Проєкція (Меркатор) ───────────────────────────────────────
 
 const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 180 / 2));
 const invMercY = (y) => ((2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180) / Math.PI;
 
-/** Кадр аркуша: довготи й центральна широта → межі, висота, проєкція. */
 function frame(lonMin, lonMax, latCentre) {
   const scale = WIDTH / (lonMax - lonMin);
   const half = ((HEIGHT / scale) * (Math.PI / 180)) / 2;
@@ -69,19 +38,12 @@ function frame(lonMin, lonMax, latCentre) {
   return { view, height: HEIGHT, project };
 }
 
-/*
-  Кадри аркушів. Рив'єра — від Канн до італійського кордону; Франція — з
-  Корсикою; Італія — з Сицилією й Сардинією; схід — Польща й Україна з
-  Кримом.
-*/
 const FRAMES = {
   riviera: frame(6.7, 7.7, 43.66),
   france: frame(-6.5, 11.0, 46.3),
   italy: frame(3.5, 21.5, 41.6),
   east: frame(12.5, 41.5, 49.6),
 };
-
-// ─── Спрощення (Дуглас — Пекер) ────────────────────────────────
 
 function simplify(points, tolerance) {
   if (points.length < 3) return points;
@@ -122,9 +84,7 @@ function simplify(points, tolerance) {
   return points.filter((_, i) => keep[i]);
 }
 
-// ─── GeoJSON → SVG path ────────────────────────────────────────
-
-const MIN_RING_AREA = 3; // px² — відкидає дрібні скелі, лишає Корсику й Сицилію
+const MIN_RING_AREA = 3;
 
 function ringArea(pts) {
   let a = 0;
@@ -134,17 +94,6 @@ function ringArea(pts) {
   return Math.abs(a / 2);
 }
 
-/**
- * Кодує контур у SVG-path відносними командами з цілими координатами.
- *
- * Абсолютні координати з десятковою частиною («L332.0 321.5») — найдорожчий
- * спосіб записати контур: на карті це була половина стисненого HTML головної.
- * Відносні дельти дають короткі числа (`l2 -2`), а ціла точність на полотні
- * 1000 px непомітна — карта малюється вужчою за 800 px.
- *
- * Курсор ведемо по ВЖЕ ОКРУГЛЕНИХ значеннях, інакше похибка накопичується
- * і контур «повзе».
- */
 function encodePath(points) {
   let cx = Math.round(points[0][0]);
   let cy = Math.round(points[0][1]);
@@ -156,8 +105,7 @@ function encodePath(points) {
     const ny = Math.round(points[i][1]);
     const dx = nx - cx;
     const dy = ny - cy;
-    if (dx === 0 && dy === 0) continue; // після округлення точка злилася з попередньою
-    // Пробіл перед від'ємним числом не потрібен — мінус сам розділяє.
+    if (dx === 0 && dy === 0) continue;
     chunks.push(dy < 0 ? `${dx}${dy}` : `${dx} ${dy}`);
     cx = nx;
     cy = ny;
@@ -178,16 +126,9 @@ function toPath(geometry, tolerance, fr) {
   for (const polygon of polygons) {
     for (const ring of polygon) {
       let pts = ring.map(fr.project);
-      // Поза кадром — не малюємо (заморські території Франції тощо).
       const inFrame = pts.some(([x, y]) => x > -60 && x < WIDTH + 60 && y > -60 && y < fr.height + 60);
       if (!inFrame) continue;
 
-      /*
-        Точки за рамкою притискаються до неї (з запасом 20 px, щоб край
-        лишався невидимим). Регіон PACA тягнеться далеко за кадр Рив'єри,
-        і без цього його контур за рамкою важив утричі більше за видимий.
-        Притиснуті точки лягають на пряму, і спрощення їх прибирає.
-      */
       const P = 20;
       pts = pts.map(([x, y]) => [Math.min(WIDTH + P, Math.max(-P, x)), Math.min(fr.height + P, Math.max(-P, y))]);
       pts = simplify(pts, tolerance);
@@ -199,23 +140,11 @@ function toPath(geometry, tolerance, fr) {
   return parts.join('');
 }
 
-/**
- * Зовнішній контур країни з її областей.
- *
- * Спільний кордон двох областей складається з тих самих вузлів (дані з
- * OpenStreetMap), тож кожне його ребро трапляється двічі. Ребра, що
- * трапилися один раз, — зовнішня межа; з них і збираються кільця.
- * Бібліотека для об'єднання полігонів тут зайва.
- */
 function dissolve(features) {
   const key = (p) => `${p[0].toFixed(6)},${p[1].toFixed(6)}`;
   const edges = new Map();
   for (const f of features) {
     const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-    // Усі кільця, не лише перше: у цих даних острови й материк лежать
-    // кільцями одного Polygon, і в Одеської, Миколаївської та Херсонської
-    // областей материк — не перше кільце. З poly[0] пропадало все
-    // південне узбережжя.
     for (const r of polys.flat()) {
       for (let i = 0; i < r.length - 1; i++) {
         const a = key(r[i]);
@@ -260,8 +189,6 @@ function dissolve(features) {
   return { type: 'MultiPolygon', coordinates: rings };
 }
 
-// ─── Завантаження з кешем ──────────────────────────────────────
-
 async function load(name, url) {
   await fs.mkdir(CACHE, { recursive: true });
   const file = path.join(CACHE, `${name}.geojson`);
@@ -304,10 +231,6 @@ async function main() {
   const plName = (p) => p.nazwa;
   const uaName = (p) => p['name:en'];
 
-  /**
-   * Аркуш: контури (outline — лише лінія) і підсвічені регіони (region —
-   * заливка), обидва — масиви {key, label?, d}.
-   */
   const sheet = (fr, outline, regions) => ({
     viewBox: `0 0 ${WIDTH} ${fr.height}`,
     width: WIDTH,
@@ -323,10 +246,6 @@ async function main() {
   const E = FRAMES.east;
 
   const out = {
-    /*
-      Рив'єра: суша — регіон PACA і Лігурія (береги детальні, на відміну
-      від Natural Earth). Монако — проміжок між ними на узбережжі.
-    */
     riviera: sheet(
       R,
       [
@@ -334,9 +253,6 @@ async function main() {
         ['liguria', find(regionsIT, itName, 'Liguria').geometry, 0.8],
         ['piemonte', find(regionsIT, itName, 'Piemonte').geometry, 0.8],
       ],
-      // Регіони не підсвічуються: на такому масштабі департамент займає
-      // майже весь кадр, і межа з Варом лягала темною виїмкою. Суша
-      // натомість злегка залита (див. GeographyMap.astro).
       [],
     ),
     france: sheet(
@@ -352,7 +268,6 @@ async function main() {
       [['italy', byIso('IT').geometry, 0.6]],
       [
         ['lombardia', 'Lombardia', find(regionsIT, itName, 'Lombardia').geometry, 0.35],
-        // Bologna — три виставкові стенди, тож регіон теж підсвічуємо.
         ['emiliaromagna', 'Emilia-Romagna', find(regionsIT, itName, 'Emilia-Romagna').geometry, 0.35],
         ['lazio', 'Lazio', find(regionsIT, itName, 'Lazio').geometry, 0.35],
       ],
