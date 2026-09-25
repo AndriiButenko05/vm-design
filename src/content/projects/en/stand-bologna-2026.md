@@ -36,6 +36,9 @@ gallery:
   - src: ../../../assets/projects/stand-bologna-2026/006-img-1146.jpg
     alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
     size: detail
+  - src: ../../../assets/projects/stand-bologna-2026/more-img-1119.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — the illuminated counter in front of the red campaign wall"
+    size: half
 ---
 
 Each exhibition brings a new venue, schedule and set of practical requirements.

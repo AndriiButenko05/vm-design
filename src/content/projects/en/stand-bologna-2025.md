@@ -51,6 +51,33 @@ gallery:
   - src: ../../../assets/projects/stand-bologna-2025/018-img-4360.jpg
     alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the exhibition stand wrapped in a violet quartzite graphic"
     size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4313.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the stand with its counters and violet quartzite graphic"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4320.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the illuminated counter and product display"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4326.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — a backlit counter printed with the quartzite graphic"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4329.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the treatment area with the video wall"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4335.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — glass product vitrine against the quartzite wall"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4341.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the stand seen from the aisle"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4345.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — a styling station with an illuminated mirror"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4346.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — the backlit counter and orchids"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2025/more-img-4357.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2025 — product shelves and vitrine along the quartzite wall"
+    size: half
 ---
 
 Each exhibition brings a new venue, schedule and set of practical requirements.

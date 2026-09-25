@@ -86,6 +86,7 @@ class Title {
   textColor: string;
   font: string;
   mesh!: Mesh;
+  aspect = 1;
 
   constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }: TitleProps) {
     autoBind(this);
@@ -129,21 +130,31 @@ class Title {
       transparent: true
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
-    const aspect = width / height;
-
-    let textHeightScaled = this.plane.scale.y * 0.24;
-    let textWidthScaled = textHeightScaled * aspect;
-
-    const maxWidth = this.plane.scale.x * 0.92;
-    if (textWidthScaled > maxWidth) {
-      textHeightScaled *= maxWidth / textWidthScaled;
-      textWidthScaled = maxWidth;
-    }
-
-    this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
+    this.aspect = width / height;
     this.mesh.setParent(this.plane);
   }
+
+  /*
+    Розмір підпису — у світових одиницях, однаковий для всіх карток
+    (textHeight рахує App за найдовшим підписом). Підпис — дочірній
+    елемент картки, тож його масштаб множиться на масштаб картки; тому
+    ділимо на її ширину й висоту окремо. Інакше літери стискалися б
+    разом із карткою 700×900 — на чверть по горизонталі.
+  */
+  layout(planeW: number, planeH: number, textHeight: number) {
+    this.mesh.scale.set((textHeight * this.aspect) / planeW, textHeight / planeH, 1);
+    this.mesh.position.y = -0.5 - (textHeight * 0.5 + 0.05) / planeH;
+  }
+}
+
+/** Пропорція текстури підпису — так само, як у createTextTexture. */
+function labelAspect(text: string, font: string): number {
+  const ctx = document.createElement('canvas').getContext('2d');
+  if (!ctx) return 1;
+  ctx.font = font;
+  const w = Math.ceil(ctx.measureText(text).width) + 20;
+  const h = Math.ceil(getFontSize(font) * 1.2) + 20;
+  return w / h;
 }
 
 interface ScreenSize {
@@ -171,6 +182,7 @@ interface MediaProps {
   textColor: string;
   borderRadius?: number;
   font?: string;
+  labelAspect?: number;
   onLoad?: () => void;
 }
 
@@ -190,6 +202,7 @@ class Media {
   textColor: string;
   borderRadius: number;
   font?: string;
+  labelAspect: number;
   onLoad?: () => void;
   program!: Program;
   plane!: Mesh;
@@ -218,6 +231,7 @@ class Media {
     textColor,
     borderRadius = 0,
     font,
+    labelAspect = 1,
     onLoad
   }: MediaProps) {
     this.geometry = geometry;
@@ -234,6 +248,7 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.labelAspect = labelAspect;
     this.onLoad = onLoad;
     this.createShader();
     this.createMesh();
@@ -390,6 +405,13 @@ class Media {
     this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
+
+    // Один розмір для всіх підписів: найдовший має вміститися під
+    // карткою, заходячи в проміжок до сусідньої не більше ніж на 80%.
+    const maxLabelWidth = this.plane.scale.x + this.padding * 0.8;
+    const textHeight = Math.min(this.plane.scale.y * 0.16, maxLabelWidth / this.labelAspect);
+    this.title.layout(this.plane.scale.x, this.plane.scale.y, textHeight);
+
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
@@ -506,6 +528,7 @@ class App {
   ) {
     const galleryItems = items ?? [];
     this.mediasImages = galleryItems.concat(galleryItems);
+    const widestLabel = Math.max(1, ...galleryItems.map((it) => labelAspect(it.text, font)));
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
@@ -522,6 +545,7 @@ class App {
         textColor,
         borderRadius,
         font,
+        labelAspect: widestLabel,
         onLoad: () => {
           this.needsRender = true;
         }

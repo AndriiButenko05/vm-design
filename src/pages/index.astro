@@ -11,7 +11,12 @@ import { getProjects, slugOf, type Project } from '../lib/projects';
 import { resolveLocale, localePath, t } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
-import heroImage from '../assets/projects/la-villa-nice/034-img-2560.jpg';
+import heroVilla from '../assets/projects/la-villa-nice/034-img-2560.jpg';
+import heroParis from '../assets/projects/paris-apartment/07-living.jpg';
+import heroLarimar from '../assets/projects/larimar-nice/009-img-2674.jpg';
+
+// Кадри фону першого екрана — тимчасовий вибір, замовниця замінить.
+const heroImages = [heroVilla, heroParis, heroLarimar];
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);
@@ -35,7 +40,7 @@ const toItem = (p: Project): RailItem => ({
 >
   <link slot="head" rel="preload" href="/fonts/cormorant-garamond-400-latin-normal.woff2" as="font" type="font/woff2" crossorigin />
 
-  <Hero locale={locale} image={heroImage} id="top" eager />
+  <Hero locale={locale} images={heroImages} id="top" eager />
 
   <section class="intro section" id="studio">
     <div class="container grid">

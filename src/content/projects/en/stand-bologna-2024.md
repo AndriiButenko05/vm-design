@@ -36,6 +36,12 @@ gallery:
   - src: ../../../assets/projects/stand-bologna-2024/007-img-6578.jpg
     alt: "Christina at Cosmoprof Worldwide Bologna 2024 — white stand with glass display cases"
     size: detail
+  - src: ../../../assets/projects/stand-bologna-2024/more-img-6576.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2024 — styling chairs and round mirrors on the white stand"
+    size: half
+  - src: ../../../assets/projects/stand-bologna-2024/more-img-6577.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna 2024 — the stand with its counters and vitrines"
+    size: half
 ---
 
 Each exhibition brings a new venue, schedule and set of practical requirements.

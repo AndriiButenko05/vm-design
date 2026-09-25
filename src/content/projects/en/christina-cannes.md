@@ -68,6 +68,24 @@ gallery:
   - src: ../../../assets/projects/christina-cannes/004-img-1329.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
     size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-1330.jpg
+    alt: "Christina Beauty Space in Cannes — the salon with styling chairs and illuminated mirrors"
+    size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-8080.jpg
+    alt: "Christina Beauty Space in Cannes — styling stations beside the glass product shelves"
+    size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-1331.jpg
+    alt: "Christina Beauty Space in Cannes — the treatment room behind grey curtains"
+    size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-1326.jpg
+    alt: "Christina Beauty Space in Cannes — the lounge by the windows, dressed for the holidays"
+    size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-7993.jpg
+    alt: "Christina Beauty Space in Cannes — the marble-clad WC"
+    size: half
+  - src: ../../../assets/projects/christina-cannes/more-img-7075.jpg
+    alt: "Christina Beauty Space in Cannes — a sculpted wall light"
+    size: half
 beforeAfter:
   pairs:
     - before: ../../../assets/projects/christina-cannes/008-img-5094.jpg

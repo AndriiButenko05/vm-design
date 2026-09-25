@@ -148,7 +148,7 @@ const processImages = d.beforeAfter?.images ?? [];
 
     {drawingSets.length > 0 && <Drawings locale={locale} project={slug} sets={drawingSets} picks={d.drawingsPreview} />}
 
-    {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} />}
+    {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} stage={d.processStage} />}
 
     <Lightbox locale={locale} label={d.title} />
   </article>
@@ -244,19 +244,20 @@ const processImages = d.beforeAfter?.images ?? [];
   }
 
   .facts__row + .facts__row {
-    margin-top: 1.25rem;
+    margin-top: 1.75rem;
   }
 
   .facts dt {
-    font-size: var(--step-meta);
+    font-size: 0.875rem;
     letter-spacing: var(--ls-meta);
     text-transform: uppercase;
     color: var(--fg-muted);
   }
 
   .facts dd {
-    margin: 0.25rem 0 0;
-    font-size: var(--step-small);
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.125rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.55;
   }
 
   .prose {

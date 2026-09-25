@@ -41,6 +41,12 @@ gallery:
   - src: ../../../assets/projects/stand-paris-2026/010-e2008c24-adc9-4fea-8b5c-843e2e094b62.jpg
     alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
     size: half
+  - src: ../../../assets/projects/stand-paris-2026/more-img-1534.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2026 — the product counter in front of the campaign portrait"
+    size: half
+  - src: ../../../assets/projects/stand-paris-2026/more-img-1539.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2026 — the corner of the stand with the suspended rig"
+    size: half
 ---
 
 Each exhibition brings a new venue, schedule and set of practical requirements.

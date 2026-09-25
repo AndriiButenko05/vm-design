@@ -4,26 +4,37 @@ import { t, type Locale } from '../../lib/i18n';
 
 interface Props {
   locale: Locale;
-  image: ImageMetadata;
+  images: ImageMetadata[];
   id?: string;
   eager?: boolean;
 }
 
-const { locale, image, id, eager = false } = Astro.props;
+const { locale, images, id, eager = false } = Astro.props;
 ---
 
 <section class="hero on-ink-deep" id={id}>
-  <div class="hero__bg" aria-hidden="true">
-    <Picture
-      src={image}
-      formats={['avif']}
-      fallbackFormat="webp"
-      alt=""
-      widths={[900, 1400, 2000]}
-      sizes="100vw"
-      loading={eager ? 'eager' : 'lazy'}
-      fetchpriority={eager ? 'high' : 'auto'}
-    />
+  {/*
+    Фон гортається сам: кадри плавно змінюються кожні 5 секунд, керування
+    немає. Перший кадр вантажиться одразу, решта — з низьким пріоритетом,
+    щоб не заважати першому екрану.
+  */}
+  <div class="hero__bg" aria-hidden="true" data-hero-slides>
+    {
+      images.map((image, i) => (
+        <div class:list={['hero__slide', i === 0 && 'is-active']} data-hero-slide>
+          <Picture
+            src={image}
+            formats={['avif']}
+            fallbackFormat="webp"
+            alt=""
+            widths={[900, 1400, 2000]}
+            sizes="100vw"
+            loading={i === 0 && eager ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 && eager ? 'high' : 'low'}
+          />
+        </div>
+      ))
+    }
   </div>
 
   <div class="container hero__inner">
@@ -40,6 +51,33 @@ const { locale, image, id, eager = false } = Astro.props;
   <span class="hero__scroll t-meta" aria-hidden="true">{t(locale, 'hero.scroll')}</span>
 </section>
 
+<script>
+  const INTERVAL = 5000;
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-hero-slides]')) {
+    const slides = [...root.querySelectorAll<HTMLElement>('[data-hero-slide]')];
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (slides.length < 2 || still) continue;
+
+    for (const img of root.querySelectorAll('img')) img.loading = 'eager';
+
+    let current = 0;
+    const ready = (el: HTMLElement) => {
+      const img = el.querySelector('img');
+      return !img || (img.complete && img.naturalWidth > 0);
+    };
+
+    setInterval(() => {
+      if (document.hidden) return;
+      const next = (current + 1) % slides.length;
+      if (!ready(slides[next])) return;
+      slides[current].classList.remove('is-active');
+      slides[next].classList.add('is-active');
+      current = next;
+    }, INTERVAL);
+  }
+</script>
+
 <style>
   .hero {
     position: relative;
@@ -55,6 +93,17 @@ const { locale, image, id, eager = false } = Astro.props;
     position: absolute;
     inset: 0;
     z-index: -1;
+  }
+
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.6s var(--ease);
+  }
+
+  .hero__slide.is-active {
+    opacity: 1;
   }
 
   .hero__bg :global(img) {
@@ -88,14 +137,19 @@ const { locale, image, id, eager = false } = Astro.props;
     max-width: min(var(--container), 68rem);
   }
 
+  /*
+    Кожна фраза — один рядок. Найдовша («Your character.») займає ~8.9
+    кегля завширшки, тож кегль додатково обмежено шириною контейнера з
+    запасом (÷ 9.2): на вузькому екрані літери меншають, а не переносяться.
+  */
   .hero__slogan {
     font-family: var(--font-hero);
-    font-size: clamp(2.5rem, 6.2vw, 6.25rem);
-    max-width: 18ch;
+    font-size: min(clamp(2.5rem, 6.2vw, 6.25rem), calc((min(100vw, 68rem) - 2 * var(--gutter)) / 9.2));
   }
 
   .hero__slogan span {
     display: block;
+    white-space: nowrap;
   }
 
   .hero__slogan span:last-child {

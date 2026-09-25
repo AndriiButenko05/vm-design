@@ -58,6 +58,15 @@ renders:
   - src: ../../../assets/projects/warsaw-powisle/09-kitchen-island-2.jpg
     alt: "Penthouse in Warsaw — kitchen island, 3D visualisation"
     caption: "Kitchen island"
+  - src: ../../../assets/projects/warsaw-powisle/44-dining-shelving.jpg
+    alt: "Penthouse in Warsaw — dining area, 3D visualisation"
+    caption: "Dining area"
+  - src: ../../../assets/projects/warsaw-powisle/45-kitchen-island-front.jpg
+    alt: "Penthouse in Warsaw — kitchen island, 3D visualisation"
+    caption: "Kitchen island"
+  - src: ../../../assets/projects/warsaw-powisle/46-kitchen-side.jpg
+    alt: "Penthouse in Warsaw — the kitchen, 3D visualisation"
+    caption: "The kitchen"
   - src: ../../../assets/projects/warsaw-powisle/10-entrance.jpg
     alt: "Penthouse in Warsaw — entrance hall, 3D visualisation"
     caption: "Entrance hall"

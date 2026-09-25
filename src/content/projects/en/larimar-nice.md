@@ -65,12 +65,16 @@ beforeAfter:
   images:
     - src: ../../../assets/projects/larimar-nice/000-img-0328.jpg
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
+    - src: ../../../assets/projects/larimar-nice/site-img-0329.jpg
+      alt: "Larimar Beauty Salon — the salon space before the works"
     - src: ../../../assets/projects/larimar-nice/002-img-0330.jpg
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
     - src: ../../../assets/projects/larimar-nice/003-img-0331.jpg
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
     - src: ../../../assets/projects/larimar-nice/004-img-0336.jpg
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
+    - src: ../../../assets/projects/larimar-nice/site-img-0339.jpg
+      alt: "Larimar Beauty Salon — the WC before the works"
 ---
 
 Larimar Beauty Salon opened in a renovated space in central Nice.

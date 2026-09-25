@@ -61,6 +61,15 @@ gallery:
   - src: ../../../assets/projects/christina-kassel/001-christina-kassel-10.jpg
     alt: "Christina Beauty Space in Kassel — the finished salon: oak floor, product wall and backlit round mirrors"
     size: half
+  - src: ../../../assets/projects/christina-kassel/more-christina-kassel-1.jpg
+    alt: "Christina Beauty Space in Kassel — styling chairs in front of backlit round mirrors"
+    size: half
+  - src: ../../../assets/projects/christina-kassel/more-christina-kassel-21.jpg
+    alt: "Christina Beauty Space in Kassel — the salon with its oak floor and product wall"
+    size: half
+  - src: ../../../assets/projects/christina-kassel/more-christina-kassel-22.jpg
+    alt: "Christina Beauty Space in Kassel — the product wall and a styling chair"
+    size: half
 beforeAfter:
   pairs:
     - before: ../../../assets/projects/christina-kassel/020-img-9867.jpg
@@ -79,15 +88,21 @@ beforeAfter:
       after: ../../../assets/projects/christina-kassel/012-christina-kassel-3-1.jpg
       caption: "The entrance, now the reception"
   images:
+    - src: ../../../assets/projects/christina-kassel/site-img-9855.jpg
+      alt: "Christina Beauty Space in Kassel — the space before fit-out"
+    - src: ../../../assets/projects/christina-kassel/site-img-9856.jpg
+      alt: "Christina Beauty Space in Kassel — the street front during fit-out"
+    - src: ../../../assets/projects/christina-kassel/018-img-9858.jpg
+      alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
+    - src: ../../../assets/projects/christina-kassel/019-img-9862.jpg
+      alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
     - src: ../../../assets/projects/christina-kassel/020-img-9867.jpg
       alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
     - src: ../../../assets/projects/christina-kassel/021-img-9868.jpg
       alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
-    - src: ../../../assets/projects/christina-kassel/018-img-9858.jpg
-      alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
+    - src: ../../../assets/projects/christina-kassel/site-img-9872.jpg
+      alt: "Christina Beauty Space in Kassel — the office area during fit-out"
     - src: ../../../assets/projects/christina-kassel/023-img-9875.jpg
-      alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
-    - src: ../../../assets/projects/christina-kassel/019-img-9862.jpg
       alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
 ---
 

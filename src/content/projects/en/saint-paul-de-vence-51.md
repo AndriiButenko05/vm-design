@@ -18,8 +18,32 @@ coverAlt: "Apartment in Saint-Paul-de-Vence · 51 m² — the design project, wi
 coords: { lat: 43.6959, lon: 7.1222 }
 featured: false
 order: 9
+processStage: design
 drawingsPreview: ["003", "006", "008"]
 todo: "Тексти й назва — від Марини. Appartement №3. Фото немає: у галереї креслення."
+beforeAfter:
+  images:
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-01-the-bedroom.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — a bedroom with a view of the garden, before the renovation"
+      caption: "The bedroom"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-02-the-living-room.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the living room before the renovation"
+      caption: "The living room"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-03-the-old-partitions.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the old partitions before the replanning"
+      caption: "The old partitions"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-04-the-old-kitchen.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the old kitchen wall"
+      caption: "The old kitchen"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-05-the-corridor.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the long corridor the new layout removes"
+      caption: "The corridor"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-06-the-hall.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the doorway from the hall"
+      caption: "The hall"
+    - src: ../../../assets/projects/saint-paul-de-vence-51/before-07-the-old-shower.jpg
+      alt: "Apartment in Saint-Paul-de-Vence · 51 m² — the old shower"
+      caption: "The old shower"
 ---
 
 This compact apartment in Saint-Paul-de-Vence was redesigned for rental use.

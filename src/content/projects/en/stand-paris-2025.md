@@ -43,6 +43,18 @@ gallery:
   - src: ../../../assets/projects/stand-paris-2025/007-img-4748.jpg
     alt: "Christina at Congrès International Esthétique & Spa 2025 — campaign wall and treatment stations on the stand"
     size: half
+  - src: ../../../assets/projects/stand-paris-2025/more-img-4734.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2025 — the stand with the full-height campaign portrait"
+    size: half
+  - src: ../../../assets/projects/stand-paris-2025/more-img-4740.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2025 — the illuminated counter in front of the campaign wall"
+    size: half
+  - src: ../../../assets/projects/stand-paris-2025/more-img-4751.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2025 — the treatment table beside the campaign portrait"
+    size: half
+  - src: ../../../assets/projects/stand-paris-2025/more-img-4757.jpg
+    alt: "Christina at Congrès International Esthétique & Spa 2025 — the stand seen from the corner"
+    size: half
 ---
 
 Each exhibition brings a new venue, schedule and set of practical requirements.

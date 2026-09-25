@@ -74,6 +74,42 @@ gallery:
   - src: ../../../assets/projects/christina-paris/025-img-1584.jpg
     alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
     size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1479.jpg
+    alt: "Christina Beauty Space in Paris — styling stations with round mirrors by the fireplace"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1526.jpg
+    alt: "Christina Beauty Space in Paris — the styling area with pedestal stations"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1475.jpg
+    alt: "Christina Beauty Space in Paris — the reception desk and product shelving"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1499.jpg
+    alt: "Christina Beauty Space in Paris — the reception desk under the brand logo"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1537.jpg
+    alt: "Christina Beauty Space in Paris — the reception beside the exposed Paris stone"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1553.jpg
+    alt: "Christina Beauty Space in Paris — the reception seen past the stone pier"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1554.jpg
+    alt: "Christina Beauty Space in Paris — the consultation desk by the courtyard window"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1532.jpg
+    alt: "Christina Beauty Space in Paris — the stone arch framing the courtyard door"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1589.jpg
+    alt: "Christina Beauty Space in Paris — the entrance through the stone arch"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1523.jpg
+    alt: "Christina Beauty Space in Paris — the courtyard entrance"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1569.jpg
+    alt: "Christina Beauty Space in Paris — the courtyard with the brand logo"
+    size: half
+  - src: ../../../assets/projects/christina-paris/more-img-1579.jpg
+    alt: "Christina Beauty Space in Paris — the planted courtyard in front of the salon"
+    size: half
 ---
 
 Located on Rue Saint-Honoré in central Paris, this 100 m² beauty space was created through the renovation of an existing salon.

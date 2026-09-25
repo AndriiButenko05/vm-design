@@ -53,6 +53,12 @@ const projects = defineCollection({
 
       heroCaption: z.string().optional(),
 
+      /**
+       * Стадія проєкту для блоку «Процес»: built — реалізовано, in-progress —
+       * ремонт триває, design — лише проєкт, фото показують об'єкт до робіт.
+       */
+      processStage: z.enum(['built', 'in-progress', 'design']).default('built'),
+
       beforeAfter: z
         .object({
           mode: z.enum(['slider', 'pair']).optional(),

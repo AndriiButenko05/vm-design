@@ -118,6 +118,13 @@ const ui: Record<Locale, Dict> = {
     'process.summary':
       'The transformation began with a substantial renovation. See the site before the finished interior took shape.',
     'process.toggle': 'View the process',
+    'process.in-progress.title': 'From the flat as found to the works on site',
+    'process.in-progress.summary':
+      'The apartment before the works, the materials chosen for it, and the renovation as it progresses.',
+    'process.design.title': 'The property as found',
+    'process.design.summary':
+      'Photographs of the apartment before the redesign — the starting point for the new layout.',
+    'process.design.toggle': 'View the photos',
 
     'dwg.eyebrow': 'Design project',
     'dwg.title': 'The drawings',
@@ -125,7 +132,7 @@ const ui: Record<Locale, Dict> = {
       'Survey, demolition, layout, services and elevations — the full set of drawings the project is built from.',
     'dwg.sheet': 'drawing sheet',
     'dwg.sheets': 'sheets',
-    'dwg.all': 'View all drawings',
+    'dwg.all': 'View the design project',
     'dwg.back': 'Back to the project',
 
     'index.eyebrow': 'Selected work',
@@ -159,7 +166,7 @@ const ui: Record<Locale, Dict> = {
     'contact.type': 'Service',
     'contact.message': 'Message',
     'contact.send': 'Send message',
-    'contact.lead': 'Tell me about the space and how you want to live in it.',
+    'contact.lead': 'Share your project details, and I’ll be in touch to discuss the next steps.',
     'contact.sending': 'Sending…',
     'contact.ok': 'Thank you — your message has been sent. I will reply personally.',
     'contact.error': 'Something went wrong. Please write to',

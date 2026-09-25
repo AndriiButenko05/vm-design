@@ -52,6 +52,10 @@ gallery:
   - src: ../../../assets/projects/christina-monaco/006-img-8860.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
     size: half
+beforeAfter:
+  images:
+    - src: ../../../assets/projects/christina-monaco/site-img-8815.jpg
+      alt: "Christina Beauty Space in Monaco — brand lettering being set into the marble reception counter"
 ---
 
 A small salon fitted out in pale lacquer and timber.

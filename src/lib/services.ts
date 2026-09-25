@@ -145,6 +145,6 @@ export const SERVICES: Service[] = [
       'Understanding the likely scope of work',
     ],
     image: marbleSlabs,
-    featured: false,
+    featured: true,
   },
 ];

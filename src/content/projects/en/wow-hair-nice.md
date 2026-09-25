@@ -45,6 +45,12 @@ gallery:
   - src: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
     size: half
+  - src: ../../../assets/projects/wow-hair-nice/more-img-2655.jpg
+    alt: "Wow Hair Salon in Nice — an oval illuminated mirror and a pink styling chair"
+    size: half
+  - src: ../../../assets/projects/wow-hair-nice/more-img-2659.jpg
+    alt: "Wow Hair Salon in Nice — hair extensions on the display wall"
+    size: half
 beforeAfter:
   pairs:
     - before: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg

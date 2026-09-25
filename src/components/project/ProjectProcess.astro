@@ -5,9 +5,15 @@ import { t, type Locale } from '../../lib/i18n';
 interface Props {
   locale: Locale;
   images: { src: ImageMetadata; alt: string; caption?: string }[];
+  stage?: 'built' | 'in-progress' | 'design';
 }
 
-const { locale, images } = Astro.props;
+const { locale, images, stage = 'built' } = Astro.props;
+const text = (key: string) => {
+  const own = `process.${stage}.${key}`;
+  const v = t(locale, own);
+  return v === own ? t(locale, `process.${key}`) : v;
+};
 
 const fullSize = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1800, format: 'webp' })));
 const fullSizeAvif = await Promise.all(images.map((img) => getImage({ src: img.src, width: 1800, format: 'avif' })));
@@ -16,11 +22,11 @@ const fullSizeAvif = await Promise.all(images.map((img) => getImage({ src: img.s
 <section class="process section on-sand">
   <div class="container">
     <p class="t-eyebrow">{t(locale, 'process.eyebrow')}</p>
-    <h2 class="t-subhead">{t(locale, 'process.title')}</h2>
-    <p class="process__summary">{t(locale, 'process.summary')}</p>
+    <h2 class="t-subhead">{text('title')}</h2>
+    <p class="process__summary">{text('summary')}</p>
 
     <details class="process__details">
-      <summary class="process__toggle">{t(locale, 'process.toggle')}</summary>
+      <summary class="process__toggle">{text('toggle')}</summary>
 
       <ul class="process__grid">
         {

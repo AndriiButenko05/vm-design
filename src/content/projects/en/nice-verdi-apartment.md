@@ -22,6 +22,7 @@ coverAlt: "Apartment in Nice — working drawing"
 coords: { lat: 43.6997, lon: 7.2688 }
 featured: false
 order: 4
+processStage: in-progress
 drawingsPreview: ["003", "006", "008"]
 beforeAfter:
   images:
