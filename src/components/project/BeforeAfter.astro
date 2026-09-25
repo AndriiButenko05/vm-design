@@ -150,6 +150,10 @@ const multiple = pairs.length > 1;
     overflow: hidden;
     aspect-ratio: var(--ar, 1);
     background: var(--sand);
+    cursor: ew-resize;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .slider__layer {
@@ -208,7 +212,7 @@ const multiple = pairs.length > 1;
     padding: 0;
     background: transparent;
     appearance: none;
-    cursor: ew-resize;
+    pointer-events: none;
   }
 
   .slider__range::-webkit-slider-thumb {

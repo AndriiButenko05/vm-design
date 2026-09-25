@@ -99,7 +99,7 @@ const processImages = d.beforeAfter?.images ?? [];
       {d.heroCaption && <figcaption class="t-meta">{d.heroCaption}</figcaption>}
     </figure>
 
-    <section class="section">
+    <section class="section story-section">
       <div class="container grid story">
         <aside class="facts">
           <dl>
@@ -212,6 +212,14 @@ const processImages = d.beforeAfter?.images ?? [];
 
   .hero figcaption {
     padding-block: 0.625rem;
+  }
+
+  .story-section {
+    padding-bottom: 0;
+  }
+
+  .story-section + :global(.section) {
+    padding-top: var(--space-xl);
   }
 
   .story {
