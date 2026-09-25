@@ -208,6 +208,13 @@ const processImages = d.beforeAfter?.images ?? [];
     .hero__cell + .hero__cell {
       display: none;
     }
+
+    /* Один кадр із ряду — на всю ширину, а не вузькою смугою зліва. */
+    .hero__cell {
+      flex: 1 1 100%;
+      aspect-ratio: 4 / 5;
+      max-height: none;
+    }
   }
 
   .hero figcaption {
@@ -286,6 +293,10 @@ const processImages = d.beforeAfter?.images ?? [];
 
     .facts {
       margin-bottom: var(--space-l);
+    }
+
+    .story-section {
+      padding-top: var(--space-s);
     }
   }
 </style>

@@ -15,6 +15,8 @@ const stageRatio = (pair: (typeof pairs)[number]) =>
   (pair.before.width / pair.before.height + pair.after.width / pair.after.height) / 2;
 
 const multiple = pairs.length > 1;
+
+const tallest = Math.min(...pairs.map(stageRatio));
 ---
 
 <section class="ba section">
@@ -33,62 +35,64 @@ const multiple = pairs.length > 1;
       aria-roledescription="carousel"
       aria-label={t(locale, 'ba.title')}
     >
-      {
-        pairs.map((pair, i) => (
-          <figure
-            class="slider"
-            data-ba
-            data-carousel-slide
-            data-caption={pair.caption ?? ''}
-            hidden={i > 0}
-            aria-label={`${i + 1} / ${pairs.length}`}
-            style={`--ar:${stageRatio(pair).toFixed(4)}`}
-          >
-            <div class="slider__stage">
-              <span class="slider__layer slider__layer--after">
-                <Picture
-                  formats={['avif']}
-                  fallbackFormat="webp"
-                  src={pair.after}
-                  alt={`${t(locale, 'ba.after')}${pair.caption ? ` — ${pair.caption}` : ''}`}
-                  widths={[600, 1000, 1500]}
-                  sizes="(max-width: 900px) 92vw, 70vw"
-                  loading="lazy"
+      <div class="ba__frame" style={`--ar-min:${tallest.toFixed(4)}`}>
+        {
+          pairs.map((pair, i) => (
+            <figure
+              class="slider"
+              data-ba
+              data-carousel-slide
+              data-caption={pair.caption ?? ''}
+              hidden={i > 0}
+              aria-label={`${i + 1} / ${pairs.length}`}
+              style={`--ar:${stageRatio(pair).toFixed(4)}`}
+            >
+              <div class="slider__stage">
+                <span class="slider__layer slider__layer--after">
+                  <Picture
+                    formats={['avif']}
+                    fallbackFormat="webp"
+                    src={pair.after}
+                    alt={`${t(locale, 'ba.after')}${pair.caption ? ` — ${pair.caption}` : ''}`}
+                    widths={[600, 1000, 1500]}
+                    sizes="(max-width: 900px) 92vw, 70vw"
+                    loading="lazy"
+                  />
+                </span>
+                <span class="slider__layer slider__layer--before">
+                  <Picture
+                    formats={['avif']}
+                    fallbackFormat="webp"
+                    src={pair.before}
+                    alt={`${t(locale, 'ba.before')}${pair.caption ? ` — ${pair.caption}` : ''}`}
+                    widths={[600, 1000, 1500]}
+                    sizes="(max-width: 900px) 92vw, 70vw"
+                    loading="lazy"
+                  />
+                </span>
+
+                <span class="slider__handle" aria-hidden="true" />
+
+                <label class="visually-hidden" for={`ba-${i}`}>
+                  {t(locale, 'ba.drag')}
+                </label>
+                <input
+                  id={`ba-${i}`}
+                  class="slider__range"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                  step="0.1"
                 />
-              </span>
-              <span class="slider__layer slider__layer--before">
-                <Picture
-                  formats={['avif']}
-                  fallbackFormat="webp"
-                  src={pair.before}
-                  alt={`${t(locale, 'ba.before')}${pair.caption ? ` — ${pair.caption}` : ''}`}
-                  widths={[600, 1000, 1500]}
-                  sizes="(max-width: 900px) 92vw, 70vw"
-                  loading="lazy"
-                />
-              </span>
 
-              <span class="slider__handle" aria-hidden="true" />
-
-              <label class="visually-hidden" for={`ba-${i}`}>
-                {t(locale, 'ba.drag')}
-              </label>
-              <input
-                id={`ba-${i}`}
-                class="slider__range"
-                type="range"
-                min="0"
-                max="100"
-                value="50"
-                step="0.1"
-              />
-
-              <span class="slider__tag slider__tag--before">{t(locale, 'ba.before')}</span>
-              <span class="slider__tag slider__tag--after">{t(locale, 'ba.after')}</span>
-            </div>
-          </figure>
-        ))
-      }
+                <span class="slider__tag slider__tag--before">{t(locale, 'ba.before')}</span>
+                <span class="slider__tag slider__tag--after">{t(locale, 'ba.after')}</span>
+              </div>
+            </figure>
+          ))
+        }
+      </div>
 
       <div class="ba__bar">
         <p class="ba__caption" data-carousel-caption>{pairs[0]?.caption}</p>
@@ -139,10 +143,29 @@ const multiple = pairs.length > 1;
     visibility: hidden;
   }
 
+  /*
+    Рамка сталої висоти на всю карусель: пари мають різні пропорції, і
+    з висотою за кадром блок стрибав при кожному перегортанні — на
+    телефоні між вертикальною й горизонтальною парою це ~200 px. Висота
+    дорівнює найвищій парі на всю ширину (але не більше за екран), решта
+    пар вписуються по центру на бежевому полі, як кадри галереї нижче.
+  */
+  .ba__carousel {
+    container-type: inline-size;
+  }
+
+  .ba__frame {
+    --frame-h: min(78vh, 760px, calc(100cqw / var(--ar-min, 1)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--frame-h);
+    background: var(--sand);
+  }
+
   .slider {
-    width: 100%;
-    max-width: calc(min(78vh, 760px) * var(--ar, 1));
-    margin: 0 auto;
+    width: min(100%, calc(var(--frame-h) * var(--ar, 1)));
+    margin: 0;
   }
 
   .slider__stage {
@@ -154,6 +177,27 @@ const multiple = pairs.length > 1;
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
+  }
+
+  /*
+    На телефоні вписувати пару цілком — це горизонтальний кадр смужкою
+    посеред високої рамки. Тут рамка квадратна, і кожна пара заповнює її
+    повністю (object-fit: cover): обрізається до чверті по краях, зате
+    без порожніх полів і так само без стрибків.
+  */
+  @media (max-width: 700px) {
+    .ba__frame {
+      --frame-h: 100cqw;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    .slider__stage {
+      aspect-ratio: auto;
+      height: var(--frame-h);
+    }
   }
 
   .slider__layer {

@@ -2,6 +2,7 @@
 import BaseLayout from '../../components/layout/BaseLayout.astro';
 import ProjectIndex from '../../components/project/ProjectIndex.astro';
 import ContactSection from '../../components/home/ContactSection.astro';
+import GeographyMap from '../../components/map/GeographyMap.astro';
 import { getProjects, typeFilters } from '../../lib/projects';
 import { resolveLocale, localePath, t } from '../../lib/i18n';
 
@@ -42,6 +43,8 @@ const filters = typeFilters(locale);
       <ProjectIndex locale={locale} projects={projects} />
     </div>
   </section>
+
+  <GeographyMap locale={locale} projects={projects} id="geography" />
 
   <ContactSection locale={locale} />
 </BaseLayout>
@@ -89,7 +92,4 @@ const filters = typeFilters(locale);
     background: var(--accent-line);
   }
 
-  .work {
-    padding-bottom: var(--section);
-  }
 </style>
