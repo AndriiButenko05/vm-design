@@ -1,4 +1,4 @@
-import boatWake from '../assets/services/000-fullsizerender.jpg';
+import boatWake from '../assets/services/000-fullsizerender-tall.jpg';
 import sampleApproval from '../assets/services/002-img-1428.jpg';
 import planOnSite from '../assets/services/004-img-1763.jpg';
 import monacoBay from '../assets/services/005-img-2356.jpg';
