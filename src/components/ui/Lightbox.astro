@@ -155,7 +155,14 @@ const { locale, label } = Astro.props;
       right: var(--space-m);
     }
 
+    /* Згори — смуга під хрестик, знизу — під стрілки: кадр не заходить під жодне. */
+    .lb__close {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+
     .lb__stage {
+      padding-top: 3.75rem;
       padding-bottom: 4.25rem;
     }
   }
