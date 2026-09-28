@@ -25,39 +25,51 @@ todo: "Тексти й назва — від Марини. Потрібні пл
 gallery:
   - src: ../../../assets/projects/paris-apartment/01-kitchen-dining.jpg
     alt: "Apartment in Paris — the kitchen opening onto the dining area and panelled walls"
+    room: kitchen
     caption: "Kitchen & dining"
   - src: ../../../assets/projects/paris-apartment/06-kitchen-to-dining.jpg
     alt: "Apartment in Paris — the kitchen bar looking towards the dining area"
+    room: kitchen
     caption: "Kitchen & dining"
   - src: ../../../assets/projects/paris-apartment/11-kitchen.jpg
     alt: "Apartment in Paris — the white lacquer kitchen and bar counter"
+    room: kitchen
     caption: "The kitchen"
   - src: ../../../assets/projects/paris-apartment/04-bar-counter.jpg
     alt: "Apartment in Paris — the bar counter framed in black glass"
+    room: kitchen
     caption: "Bar counter"
   - src: ../../../assets/projects/paris-apartment/10-bar-dining.jpg
     alt: "Apartment in Paris — the bar counter and dining chairs"
+    room: kitchen
     caption: "Bar counter & dining"
   - src: ../../../assets/projects/paris-apartment/05-bar-living.jpg
     alt: "Apartment in Paris — the black-framed opening between kitchen and living room"
+    room: kitchen
     caption: "Bar counter & living room"
   - src: ../../../assets/projects/paris-apartment/03-dining.jpg
     alt: "Apartment in Paris — the round dining table under a glass chandelier"
+    room: dining
     caption: "Dining area"
   - src: ../../../assets/projects/paris-apartment/08-living-window.jpg
     alt: "Apartment in Paris — the living room and its window wall"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/paris-apartment/09-living-kitchen.jpg
     alt: "Apartment in Paris — the living room looking back to the kitchen"
+    room: living
     caption: "Living room & kitchen"
   - src: ../../../assets/projects/paris-apartment/02-bedroom.jpg
     alt: "Apartment in Paris — the bedroom"
+    room: bedroom
     caption: "Bedroom"
   - src: ../../../assets/projects/paris-apartment/12-entrance-hall.jpg
     alt: "Apartment in Paris — the entrance hall with moulded wall panels"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/paris-apartment/13-hall-wardrobe.jpg
     alt: "Apartment in Paris — the hall wardrobe with faceted doors"
+    room: hall
     caption: "Hall wardrobe"
 beforeAfter:
   pairs:

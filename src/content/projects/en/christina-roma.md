@@ -37,79 +37,104 @@ todo: "Тексти й назва — від Марини."
 gallery:
   - src: ../../../assets/projects/christina-roma/036-img-9764.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: salon
     size: full
   - src: ../../../assets/projects/christina-roma/044-img-9780.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: reception
     size: half
   - src: ../../../assets/projects/christina-roma/046-img-9782.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: reception
     size: half
   - src: ../../../assets/projects/christina-roma/038-img-9766.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/040-img-9769.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: detail
     material: "Plaster vault"
   - src: ../../../assets/projects/christina-roma/045-img-9781.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-roma/048-img-9786.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/050-img-9788.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/051-img-9789.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/041-img-9770.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: detail
   - src: ../../../assets/projects/christina-roma/052-img-9790.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/037-img-9765.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-roma/043-img-9776.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: cabins
     size: half
   - src: ../../../assets/projects/christina-roma/031-img-9684.jpg
     alt: "Christina Beauty Space in Rome — the restored vault with oval mirrors and sculptural seating"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-roma/more-8519c94c-867d-489f-9d3e-7e4e6a07b1f7.jpg
     alt: "Christina Beauty Space in Rome — a linear light set along the marble floor"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-0071.jpg
     alt: "Christina Beauty Space in Rome — the arched glazed door with the brand logo"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9768.jpg
     alt: "Christina Beauty Space in Rome — styling stations with illuminated round mirrors"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9783.jpg
     alt: "Christina Beauty Space in Rome — the curtained treatment room beside a styling station"
+    room: cabins
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9787.jpg
     alt: "Christina Beauty Space in Rome — the salon under the vaulted ceiling"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9349.jpg
     alt: "Christina Beauty Space in Rome — the sculptural chandelier under the vault"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9354.jpg
     alt: "Christina Beauty Space in Rome — the chandelier above the curved curtain"
+    room: cabins
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9793.jpg
     alt: "Christina Beauty Space in Rome — the entrance glazing with the brand logo"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9683.jpg
     alt: "Christina Beauty Space in Rome — the restored arched shopfront"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9685.jpg
     alt: "Christina Beauty Space in Rome — the arched shopfront glazing, lit from within"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-roma/more-img-9799.jpg
     alt: "Christina Beauty Space in Rome — the street window with the brand logo"
+    room: entrance
     size: half
 beforeAfter:
   pairs:

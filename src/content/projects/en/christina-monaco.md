@@ -30,27 +30,35 @@ todo: "Назва й рядок картки — від Марини; ОПИСУ
 gallery:
   - src: ../../../assets/projects/christina-monaco/010-img-9401.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: stations
     size: full
   - src: ../../../assets/projects/christina-monaco/011-img-9402.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-monaco/009-img-9396.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-monaco/013-img-9408.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-monaco/007-img-8865.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: stations
     size: detail
   - src: ../../../assets/projects/christina-monaco/005-img-8849.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: entrance
     size: half
   - src: ../../../assets/projects/christina-monaco/008-img-8876.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: reception
     size: half
   - src: ../../../assets/projects/christina-monaco/006-img-8860.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+    room: reception
     size: half
 beforeAfter:
   images:

@@ -31,22 +31,28 @@ todo: "Тексти й назва — від Марини. Площа 66.52 m² 
 gallery:
   - src: ../../../assets/projects/larimar-nice/013-img-2686.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: salon
     size: full
   - src: ../../../assets/projects/larimar-nice/010-img-2676.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: stations
     size: half
   - src: ../../../assets/projects/larimar-nice/011-img-2677.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: stations
     size: half
   - src: ../../../assets/projects/larimar-nice/012-img-2680.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: wc
     size: half
   - src: ../../../assets/projects/larimar-nice/009-img-2674.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: salon
     size: detail
     material: "Sculpted plaster"
   - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+    room: salon
     size: half
 beforeAfter:
   pairs:

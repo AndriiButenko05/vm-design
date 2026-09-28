@@ -29,108 +29,143 @@ todo: "Тексти й назва — від Марини; рік 2022 від н
 renders:
   - src: ../../../assets/projects/parus-kyiv/02-dining-wine-wall.jpg
     alt: "Riverside Apartment in Kyiv — the dining area against the wine wall in embossed leather and burl walnut"
+    room: dining
     caption: "Dining & wine wall"
   - src: ../../../assets/projects/parus-kyiv/03-living-fireplace-wall.jpg
     alt: "Riverside Apartment in Kyiv — the living room media wall with a built-in fireplace"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/parus-kyiv/04-kitchen-living.jpg
     alt: "Riverside Apartment in Kyiv — the open kitchen and living room"
+    room: kitchen
     caption: "Kitchen & living room"
   - src: ../../../assets/projects/parus-kyiv/05-kitchen.jpg
     alt: "Riverside Apartment in Kyiv — the kitchen with a marble-look island"
+    room: kitchen
     caption: "The kitchen"
   - src: ../../../assets/projects/parus-kyiv/06-kitchen-island.jpg
     alt: "Riverside Apartment in Kyiv — the kitchen island with brass bar stools"
+    room: kitchen
     caption: "Kitchen island"
   - src: ../../../assets/projects/parus-kyiv/07-living-shelving.jpg
     alt: "Riverside Apartment in Kyiv — backlit shelving either side of the television wall"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/parus-kyiv/01-dining-river-view.jpg
     alt: "Riverside Apartment in Kyiv — the dining area, looking out over the Dnipro"
+    room: kitchen
     caption: "Kitchen & dining"
   - src: ../../../assets/projects/parus-kyiv/08-hall-wardrobe.jpg
     alt: "Riverside Apartment in Kyiv — the entrance hall wardrobe in brass, mirror and leather"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/parus-kyiv/09-hall-console.jpg
     alt: "Riverside Apartment in Kyiv — the entrance console against a Sahara Noir slab"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/parus-kyiv/10-hall-corridor.jpg
     alt: "Riverside Apartment in Kyiv — the corridor towards the living room"
+    room: hall
     caption: "Corridor"
   - src: ../../../assets/projects/parus-kyiv/11-hall-bench.jpg
     alt: "Riverside Apartment in Kyiv — the upholstered wall panel and bench in the hall"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/parus-kyiv/12-master-bedroom.jpg
     alt: "Riverside Apartment in Kyiv — the master bedroom and its upholstered headboard wall"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/parus-kyiv/13-master-bedroom-panorama.jpg
     alt: "Riverside Apartment in Kyiv — the master bedroom with the river view"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/parus-kyiv/14-master-bedroom-sofa.jpg
     alt: "Riverside Apartment in Kyiv — the sitting area at the foot of the bed"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/parus-kyiv/15-master-bedroom-seating.jpg
     alt: "Riverside Apartment in Kyiv — the master bedroom sitting area"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/parus-kyiv/16-master-bedroom-tv-wall.jpg
     alt: "Riverside Apartment in Kyiv — the master bedroom television wall"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/parus-kyiv/17-master-bath-vanity.jpg
     alt: "Riverside Apartment in Kyiv — the master bathroom double vanity"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/parus-kyiv/18-master-bath-shower.jpg
     alt: "Riverside Apartment in Kyiv — the master bathroom in Arabescato Orobico"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/parus-kyiv/19-master-bath-vanity-detail.jpg
     alt: "Riverside Apartment in Kyiv — the master bathroom vanity and shower"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/parus-kyiv/20-master-bath-bathtub.jpg
     alt: "Riverside Apartment in Kyiv — the master bathroom bathtub and niche"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/parus-kyiv/21-dressing-room-1.jpg
     alt: "Riverside Apartment in Kyiv — the master dressing room"
+    room: dressing
     caption: "Dressing room"
   - src: ../../../assets/projects/parus-kyiv/22-dressing-room-1-left.jpg
     alt: "Riverside Apartment in Kyiv — the master dressing room"
+    room: dressing
     caption: "Dressing room"
   - src: ../../../assets/projects/parus-kyiv/23-dressing-room-1-right.jpg
     alt: "Riverside Apartment in Kyiv — the master dressing room"
+    room: dressing
     caption: "Dressing room"
   - src: ../../../assets/projects/parus-kyiv/24-bedroom-2.jpg
     alt: "Riverside Apartment in Kyiv — the second bedroom and its sculpted feature wall"
+    room: bedroom
     caption: "Second bedroom"
   - src: ../../../assets/projects/parus-kyiv/25-bedroom-2-bed.jpg
     alt: "Riverside Apartment in Kyiv — the second bedroom"
+    room: bedroom
     caption: "Second bedroom"
   - src: ../../../assets/projects/parus-kyiv/26-bedroom-2-window.jpg
     alt: "Riverside Apartment in Kyiv — the second bedroom with the view over the lake"
+    room: bedroom
     caption: "Second bedroom"
   - src: ../../../assets/projects/parus-kyiv/27-bedroom-2-tv-wall.jpg
     alt: "Riverside Apartment in Kyiv — the second bedroom media wall and display cabinet"
+    room: bedroom
     caption: "Second bedroom"
   - src: ../../../assets/projects/parus-kyiv/28-bedroom-2-artwork.jpg
     alt: "Riverside Apartment in Kyiv — the second bedroom"
+    room: bedroom
     caption: "Second bedroom"
   - src: ../../../assets/projects/parus-kyiv/29-dressing-room-2.jpg
     alt: "Riverside Apartment in Kyiv — the second dressing room"
+    room: dressing
     caption: "Second dressing room"
   - src: ../../../assets/projects/parus-kyiv/30-dressing-room-2-angle.jpg
     alt: "Riverside Apartment in Kyiv — the second dressing room"
+    room: dressing
     caption: "Second dressing room"
   - src: ../../../assets/projects/parus-kyiv/31-guest-bath.jpg
     alt: "Riverside Apartment in Kyiv — the guest bathroom"
+    room: bathroom
     caption: "Guest bathroom"
   - src: ../../../assets/projects/parus-kyiv/32-guest-bath-bathtub.jpg
     alt: "Riverside Apartment in Kyiv — the guest bathroom bathtub"
+    room: bathroom
     caption: "Guest bathroom"
   - src: ../../../assets/projects/parus-kyiv/33-guest-bath-detail.jpg
     alt: "Riverside Apartment in Kyiv — the guest bathroom"
+    room: bathroom
     caption: "Guest bathroom"
   - src: ../../../assets/projects/parus-kyiv/34-guest-bath-vanity.jpg
     alt: "Riverside Apartment in Kyiv — the guest bathroom vanity"
+    room: bathroom
     caption: "Guest bathroom"
   - src: ../../../assets/projects/parus-kyiv/35-guest-bath-mirror.jpg
     alt: "Riverside Apartment in Kyiv — the guest bathroom vanity and backlit mirror"
+    room: bathroom
     caption: "Guest bathroom"
 ---
 

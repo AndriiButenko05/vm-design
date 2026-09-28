@@ -26,30 +26,39 @@ todo: "Тексти й назва — від Марини. Потрібна пл
 gallery:
   - src: ../../../assets/projects/wow-hair-nice/003-img-2642.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: salon
     size: full
   - src: ../../../assets/projects/wow-hair-nice/001-img-2639.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: stations
     size: half
   - src: ../../../assets/projects/wow-hair-nice/006-img-2653.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: stations
     size: half
   - src: ../../../assets/projects/wow-hair-nice/004-img-2643.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: stations
     size: half
   - src: ../../../assets/projects/wow-hair-nice/002-img-2641.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: salon
     size: detail
   - src: ../../../assets/projects/wow-hair-nice/005-img-2645.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: salon
     size: half
   - src: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+    room: salon
     size: half
   - src: ../../../assets/projects/wow-hair-nice/more-img-2655.jpg
     alt: "Wow Hair Salon in Nice — an oval illuminated mirror and a pink styling chair"
+    room: stations
     size: half
   - src: ../../../assets/projects/wow-hair-nice/more-img-2659.jpg
     alt: "Wow Hair Salon in Nice — hair extensions on the display wall"
+    room: salon
     size: half
 beforeAfter:
   pairs:

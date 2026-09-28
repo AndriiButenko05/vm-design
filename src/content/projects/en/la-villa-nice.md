@@ -29,258 +29,331 @@ todo: "Тексти й назва — від Марини. Підписи кад
 gallery:
   - src: ../../../assets/projects/la-villa-nice/025-img-2519.jpg
     alt: "Villa in Nice — the kitchen island in Emperador Dark marble"
+    room: kitchen
     caption: "The kitchen"
     size: half
   - src: ../../../assets/projects/la-villa-nice/034-img-2560.jpg
     alt: "Villa in Nice — the living area with the cantilevered oak stair"
+    room: living
     caption: "Living area & staircase"
     size: half
   - src: ../../../assets/projects/la-villa-nice/060-img-2524.jpg
     alt: "Villa in Nice — the kitchen and living area with the oak stair beyond"
+    room: kitchen
     caption: "Kitchen & living area"
     size: half
   - src: ../../../assets/projects/la-villa-nice/061-img-2529.jpg
     alt: "Villa in Nice — the living room and kitchen under the brass ribbon chandelier"
+    room: living
     caption: "Living room & kitchen"
     size: half
   - src: ../../../assets/projects/la-villa-nice/028-img-2528.jpg
     alt: "Villa in Nice — Calacatta dining table in front of the kitchen"
+    room: dining
     caption: "Dining table & kitchen"
     size: half
     material: "Calacatta marble"
   - src: ../../../assets/projects/la-villa-nice/062-img-2513.jpg
     alt: "Villa in Nice — the Calacatta dining table in front of the kitchen"
+    room: dining
     caption: "Dining table & kitchen"
     size: half
   - src: ../../../assets/projects/la-villa-nice/030-img-2530.jpg
     alt: "Villa in Nice — the dining area under the brass ribbon chandelier"
+    room: dining
     caption: "Dining area"
     size: half
   - src: ../../../assets/projects/la-villa-nice/022-img-2508.jpg
     alt: "Villa in Nice — dining table by the bay windows"
+    room: dining
     caption: "Dining by the windows"
     size: half
     material: "Sheer curtains"
   - src: ../../../assets/projects/la-villa-nice/063-img-2512.jpg
     alt: "Villa in Nice — the dining area by the bay windows"
+    room: dining
     caption: "Dining area"
     size: half
   - src: ../../../assets/projects/la-villa-nice/032-img-2553.jpg
     alt: "Villa in Nice — dining and living space"
+    room: dining
     caption: "Dining & living"
     size: half
   - src: ../../../assets/projects/la-villa-nice/020-img-2498.jpg
     alt: "Villa in Nice — the living room and the open oak stair"
+    room: living
     caption: "Living room & oak stair"
     size: detail
     material: "Lacquered panelling"
   - src: ../../../assets/projects/la-villa-nice/021-img-2502.jpg
     alt: "Villa in Nice — the fireplace wall in Emperador Dark marble"
+    room: living
     caption: "Fireplace wall"
     size: half
   - src: ../../../assets/projects/la-villa-nice/036-img-2564.jpg
     alt: "Villa in Nice — the kitchen and the stair"
+    room: kitchen
     caption: "Kitchen & stair"
     size: half
   - src: ../../../assets/projects/la-villa-nice/064-img-2526.jpg
     alt: "Villa in Nice — the kitchen island in Emperador Dark marble"
+    room: kitchen
     caption: "Kitchen island"
     size: half
   - src: ../../../assets/projects/la-villa-nice/065-img-2557.jpg
     alt: "Villa in Nice — the kitchen with its bronze mirror panels"
+    room: kitchen
     caption: "The kitchen"
     size: half
   - src: ../../../assets/projects/la-villa-nice/066-img-2562.jpg
     alt: "Villa in Nice — built-in ovens and the marble worktop"
+    room: kitchen
     caption: "Kitchen detail"
     size: half
   - src: ../../../assets/projects/la-villa-nice/007-img-2458.jpg
     alt: "Villa in Nice — the bath against a full-height Emperador marble slab"
+    room: bathroom
     caption: "The bath"
     size: full
   - src: ../../../assets/projects/la-villa-nice/067-img-2454.jpg
     alt: "Villa in Nice — the freestanding bath against a backlit marble slab"
+    room: bathroom
     caption: "The bath"
     size: half
   - src: ../../../assets/projects/la-villa-nice/043-img-2582.jpg
     alt: "Villa in Nice — shower room in Emperador Dark marble"
+    room: bathroom
     caption: "Emperador marble shower room"
     size: detail
     material: "Emperador Dark marble"
   - src: ../../../assets/projects/la-villa-nice/016-img-2485.jpg
     alt: "Villa in Nice — guest shower room with a green vanity"
+    room: bathroom
     caption: "Guest shower room"
     size: half
   - src: ../../../assets/projects/la-villa-nice/008-img-2461.jpg
     alt: "Villa in Nice — dressing room with glazed joinery"
+    room: dressing
     caption: "Dressing room"
     size: half
     material: "Glazed joinery"
   - src: ../../../assets/projects/la-villa-nice/068-img-2463.jpg
     alt: "Villa in Nice — glazed shoe cabinets in the dressing room"
+    room: dressing
     caption: "Dressing room"
     size: half
   - src: ../../../assets/projects/la-villa-nice/069-img-2475.jpg
     alt: "Villa in Nice — the child’s bedroom with its built-in desk and shelving"
+    room: children
     caption: "Child’s bedroom"
     size: half
   - src: ../../../assets/projects/la-villa-nice/070-img-2478.jpg
     alt: "Villa in Nice — backlit display shelving in the child’s bedroom"
+    room: children
     caption: "Child’s bedroom"
     size: half
   - src: ../../../assets/projects/la-villa-nice/071-img-2495.jpg
     alt: "Villa in Nice — wardrobes and display shelving in the child’s bedroom"
+    room: children
     caption: "Child’s bedroom"
     size: half
   - src: ../../../assets/projects/la-villa-nice/072-img-2492.jpg
     alt: "Villa in Nice — backlit display shelves in the child’s bedroom"
+    room: children
     caption: "Child’s bedroom — display shelving"
     size: half
   - src: ../../../assets/projects/la-villa-nice/038-img-2569.jpg
     alt: "Villa in Nice — the hallway with panelled walls"
+    room: hall
     caption: "Hallway"
     size: half
   - src: ../../../assets/projects/la-villa-nice/041-img-2572.jpg
     alt: "Villa in Nice — the hallway towards the bedrooms"
+    room: hall
     caption: "Hallway"
     size: half
   - src: ../../../assets/projects/la-villa-nice/042-img-2578.jpg
     alt: "Villa in Nice — brass wall light on the panelling"
+    room: hall
     caption: "Wall light detail"
     size: detail
     material: "Brass"
 renders:
   - src: ../../../assets/projects/la-villa-nice/3d/p032-living-dining.jpg
     alt: "Villa in Nice — living & dining, 3D visualisation"
+    room: living
     caption: "Living & dining"
   - src: ../../../assets/projects/la-villa-nice/3d/p031-kitchen-stair.jpg
     alt: "Villa in Nice — kitchen & stair, 3D visualisation"
+    room: kitchen
     caption: "Kitchen & stair"
   - src: ../../../assets/projects/la-villa-nice/3d/p035-kitchen-dining.jpg
     alt: "Villa in Nice — kitchen & dining, 3D visualisation"
+    room: kitchen
     caption: "Kitchen & dining"
   - src: ../../../assets/projects/la-villa-nice/3d/p037-the-kitchen.jpg
     alt: "Villa in Nice — the kitchen, 3D visualisation"
+    room: kitchen
     caption: "The kitchen"
   - src: ../../../assets/projects/la-villa-nice/3d/p033-living-room.jpg
     alt: "Villa in Nice — living room, 3D visualisation"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/la-villa-nice/3d/p038-living-room.jpg
     alt: "Villa in Nice — living room, 3D visualisation"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/la-villa-nice/3d/p039-living-room.jpg
     alt: "Villa in Nice — living room, 3D visualisation"
+    room: living
     caption: "Living room"
   - src: ../../../assets/projects/la-villa-nice/3d/p034-living-room-stair.jpg
     alt: "Villa in Nice — living room & stair, 3D visualisation"
+    room: living
     caption: "Living room & stair"
   - src: ../../../assets/projects/la-villa-nice/3d/p036-the-staircase.jpg
     alt: "Villa in Nice — the staircase, 3D visualisation"
+    room: living
     caption: "The staircase"
   - src: ../../../assets/projects/la-villa-nice/3d/p022-entrance-hall.jpg
     alt: "Villa in Nice — entrance hall, 3D visualisation"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/la-villa-nice/3d/p023-entrance-hall.jpg
     alt: "Villa in Nice — entrance hall, 3D visualisation"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/la-villa-nice/3d/p024-entrance-hall.jpg
     alt: "Villa in Nice — entrance hall, 3D visualisation"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/la-villa-nice/3d/p025-entrance-hall.jpg
     alt: "Villa in Nice — entrance hall, 3D visualisation"
+    room: hall
     caption: "Entrance hall"
   - src: ../../../assets/projects/la-villa-nice/3d/p026-corridor.jpg
     alt: "Villa in Nice — corridor, 3D visualisation"
+    room: hall
     caption: "Corridor"
   - src: ../../../assets/projects/la-villa-nice/3d/p030-corridor.jpg
     alt: "Villa in Nice — corridor, 3D visualisation"
+    room: hall
     caption: "Corridor"
   - src: ../../../assets/projects/la-villa-nice/3d/p049-guest-wc.jpg
     alt: "Villa in Nice — guest wc, 3D visualisation"
+    room: wc
     caption: "Guest WC"
   - src: ../../../assets/projects/la-villa-nice/3d/p040-bedroom.jpg
     alt: "Villa in Nice — bedroom, 3D visualisation"
+    room: bedroom
     caption: "Bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p042-bedroom.jpg
     alt: "Villa in Nice — bedroom, 3D visualisation"
+    room: bedroom
     caption: "Bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p043-bedroom.jpg
     alt: "Villa in Nice — bedroom, 3D visualisation"
+    room: bedroom
     caption: "Bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p045-bathroom.jpg
     alt: "Villa in Nice — bathroom, 3D visualisation"
+    room: bathroom
     caption: "Bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p046-bathroom.jpg
     alt: "Villa in Nice — bathroom, 3D visualisation"
+    room: bathroom
     caption: "Bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p048-bathroom.jpg
     alt: "Villa in Nice — bathroom, 3D visualisation"
+    room: bathroom
     caption: "Bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p051-study.jpg
     alt: "Villa in Nice — study, 3D visualisation"
+    room: study
     caption: "Study"
   - src: ../../../assets/projects/la-villa-nice/3d/p052-study.jpg
     alt: "Villa in Nice — study, 3D visualisation"
+    room: study
     caption: "Study"
   - src: ../../../assets/projects/la-villa-nice/3d/p054-study.jpg
     alt: "Villa in Nice — study, 3D visualisation"
+    room: study
     caption: "Study"
   - src: ../../../assets/projects/la-villa-nice/3d/p076-upper-landing.jpg
     alt: "Villa in Nice — upper landing, 3D visualisation"
+    room: hall
     caption: "Upper landing"
   - src: ../../../assets/projects/la-villa-nice/3d/p055-master-bedroom.jpg
     alt: "Villa in Nice — master bedroom, 3D visualisation"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p079-master-bedroom.jpg
     alt: "Villa in Nice — master bedroom, 3D visualisation"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p080-master-bedroom.jpg
     alt: "Villa in Nice — master bedroom, 3D visualisation"
+    room: bedroom
     caption: "Master bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p082-master-dressing-room.jpg
     alt: "Villa in Nice — master dressing room, 3D visualisation"
+    room: dressing
     caption: "Master dressing room"
   - src: ../../../assets/projects/la-villa-nice/3d/p083-master-dressing-room.jpg
     alt: "Villa in Nice — master dressing room, 3D visualisation"
+    room: dressing
     caption: "Master dressing room"
   - src: ../../../assets/projects/la-villa-nice/3d/p084-master-dressing-room.jpg
     alt: "Villa in Nice — master dressing room, 3D visualisation"
+    room: dressing
     caption: "Master dressing room"
   - src: ../../../assets/projects/la-villa-nice/3d/p086-master-bathroom.jpg
     alt: "Villa in Nice — master bathroom, 3D visualisation"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p087-master-bathroom.jpg
     alt: "Villa in Nice — master bathroom, 3D visualisation"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p089-master-bathroom.jpg
     alt: "Villa in Nice — master bathroom, 3D visualisation"
+    room: bathroom
     caption: "Master bathroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p091-nursery.jpg
     alt: "Villa in Nice — nursery, 3D visualisation"
+    room: children
     caption: "Nursery"
   - src: ../../../assets/projects/la-villa-nice/3d/p093-nursery.jpg
     alt: "Villa in Nice — nursery, 3D visualisation"
+    room: children
     caption: "Nursery"
   - src: ../../../assets/projects/la-villa-nice/3d/p095-childs-bedroom.jpg
     alt: "Villa in Nice — child’s bedroom, 3D visualisation"
+    room: children
     caption: "Child’s bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p096-childs-bedroom.jpg
     alt: "Villa in Nice — child’s bedroom, 3D visualisation"
+    room: children
     caption: "Child’s bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p098-childs-bedroom.jpg
     alt: "Villa in Nice — child’s bedroom, 3D visualisation"
+    room: children
     caption: "Child’s bedroom"
   - src: ../../../assets/projects/la-villa-nice/3d/p099-childs-dressing-room.jpg
     alt: "Villa in Nice — child’s dressing room, 3D visualisation"
+    room: dressing
     caption: "Child’s dressing room"
   - src: ../../../assets/projects/la-villa-nice/3d/p100-childs-dressing-room.jpg
     alt: "Villa in Nice — child’s dressing room, 3D visualisation"
+    room: dressing
     caption: "Child’s dressing room"
   - src: ../../../assets/projects/la-villa-nice/3d/p103-shower-room.jpg
     alt: "Villa in Nice — shower room, 3D visualisation"
+    room: bathroom
     caption: "Shower room"
   - src: ../../../assets/projects/la-villa-nice/3d/p104-shower-room.jpg
     alt: "Villa in Nice — shower room, 3D visualisation"
+    room: bathroom
     caption: "Shower room"
 beforeAfter:
   pairs:

@@ -34,57 +34,75 @@ todo: "Тексти й назва — від Марини. Потрібна пл
 gallery:
   - src: ../../../assets/projects/christina-cannes/022-img-8035.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: full
   - src: ../../../assets/projects/christina-cannes/020-img-8022.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/023-img-8038.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-cannes/025-img-8071.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/026-img-8077.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: detail
   - src: ../../../assets/projects/christina-cannes/021-img-8023.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-cannes/024-img-8043.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-cannes/003-img-1328.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/000-3e0b524b-f6ad-42bc-8e9c-7b4c844d9046.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: cabins
     size: half
   - src: ../../../assets/projects/christina-cannes/018-img-7999.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: cabins
     size: detail
   - src: ../../../assets/projects/christina-cannes/016-img-7642.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/004-img-1329.jpg
     alt: "Christina Beauty Space in Cannes — arched niches and lit oval mirrors along the salon"
+    room: wc
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-1330.jpg
     alt: "Christina Beauty Space in Cannes — the salon with styling chairs and illuminated mirrors"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-8080.jpg
     alt: "Christina Beauty Space in Cannes — styling stations beside the glass product shelves"
+    room: stations
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-1331.jpg
     alt: "Christina Beauty Space in Cannes — the treatment room behind grey curtains"
+    room: cabins
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-1326.jpg
     alt: "Christina Beauty Space in Cannes — the lounge by the windows, dressed for the holidays"
+    room: salon
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-7993.jpg
     alt: "Christina Beauty Space in Cannes — the marble-clad WC"
+    room: wc
     size: half
   - src: ../../../assets/projects/christina-cannes/more-img-7075.jpg
     alt: "Christina Beauty Space in Cannes — a sculpted wall light"
+    room: salon
     size: half
 beforeAfter:
   pairs:

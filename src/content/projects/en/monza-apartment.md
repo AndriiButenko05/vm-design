@@ -34,92 +34,114 @@ todo: "Тексти й назва — від Марини. Обʼєкт у Мо�
 gallery:
   - src: ../../../assets/projects/monza-apartment/008-img-0442.jpg
     alt: "Apartment in Milan — the bathroom vanity and mirror against onyx-effect tile"
+    room: bathroom
     caption: "Bathroom vanity"
     size: full
   - src: ../../../assets/projects/monza-apartment/003-img-0428.jpg
     alt: "Apartment in Milan — the towel radiator against Sant’Agostino onyx-effect tile"
+    room: bathroom
     caption: "Towel radiator"
     size: half
   - src: ../../../assets/projects/monza-apartment/005-img-0431.jpg
     alt: "Apartment in Milan — the bathroom, shower and vanity"
+    room: bathroom
     caption: "Shower & vanity"
     size: half
   - src: ../../../assets/projects/monza-apartment/040-img-0426.jpg
     alt: "Apartment in Milan — the bathroom in onyx-effect tile"
+    room: bathroom
     caption: "The bathroom"
     size: half
   - src: ../../../assets/projects/monza-apartment/041-img-0427.jpg
     alt: "Apartment in Milan — the towel radiator and wall-hung sanitaryware"
+    room: bathroom
     caption: "Towel radiator & sanitaryware"
     size: half
   - src: ../../../assets/projects/monza-apartment/042-img-0430.jpg
     alt: "Apartment in Milan — the glass shower enclosure"
+    room: bathroom
     caption: "The shower"
     size: half
   - src: ../../../assets/projects/monza-apartment/043-img-0434.jpg
     alt: "Apartment in Milan — wall-hung sanitaryware against onyx-effect tile"
+    room: bathroom
     caption: "The bathroom"
     size: half
   - src: ../../../assets/projects/monza-apartment/044-img-0440.jpg
     alt: "Apartment in Milan — the bathroom door and towel radiator"
+    room: bathroom
     caption: "Bathroom door & radiator"
     size: half
   - src: ../../../assets/projects/monza-apartment/013-img-0460.jpg
     alt: "Apartment in Milan — the kitchen sink with a black mixer"
+    room: kitchen
     caption: "Kitchen sink"
     size: half
   - src: ../../../assets/projects/monza-apartment/018-img-0471.jpg
     alt: "Apartment in Milan — the kitchen splashback in onyx-effect tile"
+    room: kitchen
     caption: "Kitchen splashback"
     size: detail
     material: "Onyx-effect porcelain"
   - src: ../../../assets/projects/monza-apartment/010-img-0451.jpg
     alt: "Apartment in Milan — the galley kitchen towards the balcony"
+    room: kitchen
     caption: "Kitchen towards the balcony"
     size: half
   - src: ../../../assets/projects/monza-apartment/012-img-0458.jpg
     alt: "Apartment in Milan — kitchen cabinetry to the ceiling"
+    room: kitchen
     caption: "Kitchen cabinetry"
     size: half
   - src: ../../../assets/projects/monza-apartment/021-img-0477.jpg
     alt: "Apartment in Milan — the galley kitchen"
+    room: kitchen
     caption: "The galley kitchen"
     size: half
   - src: ../../../assets/projects/monza-apartment/023-img-0487.jpg
     alt: "Apartment in Milan — the galley kitchen with a black worktop"
+    room: kitchen
     caption: "The galley kitchen"
     size: half
   - src: ../../../assets/projects/monza-apartment/015-img-0463.jpg
     alt: "Apartment in Milan — the hob and oven below the onyx-effect splashback"
+    room: kitchen
     caption: "Hob & oven"
     size: detail
     material: "Black composite"
   - src: ../../../assets/projects/monza-apartment/016-img-0465.jpg
     alt: "Apartment in Milan — the breakfast corner by the window"
+    room: kitchen
     caption: "Breakfast corner"
     size: half
   - src: ../../../assets/projects/monza-apartment/045-img-0449.jpg
     alt: "Apartment in Milan — the galley kitchen towards the balcony"
+    room: kitchen
     caption: "Kitchen towards the balcony"
     size: half
   - src: ../../../assets/projects/monza-apartment/046-img-0462.jpg
     alt: "Apartment in Milan — the hob, black mixer and onyx-effect splashback"
+    room: kitchen
     caption: "Hob & mixer"
     size: half
   - src: ../../../assets/projects/monza-apartment/047-img-0466.jpg
     alt: "Apartment in Milan — the kitchen towards the door"
+    room: kitchen
     caption: "Kitchen towards the door"
     size: half
   - src: ../../../assets/projects/monza-apartment/048-img-0472.jpg
     alt: "Apartment in Milan — kitchen cabinetry with a glass-front wall unit"
+    room: kitchen
     caption: "Kitchen cabinetry"
     size: half
   - src: ../../../assets/projects/monza-apartment/049-img-0473.jpg
     alt: "Apartment in Milan — the kitchen cabinetry and worktop"
+    room: kitchen
     caption: "Kitchen cabinetry"
     size: half
   - src: ../../../assets/projects/monza-apartment/050-img-0484.jpg
     alt: "Apartment in Milan — the galley kitchen with a black worktop"
+    room: kitchen
     caption: "The galley kitchen"
     size: half
 beforeAfter:

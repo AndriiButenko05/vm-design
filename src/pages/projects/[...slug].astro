@@ -8,6 +8,7 @@ import ProjectGallery from '../../components/project/ProjectGallery.astro';
 import ProjectProcess from '../../components/project/ProjectProcess.astro';
 import Drawings from '../../components/project/Drawings.astro';
 import { setsForProject } from '../../lib/drawings';
+import { byRoom } from '../../lib/rooms';
 import { getProjects, slugOf } from '../../lib/projects';
 import { resolveLocale, t, DEFAULT_LOCALE } from '../../lib/i18n';
 
@@ -33,6 +34,10 @@ const heroItems: { src: ImageMetadata; alt: string }[] = d.hero?.length
   : firstWide
     ? [firstWide]
     : uniqueCandidates.slice(0, 3);
+const heroSrc = heroItems[0].src.src;
+const gallery = byRoom(d.gallery, d.type, heroSrc);
+const renders = byRoom(d.renders, d.type, heroSrc);
+
 const heroIsRow = heroItems.length > 1;
 const heroIsTall = !heroIsRow && !isWide(heroItems[0]);
 
@@ -132,13 +137,13 @@ const processImages = d.beforeAfter?.images ?? [];
 
     {pairs.length > 0 && <BeforeAfter locale={locale} pairs={pairs} />}
 
-    {d.gallery.length > 0 && <ProjectGallery locale={locale} items={d.gallery} />}
+    {gallery.length > 0 && <ProjectGallery locale={locale} items={gallery} />}
 
     {
-      d.renders.length > 0 && (
+      renders.length > 0 && (
         <ProjectGallery
           locale={locale}
-          items={d.renders}
+          items={renders}
           eyebrow={t(locale, 'renders3d.eyebrow')}
           title={t(locale, 'renders3d.title')}
           group="renders"

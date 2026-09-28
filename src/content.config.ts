@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { ROOMS } from './lib/rooms';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
@@ -36,12 +37,16 @@ const projects = defineCollection({
             material: z.string().optional(),
 
             caption: z.string().optional(),
+
+            room: z.enum(ROOMS).optional(),
           }),
         )
         .default([]),
 
       renders: z
-        .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
+        .array(
+          z.object({ src: image(), alt: z.string(), caption: z.string().optional(), room: z.enum(ROOMS).optional() }),
+        )
         .default([]),
 
       drawingsPreview: z.array(z.string()).optional(),
