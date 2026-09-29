@@ -87,9 +87,6 @@ const ui: Record<Locale, Dict> = {
     'christina.countries': 'countries',
 
     'services.eyebrow': 'Services',
-    'services.title': 'How we can work together',
-    'services.lead':
-      'From a single consultation to a complete interior delivered and styled — each format covers a different amount of the work, so the studio fits the project rather than the other way round.',
     'services.page.title': 'From first idea to final detail.',
     'services.page.lead':
       'Whether you need a single consultation or support throughout the entire project, our services are tailored to your space, your priorities and the level of involvement you need.',

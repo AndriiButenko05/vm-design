@@ -5,15 +5,17 @@ country: "Germany"
 type: commercial
 brand: "Christina"
 scope:
-  - "Concept design"
   - "Space planning"
-  - "Custom furniture"
+  - "Interior design"
+  - "Material selection"
+  - "Remote design supervision"
 materials:
   - "Oak flooring"
   - "Backlit round mirror"
   - "Lacquered joinery"
   - "Glass shelving"
-summary: "A bright street-level salon in Kassel — the one project with professional photography."
+summary: "A spacious Christina beauty space, office and storage area in Kassel, designed around the existing finishes."
+heroCaption: "Beauty space and office · Interior design"
 card: "Beauty space and office · Kassel, Germany · 2023"
 year: 2023
 cover: ../../../assets/projects/christina-kassel/004-christina-kassel-13-1.jpg
@@ -21,7 +23,7 @@ coverAlt: "Christina Beauty Space in Kassel — the finished salon: oak floor, p
 coords: { lat: 51.3127, lon: 9.4797 }
 featured: true
 order: 17
-todo: "Назва й рядок картки — від Марини; ОПИСУ ВІД НЕЇ ЩЕ НЕМАЄ, текст тимчасовий. Потрібна площа."
+todo: "Тексти й назва — від Марини. Потрібна площа."
 gallery:
   - src: ../../../assets/projects/christina-kassel/003-christina-kassel-13.jpg
     alt: "Christina Beauty Space in Kassel — the finished salon: oak floor, product wall and backlit round mirrors"
@@ -121,8 +123,10 @@ beforeAfter:
       alt: "Christina Beauty Space in Kassel — the empty unit before fit-out"
 ---
 
-A street-level unit in Kassel, taken from bare shell to finished salon.
+This spacious project in Kassel brings together a beauty space, an office and a storage area for Christina.
 
-The plan is simple and the discipline is in the restraint: a single product wall running the length of the room, oak laid along it to stretch the space, and round backlit mirrors hung free of any joinery so the wall reads as wall.
+A modest change to the layout helped organise these different functions within the premises.
 
-The treatment rooms behind stay entirely white, with the brand's own colour appearing only on the campaign wall.
+The existing wall finishes and flooring had to remain, so the new interior was designed around them. The result is a contemporary space that meets the practical needs of the team while giving Christina a distinct presence in Germany.
+
+Maryna Vashchenko developed the complete interior design project, selected the materials and provided design supervision remotely during its implementation.

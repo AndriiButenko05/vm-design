@@ -1,11 +1,11 @@
+import svcFullService from '../assets/services/svc-01-full-service.jpg';
+import svcDesignProject from '../assets/services/svc-02-design-project.jpg';
+import svcSupervision from '../assets/services/svc-03-supervision.jpg';
+import svcSelection from '../assets/services/svc-04-selection.jpg';
+import svcRentalSetup from '../assets/services/svc-05-rental-setup.jpg';
+import svcConsultation from '../assets/services/svc-06-consultation.jpg';
 import boatWake from '../assets/services/000-fullsizerender-tall.jpg';
-import sampleApproval from '../assets/services/002-img-1428.jpg';
-import planOnSite from '../assets/services/004-img-1763.jpg';
 import monacoBay from '../assets/services/005-img-2356.jpg';
-import rivieraBay from '../assets/services/006-img-2816.jpg';
-import sketchDims from '../assets/services/007-img-6207.jpg';
-import marbleSlabs from '../assets/services/008-img-8006.jpg';
-import finishSamples from '../assets/services/009-img-8011.jpg';
 
 export const CONTACT_BACKDROP = {
   wide: monacoBay,
@@ -45,7 +45,7 @@ export const SERVICES: Service[] = [
       'Design supervision',
       'Final installation and styling',
     ],
-    image: planOnSite,
+    image: svcFullService,
     featured: true,
   },
   {
@@ -67,7 +67,7 @@ export const SERVICES: Service[] = [
       'Preliminary selection of materials, furniture and lighting',
       'Specifications',
     ],
-    image: sketchDims,
+    image: svcDesignProject,
     featured: true,
   },
   {
@@ -87,7 +87,7 @@ export const SERVICES: Service[] = [
       'Coordination of suppliers and furniture makers',
       'Inspection of the final result',
     ],
-    image: sampleApproval,
+    image: svcSupervision,
     featured: true,
   },
   {
@@ -108,7 +108,7 @@ export const SERVICES: Service[] = [
       'Access to trade terms and designer discounts where available',
       'Help with orders and delivery scheduling',
     ],
-    image: finishSamples,
+    image: svcSelection,
     featured: true,
   },
   {
@@ -127,7 +127,7 @@ export const SERVICES: Service[] = [
       'Final installation',
       'Preparing the interior for photography and occupancy',
     ],
-    image: rivieraBay,
+    image: svcRentalSetup,
     featured: true,
   },
   {
@@ -144,7 +144,7 @@ export const SERVICES: Service[] = [
       'Choosing materials or furniture',
       'Understanding the likely scope of work',
     ],
-    image: marbleSlabs,
+    image: svcConsultation,
     featured: true,
   },
 ];

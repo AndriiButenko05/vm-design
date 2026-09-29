@@ -5,13 +5,15 @@ country: "Monaco"
 type: commercial
 brand: "Christina"
 scope:
-  - "Concept design"
-  - "Custom furniture"
+  - "Space planning"
+  - "Interior design"
+  - "Site supervision"
 materials:
   - "Arched backlit mirror"
   - "Curved timber reception"
   - "Lacquered joinery"
-summary: "A compact Monaco salon with arched mirrors and a curved timber reception."
+summary: "An intimate Christina Beauty Space beside Hôtel Hermitage in Monaco, rebuilt around an open main area and a statement chandelier."
+heroCaption: "Beauty space · Interior design & supervision"
 card: "Beauty space · Near Hôtel Hermitage, Monaco · 2023"
 year: 2023
 cover: ../../../assets/projects/christina-monaco/012-img-9407.jpg
@@ -26,7 +28,7 @@ hero:
 coords: { lat: 43.7384, lon: 7.4246 }
 featured: false
 order: 16
-todo: "Назва й рядок картки — від Марини; ОПИСУ ВІД НЕЇ ЩЕ НЕМАЄ, текст тимчасовий. У теці також простір бренду DERMADIANE (4 кадри) — уточнити. Потрібна площа."
+todo: "Тексти й назва — від Марини. У теці також простір бренду DERMADIANE (4 кадри) — уточнити. Потрібна площа."
 gallery:
   - src: ../../../assets/projects/christina-monaco/010-img-9401.jpg
     alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
@@ -66,6 +68,10 @@ beforeAfter:
       alt: "Christina Beauty Space in Monaco — brand lettering being set into the marble reception counter"
 ---
 
-A small salon fitted out in pale lacquer and timber.
+Located beside Hôtel Hermitage in the centre of Monaco, this intimate Christina Beauty Space occupies a former salon that was completely reconstructed for the new project.
 
-Arched backlit mirrors set the rhythm along the product wall; a curved reception in warm timber breaks the whiteness at the entrance. A cluster of glass pendants marks the centre of the room.
+The previous interior was removed, including the wall coverings, leaving the premises ready for a new design.
+
+The layout brings together an open main area and a separate treatment room. With its high ceiling, the space could accommodate a long statement chandelier, which became a defining feature of the new interior.
+
+Maryna Vashchenko led the project from planning and interior design through to supervision of the works and the opening of the space.

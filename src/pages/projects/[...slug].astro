@@ -267,6 +267,7 @@ const processImages = d.beforeAfter?.images ?? [];
 
   .prose {
     grid-column: 6 / span 7;
+    max-width: var(--measure);
   }
 
   .prose__eyebrow {
@@ -275,10 +276,20 @@ const processImages = d.beforeAfter?.images ?? [];
 
   .prose :global(p:not(.prose__eyebrow)) {
     color: var(--fg-muted);
+    font-size: clamp(1.125rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.65;
+  }
+
+  /*
+    Лід і абзаци — однієї ширини: межу задає сама колонка (68ch основного
+    кегля), а не кожен абзац окремо. Інакше лід крупним шрифтом зі своїм
+    обмеженням у 30ch виходив удвічі вужчим за текст під ним.
+  */
+  .prose :global(p) {
+    max-width: none;
   }
 
   .prose :global(.prose__eyebrow + p) {
-    max-width: 30ch;
     margin-block: 0 var(--space-m);
     font-family: var(--font-subhead);
     font-size: clamp(1.4375rem, 3.2vw, 2.0625rem);
