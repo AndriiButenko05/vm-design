@@ -80,8 +80,11 @@ const { locale, images, id, eager = false } = Astro.props;
         tpl.replaceWith(tpl.content.cloneNode(true));
       }
     };
-    if (document.readyState === 'complete') reveal();
-    else addEventListener('load', reveal, { once: true });
+    // Трохи після load і коли браузер вільний — перша зміна кадру все одно лише за 5 с.
+    const later = () =>
+      setTimeout(() => ('requestIdleCallback' in window ? requestIdleCallback(reveal, { timeout: 2000 }) : reveal()), 1500);
+    if (document.readyState === 'complete') later();
+    else addEventListener('load', later, { once: true });
 
     let current = 0;
     const ready = (el: HTMLElement) => {
