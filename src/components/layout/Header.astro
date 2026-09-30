@@ -27,7 +27,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
         src="/brand/logo-light-264.png"
         width="264"
         height="264"
-        alt=""
+        alt="VM Design"
         decoding="async"
       />
     </a>
@@ -206,7 +206,13 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     gap: 0.625rem;
   }
 
+  /* Поля збільшують зону натискання до ≥24px, від'ємний відступ лишає текст на місці. */
   .lang a {
+    display: inline-block;
+    min-width: 1.5rem;
+    padding: 0.375rem 0.3125rem;
+    margin: -0.375rem -0.3125rem;
+    text-align: center;
     font-size: var(--step-meta);
     letter-spacing: 0.06em;
   }
@@ -294,6 +300,12 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     gap: var(--space-m);
     font-size: var(--step-meta);
     letter-spacing: var(--ls-meta);
+  }
+
+  .mobile-nav__lang a {
+    display: inline-block;
+    padding: 0.75rem;
+    margin: -0.75rem;
   }
 
   .mobile-nav__lang a[aria-current='true'] {

@@ -41,9 +41,8 @@ const featured = getServices(locale).filter((s) => s.featured);
               <a
                 class="link"
                 href={`${localePath(locale, '/services')}#${s.slug}`}
-                aria-label={`${t(locale, 'services.more')} — ${s.title}`}
               >
-                {t(locale, 'services.more')}
+                {t(locale, 'services.more')}<span class="visually-hidden"> — {s.title}</span>
               </a>
             </p>
           </li>
