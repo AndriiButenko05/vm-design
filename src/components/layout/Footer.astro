@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/logo-light.png';
 import { localePath, t, type Locale } from '../../lib/i18n';
 import { SITE } from '../../lib/site';
 
@@ -19,7 +21,7 @@ const sections = [
 <footer class="footer on-ink-deep">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <img src="/brand/logo-light-264.png" width="264" height="264" alt="" decoding="async" />
+      <Image src={logo} width={56} height={56} densities={[1, 2, 3]} alt="" />
       <p class="t-meta">VM Design</p>
     </div>
 

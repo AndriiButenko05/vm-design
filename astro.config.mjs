@@ -58,7 +58,7 @@ export default defineConfig({
     },
   },
 
-  build: { inlineStylesheets: 'auto' },
+  build: { inlineStylesheets: 'always' },
 
   vite: {
     optimizeDeps: {
