@@ -11,12 +11,13 @@ import { getProjects, slugOf, type Project } from '../lib/projects';
 import { resolveLocale, localePath, t, place } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
-import heroVilla from '../assets/projects/la-villa-nice/034-img-2560.jpg';
-import heroParis from '../assets/projects/paris-apartment/07-living.jpg';
-import heroLarimar from '../assets/projects/larimar-nice/009-img-2674.jpg';
+import hero1 from '../assets/hero/01-villa-staircase.jpg';
+import hero2 from '../assets/hero/02-paris-dining.jpg';
+import hero3 from '../assets/hero/03-living-room.jpg';
+import hero4 from '../assets/hero/04-larimar-salon.jpg';
 
-// Кадри фону першого екрана — тимчасовий вибір, замовниця замінить.
-const heroImages = [heroVilla, heroParis, heroLarimar];
+// Кадри фону першого екрана — оброблені фото від замовниці, у її порядку.
+const heroImages = [hero1, hero2, hero3, hero4];
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);

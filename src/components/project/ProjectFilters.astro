@@ -1,0 +1,59 @@
+---
+import { typeFilters } from '../../lib/projects';
+import { t, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** 'all' або тип проєкту — підсвічується як поточний. */
+  current: string;
+}
+
+const { locale, current } = Astro.props;
+const filters = typeFilters(locale);
+---
+
+{/* Стоїть першим на сторінці, тож при перемиканні категорій не зсувається. */}
+<nav class="filters" aria-label={t(locale, 'aria.filter')}>
+  {
+    filters.map((f) => (
+      <a href={f.href} class="filters__link" aria-current={f.key === current ? 'page' : undefined}>
+        {f.label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-m);
+    padding-bottom: var(--space-m);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .filters__link {
+    position: relative;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-block: 0.25rem;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .filters__link:hover,
+  .filters__link[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  .filters__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent-line);
+  }
+</style>

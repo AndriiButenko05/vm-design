@@ -98,8 +98,8 @@ h1, h2, h3, h4 {
 }
 
 .t-lead {
-  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
-  line-height: 1.55;
+  font-size: var(--step-lead);
+  line-height: var(--lh-lead);
   max-width: 46ch;
 }
 

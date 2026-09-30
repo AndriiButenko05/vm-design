@@ -18,7 +18,7 @@ const { locale, projects } = Astro.props;
         <li class="index__row" data-index-row={slugOf(p)}>
           <a href={localePath(locale, `/projects/${slugOf(p)}`)}>
             <span class="index__num t-meta">{String(i + 1).padStart(2, '0')}</span>
-            <span class="index__title">{p.data.title}</span>
+            <span class="index__title">{p.data.title.replace(/ (?=\S+$)/, ' ')}</span>
             <span class="index__meta t-meta">{place(locale, p.data.city)}</span>
             <span class="index__meta index__meta--type t-meta">{t(locale, `type.${p.data.type}`)}</span>
             <span class="index__meta index__meta--year t-meta">{p.data.year ?? ''}</span>

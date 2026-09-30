@@ -1,4 +1,5 @@
 import { createRequire } from 'node:module';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -6,7 +7,11 @@ const require = createRequire(import.meta.url);
 const sharp = require('sharp');
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const IMAGE = path.join(ROOT, 'src/assets/projects/la-villa-nice/034-img-2560.jpg');
+// Кадри hero: аргументи командного рядка або всі файли з src/assets/hero.
+const HERO_DIR = path.join(ROOT, 'src/assets/hero');
+const IMAGES = process.argv.length > 2
+  ? process.argv.slice(2).map((p) => path.resolve(p))
+  : fs.readdirSync(HERO_DIR).filter((f) => /.(jpe?g|png|webp)$/i.test(f)).sort().map((f) => path.join(HERO_DIR, f));
 
 const SCRIM = { r: 25, g: 24, b: 23 };
 
@@ -116,35 +121,38 @@ async function check(title, pipeline, alphas, zones) {
   console.log();
 }
 
-console.log(`Кадр: ${path.basename(IMAGE)}, поріг ${THRESHOLD}:1\n`);
+for (const image of IMAGES) {
+  console.log(`Кадр: ${path.basename(image)}, поріг ${THRESHOLD}:1\n`);
 
-await check(
-  'Десктоп',
-  sharp(IMAGE).resize({ width: 600 }),
-  (x, y) => [alphaY(y), alphaX(x)],
-  ZONES,
-);
+  await check(
+    'Десктоп',
+    sharp(image).resize({ width: 600 }),
+    (x, y) => [alphaY(y), alphaX(x)],
+    ZONES,
+  );
 
-const VW = 390;
-const VH = 844;
-const meta = await sharp(IMAGE).metadata();
-const scale = Math.max(VW / meta.width, VH / meta.height);
-const rw = Math.round(meta.width * scale);
-const rh = Math.round(meta.height * scale);
+  const VW = 390;
+  const VH = 844;
+  const meta = await sharp(image).metadata();
+  const scale = Math.max(VW / meta.width, VH / meta.height);
+  const rw = Math.round(meta.width * scale);
+  const rh = Math.round(meta.height * scale);
 
-await check(
-  'Телефон 390×844',
-  sharp(IMAGE)
-    .resize(rw, rh)
-    .extract({
-      left: Math.round((rw - VW) / 2),
-      top: Math.round((rh - VH) / 2),
-      width: VW,
-      height: VH,
-    }),
-  (_x, y) => [alphaMobile(y)],
-  ZONES.map((z) => ({ ...z, x0: 0.05, x1: 0.95 })),
-);
+  await check(
+    'Телефон 390×844',
+    sharp(image)
+      .resize(rw, rh)
+      .extract({
+        left: Math.round((rw - VW) / 2),
+        top: Math.round((rh - VH) / 2),
+        width: VW,
+        height: VH,
+      }),
+    (_x, y) => [alphaMobile(y)],
+    ZONES.map((z) => ({ ...z, x0: 0.05, x1: 0.95 })),
+  );
+
+}
 
 if (failed) {
   console.error('Контрасту бракує. Підсиль градієнт у Hero.astro і прожени ще раз.');

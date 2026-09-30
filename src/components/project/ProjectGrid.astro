@@ -1,0 +1,68 @@
+---
+import { Picture } from 'astro:assets';
+import { slugOf, type Project } from '../../lib/projects';
+import { localePath, place, type Locale } from '../../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  projects: Project[];
+  /** Скільки перших карток вантажити одразу (решта — lazy). */
+  eager?: number;
+}
+
+const { locale, projects, eager = 0 } = Astro.props;
+---
+
+<div class="work__grid">
+  {
+    projects.map((p, i) => (
+      <a class="work__item" href={localePath(locale, `/projects/${slugOf(p)}`)} data-reveal>
+        <span class="plate plate--tall">
+          <Picture
+            formats={['avif']}
+            fallbackFormat="webp"
+            src={p.data.cover}
+            alt={p.data.coverAlt}
+            widths={[480, 720, 1080]}
+            sizes="(max-width: 700px) 92vw, 44vw"
+            loading={i < eager ? 'eager' : 'lazy'}
+          />
+        </span>
+        <span class="work__caption">
+          <span class="work__title">{p.data.title}</span>
+          <span class="t-meta">{p.data.card ?? [place(locale, p.data.city), p.data.year].filter(Boolean).join(' · ')}</span>
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 5vw, 5rem);
+  }
+
+  .work__item .plate {
+    aspect-ratio: auto;
+    height: clamp(320px, 46vh, 560px);
+  }
+
+  .work__caption {
+    display: block;
+    margin-top: var(--space-s);
+  }
+
+  .work__title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  @media (max-width: 700px) {
+    .work__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
