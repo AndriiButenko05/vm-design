@@ -6,6 +6,8 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
 const LATIN = ['latin', 'latin-ext'];
+const EXT_A_RANGE = 'U+0100-017F';
+const EXT_A = String.fromCodePoint(...Array.from({ length: 0x180 - 0x100 }, (_, i) => 0x100 + i));
 const FAMILIES = [
   ['Cormorant+Garamond:wght@400', 'cormorant-garamond', [...LATIN, 'cyrillic', 'cyrillic-ext']],
   ['Inter+Tight:wght@300..600', 'inter-tight', [...LATIN, 'cyrillic', 'cyrillic-ext']],
@@ -43,12 +45,24 @@ for (const [query, slug, subsets] of FAMILIES) {
 
     const weight = (face.match(/font-weight:\s*([^;]+);/)?.[1] ?? '400').trim().replace(/\s+/g, '-');
     const name = `${slug}-${weight}-${subset}-${style}.woff2`;
-    const buf = Buffer.from(await (await fetch(url, { headers: { 'User-Agent': UA } })).arrayBuffer());
+
+    // Повний latin-ext важить до 90 КБ (в'єтнамська, рідкісні знаки), а сайту
+    // з нього потрібні лише літери на кшталт «ś» у «Powiśle». Беремо тільки
+    // Latin Extended-A — Google Fonts сам обрізає шрифт за параметром text=.
+    let fontUrl = url;
+    let faceCss = face;
+    if (subset === 'latin-ext') {
+      const q = `https://fonts.googleapis.com/css2?family=${query}&text=${encodeURIComponent(EXT_A)}&display=swap`;
+      const cut = await (await fetch(q, { headers: { 'User-Agent': UA } })).text();
+      fontUrl = cut.match(/url\((https:[^)]+)\)\s*format\('woff2'\)/)?.[1] ?? url;
+      faceCss = face.replace(/unicode-range:[^;]+;/, `unicode-range: ${EXT_A_RANGE};`);
+    }
+    const buf = Buffer.from(await (await fetch(fontUrl, { headers: { 'User-Agent': UA } })).arrayBuffer());
 
     await fs.writeFile(path.join(FONT_DIR, name), buf);
     console.log(`  ${name.padEnd(40)} ${(buf.length / 1024).toFixed(1)} KB`);
 
-    css += face.replace(/src:\s*url\([^)]+\)/, `src: url('/fonts/${name}')`).trim() + '\n\n';
+    css += faceCss.replace(/src:\s*url\([^)]+\)/, `src: url('/fonts/${name}')`).trim() + '\n\n';
   }
 }
 

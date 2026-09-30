@@ -15,23 +15,39 @@ const { locale, images, id, eager = false } = Astro.props;
 <section class="hero on-ink-deep" id={id}>
   {/*
     Фон гортається сам: кадри плавно змінюються кожні 5 секунд, керування
-    немає. Перший кадр вантажиться одразу, решта — з низьким пріоритетом,
-    щоб не заважати першому екрану.
+    немає. Перший кадр вантажиться одразу; решта лежать у <template> і
+    з'являються лише після завантаження сторінки, щоб не забирати канал
+    у першого екрана.
   */}
   <div class="hero__bg" aria-hidden="true" data-hero-slides>
     {
       images.map((image, i) => (
         <div class:list={['hero__slide', i === 0 && 'is-active']} data-hero-slide>
-          <Picture
-            src={image}
-            formats={['avif']}
-            fallbackFormat="webp"
-            alt=""
-            widths={[900, 1400, 2000]}
-            sizes="100vw"
-            loading={i === 0 && eager ? 'eager' : 'lazy'}
-            fetchpriority={i === 0 && eager ? 'high' : 'low'}
-          />
+          {i === 0 ? (
+            <Picture
+              src={image}
+              formats={['avif']}
+              fallbackFormat="webp"
+              alt=""
+              widths={[900, 1400, 2000]}
+              sizes="100vw"
+              loading={eager ? 'eager' : 'lazy'}
+              fetchpriority={eager ? 'high' : 'auto'}
+            />
+          ) : (
+            <template data-hero-later>
+              <Picture
+                src={image}
+                formats={['avif']}
+                fallbackFormat="webp"
+                alt=""
+                widths={[900, 1400, 2000]}
+                sizes="100vw"
+                loading="eager"
+                fetchpriority="low"
+              />
+            </template>
+          )}
         </div>
       ))
     }
@@ -59,7 +75,13 @@ const { locale, images, id, eager = false } = Astro.props;
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (slides.length < 2 || still) continue;
 
-    for (const img of root.querySelectorAll('img')) img.loading = 'eager';
+    const reveal = () => {
+      for (const tpl of root.querySelectorAll<HTMLTemplateElement>('template[data-hero-later]')) {
+        tpl.replaceWith(tpl.content.cloneNode(true));
+      }
+    };
+    if (document.readyState === 'complete') reveal();
+    else addEventListener('load', reveal, { once: true });
 
     let current = 0;
     const ready = (el: HTMLElement) => {
