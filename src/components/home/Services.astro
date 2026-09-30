@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { t, type Locale, localePath } from '../../lib/i18n';
-import { SERVICES } from '../../lib/services';
+import { getServices } from '../../lib/services';
 
 interface Props {
   locale: Locale;
@@ -9,7 +9,7 @@ interface Props {
 }
 const { locale, id } = Astro.props;
 
-const featured = SERVICES.filter((s) => s.featured);
+const featured = getServices(locale).filter((s) => s.featured);
 ---
 
 <section class="services section" id={id}>

@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../../components/layout/BaseLayout.astro';
 import { SETS, setsForProject, allSheets } from '../../lib/drawings';
-import { getProjects, slugOf } from '../../lib/projects';
-import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../lib/i18n';
+import { getProjects, localize, slugOf } from '../../lib/projects';
+import { resolveLocale, localePath, t, DEFAULT_LOCALE, tp } from '../../lib/i18n';
 
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
@@ -13,8 +13,8 @@ export async function getStaticPaths() {
     .map((project) => ({ params: { project: slugOf(project) }, props: { project } }));
 }
 
-const { project } = Astro.props;
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const project = localize(Astro.props.project, locale);
 const slug = slugOf(project);
 const sheets = await allSheets(setsForProject(slug));
 const title = project.data.title;
@@ -23,7 +23,7 @@ const title = project.data.title;
 <BaseLayout title={`${title} — ${t(locale, 'dwg.title')} — VM Design`} description={project.data.summary} noindex>
   <article class="viewer">
     <header class="container page-intro viewer__head">
-      <p class="t-eyebrow">{t(locale, 'dwg.eyebrow')} · {sheets.length} {t(locale, 'dwg.sheets')}</p>
+      <p class="t-eyebrow">{t(locale, 'dwg.eyebrow')} · {sheets.length} {tp(locale, 'dwg.sheets', sheets.length)}</p>
       <h1 class="page-intro__title">{title}</h1>
       <a class="link" href={localePath(locale, `/projects/${slug}`)}>← {t(locale, 'dwg.back')}</a>
     </header>

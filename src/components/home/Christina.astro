@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { slugOf, type Project } from '../../lib/projects';
-import { localePath, t, type Locale } from '../../lib/i18n';
+import { localePath, t, tp, place, type Locale } from '../../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -37,9 +37,9 @@ if (tiles.length < TILES) {
 }
 
 const stats = [
-  { n: projects.length, label: t(locale, 'christina.projects') },
-  { n: cities.length, label: t(locale, 'christina.cities') },
-  { n: countries.length, label: t(locale, 'christina.countries') },
+  { n: projects.length, label: tp(locale, 'christina.projects', projects.length) },
+  { n: cities.length, label: tp(locale, 'christina.cities', cities.length) },
+  { n: countries.length, label: tp(locale, 'christina.countries', countries.length) },
 ];
 ---
 
@@ -82,7 +82,7 @@ const stats = [
                   loading="lazy"
                 />
                 <span class="visually-hidden">
-                  {p.data.title} — {p.data.city}
+                  {p.data.title} — {place(locale, p.data.city)}
                 </span>
               </a>
             </li>
@@ -100,7 +100,7 @@ const stats = [
                 <p class="ch__year">{year}</p>
                 <ul>
                   {list.map((p) => (
-                    <li class="t-meta">{p.data.city}</li>
+                    <li class="t-meta">{place(locale, p.data.city)}</li>
                   ))}
                 </ul>
               </li>

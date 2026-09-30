@@ -1,7 +1,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { DEFAULT_LOCALE, isLocale, localePath, t, type Locale } from './i18n';
+import { DEFAULT_LOCALE, caption, isLocale, localePath, pack, t, type Locale } from './i18n';
 
-export type Project = CollectionEntry<'projects'>;
+/** Проєкт; bodyText — перекладені абзаци опису, коли переклад є. */
+export type Project = CollectionEntry<'projects'> & { bodyText?: string[] };
 
 export const PROJECT_TYPES = ['residential', 'commercial', 'exhibition'] as const;
 export type ProjectType = (typeof PROJECT_TYPES)[number];
@@ -48,7 +49,58 @@ export async function getProjects(
 
   return [...bySlug.values()]
     .filter((p) => includeDrafts || !p.data.draft)
-    .sort((a, b) => a.data.order - b.data.order);
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((p) => localize(p, locale));
+}
+
+/**
+ * Проєкт мовою сторінки: текст з перекладу (src/i18n/<мова>.ts), фото й
+ * решта даних — з англійського файлу. Чого в перекладі немає, лишається
+ * англійською.
+ */
+export function localize(p: Project, locale: Locale): Project {
+  const tr = pack(locale);
+  if (!tr) return p;
+  const pt = tr.projects[slugOf(p)] ?? {};
+  const cap = <T extends { caption?: string; material?: string }>(it: T): T => ({
+    ...it,
+    caption: caption(locale, it.caption),
+    ...('material' in it ? { material: caption(locale, it.material) } : {}),
+  });
+  const d = p.data;
+  const title = pt.title ?? d.title;
+  // Alt має вигляд «Назва проєкту[ рік] — опис»: назву беремо перекладену, опис — зі словника.
+  const altText = (text: string) => {
+    const i = text.indexOf(' — ');
+    if (i < 0) return tr.alts[text] ?? text;
+    const head = text.slice(0, i);
+    const rest = text.slice(i + 3);
+    const year = head.match(/^(.*) (\d{4})$/);
+    const name = head === d.title ? title : year && year[1] === d.title ? `${title} ${year[2]}` : head;
+    return `${name} — ${tr.alts[rest] ?? rest}`;
+  };
+  const alt = <T extends { alt: string }>(it: T): T => ({ ...it, alt: altText(it.alt) });
+  return {
+    ...p,
+    bodyText: pt.body,
+    data: {
+      ...d,
+      title,
+      card: pt.card ?? d.card,
+      summary: pt.summary ?? d.summary,
+      heroCaption: pt.heroCaption ?? d.heroCaption,
+      scope: pt.scope ?? d.scope,
+      coverAlt: altText(d.coverAlt),
+      hero: d.hero?.map(alt),
+      gallery: d.gallery.map((it) => alt(cap(it))),
+      renders: d.renders.map((it) => alt(cap(it))),
+      beforeAfter: d.beforeAfter && {
+        ...d.beforeAfter,
+        images: d.beforeAfter.images.map((it) => alt(cap(it))),
+        pairs: d.beforeAfter.pairs.map(cap),
+      },
+    },
+  };
 }
 
 export async function getFeatured(locale: Locale = DEFAULT_LOCALE): Promise<Project[]> {

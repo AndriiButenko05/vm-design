@@ -31,13 +31,13 @@ type Item = { src: ImageMetadata; room?: string };
  * міняємо місцями з наступним кадром тієї ж кімнати, щоб галерея не
  * починалася з повтору.
  */
-export function byRoom<T extends Item>(items: T[], type: string, heroSrc?: string): T[] {
+export function byRoom<T extends Item>(items: T[], type: string, heroSrc?: ImageMetadata): T[] {
   const order: readonly string[] =
     type === 'residential' ? RESIDENTIAL_ORDER : type === 'commercial' ? COMMERCIAL_ORDER : [];
   if (!order.length) return items;
   const rank = (it: T) => (it.room ? order.indexOf(it.room) : order.length);
   const sorted = [...items].sort((a, b) => rank(a) - rank(b));
-  if (heroSrc && sorted[0]?.src.src === heroSrc) {
+  if (heroSrc && sorted[0]?.src === heroSrc) {
     const j = sorted.findIndex((it, i) => i > 0 && it.room === sorted[0].room);
     if (j > 0) [sorted[0], sorted[j]] = [sorted[j], sorted[0]];
   }

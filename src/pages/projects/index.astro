@@ -14,15 +14,15 @@ const filters = typeFilters(locale);
 ---
 
 <BaseLayout
-  title="Projects — VM Design"
-  description="Realised interiors by Maryna Vashchenko: private residences and commercial spaces in France, Monaco and Italy."
+  title={t(locale, 'meta.projects.title')}
+  description={t(locale, 'meta.projects.description')}
 >
   <section class="head section">
     <div class="container">
       <p class="t-eyebrow">{t(locale, 'index.eyebrow')}</p>
       <h1 class="t-display">{t(locale, 'index.title')}</h1>
 
-      <nav class="filters" aria-label="Filter projects">
+      <nav class="filters" aria-label={t(locale, 'aria.filter')}>
         {
           filters.map((f) => (
             <a

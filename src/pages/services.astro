@@ -2,15 +2,15 @@
 import { Picture } from 'astro:assets';
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import ContactSection from '../components/home/ContactSection.astro';
-import { SERVICES } from '../lib/services';
+import { getServices } from '../lib/services';
 import { resolveLocale, t } from '../lib/i18n';
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 ---
 
 <BaseLayout
-  title="Services — VM Design"
-  description="Interior design services by Maryna Vashchenko: full-service interior architecture, design projects, supervision, furniture and material selection, rental setup and consultation."
+  title={t(locale, 'meta.services.title')}
+  description={t(locale, 'meta.services.description')}
 >
   <section class="head section">
     <div class="container">
@@ -24,7 +24,7 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
     <div class="container">
       <ol class="list__items">
         {
-          SERVICES.map((s, i) => (
+          getServices(locale).map((s, i) => (
             <li class="svc" id={s.slug} data-reveal>
               <span class="svc__plate plate">
                 <Picture
@@ -35,6 +35,7 @@ const locale = resolveLocale(Astro.currentLocale, Astro.url);
                   widths={[400, 800, 1200]}
                   sizes="(max-width: 900px) 92vw, 38vw"
                   loading={i < 2 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
                 />
               </span>
 

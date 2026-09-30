@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../../components/layout/BaseLayout.astro';
 import Lightbox from '../../components/ui/Lightbox.astro';
@@ -9,8 +9,9 @@ import ProjectProcess from '../../components/project/ProjectProcess.astro';
 import Drawings from '../../components/project/Drawings.astro';
 import { setsForProject } from '../../lib/drawings';
 import { byRoom } from '../../lib/rooms';
-import { getProjects, slugOf } from '../../lib/projects';
-import { resolveLocale, t, DEFAULT_LOCALE } from '../../lib/i18n';
+import { getProjects, localize, slugOf } from '../../lib/projects';
+import { resolveLocale, t, DEFAULT_LOCALE, place, localePath } from '../../lib/i18n';
+import { breadcrumbs, projectNode, projectTitle } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
@@ -20,21 +21,21 @@ export async function getStaticPaths() {
   }));
 }
 
-const { project } = Astro.props;
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const project = localize(Astro.props.project, locale);
 const { Content } = await render(project);
 const d = project.data;
 
 const heroCandidates = [{ src: d.cover, alt: d.coverAlt }, ...d.gallery, ...d.renders];
 const isWide = (c: { src: ImageMetadata }) => c.src.width > c.src.height;
 const firstWide = heroCandidates.find(isWide);
-const uniqueCandidates = [...new Map(heroCandidates.map((c) => [c.src.src, c])).values()];
+const uniqueCandidates = [...new Map(heroCandidates.map((c) => [c.src, c])).values()];
 const heroItems: { src: ImageMetadata; alt: string }[] = d.hero?.length
   ? d.hero
   : firstWide
     ? [firstWide]
     : uniqueCandidates.slice(0, 3);
-const heroSrc = heroItems[0].src.src;
+const heroSrc = heroItems[0].src;
 const gallery = byRoom(d.gallery, d.type, heroSrc);
 const renders = byRoom(d.renders, d.type, heroSrc);
 
@@ -42,13 +43,14 @@ const heroIsRow = heroItems.length > 1;
 const heroIsTall = !heroIsRow && !isWide(heroItems[0]);
 
 const typeLabel = t(locale, `type.${d.type}`);
-const intro = [typeLabel, `${d.city}, ${d.country}`, d.year ? String(d.year) : null].filter(Boolean).join(' · ');
+const where = `${place(locale, d.city)}, ${place(locale, d.country)}`;
+const intro = [typeLabel, where, d.year ? String(d.year) : null].filter(Boolean).join(' · ');
 
 const facts: { label: string; value: string | string[] }[] = [
-  { label: t(locale, 'project.location'), value: `${d.city}, ${d.country}` },
+  { label: t(locale, 'project.location'), value: where },
   { label: t(locale, 'project.brand'), value: d.brand ?? '' },
   { label: t(locale, 'project.year'), value: d.year ? String(d.year) : '' },
-  { label: t(locale, 'project.area'), value: d.area ? `${d.area} m²` : '' },
+  { label: t(locale, 'project.area'), value: d.area ? `${d.area.toLocaleString(locale)} ${t(locale, 'project.m2')}` : '' },
   { label: t(locale, 'project.kind'), value: typeLabel },
   { label: t(locale, 'project.services'), value: d.scope },
 ].filter((f) => f.value.length > 0);
@@ -58,9 +60,38 @@ const pairs = d.beforeAfter?.pairs ?? [];
 const slug = slugOf(project);
 const drawingSets = setsForProject(slug);
 const processImages = d.beforeAfter?.images ?? [];
+
+const metaTitle = projectTitle(locale, {
+  title: d.title,
+  enTitle: Astro.props.project.data.title,
+  type: d.type,
+  city: d.city,
+  year: d.year,
+});
+const metaDescription = d.type === 'exhibition' ? `${d.summary} ${t(locale, 'meta.stand.more')}` : d.summary;
+
+const ogImage = heroItems[0].src;
+const site = Astro.site!;
+const jsonLd = [
+  breadcrumbs(site, [
+    { name: 'VM Design', path: localePath(locale, '/') },
+    { name: t(locale, 'index.title'), path: localePath(locale, '/projects') },
+    { name: typeLabel, path: localePath(locale, `/projects/type/${d.type}`) },
+    { name: d.title, path: localePath(locale, `/projects/${slug}`) },
+  ]),
+  projectNode(site, locale, {
+    slug,
+    title: d.title,
+    summary: d.summary,
+    year: d.year,
+    city: d.city,
+    country: d.country,
+    image: new URL((await getImage({ src: ogImage, width: 1600, format: 'jpg' })).src, site).href,
+  }),
+];
 ---
 
-<BaseLayout title={`${d.title} — VM Design`} description={d.summary}>
+<BaseLayout title={metaTitle} description={metaDescription} ogImage={ogImage} jsonLd={jsonLd}>
   <link slot="head" rel="preload" href="/fonts/spectral-500-latin-normal.woff2" as="font" type="font/woff2" crossorigin />
 
   <article class="project">
@@ -130,7 +161,7 @@ const processImages = d.beforeAfter?.images ?? [];
 
         <div class="prose" data-reveal>
           <p class="t-eyebrow prose__eyebrow">{t(locale, 'project.about')}</p>
-          <Content />
+          {project.bodyText ? project.bodyText.map((para) => <p>{para}</p>) : <Content />}
         </div>
       </div>
     </section>
@@ -151,7 +182,7 @@ const processImages = d.beforeAfter?.images ?? [];
       )
     }
 
-    {drawingSets.length > 0 && <Drawings locale={locale} project={slug} sets={drawingSets} picks={d.drawingsPreview} />}
+    {drawingSets.length > 0 && <Drawings locale={locale} project={slug} title={d.title} sets={drawingSets} picks={d.drawingsPreview} />}
 
     {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} stage={d.processStage} />}
 

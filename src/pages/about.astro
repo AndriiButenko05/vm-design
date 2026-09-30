@@ -4,45 +4,39 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import ContactSection from '../components/home/ContactSection.astro';
 import GeographyMap from '../components/map/GeographyMap.astro';
 import { getProjects } from '../lib/projects';
-import { resolveLocale, t } from '../lib/i18n';
+import { resolveLocale, t, place } from '../lib/i18n';
 import { SITE } from '../lib/site';
 import portrait from '../assets/portrait.jpg';
+import portraitOg from '../assets/og/about-portrait.jpg';
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const projects = await getProjects(locale);
 
-const BIO = [
-  'Maryna Vashchenko is an architect, interior designer and founder of VM Design, with over 15 years of professional experience.',
-  'After completing her architectural education in Ukraine, Maryna began her career in Kyiv. She worked on residential and commercial interiors, spa complexes and large-scale architectural projects before taking responsibility for project management, site supervision and the coordination of project implementation.',
-  'An important chapter in her professional journey began with projects involving private villas and a yacht on the French Riviera. From 2018, Maryna worked regularly between Kyiv and Nice for three years. This experience established her strong connection with the French Riviera and shaped the international direction of her work.',
-  'Today, VM Design creates residential and commercial interiors across the French Riviera, Monaco, Italy and other European destinations. The studio’s primary focus is residential interior architecture and design, ranging from apartments and holiday residences to private houses and villas. Maryna’s professional experience also includes projects in Germany, Poland, Ukraine and the United States.',
-  'Maryna personally leads every project. She takes the time to understand each client’s lifestyle, tastes and individual needs, conducts site surveys and measurements, develops the design concept and spatial planning, selects furniture, lighting and materials, and coordinates the implementation process.',
-  'Technical drawings and 3D visualisations are developed by trusted specialists under her direction. When required, Maryna also brings together experienced contractors, furniture manufacturers and suppliers. Throughout the entire process, the client remains in direct contact with her and does not have to manage numerous technical and organisational matters independently.',
-  'Her approach combines precise architectural planning, contemporary elegance, carefully selected materials and close attention to the client’s individuality. Rather than imposing a predetermined aesthetic, Maryna finds the right balance between the client’s vision and her own professional experience.',
-  'The aim of every project is to create a beautiful and comfortable interior that reflects the character and way of life of its owners, while ensuring that the completed space remains as faithful as possible to the approved design concept.',
-];
+const BIO = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => t(locale, `about.bio.${n}`));
 
-const PROCESS = [
-  { n: '01', title: 'Survey', text: 'Measured drawings of what is actually there, before anything is proposed.' },
-  { n: '02', title: 'Concept & planning', text: 'Layout, light and the decision about which material will carry each room.' },
-  { n: '03', title: 'Working drawings', text: 'Demolition, services, elevations and joinery, drawn in full so the site builds what was designed.' },
-  { n: '04', title: 'Author supervision', text: 'On site through to the last fitting.' },
-];
+const PROCESS = [1, 2, 3, 4].map((n) => ({
+  n: String(n).padStart(2, '0'),
+  title: t(locale, `about.process.${n}.title`),
+  text: t(locale, `about.process.${n}.text`),
+}));
+
+const list = (items: readonly string[]) => items.map((x) => place(locale, x)).join(' · ');
 ---
 
 <BaseLayout
-  title="About — Maryna Vashchenko, VM Design"
-  description="Architect and interior designer with over 15 years of experience, working across the French Riviera, Monaco and Italy."
+  title={t(locale, 'meta.about.title')}
+  description={t(locale, 'meta.about.description')}
+  ogImage={portraitOg}
 >
   <section class="lede section">
     <div class="container grid">
       <div class="lede__type">
         <p class="t-eyebrow">{t(locale, 'nav.about')}</p>
-        <h1 class="t-display">Maryna<br />Vashchenko</h1>
-        <p class="t-meta lede__role">{SITE.role}</p>
+        <h1 class="t-display">{t(locale, 'about.name.first')}<br />{t(locale, 'about.name.last')}</h1>
+        <p class="t-meta lede__role">{t(locale, 'site.role')}</p>
 
         <blockquote class="lede__quote">
-          <p>“For me, an interior begins not with a style, but with the person it is created for.”</p>
+          <p>{t(locale, 'about.quote')}</p>
         </blockquote>
       </div>
 
@@ -51,7 +45,7 @@ const PROCESS = [
           src={portrait}
           formats={['avif']}
           fallbackFormat="webp"
-          alt={SITE.designer}
+          alt={t(locale, 'meta.designer')}
           widths={[500, 1000]}
           sizes="(max-width: 900px) 70vw, 34vw"
           loading="eager"
@@ -66,24 +60,24 @@ const PROCESS = [
       <aside class="bio__facts">
         <dl>
           <div>
-            <dt class="t-meta">Experience</dt>
-            <dd>Over {SITE.facts.experienceYears} years</dd>
+            <dt class="t-meta">{t(locale, 'about.fact.experience')}</dt>
+            <dd>{t(locale, 'about.fact.experienceValue', { n: SITE.facts.experienceYears })}</dd>
           </div>
           <div>
-            <dt class="t-meta">Based in</dt>
-            <dd>{SITE.facts.based}</dd>
+            <dt class="t-meta">{t(locale, 'about.fact.based')}</dt>
+            <dd>{place(locale, SITE.facts.based)}</dd>
           </div>
           <div>
-            <dt class="t-meta">Working across</dt>
-            <dd>{SITE.regions.join(' · ')}</dd>
+            <dt class="t-meta">{t(locale, 'about.fact.across')}</dt>
+            <dd>{list(SITE.regions)}</dd>
           </div>
           <div>
-            <dt class="t-meta">International experience</dt>
-            <dd>{SITE.facts.internationalExperience.join(' · ')}</dd>
+            <dt class="t-meta">{t(locale, 'about.fact.international')}</dt>
+            <dd>{list(SITE.facts.internationalExperience)}</dd>
           </div>
           <div>
-            <dt class="t-meta">Languages</dt>
-            <dd>{SITE.facts.languages.join(' · ')}</dd>
+            <dt class="t-meta">{t(locale, 'about.fact.languages')}</dt>
+            <dd>{list(SITE.facts.languages)}</dd>
           </div>
         </dl>
       </aside>
@@ -97,8 +91,8 @@ const PROCESS = [
   <section class="process on-sand section">
     <div class="container">
       <header class="process__head" data-reveal>
-        <p class="t-eyebrow">Process</p>
-        <h2 class="t-h2">From survey to the last fitting</h2>
+        <p class="t-eyebrow">{t(locale, 'about.process.eyebrow')}</p>
+        <h2 class="t-h2">{t(locale, 'about.process.title')}</h2>
       </header>
 
       <ol class="process__list">

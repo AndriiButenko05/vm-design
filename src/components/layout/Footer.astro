@@ -38,7 +38,7 @@ const sections = [
       </p>
     </div>
 
-    <nav class="footer__col" aria-label="Pages">
+    <nav class="footer__col" aria-label={t(locale, 'aria.pages')}>
       <p class="t-meta">{t(locale, 'index.title')}</p>
       <ul>
         <li><a class="link" href={localePath(locale, '/projects')}>{t(locale, 'nav.work')}</a></li>
@@ -48,7 +48,7 @@ const sections = [
       </ul>
     </nav>
 
-    <nav class="footer__col footer__col--sections" aria-label="Sections">
+    <nav class="footer__col footer__col--sections" aria-label={t(locale, 'aria.sections')}>
       <p class="t-meta">{t(locale, 'footer.sections')}</p>
       <ul>
         {

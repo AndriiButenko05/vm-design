@@ -7,14 +7,14 @@ const UA =
 
 const LATIN = ['latin', 'latin-ext'];
 const FAMILIES = [
-  ['Cormorant+Garamond:wght@400', 'cormorant-garamond', LATIN],
-  ['Inter+Tight:wght@300..600', 'inter-tight', LATIN],
+  ['Cormorant+Garamond:wght@400', 'cormorant-garamond', [...LATIN, 'cyrillic', 'cyrillic-ext']],
+  ['Inter+Tight:wght@300..600', 'inter-tight', [...LATIN, 'cyrillic', 'cyrillic-ext']],
   ['Spectral:wght@400;500', 'spectral', [...LATIN, 'cyrillic', 'cyrillic-ext']],
 ];
 
 let css =
   '/* Локальні шрифти. Згенеровано scripts/fetch-fonts.mjs — не редагувати вручну.\n' +
-  '   Сабсети: latin + latin-ext; для Spectral ще cyrillic + cyrillic-ext. */\n\n';
+  '   Сабсети: latin, latin-ext, cyrillic, cyrillic-ext — для ru і uk. */\n\n';
 
 const FONT_DIR = path.join(ROOT, 'public/fonts');
 

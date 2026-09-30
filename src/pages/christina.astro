@@ -4,7 +4,7 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import HeroSlider from '../components/home/HeroSlider.astro';
 import ContactSection from '../components/home/ContactSection.astro';
 import { getProjects, slugOf, type Project } from '../lib/projects';
-import { resolveLocale, localePath, t } from '../lib/i18n';
+import { resolveLocale, localePath, t, place } from '../lib/i18n';
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const all = await getProjects(locale);
@@ -23,19 +23,20 @@ const heroSlides = [cover, ...retail.filter((p) => p !== cover)].filter(Boolean)
   src: p.data.cover,
   alt: p.data.coverAlt,
   href: localePath(locale, `/projects/${slugOf(p)}`),
-  label: [p.data.city, p.data.year].filter(Boolean).join(' · '),
+  label: [place(locale, p.data.city), p.data.year].filter(Boolean).join(' · '),
 }));
 
 const card = (p: Project) => ({
   href: localePath(locale, `/projects/${slugOf(p)}`),
   title: p.data.title,
-  meta: [p.data.city, p.data.year].filter(Boolean).join(' · '),
+  meta: [place(locale, p.data.city), p.data.year].filter(Boolean).join(' · '),
 });
 ---
 
 <BaseLayout
-  title="Christina — a retail programme across five countries | VM Design"
-  description="Five retail interiors and six exhibition stands for the cosmetics brand Christina, designed by Maryna Vashchenko across France, Monaco, Italy, Germany and Hong Kong."
+  title={t(locale, 'meta.christina.title')}
+  description={t(locale, 'meta.christina.description')}
+  ogImage={cover?.data.cover}
   transparentHeader
 >
   <article>
@@ -60,21 +61,21 @@ const card = (p: Project) => ({
     <section class="facts on-ink">
       <dl class="container facts__grid">
         <div>
-          <dt class="t-meta">Retail interiors</dt>
+          <dt class="t-meta">{t(locale, 'christina.facts.retail')}</dt>
           <dd class="facts__n">{retail.length}</dd>
         </div>
         <div>
-          <dt class="t-meta">Exhibition stands</dt>
+          <dt class="t-meta">{t(locale, 'christina.facts.stands')}</dt>
           <dd class="facts__n">{stands.length}</dd>
         </div>
         <div>
-          <dt class="t-meta">Countries</dt>
+          <dt class="t-meta">{t(locale, 'christina.facts.countries')}</dt>
           <dd class="facts__n">{countries.length}</dd>
         </div>
         {
           span && (
             <div>
-              <dt class="t-meta">Years</dt>
+              <dt class="t-meta">{t(locale, 'christina.facts.years')}</dt>
               <dd class="facts__n facts__n--small">{span}</dd>
             </div>
           )
@@ -85,13 +86,9 @@ const card = (p: Project) => ({
     <section class="stream section">
       <div class="container">
         <header class="stream__head" data-reveal>
-          <p class="t-eyebrow">Retail</p>
-          <h2 class="t-h2">One brand, five rooms, five buildings</h2>
-          <p class="stream__text">
-            The same identity had to sit inside a Roman vault, a Paris courtyard, a Monaco
-            storefront, a Cannes terrace and a German street unit. What repeats is the language —
-            arched niches, backlit mirrors, one wall given to the product — not the plan.
-          </p>
+          <p class="t-eyebrow">{t(locale, 'christina.retail.eyebrow')}</p>
+          <h2 class="t-h2">{t(locale, 'christina.retail.title')}</h2>
+          <p class="stream__text">{t(locale, 'christina.retail.text')}</p>
         </header>
 
         <ul class="stream__grid">
@@ -128,13 +125,9 @@ const card = (p: Project) => ({
     <section class="stream stream--stands on-sand section">
       <div class="container">
         <header class="stream__head" data-reveal>
-          <p class="t-eyebrow">Exhibitions</p>
-          <h2 class="t-h2">A brand built and dismantled in four days</h2>
-          <p class="stream__text">
-            Trade-fair stands work to a different clock than an interior: the whole thing is
-            assembled, used hard for four days and taken apart. Six of them, in Bologna, Paris
-            and Hong Kong.
-          </p>
+          <p class="t-eyebrow">{t(locale, 'christina.stands.eyebrow')}</p>
+          <h2 class="t-h2">{t(locale, 'christina.stands.title')}</h2>
+          <p class="stream__text">{t(locale, 'christina.stands.text')}</p>
         </header>
 
         <ul class="stream__grid stream__grid--wide">
@@ -157,7 +150,7 @@ const card = (p: Project) => ({
                     </span>
                     <span class="stream__caption">
                       <span class="stream__title">{c.title}</span>
-                      <span class="t-meta">{p.data.city}</span>
+                      <span class="t-meta">{place(locale, p.data.city)}</span>
                     </span>
                   </a>
                 </li>

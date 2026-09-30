@@ -1,3 +1,4 @@
+import { pack, type Locale } from './i18n';
 import svcFullService from '../assets/services/svc-01-full-service.jpg';
 import svcDesignProject from '../assets/services/svc-02-design-project.jpg';
 import svcSupervision from '../assets/services/svc-03-supervision.jpg';
@@ -148,3 +149,9 @@ export const SERVICES: Service[] = [
     featured: true,
   },
 ];
+
+/** Послуги мовою сторінки; чого в перекладі немає — англійською. */
+export function getServices(locale: Locale): Service[] {
+  const tr = pack(locale)?.services;
+  return SERVICES.map((s) => ({ ...s, ...(tr?.[s.slug] ?? {}) }));
+}

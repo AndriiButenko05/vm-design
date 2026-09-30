@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import { buildSheets, cityId } from '../../lib/map';
 import { groupByCity, slugOf, type Project } from '../../lib/projects';
-import { localePath, t, type Locale } from '../../lib/i18n';
+import { localePath, t, tp, place, type Locale } from '../../lib/i18n';
 
 interface Props {
   locale: Locale;
@@ -16,7 +16,7 @@ const groups = groupByCity(projects);
 const { sheets, beyond } = buildSheets(groups, t(locale, 'map.riviera'));
 
 const typeLabel = (p: Project) => t(locale, `type.${p.data.type}`);
-const countLabel = (n: number) => `${n} ${t(locale, n === 1 ? 'map.project' : 'map.projects')}`;
+const countLabel = (n: number) => `${n} ${tp(locale, 'map.projects', n)}`;
 const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.projects.length, 0);
 ---
 
@@ -35,13 +35,13 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
               data-map-sheet={sheet.id}
               viewBox={sheet.geometry.viewBox}
               role="img"
-              aria-label={`${t(locale, sheet.labelKey)} — ${sheet.groups.map((g) => g.city).join(', ')}`}
+              aria-label={`${t(locale, sheet.labelKey)} — ${sheet.groups.map((g) => place(locale, g.city)).join(', ')}`}
               hidden={i > 0}
             >
               <g class="geo__regions">
                 {sheet.geometry.regions.map((r) => (
                   <path d={r.d} data-region={r.key}>
-                    <title>{r.label}</title>
+                    <title>{place(locale, r.label)}</title>
                   </path>
                 ))}
               </g>
@@ -59,7 +59,7 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
                     transform={`translate(${m.x} ${m.y})`}
                     role="button"
                     tabindex="0"
-                    aria-label={`${m.label} — ${countLabel(m.count)}`}
+                    aria-label={`${place(locale, m.label)} — ${countLabel(m.count)}`}
                   >
                     <circle class="marker__hit" r="22" />
                     <circle class="marker__halo" r="20" />
@@ -74,7 +74,7 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
                       x={m.side === 'right' ? 18 : m.side === 'left' ? -18 : 0}
                       y={m.side === 'top' ? -18 : 6}
                     >
-                      {m.label}
+                      {place(locale, m.label)}
                     </text>
                   </g>
                 ))}
@@ -105,7 +105,7 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
                 {sheet.groups.map((g) => (
                   <li>
                     <button type="button" class="geo__city-btn" data-city={cityId(g.city)}>
-                      <span class="geo__city">{g.city}</span>
+                      <span class="geo__city">{place(locale, g.city)}</span>
                       <span class="geo__sep" aria-hidden="true" />
                       <span class="t-meta">{countLabel(g.projects.length)}</span>
                     </button>
@@ -124,7 +124,7 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
                   ← {t(locale, sheet.labelKey)}
                 </button>
                 <p class="t-eyebrow">
-                  {g.city} · {g.country}
+                  {place(locale, g.city)} · {place(locale, g.country)}
                 </p>
                 <ul>
                   {g.projects.map((p) => (
@@ -157,7 +157,7 @@ const total = (s: (typeof sheets)[number]) => s.groups.reduce((n, g) => n + g.pr
         {
           beyond.length > 0 && (
             <p class="geo__beyond t-meta">
-              {t(locale, 'map.beyond')}: {beyond.map((g) => g.city).join(' · ')}
+              {t(locale, 'map.beyond')}: {beyond.map((g) => place(locale, g.city)).join(' · ')}
             </p>
           )
         }

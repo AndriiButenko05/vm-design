@@ -1,8 +1,8 @@
 ---
 import { Picture } from 'astro:assets';
-import { t, type Locale } from '../../lib/i18n';
+import { t, place, type Locale } from '../../lib/i18n';
 import { SITE } from '../../lib/site';
-import { CONTACT_BACKDROP, SERVICES } from '../../lib/services';
+import { CONTACT_BACKDROP, getServices } from '../../lib/services';
 
 interface Props {
   locale: Locale;
@@ -13,7 +13,7 @@ const { locale, as: Heading = 'h2', id = 'contact' } = Astro.props;
 
 const { wide, tall } = CONTACT_BACKDROP;
 
-const serviceOptions = [...SERVICES.map((s) => s.title), 'Other'];
+const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'contact.other')];
 ---
 
 <section class="contact on-ink-deep" id={id}>
@@ -54,15 +54,15 @@ const serviceOptions = [...SERVICES.map((s) => s.title), 'Other'];
 
       <dl class="contact__details">
         <div>
-          <dt class="t-meta">Phone</dt>
+          <dt class="t-meta">{t(locale, 'contact.phone')}</dt>
           <dd><a class="link" href={SITE.phoneHref}>{SITE.phone}</a></dd>
         </div>
         <div>
-          <dt class="t-meta">Email</dt>
+          <dt class="t-meta">{t(locale, 'contact.email')}</dt>
           <dd><a class="link" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
         </div>
         <div>
-          <dt class="t-meta">Instagram</dt>
+          <dt class="t-meta">{t(locale, 'contact.instagram')}</dt>
           <dd>
             <a class="link" href={SITE.instagramUrl} rel="me noopener" target="_blank">
               {SITE.instagram}
@@ -70,8 +70,8 @@ const serviceOptions = [...SERVICES.map((s) => s.title), 'Other'];
           </dd>
         </div>
         <div>
-          <dt class="t-meta">Working in</dt>
-          <dd>{SITE.regions.join(' · ')}</dd>
+          <dt class="t-meta">{t(locale, 'contact.workingIn')}</dt>
+          <dd>{SITE.regions.map((r) => place(locale, r)).join(' · ')}</dd>
         </div>
       </dl>
     </div>

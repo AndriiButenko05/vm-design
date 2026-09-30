@@ -1,16 +1,17 @@
 ---
 import { Picture, getImage } from 'astro:assets';
 import { previewSheets, totalPages, viewerPath, type DrawingSet } from '../../lib/drawings';
-import { localePath, t, type Locale } from '../../lib/i18n';
+import { localePath, t, type Locale, tp } from '../../lib/i18n';
 
 interface Props {
   locale: Locale;
   project: string;
+  title: string;
   sets: DrawingSet[];
   picks?: string[];
 }
 
-const { locale, project, sets, picks } = Astro.props;
+const { locale, project, title, sets, picks } = Astro.props;
 
 const sheets = await previewSheets(sets, picks);
 const total = totalPages(sets);
@@ -40,16 +41,16 @@ const fullAvif = await Promise.all(sheets.map((s) => getImage({ src: s.img, widt
               data-lightbox-group="drawings"
               data-full={full[i].src}
               data-full-avif={fullAvif[i].src}
-              data-alt={`${sheet.set.title} — ${t(locale, 'dwg.sheet')}`}
+              data-alt={`${title} — ${t(locale, 'dwg.sheet')}`}
               data-w={sheet.img.width}
               data-h={sheet.img.height}
-              aria-label={`${sheet.set.title} — ${t(locale, 'dwg.sheet')} — ${t(locale, 'renders.zoom')}`}
+              aria-label={`${title} — ${t(locale, 'dwg.sheet')} — ${t(locale, 'renders.zoom')}`}
             >
               <Picture
                 formats={['avif']}
                 fallbackFormat="webp"
                 src={sheet.img}
-                alt={`${sheet.set.title} — ${t(locale, 'dwg.sheet')}`}
+                alt={`${title} — ${t(locale, 'dwg.sheet')}`}
                 widths={[400, 700, 1000]}
                 sizes="(max-width: 700px) 92vw, 30vw"
                 loading="lazy"
@@ -61,7 +62,7 @@ const fullAvif = await Promise.all(sheets.map((s) => getImage({ src: s.img, widt
     </ul>
 
     <div class="dwg__bar">
-      <span class="dwg__count">{total} {t(locale, 'dwg.sheets')}</span>
+      <span class="dwg__count">{total} {tp(locale, 'dwg.sheets', total)}</span>
       {
         hasMore && (
           <a class="dwg__all" href={localePath(locale, viewerPath(project))} target="_blank" rel="noopener">

@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { locale, transparent = false } = Astro.props;
-const bare = stripLocale(Astro.url.pathname);
+const stripped = stripLocale(Astro.url.pathname).replace(/\/$/, '') || '/';
+const bare = stripped === '/404' ? '/' : stripped;
 
 const nav = [
   { key: 'nav.work', href: '/projects' },
@@ -21,7 +22,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
 
 <header class="site-header" data-transparent={transparent ? '' : null}>
   <div class="site-header__inner">
-    <a class="logo" href={localePath(locale, '/')} aria-label="VM Design — home">
+    <a class="logo" href={localePath(locale, '/')} aria-label={t(locale, 'aria.home')}>
       <img
         src="/brand/logo-light-264.png"
         width="264"
@@ -31,7 +32,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
       />
     </a>
 
-    <nav class="site-nav" aria-label="Primary">
+    <nav class="site-nav" aria-label={t(locale, 'aria.primary')}>
       <ul>
         {
           nav.map((item) => (
@@ -49,7 +50,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
       </ul>
     </nav>
 
-    <nav class="lang" aria-label="Language">
+    <nav class="lang" aria-label={t(locale, 'aria.language')}>
       <ul>
         {
           LOCALES.map((l) => (
@@ -84,7 +85,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
 </header>
 
 <div class="mobile-nav on-ink" id="mobile-nav" hidden data-mobile-nav>
-  <nav aria-label="Primary mobile">
+  <nav aria-label={t(locale, 'aria.primaryMobile')}>
     <ul>
       {
         nav.map((item) => (

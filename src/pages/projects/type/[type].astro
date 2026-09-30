@@ -1,8 +1,8 @@
 ---
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../../components/layout/BaseLayout.astro';
-import { getProjects, slugOf, PROJECT_TYPES, typeFilters } from '../../../lib/projects';
-import { resolveLocale, localePath, t, DEFAULT_LOCALE } from '../../../lib/i18n';
+import { getProjects, localize, slugOf, PROJECT_TYPES, typeFilters } from '../../../lib/projects';
+import { resolveLocale, localePath, t, DEFAULT_LOCALE, place } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
@@ -12,8 +12,9 @@ export async function getStaticPaths() {
   }));
 }
 
-const { type, projects } = Astro.props;
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const { type } = Astro.props;
+const projects = Astro.props.projects.map((p) => localize(p, locale));
 
 const filters = typeFilters(locale);
 
@@ -22,14 +23,14 @@ const label = t(locale, `type.${type}`);
 const intro = t(locale, `type.${type}.text`);
 ---
 
-<BaseLayout title={`${label} — VM Design`} description={intro}>
+<BaseLayout title={t(locale, `meta.type.${type}.title`)} description={t(locale, `meta.type.${type}.description`)}>
   <section class="head section">
     <div class="container">
       <p class="t-eyebrow">{t(locale, 'index.eyebrow')}</p>
       <h1 class="t-display">{label}</h1>
       <p class="t-lead head__intro">{intro}</p>
 
-      <nav class="filters" aria-label="Filter projects">
+      <nav class="filters" aria-label={t(locale, 'aria.filter')}>
         {
           filters.map((f) => (
             <a
@@ -67,7 +68,7 @@ const intro = t(locale, `type.${type}.text`);
             </span>
             <span class="work__caption">
               <span class="work__title">{p.data.title}</span>
-              <span class="t-meta">{p.data.card ?? [p.data.city, p.data.year].filter(Boolean).join(' · ')}</span>
+              <span class="t-meta">{p.data.card ?? [place(locale, p.data.city), p.data.year].filter(Boolean).join(' · ')}</span>
             </span>
           </a>
         ))
