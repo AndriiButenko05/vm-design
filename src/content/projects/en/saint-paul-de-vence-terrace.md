@@ -13,6 +13,7 @@ scope:
 summary: "An apartment in an older building in Saint-Paul-de-Vence, redesigned for rental around the view of the village."
 card: "Renovation design for rental accommodation · Saint-Paul-de-Vence, France · 2026"
 heroCaption: "Rental apartment · Renovation design"
+heroFit: contain
 cover: ../../../assets/drawings/saint-paul-1/001.jpg
 coverAlt: "Terrace Apartment in Saint-Paul-de-Vence — the design project, with the village of Saint-Paul-de-Vence behind"
 coords: { lat: 43.6959, lon: 7.1222 }

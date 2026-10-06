@@ -100,7 +100,14 @@ const jsonLd = [
       <h1 class="page-intro__title">{d.title}</h1>
     </header>
 
-    <figure class:list={['container hero', heroIsTall && 'hero--tall', heroIsRow && 'hero--row']}>
+    <figure
+      class:list={[
+        'container hero',
+        heroIsTall && 'hero--tall',
+        heroIsRow && 'hero--row',
+        !heroIsTall && !heroIsRow && d.heroFit === 'contain' && 'hero--contain',
+      ]}
+    >
       {
         heroIsRow ? (
           <div class="hero__row">
@@ -215,6 +222,19 @@ const jsonLd = [
     max-width: 100%;
     height: min(82vh, 760px);
     object-fit: contain;
+  }
+
+  /* Аркуш дизайн-проєкту: показуємо цілком, по центру, без обрізання. */
+  .hero--contain :global(picture) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero--contain :global(img) {
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    background: none;
   }
 
   .hero__row {

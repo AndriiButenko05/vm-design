@@ -304,6 +304,15 @@ const it: Translation = {
   },
 
   captions: {
+    "The dining area, from bare concrete to the finished room": "La zona pranzo, dal cemento grezzo alla stanza finita",
+    "The living room, from bare concrete to the finished room": "Il soggiorno, dal cemento grezzo alla stanza finita",
+    "The kitchen and dining area, from bare concrete to completion": "La cucina e la zona pranzo, dal cemento grezzo alla consegna",
+    "The dining wall, from new mouldings to the finished room": "La parete della zona pranzo, dalle nuove modanature alla stanza finita",
+    "The living room, now with built-in wardrobes": "Il soggiorno, ora con armadi a muro",
+    "The open-plan living area, from demolition to completion": "La zona giorno open space, dalla demolizione alla consegna",
+    "The entrance hall, from bare walls to moulded panels": "L’ingresso, dalle pareti grezze ai pannelli modanati",
+    "The master bathroom, from stripped walls to marble": "Il bagno padronale, dalle pareti spogliate al marmo",
+    "The bathroom, from bare walls to Calacatta marble": "Il bagno, dalle pareti grezze al marmo Calacatta",
     'Bar counter': 'Bancone bar',
     'Bar counter & dining': 'Bancone bar e zona pranzo',
     'Bar counter & living room': 'Bancone bar e soggiorno',

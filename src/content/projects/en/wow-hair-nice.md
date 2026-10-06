@@ -17,71 +17,48 @@ summary: "A bright hair extension salon in central Nice with pink styling chairs
 heroCaption: "Hair extension salon · Interior design"
 card: "Hair extension salon · Central Nice, France · 2026"
 year: 2026
-cover: ../../../assets/projects/wow-hair-nice/000-img-2638.jpg
+cover: ../../../assets/projects/wow-hair-nice/final/01.png
 coverAlt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: false
 order: 13
 todo: "Тексти й назва — від Марини. Потрібна площа."
 gallery:
-  - src: ../../../assets/projects/wow-hair-nice/003-img-2642.jpg
+  - src: ../../../assets/projects/wow-hair-nice/final/01.png
     alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: salon
-    size: full
-  - src: ../../../assets/projects/wow-hair-nice/001-img-2639.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: stations
     size: half
-  - src: ../../../assets/projects/wow-hair-nice/006-img-2653.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/wow-hair-nice/004-img-2643.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/wow-hair-nice/002-img-2641.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: salon
-    size: detail
-  - src: ../../../assets/projects/wow-hair-nice/005-img-2645.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: salon
-    size: half
-  - src: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
-    alt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
-    room: salon
-    size: half
-  - src: ../../../assets/projects/wow-hair-nice/more-img-2655.jpg
+  - src: ../../../assets/projects/wow-hair-nice/final/02.png
     alt: "Wow Hair Salon in Nice — an oval illuminated mirror and a pink styling chair"
-    room: stations
     size: half
-  - src: ../../../assets/projects/wow-hair-nice/more-img-2659.jpg
+  - src: ../../../assets/projects/wow-hair-nice/final/03.png
+    alt: "Wow Hair Salon in Nice — the salon with its oak floor and product wall"
+    size: half
+  - src: ../../../assets/projects/wow-hair-nice/final/04.png
+    alt: "Wow Hair Salon in Nice — the salon with styling chairs and illuminated mirrors"
+    size: half
+  - src: ../../../assets/projects/wow-hair-nice/final/05.png
+    alt: "Wow Hair Salon in Nice — a styling station with an illuminated mirror"
+    size: half
+  - src: ../../../assets/projects/wow-hair-nice/final/06.png
     alt: "Wow Hair Salon in Nice — hair extensions on the display wall"
-    room: salon
     size: half
 beforeAfter:
   pairs:
-    - before: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg
-      after: ../../../assets/projects/wow-hair-nice/002-img-2641.jpg
+    - before: ../../../assets/projects/wow-hair-nice/ba/01-before.png
+      after: ../../../assets/projects/wow-hair-nice/ba/01-after.png
       caption: "The empty unit and the finished salon"
-    - before: ../../../assets/projects/wow-hair-nice/011-img-8329.jpg
-      after: ../../../assets/projects/wow-hair-nice/005-img-2645.jpg
-      caption: "The rear wall under the mezzanine"
-    - before: ../../../assets/projects/wow-hair-nice/012-img-8330.jpg
-      after: ../../../assets/projects/wow-hair-nice/007-img-2654.jpg
+    - before: ../../../assets/projects/wow-hair-nice/ba/02-before.png
+      after: ../../../assets/projects/wow-hair-nice/ba/02-after.png
       caption: "The long wall, now the styling stations"
-    - before: ../../../assets/projects/wow-hair-nice/013-img-8762.jpg
-      after: ../../../assets/projects/wow-hair-nice/000-img-2638.jpg
-      caption: "Works in progress towards the rear"
+    - before: ../../../assets/projects/wow-hair-nice/ba/03-before.png
+      after: ../../../assets/projects/wow-hair-nice/ba/03-after.png
+      caption: "The rear wall under the mezzanine"
   images:
-    - src: ../../../assets/projects/wow-hair-nice/010-img-8328.jpg
-      alt: "Wow Hair Salon in Nice — the empty unit before the works"
-    - src: ../../../assets/projects/wow-hair-nice/011-img-8329.jpg
-      alt: "Wow Hair Salon in Nice — the empty unit before the works"
-    - src: ../../../assets/projects/wow-hair-nice/012-img-8330.jpg
-      alt: "Wow Hair Salon in Nice — the empty unit before the works"
-    - src: ../../../assets/projects/wow-hair-nice/013-img-8762.jpg
+    - src: ../../../assets/projects/wow-hair-nice/ba/01-before.png
+      alt: "Wow Hair Salon in Nice — the empty unit before fit-out"
+    - src: ../../../assets/projects/wow-hair-nice/ba/02-before.png
+      alt: "Wow Hair Salon in Nice — the space before fit-out"
+    - src: ../../../assets/projects/wow-hair-nice/ba/03-before.png
       alt: "Wow Hair Salon in Nice — the empty unit before the works"
 ---
 

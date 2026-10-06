@@ -316,6 +316,15 @@ const uk: Translation = {
   },
 
   captions: {
+    "The dining area, from bare concrete to the finished room": "Їдальня: від голого бетону до готової кімнати",
+    "The living room, from bare concrete to the finished room": "Вітальня: від голого бетону до готової кімнати",
+    "The kitchen and dining area, from bare concrete to completion": "Кухня та їдальня: від голого бетону до завершення",
+    "The dining wall, from new mouldings to the finished room": "Стіна їдальні: від нових молдингів до готової кімнати",
+    "The living room, now with built-in wardrobes": "Вітальня, тепер із вбудованими шафами",
+    "The open-plan living area, from demolition to completion": "Відкрита зона вітальні: від демонтажу до завершення",
+    "The entrance hall, from bare walls to moulded panels": "Передпокій: від голих стін до панелей із молдингами",
+    "The master bathroom, from stripped walls to marble": "Ванна господарів: від оголених стін до мармуру",
+    "The bathroom, from bare walls to Calacatta marble": "Ванна кімната: від голих стін до мармуру Calacatta",
     'Bar counter': 'Барна стійка',
     'Bar counter & dining': 'Барна стійка та їдальня',
     'Bar counter & living room': 'Барна стійка та вітальня',

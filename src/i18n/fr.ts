@@ -304,6 +304,15 @@ const fr: Translation = {
   },
 
   captions: {
+    "The dining area, from bare concrete to the finished room": "Le coin repas, du béton brut à la pièce terminée",
+    "The living room, from bare concrete to the finished room": "Le séjour, du béton brut à la pièce terminée",
+    "The kitchen and dining area, from bare concrete to completion": "La cuisine et le coin repas, du béton brut à la livraison",
+    "The dining wall, from new mouldings to the finished room": "Le mur de la salle à manger, des nouvelles moulures à la pièce terminée",
+    "The living room, now with built-in wardrobes": "Le séjour, désormais avec des placards intégrés",
+    "The open-plan living area, from demolition to completion": "L’espace de vie ouvert, de la démolition à la livraison",
+    "The entrance hall, from bare walls to moulded panels": "L’entrée, des murs bruts aux panneaux moulurés",
+    "The master bathroom, from stripped walls to marble": "La salle de bains parentale, des murs mis à nu au marbre",
+    "The bathroom, from bare walls to Calacatta marble": "La salle de bains, des murs bruts au marbre Calacatta",
     'Bar counter': 'Comptoir de bar',
     'Bar counter & dining': 'Comptoir de bar et salle à manger',
     'Bar counter & living room': 'Comptoir de bar et séjour',

@@ -39,13 +39,22 @@ const projects = defineCollection({
             caption: z.string().optional(),
 
             room: z.enum(ROOMS).optional(),
+
+            /** Цей кадр — першим у галереї, попри сортування за кімнатами. */
+            pin: z.boolean().optional(),
           }),
         )
         .default([]),
 
       renders: z
         .array(
-          z.object({ src: image(), alt: z.string(), caption: z.string().optional(), room: z.enum(ROOMS).optional() }),
+          z.object({
+            src: image(),
+            alt: z.string(),
+            caption: z.string().optional(),
+            room: z.enum(ROOMS).optional(),
+            pin: z.boolean().optional(),
+          }),
         )
         .default([]),
 
@@ -57,6 +66,12 @@ const projects = defineCollection({
         .optional(),
 
       heroCaption: z.string().optional(),
+
+      /**
+       * Як вписувати головне зображення: cover — на всю ширину з обрізанням по висоті
+       * (для фото), contain — цілком, без обрізання (для аркушів дизайн-проєкту з текстом).
+       */
+      heroFit: z.enum(['cover', 'contain']).default('cover'),
 
       /**
        * Стадія проєкту для блоку «Процес»: built — реалізовано, in-progress —

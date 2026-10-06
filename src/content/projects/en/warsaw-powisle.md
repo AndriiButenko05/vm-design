@@ -27,7 +27,7 @@ hero:
     alt: "Penthouse in Warsaw — the kitchen, 3D visualisation"
 coords: { lat: 52.2395, lon: 21.0305 }
 featured: false
-order: 5
+order: 6
 drawingsPreview: ["001", "002"]
 todo: "Тексти й назва — від Марини. Проєкт лише в 3D: до реалізації не дійшов. Площа 303.9 m² — сума приміщень з обох планів (1F 167.5 + 2F 136.4, без сходів) — підтвердити. Підписи рендерів — на перевірку Марині."
 renders:

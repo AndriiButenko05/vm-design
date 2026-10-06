@@ -314,6 +314,15 @@ const ru: Translation = {
   },
 
   captions: {
+    "The dining area, from bare concrete to the finished room": "Столовая: от голого бетона до готовой комнаты",
+    "The living room, from bare concrete to the finished room": "Гостиная: от голого бетона до готовой комнаты",
+    "The kitchen and dining area, from bare concrete to completion": "Кухня и столовая: от голого бетона до завершения",
+    "The dining wall, from new mouldings to the finished room": "Стена столовой: от новых молдингов до готовой комнаты",
+    "The living room, now with built-in wardrobes": "Гостиная, теперь со встроенными шкафами",
+    "The open-plan living area, from demolition to completion": "Открытая гостиная зона: от демонтажа до завершения",
+    "The entrance hall, from bare walls to moulded panels": "Прихожая: от голых стен до панелей с молдингами",
+    "The master bathroom, from stripped walls to marble": "Ванная хозяев: от голых стен до мрамора",
+    "The bathroom, from bare walls to Calacatta marble": "Ванная комната: от голых стен до мрамора Calacatta",
     'Bar counter': 'Барная стойка',
     'Bar counter & dining': 'Барная стойка и столовая',
     'Bar counter & living room': 'Барная стойка и гостиная',

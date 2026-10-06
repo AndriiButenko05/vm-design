@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import { readdirSync, readFileSync } from 'node:fs';
 import pruneOriginals from './scripts/prune-originals.mjs';
 
-const SITE = 'https://vm-design.pages.dev';
+const SITE = 'https://vmdesignproject.com';
 const LOCALES = ['en', 'fr', 'it', 'ru', 'uk'];
 
 // Сторінки fr/it/ru/uk, що рендеряться через fallback, sitemap сам не бачить — перелічуємо їх явно.

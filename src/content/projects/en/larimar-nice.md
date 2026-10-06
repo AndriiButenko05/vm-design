@@ -18,69 +18,75 @@ summary: "A beauty salon in central Nice, replanned around styling, manicure and
 heroCaption: "Beauty salon · Interior design & supervision"
 card: "Beauty salon · Central Nice, France · 2026"
 year: 2026
-cover: ../../../assets/projects/larimar-nice/007-img-2672.jpg
+cover: ../../../assets/projects/larimar-nice/final/01.png
 coverAlt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-hero:
-  - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
 order: 11
 drawingsPreview: ["003", "004", "002"]
 todo: "Тексти й назва — від Марини. Площа 66.52 m² — з legenda креслень (16.02.2026; до робіт 69.1)."
 gallery:
-  - src: ../../../assets/projects/larimar-nice/013-img-2686.jpg
+  - src: ../../../assets/projects/larimar-nice/final/01.png
     alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: salon
-    size: full
-  - src: ../../../assets/projects/larimar-nice/010-img-2676.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: stations
     size: half
-  - src: ../../../assets/projects/larimar-nice/011-img-2677.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: stations
+  - src: ../../../assets/projects/larimar-nice/final/02.png
+    alt: "Larimar Beauty Salon — the salon with styling chairs and illuminated mirrors"
     size: half
-  - src: ../../../assets/projects/larimar-nice/012-img-2680.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: wc
+  - src: ../../../assets/projects/larimar-nice/final/03.png
+    alt: "Larimar Beauty Salon — the reception desk under the brand logo"
     size: half
-  - src: ../../../assets/projects/larimar-nice/009-img-2674.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: salon
-    size: detail
-    material: "Sculpted plaster"
-  - src: ../../../assets/projects/larimar-nice/008-img-2673.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
-    room: salon
+  - src: ../../../assets/projects/larimar-nice/final/04.png
+    alt: "Larimar Beauty Salon — a styling station with an illuminated mirror"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/05.png
+    alt: "Larimar Beauty Salon — the product wall and a styling chair"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/06.png
+    alt: "Larimar Beauty Salon — the entrance glazing with the brand logo"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/07.png
+    alt: "Larimar Beauty Salon — the reception desk and product shelving"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/08.png
+    alt: "Larimar Beauty Salon — the curtained treatment room beside a styling station"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/09.png
+    alt: "Larimar Beauty Salon — the marble-clad WC"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/10.png
+    alt: "Larimar Beauty Salon — the street window with the brand logo"
+    size: half
+  - src: ../../../assets/projects/larimar-nice/final/11.png
+    alt: "Larimar Beauty Salon — the street front with the salon lit from within"
     size: half
 beforeAfter:
   pairs:
-    - before: ../../../assets/projects/larimar-nice/000-img-0328.jpg
-      after: ../../../assets/projects/larimar-nice/009-img-2674.jpg
-      caption: "The salon floor, now the mirror stations"
-    - before: ../../../assets/projects/larimar-nice/002-img-0330.jpg
-      after: ../../../assets/projects/larimar-nice/008-img-2673.jpg
-      caption: "The rear wall, now the manicure bar"
-    - before: ../../../assets/projects/larimar-nice/003-img-0331.jpg
-      after: ../../../assets/projects/larimar-nice/011-img-2677.jpg
-      caption: "Towards the shopfront"
-    - before: ../../../assets/projects/larimar-nice/004-img-0336.jpg
-      after: ../../../assets/projects/larimar-nice/007-img-2672.jpg
+    - before: ../../../assets/projects/larimar-nice/ba/01-before.jpg
+      after: ../../../assets/projects/larimar-nice/ba/01-after.png
       caption: "The pillar wall and the relief mural"
+    - before: ../../../assets/projects/larimar-nice/ba/02-before.jpg
+      after: ../../../assets/projects/larimar-nice/ba/02-after.png
+      caption: "The salon floor, now the mirror stations"
+    - before: ../../../assets/projects/larimar-nice/ba/03-before.png
+      after: ../../../assets/projects/larimar-nice/ba/03-after.png
+      caption: "The rear wall, now the manicure bar"
+    - before: ../../../assets/projects/larimar-nice/ba/04-before.png
+      after: ../../../assets/projects/larimar-nice/ba/04-after.png
+      caption: "Towards the shopfront"
+    - before: ../../../assets/projects/larimar-nice/ba/05-before.png
+      after: ../../../assets/projects/larimar-nice/ba/05-after.png
+      caption: "The inner room, now the treatment cabin"
   images:
-    - src: ../../../assets/projects/larimar-nice/000-img-0328.jpg
-      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
-    - src: ../../../assets/projects/larimar-nice/site-img-0329.jpg
+    - src: ../../../assets/projects/larimar-nice/ba/01-before.jpg
       alt: "Larimar Beauty Salon — the salon space before the works"
-    - src: ../../../assets/projects/larimar-nice/002-img-0330.jpg
+    - src: ../../../assets/projects/larimar-nice/ba/02-before.jpg
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
-    - src: ../../../assets/projects/larimar-nice/003-img-0331.jpg
+    - src: ../../../assets/projects/larimar-nice/ba/03-before.png
+      alt: "Larimar Beauty Salon — the space before fit-out"
+    - src: ../../../assets/projects/larimar-nice/ba/04-before.png
+      alt: "Larimar Beauty Salon — the street front during fit-out"
+    - src: ../../../assets/projects/larimar-nice/ba/05-before.png
       alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
-    - src: ../../../assets/projects/larimar-nice/004-img-0336.jpg
-      alt: "Larimar Beauty Salon — the unit during fit-out, joinery going in"
-    - src: ../../../assets/projects/larimar-nice/site-img-0339.jpg
-      alt: "Larimar Beauty Salon — the WC before the works"
 ---
 
 Larimar Beauty Salon opened in a renovated space in central Nice.

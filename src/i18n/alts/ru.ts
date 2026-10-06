@@ -1,5 +1,15 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "the kitchen bar looking through to the living room": "кухонная барная стойка с видом в гостиную",
+  "the living room with a blue sofa": "гостиная с синим диваном",
+  "built-in wardrobes in the living room": "встроенные шкафы в гостиной",
+  "the media unit and oak door in the living room": "тумба под телевизор и дубовая дверь в гостиной",
+  "the street front with the salon lit from within": "фасад с улицы, салон освещён изнутри",
+  "the kitchen island with the oak stair and living room beyond": "кухонный остров с дубовой лестницей и гостиной на заднем плане",
+  "the fireplace wall and the cantilevered oak stair": "стена с камином и консольная дубовая лестница",
+  "the kitchen island and the ribbon chandelier above the dining table": "кухонный остров и люстра-лента над обеденным столом",
+  "the study with built-in bookcases": "кабинет со встроенными книжными шкафами",
+  "the freestanding bath and the vanity against Emperador marble": "отдельностоящая ванна и тумба на фоне мрамора Emperador",
   "Calacatta dining table in front of the kitchen": "обеденный стол из Calacatta перед кухней",
   "a backlit counter printed with the quartzite graphic": "стойка с подсветкой и печатной графикой под кварцит",
   "a bedroom before the renovation": "спальня до ремонта",

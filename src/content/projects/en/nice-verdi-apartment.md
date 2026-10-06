@@ -15,13 +15,14 @@ materials:
   - "Black-and-white chequerboard floor"
 summary: "A city-centre apartment in Nice renovated in a Parisian spirit, with a chequerboard kitchen floor and the original parquet restored."
 heroCaption: "City centre apartment · Renovation"
+heroFit: contain
 card: "City centre · Apartment renovation · Nice, France · 2026"
 area: 100
 cover: ../../../assets/drawings/nice-verdi/001.jpg
 coverAlt: "Apartment in Nice — working drawing"
 coords: { lat: 43.6997, lon: 7.2688 }
 featured: false
-order: 4
+order: 5
 processStage: in-progress
 drawingsPreview: ["003", "006", "008"]
 beforeAfter:

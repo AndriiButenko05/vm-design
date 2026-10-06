@@ -16,94 +16,88 @@ materials:
 summary: "A compact Paris apartment replanned around black-glass sliding doors, with Art Deco lines and a light palette."
 card: "Private apartment renovation · Art Deco details · Paris, France · 2023"
 heroCaption: "Private apartment · Art Deco interior"
-cover: ../../../assets/projects/paris-apartment/07-living.jpg
-coverAlt: "Apartment in Paris — the living room with a white sofa, glass table and Murano chandelier"
+cover: ../../../assets/projects/paris-apartment/final/01.png
+coverAlt: "Apartment in Paris — the round dining table under a glass chandelier"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: false
-order: 7
+order: 8
 todo: "Тексти й назва — від Марини. Потрібні площа й точна адреса для карти (зараз центр Парижа). Пари «до / після» — на перевірку Марині."
 gallery:
-  - src: ../../../assets/projects/paris-apartment/01-kitchen-dining.jpg
-    alt: "Apartment in Paris — the kitchen opening onto the dining area and panelled walls"
-    room: kitchen
-    caption: "Kitchen & dining"
-  - src: ../../../assets/projects/paris-apartment/06-kitchen-to-dining.jpg
-    alt: "Apartment in Paris — the kitchen bar looking towards the dining area"
-    room: kitchen
-    caption: "Kitchen & dining"
-  - src: ../../../assets/projects/paris-apartment/11-kitchen.jpg
-    alt: "Apartment in Paris — the white lacquer kitchen and bar counter"
-    room: kitchen
-    caption: "The kitchen"
-  - src: ../../../assets/projects/paris-apartment/04-bar-counter.jpg
-    alt: "Apartment in Paris — the bar counter framed in black glass"
-    room: kitchen
-    caption: "Bar counter"
-  - src: ../../../assets/projects/paris-apartment/10-bar-dining.jpg
-    alt: "Apartment in Paris — the bar counter and dining chairs"
-    room: kitchen
-    caption: "Bar counter & dining"
-  - src: ../../../assets/projects/paris-apartment/05-bar-living.jpg
-    alt: "Apartment in Paris — the black-framed opening between kitchen and living room"
-    room: kitchen
-    caption: "Bar counter & living room"
-  - src: ../../../assets/projects/paris-apartment/03-dining.jpg
+  - src: ../../../assets/projects/paris-apartment/final/01.png
     alt: "Apartment in Paris — the round dining table under a glass chandelier"
-    room: dining
-    caption: "Dining area"
-  - src: ../../../assets/projects/paris-apartment/08-living-window.jpg
-    alt: "Apartment in Paris — the living room and its window wall"
-    room: living
-    caption: "Living room"
-  - src: ../../../assets/projects/paris-apartment/09-living-kitchen.jpg
-    alt: "Apartment in Paris — the living room looking back to the kitchen"
-    room: living
+    caption: "Kitchen & dining"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/02.png
+    alt: "Apartment in Paris — the white lacquer kitchen and bar counter"
+    caption: "The kitchen"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/03.png
+    alt: "Apartment in Paris — the bar counter and dining chairs"
+    caption: "Bar counter & dining"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/04.png
+    alt: "Apartment in Paris — the black-framed opening between kitchen and living room"
+    caption: "Bar counter & living room"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/05.png
+    alt: "Apartment in Paris — the bar counter framed in black glass"
+    caption: "Bar counter"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/06.png
+    alt: "Apartment in Paris — the kitchen bar looking through to the living room"
     caption: "Living room & kitchen"
-  - src: ../../../assets/projects/paris-apartment/02-bedroom.jpg
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/07.png
+    alt: "Apartment in Paris — the kitchen bar looking towards the dining area"
+    caption: "The kitchen"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/08.png
+    alt: "Apartment in Paris — the living room with a white sofa, glass table and Murano chandelier"
+    caption: "Living room"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/09.png
+    alt: "Apartment in Paris — the living room and its window wall"
+    caption: "Living room"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/10.png
     alt: "Apartment in Paris — the bedroom"
-    room: bedroom
     caption: "Bedroom"
-  - src: ../../../assets/projects/paris-apartment/12-entrance-hall.jpg
-    alt: "Apartment in Paris — the entrance hall with moulded wall panels"
-    room: hall
-    caption: "Entrance hall"
-  - src: ../../../assets/projects/paris-apartment/13-hall-wardrobe.jpg
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/11.png
     alt: "Apartment in Paris — the hall wardrobe with faceted doors"
-    room: hall
     caption: "Hall wardrobe"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/12.png
+    alt: "Apartment in Paris — the entrance hall with moulded wall panels"
+    caption: "Entrance hall"
+    size: half
+  - src: ../../../assets/projects/paris-apartment/final/13.png
+    alt: "Apartment in Paris — the living room looking back to the kitchen"
+    caption: "Living room & kitchen"
+    size: half
 beforeAfter:
   pairs:
-    - before: ../../../assets/projects/paris-apartment/before-01-dining-wall.jpg
-      after: ../../../assets/projects/paris-apartment/01-kitchen-dining.jpg
-      caption: "The kitchen and dining area: mouldings on, island base in place"
-    - before: ../../../assets/projects/paris-apartment/before-02-island.jpg
-      after: ../../../assets/projects/paris-apartment/11-kitchen.jpg
-      caption: "The kitchen island, from bare frame to white lacquer"
-    - before: ../../../assets/projects/paris-apartment/before-03-hall.jpg
-      after: ../../../assets/projects/paris-apartment/12-entrance-hall.jpg
-      caption: "The entrance hall"
-    - before: ../../../assets/projects/paris-apartment/before-04-kitchen-ceiling.jpg
-      after: ../../../assets/projects/paris-apartment/06-kitchen-to-dining.jpg
-      caption: "The kitchen ceiling and the column by the bar"
-    - before: ../../../assets/projects/paris-apartment/before-05-living-opening.jpg
-      after: ../../../assets/projects/paris-apartment/04-bar-counter.jpg
-      caption: "The opening between kitchen and living room, now framed in black glass"
+    - before: ../../../assets/projects/paris-apartment/ba/01-before.png
+      after: ../../../assets/projects/paris-apartment/ba/01-after.png
+      caption: "The dining area, from bare concrete to the finished room"
+    - before: ../../../assets/projects/paris-apartment/ba/02-before.png
+      after: ../../../assets/projects/paris-apartment/ba/02-after.png
+      caption: "The living room, from bare concrete to the finished room"
+    - before: ../../../assets/projects/paris-apartment/ba/03-before.png
+      after: ../../../assets/projects/paris-apartment/ba/03-after.png
+      caption: "The kitchen and dining area, from bare concrete to completion"
+    - before: ../../../assets/projects/paris-apartment/ba/04-before.png
+      after: ../../../assets/projects/paris-apartment/ba/04-after.png
+      caption: "The dining wall, from new mouldings to the finished room"
   images:
-    - src: ../../../assets/projects/paris-apartment/before-01-dining-wall.jpg
+    - src: ../../../assets/projects/paris-apartment/ba/01-before.png
+      alt: "Apartment in Paris — the bare rooms before the fit-out"
+    - src: ../../../assets/projects/paris-apartment/ba/02-before.png
+      alt: "Apartment in Paris — the living room before works"
+    - src: ../../../assets/projects/paris-apartment/ba/03-before.png
+      alt: "Apartment in Paris — the space before fit-out"
+    - src: ../../../assets/projects/paris-apartment/ba/04-before.png
       alt: "Apartment in Paris — the dining wall with new mouldings, during works"
-      caption: "Mouldings on the dining wall"
-    - src: ../../../assets/projects/paris-apartment/before-02-island.jpg
-      alt: "Apartment in Paris — the kitchen island frame, during works"
-      caption: "The kitchen island frame"
-    - src: ../../../assets/projects/paris-apartment/before-03-hall.jpg
-      alt: "Apartment in Paris — the entrance hall during works"
-      caption: "The entrance hall"
-    - src: ../../../assets/projects/paris-apartment/before-04-kitchen-ceiling.jpg
-      alt: "Apartment in Paris — the kitchen ceiling during works"
-      caption: "The kitchen ceiling"
-    - src: ../../../assets/projects/paris-apartment/before-05-living-opening.jpg
-      alt: "Apartment in Paris — the opening to the living room during works"
-      caption: "The opening to the living room"
 ---
 
 This compact Paris apartment was replanned to create a more open living space.
