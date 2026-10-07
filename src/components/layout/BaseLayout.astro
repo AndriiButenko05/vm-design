@@ -97,6 +97,9 @@ const structured = noindex
 
     <script is:inline>
       document.documentElement.classList.remove('no-js');
+      // Тимчасово: варіант шапки для /header-preview/ (?hv=dark | clear).
+      var hv = new URLSearchParams(location.search).get('hv');
+      if (hv) document.documentElement.dataset.hv = hv;
     </script>
   </head>
 

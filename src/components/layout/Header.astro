@@ -125,6 +125,31 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     border-bottom-color: rgb(43 42 41 / 0.12);
   }
 
+  /*
+    Варіанти шапки над hero для показу Марині (/header-preview/), вмикаються
+    параметром ?hv= в адресі. Після вибору лишити один, решту прибрати.
+    dark — як було спочатку: темна смуга на тон світліша за hero, білий знак без диска.
+    clear — повністю прозора, білий текст прямо на фото.
+  */
+  :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) {
+    background: var(--ink-raised);
+    backdrop-filter: none;
+    border-bottom-color: rgb(255 255 255 / 0.08);
+    color: var(--bone);
+  }
+
+  :global(html[data-hv='clear']) .site-header[data-transparent]:not(.is-scrolled) {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom-color: rgb(255 255 255 / 0.18);
+    color: var(--bone);
+  }
+
+  :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) .logo,
+  :global(html[data-hv='clear']) .site-header[data-transparent]:not(.is-scrolled) .logo {
+    background: transparent;
+  }
+
   .site-header__inner {
     display: flex;
     align-items: center;

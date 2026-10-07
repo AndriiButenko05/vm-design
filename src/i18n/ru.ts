@@ -324,6 +324,7 @@ const ru: Translation = {
   },
 
   captions: {
+    "The WC, now clad in marble": "Туалет, теперь облицованный мрамором",
     "The reception, rebranded for Christina": "Ресепшен, обновлённый для Christina",
     "The reception desk, restored and repainted": "Стойка ресепшена, отреставрированная и перекрашенная",
     "The corner by the exposed stone pier": "Угол у открытого каменного пилона",

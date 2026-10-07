@@ -314,6 +314,7 @@ const fr: Translation = {
   },
 
   captions: {
+    "The WC, now clad in marble": "Les WC, désormais habillés de marbre",
     "The reception, rebranded for Christina": "L’accueil, repensé pour Christina",
     "The reception desk, restored and repainted": "Le comptoir d’accueil, restauré et repeint",
     "The corner by the exposed stone pier": "L’angle près du pilier en pierre apparente",

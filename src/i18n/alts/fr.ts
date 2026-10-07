@@ -1,5 +1,6 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "the treatment room with two treatment beds": "la cabine de soins avec deux tables de soin",
   "the campaign portrait beside the exposed stone pier": "le portrait de campagne à côté du pilier en pierre apparente",
   "the reception before the renovation": "l’accueil avant la rénovation",
   "the previous reception desk": "l’ancien comptoir d’accueil",

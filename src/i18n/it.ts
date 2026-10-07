@@ -314,6 +314,7 @@ const it: Translation = {
   },
 
   captions: {
+    "The WC, now clad in marble": "Il WC, ora rivestito in marmo",
     "The reception, rebranded for Christina": "La reception, rinnovata per Christina",
     "The reception desk, restored and repainted": "Il bancone della reception, restaurato e riverniciato",
     "The corner by the exposed stone pier": "L’angolo accanto al pilastro in pietra a vista",
