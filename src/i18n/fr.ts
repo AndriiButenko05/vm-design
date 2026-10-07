@@ -314,6 +314,9 @@ const fr: Translation = {
   },
 
   captions: {
+    "The round-window wall, now the product display": "Le mur à la fenêtre ronde, devenu la vitrine des produits",
+    "The previous salon, now opened up around the reception": "L’ancien institut, désormais ouvert autour de l’accueil",
+    "The arched niche, now a styling station": "La niche en arc, devenue un poste de coiffure",
     "The WC, now clad in marble": "Les WC, désormais habillés de marbre",
     "The reception, rebranded for Christina": "L’accueil, repensé pour Christina",
     "The reception desk, restored and repainted": "Le comptoir d’accueil, restauré et repeint",

@@ -16,56 +16,46 @@ summary: "An intimate Christina Beauty Space beside Hôtel Hermitage in Monaco, 
 heroCaption: "Beauty space · Interior design & supervision"
 card: "Beauty space · Near Hôtel Hermitage, Monaco · 2023"
 year: 2023
-cover: ../../../assets/projects/christina-monaco/012-img-9407.jpg
-coverAlt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-hero:
-  - src: ../../../assets/projects/christina-monaco/011-img-9402.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-  - src: ../../../assets/projects/christina-monaco/008-img-8876.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-  - src: ../../../assets/projects/christina-monaco/013-img-9408.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
+cover: ../../../assets/projects/christina-monaco/final/01.png
+coverAlt: "Christina Beauty Space in Monaco — the salon seen through the glass door, with the Monaco lettering on the reception"
 coords: { lat: 43.7384, lon: 7.4246 }
 featured: false
 order: 16
 todo: "Тексти й назва — від Марини. У теці також простір бренду DERMADIANE (4 кадри) — уточнити. Потрібна площа."
 gallery:
-  - src: ../../../assets/projects/christina-monaco/010-img-9401.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: stations
-    size: full
-  - src: ../../../assets/projects/christina-monaco/011-img-9402.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: salon
+  - src: ../../../assets/projects/christina-monaco/final/01.png
+    alt: "Christina Beauty Space in Monaco — the salon seen through the glass door, with the Monaco lettering on the reception"
     size: half
-  - src: ../../../assets/projects/christina-monaco/009-img-9396.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: stations
+  - src: ../../../assets/projects/christina-monaco/final/02.png
+    alt: "Christina Beauty Space in Monaco — the salon under the glass pendant chandelier"
     size: half
-  - src: ../../../assets/projects/christina-monaco/013-img-9408.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: salon
+  - src: ../../../assets/projects/christina-monaco/final/03.png
+    alt: "Christina Beauty Space in Monaco — the reception and the styling stations"
     size: half
-  - src: ../../../assets/projects/christina-monaco/007-img-8865.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: stations
-    size: detail
-  - src: ../../../assets/projects/christina-monaco/005-img-8849.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: entrance
+  - src: ../../../assets/projects/christina-monaco/final/04.png
+    alt: "Christina Beauty Space in Monaco — the curved reception under the round window"
     size: half
-  - src: ../../../assets/projects/christina-monaco/008-img-8876.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: reception
-    size: half
-  - src: ../../../assets/projects/christina-monaco/006-img-8860.jpg
-    alt: "Christina Beauty Space in Monaco — arched backlit mirrors above the stations, curved timber reception"
-    room: reception
+  - src: ../../../assets/projects/christina-monaco/final/05.png
+    alt: "Christina Beauty Space in Monaco — the styling area with arched backlit mirrors"
     size: half
 beforeAfter:
+  pairs:
+    - before: ../../../assets/projects/christina-monaco/ba/01-before.png
+      after: ../../../assets/projects/christina-monaco/ba/01-after.png
+      caption: "The round-window wall, now the product display"
+    - before: ../../../assets/projects/christina-monaco/ba/02-before.png
+      after: ../../../assets/projects/christina-monaco/ba/02-after.png
+      caption: "The previous salon, now opened up around the reception"
+    - before: ../../../assets/projects/christina-monaco/ba/03-before.png
+      after: ../../../assets/projects/christina-monaco/ba/03-after.png
+      caption: "The arched niche, now a styling station"
   images:
-    - src: ../../../assets/projects/christina-monaco/site-img-8815.jpg
-      alt: "Christina Beauty Space in Monaco — brand lettering being set into the marble reception counter"
+    - src: ../../../assets/projects/christina-monaco/ba/01-before.png
+      alt: "Christina Beauty Space in Monaco — the round-window wall before the renovation"
+    - src: ../../../assets/projects/christina-monaco/ba/02-before.png
+      alt: "Christina Beauty Space in Monaco — the previous salon before the renovation"
+    - src: ../../../assets/projects/christina-monaco/ba/03-before.png
+      alt: "Christina Beauty Space in Monaco — the arched niche before the renovation"
 ---
 
 Located beside Hôtel Hermitage in the centre of Monaco, this intimate Christina Beauty Space occupies a former salon that was completely reconstructed for the new project.

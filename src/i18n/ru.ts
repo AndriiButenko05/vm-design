@@ -324,6 +324,9 @@ const ru: Translation = {
   },
 
   captions: {
+    "The round-window wall, now the product display": "Стена с круглым окном, теперь витрина продукции",
+    "The previous salon, now opened up around the reception": "Прежний салон, теперь открытый вокруг ресепшена",
+    "The arched niche, now a styling station": "Арочная ниша, теперь рабочее место",
     "The WC, now clad in marble": "Туалет, теперь облицованный мрамором",
     "The reception, rebranded for Christina": "Ресепшен, обновлённый для Christina",
     "The reception desk, restored and repainted": "Стойка ресепшена, отреставрированная и перекрашенная",

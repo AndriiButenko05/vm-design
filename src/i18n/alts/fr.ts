@@ -1,5 +1,13 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "the salon seen through the glass door, with the Monaco lettering on the reception": "l’institut vu à travers la porte vitrée, avec l’inscription Monaco sur l’accueil",
+  "the salon under the glass pendant chandelier": "l’institut sous le lustre à suspensions de verre",
+  "the reception and the styling stations": "l’accueil et les postes de coiffure",
+  "the curved reception under the round window": "l’accueil courbe sous la fenêtre ronde",
+  "the styling area with arched backlit mirrors": "l’espace coiffure avec ses miroirs en arc rétroéclairés",
+  "the round-window wall before the renovation": "le mur à la fenêtre ronde avant la rénovation",
+  "the previous salon before the renovation": "l’ancien institut avant la rénovation",
+  "the arched niche before the renovation": "la niche en arc avant la rénovation",
   "the treatment room with two treatment beds": "la cabine de soins avec deux tables de soin",
   "the campaign portrait beside the exposed stone pier": "le portrait de campagne à côté du pilier en pierre apparente",
   "the reception before the renovation": "l’accueil avant la rénovation",

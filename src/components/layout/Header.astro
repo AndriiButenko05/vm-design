@@ -129,7 +129,8 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     Варіанти шапки над hero для показу Марині (/header-preview/), вмикаються
     параметром ?hv= в адресі. Після вибору лишити один, решту прибрати.
     dark — як було спочатку: темна смуга на тон світліша за hero, білий знак без диска.
-    clear — повністю прозора, білий текст прямо на фото.
+    t-ink / t-sand / t-bronze — над фото прозора, після прокрутки (і на сторінках
+    без фото) шапка відповідного кольору.
   */
   :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) {
     background: var(--ink-raised);
@@ -138,7 +139,31 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     color: var(--bone);
   }
 
-  :global(html[data-hv='clear']) .site-header[data-transparent]:not(.is-scrolled) {
+  /* Суцільний колір (після прокрутки й на звичайних сторінках). */
+  :global(html[data-hv='t-ink']) .site-header {
+    background: var(--ink);
+    border-bottom-color: rgb(255 255 255 / 0.08);
+    color: var(--bone);
+  }
+
+  :global(html[data-hv='t-sand']) .site-header {
+    background: var(--sand);
+    border-bottom-color: var(--stone);
+  }
+
+  :global(html[data-hv='t-bronze']) .site-header {
+    background: var(--accent);
+    border-bottom-color: transparent;
+    color: var(--bone);
+  }
+
+  :global(html[data-hv='t-ink']) .site-nav__link::after,
+  :global(html[data-hv='t-bronze']) .site-nav__link::after {
+    background: currentColor;
+  }
+
+  /* Над фото — повністю прозора. */
+  :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) {
     background: transparent;
     backdrop-filter: none;
     border-bottom-color: rgb(255 255 255 / 0.18);
@@ -146,7 +171,9 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
   }
 
   :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) .logo,
-  :global(html[data-hv='clear']) .site-header[data-transparent]:not(.is-scrolled) .logo {
+  :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) .logo,
+  :global(html[data-hv='t-ink']) .logo,
+  :global(html[data-hv='t-bronze']) .logo {
     background: transparent;
   }
 

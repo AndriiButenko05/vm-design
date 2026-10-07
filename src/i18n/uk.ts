@@ -326,6 +326,9 @@ const uk: Translation = {
   },
 
   captions: {
+    "The round-window wall, now the product display": "Стіна з круглим вікном, тепер вітрина продукції",
+    "The previous salon, now opened up around the reception": "Попередній салон, тепер відкритий навколо рецепції",
+    "The arched niche, now a styling station": "Арочна ніша, тепер робоче місце",
     "The WC, now clad in marble": "Туалет, тепер облицьований мармуром",
     "The reception, rebranded for Christina": "Рецепція, оновлена для Christina",
     "The reception desk, restored and repainted": "Стійка рецепції, відреставрована й перефарбована",
