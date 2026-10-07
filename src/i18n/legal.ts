@@ -90,8 +90,11 @@ const fr = (): Pack => ({
         ],
       },
       {
-        h: 'Cookies',
-        p: ['Ce site n’utilise pas de cookies de suivi ni de cookies publicitaires ; aucun bandeau de consentement n’est donc nécessaire.'],
+        h: 'Cookies et mesure d’audience',
+        p: [
+          'Ce site n’utilise pas de cookies de suivi ni de cookies publicitaires ; aucun bandeau de consentement n’est donc nécessaire.',
+          'Pour mesurer la fréquentation, nous utilisons Cloudflare Web Analytics, qui ne dépose pas de cookies, ne suit pas les visiteurs d’un site à l’autre et ne fournit que des statistiques agrégées (pages vues, pays, type d’appareil).',
+        ],
       },
       {
         h: 'Vos droits',
@@ -161,7 +164,13 @@ const en = (): Pack => ({
           'Messages are kept for no longer than three years after the last contact, unless a contract follows; documents relating to the contract are then kept for the periods required by law.',
         ],
       },
-      { h: 'Cookies', p: ['This site does not use tracking or advertising cookies, so no consent banner is needed.'] },
+      {
+        h: 'Cookies and analytics',
+        p: [
+          'This site does not use tracking or advertising cookies, so no consent banner is needed.',
+          'To measure visits, we use Cloudflare Web Analytics, which sets no cookies, does not track visitors across sites and provides only aggregated statistics (page views, country, device type).',
+        ],
+      },
       {
         h: 'Your rights',
         p: [
@@ -230,7 +239,13 @@ const uk = (): Pack => ({
           'Повідомлення зберігаються не довше трьох років після останнього контакту, якщо не укладено договір; документи, повʼязані з договором, зберігаються протягом строків, визначених законом.',
         ],
       },
-      { h: 'Cookies', p: ['Сайт не використовує стежувальних чи рекламних cookies, тому банер згоди не потрібен.'] },
+      {
+        h: 'Cookies та статистика',
+        p: [
+          'Сайт не використовує стежувальних чи рекламних cookies, тому банер згоди не потрібен.',
+          'Для підрахунку відвідувань ми використовуємо Cloudflare Web Analytics: він не встановлює cookies, не відстежує відвідувачів на інших сайтах і показує лише загальну статистику (перегляди сторінок, країна, тип пристрою).',
+        ],
+      },
       {
         h: 'Ваші права',
         p: [
@@ -299,7 +314,13 @@ const ru = (): Pack => ({
           'Сообщения хранятся не дольше трёх лет после последнего контакта, если не заключён договор; документы, связанные с договором, хранятся в течение сроков, установленных законом.',
         ],
       },
-      { h: 'Cookies', p: ['Сайт не использует отслеживающих или рекламных cookies, поэтому баннер согласия не нужен.'] },
+      {
+        h: 'Cookies и статистика',
+        p: [
+          'Сайт не использует отслеживающих или рекламных cookies, поэтому баннер согласия не нужен.',
+          'Для подсчёта посещений мы используем Cloudflare Web Analytics: он не устанавливает cookies, не отслеживает посетителей на других сайтах и показывает только общую статистику (просмотры страниц, страна, тип устройства).',
+        ],
+      },
       {
         h: 'Ваши права',
         p: [
@@ -368,7 +389,13 @@ const it = (): Pack => ({
           'I messaggi sono conservati per non più di tre anni dall’ultimo contatto, salvo che ne derivi un contratto; i documenti relativi al contratto sono allora conservati per i periodi previsti dalla legge.',
         ],
       },
-      { h: 'Cookie', p: ['Questo sito non utilizza cookie di tracciamento né pubblicitari, quindi non è necessario alcun banner di consenso.'] },
+      {
+        h: 'Cookie e statistiche',
+        p: [
+          'Questo sito non utilizza cookie di tracciamento né pubblicitari, quindi non è necessario alcun banner di consenso.',
+          'Per misurare le visite usiamo Cloudflare Web Analytics, che non imposta cookie, non traccia i visitatori su altri siti e fornisce solo statistiche aggregate (pagine viste, paese, tipo di dispositivo).',
+        ],
+      },
       {
         h: 'I tuoi diritti',
         p: [

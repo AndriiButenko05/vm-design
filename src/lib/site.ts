@@ -11,7 +11,8 @@ export const SITE = {
   designer: 'Maryna Vashchenko',
   role: 'Architect & interior designer',
 
-  email: 'vmdesignproject@gmail.com',
+  // Пересилається на vmdesignproject@gmail.com (Cloudflare Email Routing).
+  email: 'contact@vmdesignproject.com',
 
   phone: '+39 329 5559043',
   phoneHref: 'tel:+393295559043',
