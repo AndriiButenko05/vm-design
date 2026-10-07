@@ -97,13 +97,6 @@ const structured = noindex
 
     <script is:inline>
       document.documentElement.classList.remove('no-js');
-      // Тимчасово: варіант фону для /background-preview/ (?bg=...), памʼятається до закриття вкладки.
-      try {
-        var bg = new URLSearchParams(location.search).get('bg');
-        if (bg) sessionStorage.setItem('bg', bg);
-        else bg = sessionStorage.getItem('bg');
-        if (bg && bg !== 'none' && location.pathname.indexOf('background-preview') < 0) document.documentElement.dataset.bg = bg;
-      } catch (e) {}
     </script>
   </head>
 

@@ -40,7 +40,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       customPages,
-      filter: (page) => !page.includes('/drawings/') && !page.includes('/background-preview') && !page.endsWith('/robots.txt'),
+      filter: (page) => !page.includes('/drawings/') && !page.endsWith('/robots.txt'),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', fr: 'fr', it: 'it', ru: 'ru', uk: 'uk' },
