@@ -22,7 +22,7 @@ cover: ../../../assets/drawings/nice-verdi/001.jpg
 coverAlt: "Apartment in Nice — working drawing"
 coords: { lat: 43.6997, lon: 7.2688 }
 featured: false
-order: 5
+order: 6
 processStage: in-progress
 drawingsPreview: ["003", "006", "008"]
 beforeAfter:

@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { t, place, type Locale } from '../../lib/i18n';
+import { t, place, localePath, type Locale } from '../../lib/i18n';
 import { SITE } from '../../lib/site';
 import { CONTACT_BACKDROP, getServices } from '../../lib/services';
 
@@ -113,6 +113,11 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
       </div>
 
       <button class="form__submit" type="submit">{t(locale, 'contact.send')}</button>
+
+      <p class="form__consent">
+        {t(locale, 'contact.consent')}{' '}
+        <a class="link" href={localePath(locale, '/privacy')}>{t(locale, 'contact.privacyLink')}</a>
+      </p>
 
       <p
         class="form__status t-meta"
@@ -381,6 +386,18 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
   .form__submit:disabled {
     opacity: 0.5;
     cursor: default;
+  }
+
+  .form__consent {
+    margin-top: var(--space-m);
+    font-size: var(--step-small);
+    color: var(--muted-inv);
+  }
+
+  .form__consent .link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .form__status {

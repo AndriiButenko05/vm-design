@@ -7,6 +7,7 @@ import BeforeAfter from '../../components/project/BeforeAfter.astro';
 import ProjectGallery from '../../components/project/ProjectGallery.astro';
 import ProjectProcess from '../../components/project/ProjectProcess.astro';
 import Drawings from '../../components/project/Drawings.astro';
+import ProjectGrid from '../../components/project/ProjectGrid.astro';
 import { setsForProject } from '../../lib/drawings';
 import { byRoom } from '../../lib/rooms';
 import { getProjects, localize, slugOf } from '../../lib/projects';
@@ -60,6 +61,13 @@ const pairs = d.beforeAfter?.pairs ?? [];
 const slug = slugOf(project);
 const drawingSets = setsForProject(slug);
 const processImages = d.beforeAfter?.images ?? [];
+
+// «Інші проєкти»: три наступні проєкти тієї ж категорії, по колу.
+const sameType = (await getProjects(locale)).filter((p) => p.data.type === d.type);
+const at = sameType.findIndex((p) => slugOf(p) === slug);
+const related = [1, 2, 3]
+  .map((k) => sameType[(at + k) % sameType.length])
+  .filter((p, i, arr) => p && slugOf(p) !== slug && arr.indexOf(p) === i);
 
 const metaTitle = projectTitle(locale, {
   title: d.title,
@@ -193,6 +201,22 @@ const jsonLd = [
 
     {processImages.length > 0 && <ProjectProcess locale={locale} images={processImages} stage={d.processStage} />}
 
+    {
+      related.length > 0 && (
+        <section class="section related" aria-labelledby="related-title">
+          <div class="container">
+            <header class="related__head">
+              <h2 class="t-subhead" id="related-title">{t(locale, 'project.more')}</h2>
+              <a class="link t-meta" href={localePath(locale, `/projects/type/${d.type}`)}>
+                {t(locale, `type.${d.type}`)} →
+              </a>
+            </header>
+            <ProjectGrid locale={locale} projects={related} compact />
+          </div>
+        </section>
+      )
+    }
+
     <Lightbox locale={locale} label={d.title} />
   </article>
 </BaseLayout>
@@ -279,6 +303,19 @@ const jsonLd = [
 
   .story-section {
     padding-bottom: 0;
+  }
+
+  .related {
+    border-top: 1px solid var(--rule);
+  }
+
+  .related__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-s) var(--space-l);
+    margin-bottom: var(--space-xl);
   }
 
   .story-section + :global(.section) {

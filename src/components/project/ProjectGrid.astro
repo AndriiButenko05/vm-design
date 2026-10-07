@@ -8,12 +8,14 @@ interface Props {
   projects: Project[];
   /** Скільки перших карток вантажити одразу (решта — lazy). */
   eager?: number;
+  /** Менші картки в три колонки — для блоку «Інші проєкти». */
+  compact?: boolean;
 }
 
-const { locale, projects, eager = 0 } = Astro.props;
+const { locale, projects, eager = 0, compact = false } = Astro.props;
 ---
 
-<div class="work__grid">
+<div class:list={['work__grid', compact && 'work__grid--compact']}>
   {
     projects.map((p, i) => (
       <a class="work__item" href={localePath(locale, `/projects/${slugOf(p)}`)} data-reveal>
@@ -24,7 +26,7 @@ const { locale, projects, eager = 0 } = Astro.props;
             src={p.data.cover}
             alt={p.data.coverAlt}
             widths={[480, 720, 1080]}
-            sizes="(max-width: 700px) 92vw, 44vw"
+            sizes={compact ? '(max-width: 700px) 92vw, (max-width: 900px) 44vw, 30vw' : '(max-width: 700px) 92vw, 44vw'}
             loading={i < eager ? 'eager' : 'lazy'}
           />
         </span>
@@ -60,9 +62,37 @@ const { locale, projects, eager = 0 } = Astro.props;
     font-size: clamp(1.25rem, 2vw, 1.75rem);
   }
 
+  .work__grid--compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .work__grid--compact .work__item .plate {
+    height: clamp(260px, 34vh, 420px);
+  }
+
+  .work__grid--compact .work__title {
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  }
+
+  /* Планшет: дві картки в ряд, третя зайва. */
+  @media (max-width: 900px) {
+    .work__grid--compact {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .work__grid--compact .work__item:nth-child(3) {
+      display: none;
+    }
+  }
+
   @media (max-width: 700px) {
     .work__grid {
       grid-template-columns: 1fr;
+    }
+
+    .work__grid--compact .work__item:nth-child(3) {
+      display: block;
     }
   }
 </style>

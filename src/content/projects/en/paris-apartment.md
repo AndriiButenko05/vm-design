@@ -20,7 +20,7 @@ cover: ../../../assets/projects/paris-apartment/final/01.png
 coverAlt: "Apartment in Paris — the round dining table under a glass chandelier"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: false
-order: 8
+order: 3
 todo: "Тексти й назва — від Марини. Потрібні площа й точна адреса для карти (зараз центр Парижа). Пари «до / після» — на перевірку Марині."
 gallery:
   - src: ../../../assets/projects/paris-apartment/final/01.png

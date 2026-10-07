@@ -1,5 +1,13 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "the campaign portrait beside the exposed stone pier": "рекламний портрет поруч із відкритим камʼяним пілоном",
+  "the reception before the renovation": "рецепція до ремонту",
+  "the previous reception desk": "попередня стійка рецепції",
+  "the stone pier corner before the renovation": "кут біля камʼяного пілона до ремонту",
+  "the lounge before the renovation": "зона відпочинку до ремонту",
+  "the fireplace room before the renovation": "кімната з каміном до ремонту",
+  "the waiting area before the renovation": "зона очікування до ремонту",
+  "the fireplace wall before the renovation": "стіна з каміном до ремонту",
   "the kitchen bar looking through to the living room": "кухонна барна стійка з видом у вітальню",
   "the living room with a blue sofa": "вітальня із синім диваном",
   "built-in wardrobes in the living room": "вбудовані шафи у вітальні",

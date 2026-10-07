@@ -20,121 +20,78 @@ heroCaption: "Beauty space · Renovation & training space"
 card: "Beauty space · Rue Saint-Honoré, Paris · 2024"
 area: 100
 year: 2024
-cover: ../../../assets/projects/christina-paris/005-img-1496.jpg
-coverAlt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-hero:
-  - src: ../../../assets/projects/christina-paris/014-img-1547.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-  - src: ../../../assets/projects/christina-paris/011-img-1531.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-  - src: ../../../assets/projects/christina-paris/016-img-1549.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
+cover: ../../../assets/projects/christina-paris/final/01.png
+coverAlt: "Christina Beauty Space in Paris — the campaign portrait beside the exposed stone pier"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: true
 order: 14
 todo: "Тексти й назва — від Марини. Кадрів «до» немає. У теці також є простір бренду DARPHIN (2 кадри) і лаунж (4) — уточнити, чи це окремі проєкти."
 gallery:
-  - src: ../../../assets/projects/christina-paris/022-img-1571.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: entrance
-    size: full
-  - src: ../../../assets/projects/christina-paris/003-img-1485.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
+  - src: ../../../assets/projects/christina-paris/final/01.png
+    alt: "Christina Beauty Space in Paris — the campaign portrait beside the exposed stone pier"
     size: half
-  - src: ../../../assets/projects/christina-paris/011-img-1531.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: reception
-    size: half
-  - src: ../../../assets/projects/christina-paris/006-img-1498.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/christina-paris/016-img-1549.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: detail
-  - src: ../../../assets/projects/christina-paris/014-img-1547.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/christina-paris/009-img-1525.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/christina-paris/020-img-1567.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: entrance
-    size: half
-  - src: ../../../assets/projects/christina-paris/023-img-1574.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: entrance
-    size: half
-  - src: ../../../assets/projects/christina-paris/017-img-1552.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: detail
-    material: "Marble"
-  - src: ../../../assets/projects/christina-paris/015-img-1548.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: entrance
-    size: half
-  - src: ../../../assets/projects/christina-paris/027-img-9571.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: salon
-    size: half
-  - src: ../../../assets/projects/christina-paris/025-img-1584.jpg
-    alt: "Christina Beauty Space in Paris — round mirrors and pedestal stations against exposed Paris limestone"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1479.jpg
+  - src: ../../../assets/projects/christina-paris/final/02.jpg
     alt: "Christina Beauty Space in Paris — styling stations with round mirrors by the fireplace"
-    room: stations
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1526.jpg
-    alt: "Christina Beauty Space in Paris — the styling area with pedestal stations"
-    room: stations
-    size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1475.jpg
-    alt: "Christina Beauty Space in Paris — the reception desk and product shelving"
-    room: reception
-    size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1499.jpg
-    alt: "Christina Beauty Space in Paris — the reception desk under the brand logo"
-    room: reception
-    size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1537.jpg
-    alt: "Christina Beauty Space in Paris — the reception beside the exposed Paris stone"
-    room: reception
-    size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1553.jpg
+  - src: ../../../assets/projects/christina-paris/final/03.jpg
     alt: "Christina Beauty Space in Paris — the reception seen past the stone pier"
-    room: reception
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1554.jpg
-    alt: "Christina Beauty Space in Paris — the consultation desk by the courtyard window"
-    room: salon
+  - src: ../../../assets/projects/christina-paris/final/04.png
+    alt: "Christina Beauty Space in Paris — the reception desk and product shelving"
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1532.jpg
-    alt: "Christina Beauty Space in Paris — the stone arch framing the courtyard door"
-    room: entrance
+  - src: ../../../assets/projects/christina-paris/final/05.png
+    alt: "Christina Beauty Space in Paris — the reception desk under the brand logo"
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1589.jpg
-    alt: "Christina Beauty Space in Paris — the entrance through the stone arch"
-    room: entrance
+  - src: ../../../assets/projects/christina-paris/final/06.png
+    alt: "Christina Beauty Space in Paris — the styling area with pedestal stations"
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1523.jpg
-    alt: "Christina Beauty Space in Paris — the courtyard entrance"
-    room: entrance
+  - src: ../../../assets/projects/christina-paris/final/07.png
+    alt: "Christina Beauty Space in Paris — styling chairs in front of backlit round mirrors"
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1569.jpg
+  - src: ../../../assets/projects/christina-paris/final/08.jpg
     alt: "Christina Beauty Space in Paris — the courtyard with the brand logo"
-    room: entrance
     size: half
-  - src: ../../../assets/projects/christina-paris/more-img-1579.jpg
+  - src: ../../../assets/projects/christina-paris/final/09.jpg
     alt: "Christina Beauty Space in Paris — the planted courtyard in front of the salon"
-    room: entrance
     size: half
+beforeAfter:
+  pairs:
+    - before: ../../../assets/projects/christina-paris/ba/01-before.png
+      after: ../../../assets/projects/christina-paris/ba/01-after.png
+      caption: "The reception, rebranded for Christina"
+    - before: ../../../assets/projects/christina-paris/ba/02-before.png
+      after: ../../../assets/projects/christina-paris/ba/02-after.png
+      caption: "The reception desk, restored and repainted"
+    - before: ../../../assets/projects/christina-paris/ba/03-before.png
+      after: ../../../assets/projects/christina-paris/ba/03-after.png
+      caption: "The corner by the exposed stone pier"
+    - before: ../../../assets/projects/christina-paris/ba/04-before.png
+      after: ../../../assets/projects/christina-paris/ba/04-after.png
+      caption: "The lounge, now the styling stations"
+    - before: ../../../assets/projects/christina-paris/ba/05-before.png
+      after: ../../../assets/projects/christina-paris/ba/05-after.png
+      caption: "The fireplace room, now the styling area"
+    - before: ../../../assets/projects/christina-paris/ba/06-before.png
+      after: ../../../assets/projects/christina-paris/ba/06-after.png
+      caption: "The waiting area, now the training space"
+    - before: ../../../assets/projects/christina-paris/ba/07-before.png
+      after: ../../../assets/projects/christina-paris/ba/07-after.png
+      caption: "The fireplace wall, now the styling stations"
+  images:
+    - src: ../../../assets/projects/christina-paris/ba/01-before.png
+      alt: "Christina Beauty Space in Paris — the reception before the renovation"
+    - src: ../../../assets/projects/christina-paris/ba/02-before.png
+      alt: "Christina Beauty Space in Paris — the previous reception desk"
+    - src: ../../../assets/projects/christina-paris/ba/03-before.png
+      alt: "Christina Beauty Space in Paris — the stone pier corner before the renovation"
+    - src: ../../../assets/projects/christina-paris/ba/04-before.png
+      alt: "Christina Beauty Space in Paris — the lounge before the renovation"
+    - src: ../../../assets/projects/christina-paris/ba/05-before.png
+      alt: "Christina Beauty Space in Paris — the fireplace room before the renovation"
+    - src: ../../../assets/projects/christina-paris/ba/06-before.png
+      alt: "Christina Beauty Space in Paris — the waiting area before the renovation"
+    - src: ../../../assets/projects/christina-paris/ba/07-before.png
+      alt: "Christina Beauty Space in Paris — the fireplace wall before the renovation"
 ---
 
 Located on Rue Saint-Honoré in central Paris, this 100 m² beauty space was created through the renovation of an existing salon.

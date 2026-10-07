@@ -63,7 +63,13 @@ const sections = [
       </ul>
     </nav>
 
-    <p class="footer__legal t-meta">© {year} VM Design</p>
+    <div class="footer__legal t-meta">
+      <p>© {year} VM Design</p>
+      <p class="footer__legal-links">
+        <a class="link" href={localePath(locale, '/legal')}>{t(locale, 'footer.legal')}</a>
+        <a class="link" href={localePath(locale, '/privacy')}>{t(locale, 'footer.privacy')}</a>
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -106,9 +112,22 @@ const sections = [
 
   .footer__legal {
     grid-column: 1 / -1;
-    max-width: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-s) var(--space-l);
     padding-top: var(--space-l);
     border-top: 1px solid var(--rule);
+  }
+
+  .footer__legal p {
+    max-width: none;
+  }
+
+  .footer__legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-l);
   }
 
   @media (max-width: 700px) {

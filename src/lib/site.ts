@@ -37,6 +37,18 @@ export const SITE = {
     ],
   },
 
+  /**
+   * Реквізити для «Mentions légales». Порожні поля на сторінці не показуються —
+   * заповнити даними Марини (статус, напр. «Entrepreneur individuel», SIRET, адреса).
+   */
+  legal: {
+    status: '',
+    siret: '',
+    address: '',
+    vat: '',
+  },
+  legalUpdated: '2026-10-07',
+
   formspreeId: FORMSPREE_ID,
   get formAction() {
     return this.formspreeId ? `https://formspree.io/f/${this.formspreeId}` : '';

@@ -24,7 +24,7 @@ cover: ../../../assets/projects/parus-kyiv/14-master-bedroom-sofa.jpg
 coverAlt: "Riverside Apartment in Kyiv — the sitting area at the foot of the bed"
 coords: { lat: 50.4985, lon: 30.5195 }
 featured: false
-order: 9
+order: 8
 todo: "Тексти й назва — від Марини; рік 2022 від неї (у PDF — 2019). Ремонт зроблено за проєктом, але фото реалізації немає — лише 3D. Підписи рендерів — на перевірку Марині."
 renders:
   - src: ../../../assets/projects/parus-kyiv/02-dining-wine-wall.jpg

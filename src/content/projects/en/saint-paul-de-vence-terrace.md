@@ -18,7 +18,7 @@ cover: ../../../assets/drawings/saint-paul-1/001.jpg
 coverAlt: "Terrace Apartment in Saint-Paul-de-Vence — the design project, with the village of Saint-Paul-de-Vence behind"
 coords: { lat: 43.6959, lon: 7.1222 }
 featured: false
-order: 3
+order: 4
 processStage: design
 drawingsPreview: ["003", "006", "008"]
 todo: "Тексти й назва — від Марини. Appartement №1 (з терасою), площа 97.23 m² — з legenda. Фото немає: у галереї креслення."

@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { legalPage } from '../../i18n/legal';
+import { resolveLocale, t } from '../../lib/i18n';
+import { SITE } from '../../lib/site';
+
+interface Props {
+  page: 'legal' | 'privacy';
+}
+
+const { page } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale, Astro.url);
+const doc = legalPage(locale, page);
+const updated = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(
+  new Date(SITE.legalUpdated),
+);
+---
+
+<BaseLayout title={t(locale, `meta.${page}.title`)} description={t(locale, `meta.${page}.description`)}>
+  <article class="doc section">
+    <div class="container">
+      <h1 class="t-h1">{doc.title}</h1>
+      {doc.note && <p class="doc__note t-meta">{doc.note}</p>}
+
+      {
+        doc.sections.map((s) => (
+          <section class="doc__section">
+            <h2 class="t-h3">{s.h}</h2>
+            {s.p.map((line) => (
+              <p>{line}</p>
+            ))}
+          </section>
+        ))
+      }
+
+      <p class="doc__updated t-meta">{t(locale, 'legal.updated', { d: updated })}</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .doc {
+    padding-top: 7rem;
+  }
+
+  .doc .container {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+  }
+
+  .doc__note {
+    margin-top: var(--space-s);
+    color: var(--fg-muted);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .doc__section {
+    margin-top: var(--space-xl);
+  }
+
+  .doc__section h2 {
+    margin-bottom: var(--space-s);
+  }
+
+  .doc__section p + p {
+    margin-top: var(--space-xs);
+  }
+
+  .doc__updated {
+    margin-top: var(--space-2xl);
+    color: var(--fg-muted);
+  }
+</style>
