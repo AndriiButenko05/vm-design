@@ -126,22 +126,14 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
   }
 
   /*
-    Варіанти шапки над hero для показу Марині (/header-preview/), вмикаються
-    параметром ?hv= в адресі. Після вибору лишити один, решту прибрати.
-    dark — як було спочатку: темна смуга на тон світліша за hero, білий знак без диска.
-    t-ink / t-sand / t-bronze — над фото прозора, після прокрутки (і на сторінках
-    без фото) шапка відповідного кольору.
+    Варіанти шапки для показу Марині (/header-preview/), вмикаються параметром
+    ?hv= в адресі. Усі над фото прозорі; різниця — колір після прокрутки (він же
+    колір шапки на сторінках без фото). Після вибору лишити один, решту прибрати.
+    t-bone — світла, як зараз; t-dark — темна, як було спочатку;
+    t-sand, t-slate, t-bronze — нові.
   */
-  :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) {
+  :global(html[data-hv='t-dark']) .site-header {
     background: var(--ink-raised);
-    backdrop-filter: none;
-    border-bottom-color: rgb(255 255 255 / 0.08);
-    color: var(--bone);
-  }
-
-  /* Суцільний колір (після прокрутки й на звичайних сторінках). */
-  :global(html[data-hv='t-ink']) .site-header {
-    background: var(--ink);
     border-bottom-color: rgb(255 255 255 / 0.08);
     color: var(--bone);
   }
@@ -151,18 +143,25 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     border-bottom-color: var(--stone);
   }
 
+  :global(html[data-hv='t-slate']) .site-header {
+    background: var(--slate);
+    border-bottom-color: transparent;
+    color: var(--bone);
+  }
+
   :global(html[data-hv='t-bronze']) .site-header {
     background: var(--accent);
     border-bottom-color: transparent;
     color: var(--bone);
   }
 
-  :global(html[data-hv='t-ink']) .site-nav__link::after,
+  :global(html[data-hv='t-dark']) .site-nav__link::after,
+  :global(html[data-hv='t-slate']) .site-nav__link::after,
   :global(html[data-hv='t-bronze']) .site-nav__link::after {
     background: currentColor;
   }
 
-  /* Над фото — повністю прозора. */
+  /* Над фото — повністю прозора, білий текст. */
   :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) {
     background: transparent;
     backdrop-filter: none;
@@ -170,9 +169,9 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     color: var(--bone);
   }
 
-  :global(html[data-hv='dark']) .site-header[data-transparent]:not(.is-scrolled) .logo,
   :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) .logo,
-  :global(html[data-hv='t-ink']) .logo,
+  :global(html[data-hv='t-dark']) .logo,
+  :global(html[data-hv='t-slate']) .logo,
   :global(html[data-hv='t-bronze']) .logo {
     background: transparent;
   }
