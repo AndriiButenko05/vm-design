@@ -1,5 +1,15 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "the reception desk under the campaign screen": "le comptoir d’accueil sous l’écran de campagne",
+  "backlit product shelves along the wall": "étagères de produits rétroéclairées le long du mur",
+  "the treatment room with a heated facial bed": "la cabine de soins avec sa table de soin du visage",
+  "the treatment room and its cabinetry": "la cabine de soins et ses rangements",
+  "the waiting corner beside the campaign portrait": "le coin d’attente à côté du portrait de campagne",
+  "the salon seen from both ends": "l’institut vu depuis ses deux extrémités",
+  "the street front with the shop window": "la façade sur rue avec la vitrine",
+  "the entrance before the fit-out": "l’entrée avant l’aménagement",
+  "the corridor before the fit-out": "le couloir avant l’aménagement",
+  "the storage room before the fit-out": "la réserve avant l’aménagement",
   "the salon seen through the glass door, with the Monaco lettering on the reception": "l’institut vu à travers la porte vitrée, avec l’inscription Monaco sur l’accueil",
   "the salon under the glass pendant chandelier": "l’institut sous le lustre à suspensions de verre",
   "the reception and the styling stations": "l’accueil et les postes de coiffure",

@@ -106,12 +106,16 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
 </div>
 
 <style>
+  /*
+    Над великим фото (головна, Christina) шапка прозора, з білим знаком і меню.
+    Після прокрутки й на решті сторінок — суцільна пісочна. Вибрала Марина.
+  */
   .site-header {
     position: fixed;
     inset-inline: 0;
     top: 0;
     z-index: 50;
-    background: var(--bone);
+    background: var(--sand);
     border-bottom: 1px solid var(--stone);
     transition:
       background var(--dur) var(--ease),
@@ -120,59 +124,24 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
   }
 
   .site-header[data-transparent]:not(.is-scrolled) {
-    background: rgb(244 241 236 / 0.82);
-    backdrop-filter: blur(10px);
-    border-bottom-color: rgb(43 42 41 / 0.12);
-  }
-
-  /*
-    Варіанти шапки для показу Марині (/header-preview/), вмикаються параметром
-    ?hv= в адресі. Усі над фото прозорі; різниця — колір після прокрутки (він же
-    колір шапки на сторінках без фото). Після вибору лишити один, решту прибрати.
-    t-bone — світла, як зараз; t-dark — темна, як було спочатку;
-    t-sand, t-slate, t-bronze — нові.
-  */
-  :global(html[data-hv='t-dark']) .site-header {
-    background: var(--ink-raised);
-    border-bottom-color: rgb(255 255 255 / 0.08);
-    color: var(--bone);
-  }
-
-  :global(html[data-hv='t-sand']) .site-header {
-    background: var(--sand);
-    border-bottom-color: var(--stone);
-  }
-
-  :global(html[data-hv='t-slate']) .site-header {
-    background: var(--slate);
-    border-bottom-color: transparent;
-    color: var(--bone);
-  }
-
-  :global(html[data-hv='t-bronze']) .site-header {
-    background: var(--accent);
-    border-bottom-color: transparent;
-    color: var(--bone);
-  }
-
-  :global(html[data-hv='t-dark']) .site-nav__link::after,
-  :global(html[data-hv='t-slate']) .site-nav__link::after,
-  :global(html[data-hv='t-bronze']) .site-nav__link::after {
-    background: currentColor;
-  }
-
-  /* Над фото — повністю прозора, білий текст. */
-  :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) {
     background: transparent;
-    backdrop-filter: none;
     border-bottom-color: rgb(255 255 255 / 0.18);
     color: var(--bone);
   }
 
-  :global(html[data-hv^='t-']) .site-header[data-transparent]:not(.is-scrolled) .logo,
-  :global(html[data-hv='t-dark']) .logo,
-  :global(html[data-hv='t-slate']) .logo,
-  :global(html[data-hv='t-bronze']) .logo {
+  /* На білому знаку над фото темний диск не потрібен. */
+  .site-header[data-transparent]:not(.is-scrolled) .logo {
+    background: transparent;
+  }
+
+  /* Відкрите мобільне меню: шапка того ж кольору, що й меню під нею. */
+  .site-header:has([aria-expanded='true']) {
+    background: var(--ink);
+    border-bottom-color: #3d3b39;
+    color: var(--bone);
+  }
+
+  .site-header:has([aria-expanded='true']) .logo {
     background: transparent;
   }
 

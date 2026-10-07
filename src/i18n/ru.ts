@@ -324,6 +324,8 @@ const ru: Translation = {
   },
 
   captions: {
+    "The corridor, now the waiting corner": "Коридор, теперь уголок ожидания",
+    "The storage room, now the treatment room": "Подсобка, теперь процедурная комната",
     "The round-window wall, now the product display": "Стена с круглым окном, теперь витрина продукции",
     "The previous salon, now opened up around the reception": "Прежний салон, теперь открытый вокруг ресепшена",
     "The arched niche, now a styling station": "Арочная ниша, теперь рабочее место",

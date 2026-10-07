@@ -314,6 +314,8 @@ const fr: Translation = {
   },
 
   captions: {
+    "The corridor, now the waiting corner": "Le couloir, devenu le coin d’attente",
+    "The storage room, now the treatment room": "La réserve, devenue la cabine de soins",
     "The round-window wall, now the product display": "Le mur à la fenêtre ronde, devenu la vitrine des produits",
     "The previous salon, now opened up around the reception": "L’ancien institut, désormais ouvert autour de l’accueil",
     "The arched niche, now a styling station": "La niche en arc, devenue un poste de coiffure",

@@ -103,3 +103,34 @@
     --gutter: 20px;
   }
 }
+
+/*
+  ТИМЧАСОВО: варіанти фону сайту для показу Марині (/background-preview/),
+  вмикаються параметром ?bg= в адресі. Після вибору — прибрати.
+  darker — теплий фон на тон темніший; dark — темний сайт зі світлим текстом.
+  Темні секції (hero, контакти, мапа, футер) у всіх варіантах лишаються як є.
+*/
+html[data-bg='darker'] {
+  --bg: #e6e0d5;
+  --sand: #dad3c6;
+  --stone: #c7bfb1;
+}
+
+html[data-bg='dark'] {
+  --bg: #24221f;
+  --fg: var(--bone);
+  --fg-muted: var(--muted-inv);
+  --muted: var(--muted-inv);
+  --link: var(--accent-inv);
+  --focus: var(--accent-inv);
+  --accent: var(--accent-inv);
+  --accent-line: #9c8a6d;
+  --slate: #8f877b;
+  --sand: #2e2c29;
+  --stone: #3d3a36;
+  --rule: #3d3a36;
+}
+
+html[data-bg='dark'] .site-header .logo {
+  background: transparent;
+}

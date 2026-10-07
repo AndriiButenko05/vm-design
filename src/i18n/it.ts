@@ -314,6 +314,8 @@ const it: Translation = {
   },
 
   captions: {
+    "The corridor, now the waiting corner": "Il corridoio, ora l’angolo d’attesa",
+    "The storage room, now the treatment room": "Il ripostiglio, ora la sala trattamenti",
     "The round-window wall, now the product display": "La parete con la finestra tonda, ora l’esposizione dei prodotti",
     "The previous salon, now opened up around the reception": "Il precedente salone, ora aperto attorno alla reception",
     "The arched niche, now a styling station": "La nicchia ad arco, ora una postazione di styling",

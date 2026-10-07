@@ -326,6 +326,8 @@ const uk: Translation = {
   },
 
   captions: {
+    "The corridor, now the waiting corner": "Коридор, тепер куточок очікування",
+    "The storage room, now the treatment room": "Підсобка, тепер процедурна кімната",
     "The round-window wall, now the product display": "Стіна з круглим вікном, тепер вітрина продукції",
     "The previous salon, now opened up around the reception": "Попередній салон, тепер відкритий навколо рецепції",
     "The arched niche, now a styling station": "Арочна ніша, тепер робоче місце",
