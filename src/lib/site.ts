@@ -20,6 +20,9 @@ export const SITE = {
   instagram: '@vm_design__studio',
   instagramUrl: 'https://www.instagram.com/vm_design__studio/',
 
+  // Картка в Google Maps (Google Business Profile).
+  mapsUrl: 'https://maps.google.com/?cid=16466406334144581190',
+
   regions: ['French Riviera', 'Monaco', 'Italy'],
 
   facts: {

@@ -37,7 +37,8 @@ export function siteGraph(site: URL, locale: Locale): Node[] {
         name,
       })),
       founder: { '@id': `${home}#maryna` },
-      sameAs: [SITE.instagramUrl],
+      hasMap: SITE.mapsUrl,
+      sameAs: [SITE.instagramUrl, SITE.mapsUrl],
     },
     {
       '@type': 'Person',
