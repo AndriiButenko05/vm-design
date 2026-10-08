@@ -28,6 +28,7 @@ const { locale, projects, eager = 0, compact = false } = Astro.props;
             widths={[480, 720, 1080]}
             sizes={compact ? '(max-width: 700px) 92vw, (max-width: 900px) 44vw, 30vw' : '(max-width: 700px) 92vw, 44vw'}
             loading={i < eager ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 && eager > 0 ? 'high' : 'auto'}
           />
         </span>
         <span class="work__caption">

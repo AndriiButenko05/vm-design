@@ -16,36 +16,30 @@ materials:
 summary: "A suspended rig and a magenta floor lift the stand above the hall."
 heroCaption: "Exhibition stand · Design & coordination"
 card: "Exhibition stand · Paris, France · 2026"
-cover: ../../../assets/projects/stand-paris-2026/000-7c87ea47-6171-4a40-8c31-72084746afbb.jpg
-coverAlt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
+cover: ../../../assets/projects/stand-paris-2026/final/01-product-counter-in-front.jpg
+coverAlt: "Christina at Congrès International Esthétique & Spa — the product counter in front of the campaign portrait"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: false
 order: 21
 todo: "Назва, рядок картки, рік і текст — від Марини (текст спільний для всіх стендів)."
 gallery:
-  - src: ../../../assets/projects/stand-paris-2026/001-9790d242-5f57-4618-b436-7f00722e83f0.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
-    size: full
-  - src: ../../../assets/projects/stand-paris-2026/007-a1b5175b-61d1-459c-bc0a-b84535477a76.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
+  - src: ../../../assets/projects/stand-paris-2026/final/01-product-counter-in-front.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — the product counter in front of the campaign portrait"
     size: half
-  - src: ../../../assets/projects/stand-paris-2026/008-b4002e84-3842-40c1-8efe-0af3a6b76c9f.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
+  - src: ../../../assets/projects/stand-paris-2026/final/02-styling-station-on-the-magenta-floor.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — a styling station on the magenta floor"
     size: half
-  - src: ../../../assets/projects/stand-paris-2026/003-img-1538.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
+  - src: ../../../assets/projects/stand-paris-2026/final/03-stand-with-its-suspended-lighting-rig.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — the stand with its suspended lighting rig and campaign wall"
     size: half
-  - src: ../../../assets/projects/stand-paris-2026/009-b5a07df6-966d-41bb-8efc-cd2ae9e603bd.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
-    size: detail
-  - src: ../../../assets/projects/stand-paris-2026/010-e2008c24-adc9-4fea-8b5c-843e2e094b62.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the stand with its suspended lighting rig and campaign wall"
+  - src: ../../../assets/projects/stand-paris-2026/final/04-corner-of-the-stand.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — the corner of the stand with the suspended rig"
     size: half
-  - src: ../../../assets/projects/stand-paris-2026/more-img-1534.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the product counter in front of the campaign portrait"
+  - src: ../../../assets/projects/stand-paris-2026/final/05-stand-under-the-suspended-rig-seen.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — the stand under the suspended rig, seen from the aisle"
     size: half
-  - src: ../../../assets/projects/stand-paris-2026/more-img-1539.jpg
-    alt: "Christina at Congrès International Esthétique & Spa 2026 — the corner of the stand with the suspended rig"
+  - src: ../../../assets/projects/stand-paris-2026/final/06-stand-seen-from-the-corner.jpg
+    alt: "Christina at Congrès International Esthétique & Spa — the stand seen from the corner"
     size: half
 ---
 

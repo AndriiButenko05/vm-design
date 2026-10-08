@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import { t, place, localePath, type Locale } from '../../lib/i18n';
 import { SITE } from '../../lib/site';
 import { CONTACT_BACKDROP, getServices } from '../../lib/services';
@@ -13,35 +13,39 @@ const { locale, as: Heading = 'h2', id = 'contact' } = Astro.props;
 
 const { wide, tall } = CONTACT_BACKDROP;
 
+// Одне фото з двома кадрами: вузький — для телефона, широкий — для решти.
+// Браузер вантажить лише потрібний; на сторінці контактів (h1) — одразу.
+const top = Heading === 'h1';
+const variants = async (src: ImageMetadata, widths: number[]) => ({
+  avif: await getImage({ src, widths, format: 'avif' }),
+  webp: await getImage({ src, widths, format: 'webp' }),
+});
+const bgWide = wide ? await variants(wide, [1200, 1800, 2600, 3600]) : null;
+const bgTall = tall ? await variants(tall, [800, 1200, 1900]) : null;
+
 const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'contact.other')];
 ---
 
 <section class="contact on-ink-deep" id={id}>
   {
-    wide && (
+    wide && bgWide && (
       <div class="contact__bg" aria-hidden="true">
-        <Picture
-          formats={['avif']}
-          fallbackFormat="webp"
-          src={wide}
-          alt=""
-          widths={[1200, 1800, 2600, 3600]}
-          sizes="100vw"
-          loading="lazy"
-          class="contact__bg-wide"
-        />
-        {tall && (
-          <Picture
-            formats={['avif']}
-            fallbackFormat="webp"
-            src={tall}
+        <picture>
+          {bgTall && <source media="(max-width: 767px)" type="image/avif" srcset={bgTall.avif.srcSet.attribute} sizes="230vw" />}
+          {bgTall && <source media="(max-width: 767px)" type="image/webp" srcset={bgTall.webp.srcSet.attribute} sizes="230vw" />}
+          <source type="image/avif" srcset={bgWide.avif.srcSet.attribute} sizes="100vw" />
+          <img
+            src={bgWide.webp.src}
+            srcset={bgWide.webp.srcSet.attribute}
+            sizes="100vw"
+            width={wide.width}
+            height={wide.height}
             alt=""
-            widths={[800, 1200, 1900]}
-            sizes="(max-width: 767px) 230vw, 100vw"
-            loading="lazy"
-            class="contact__bg-tall"
+            loading={top ? 'eager' : 'lazy'}
+            fetchpriority={top ? 'high' : 'auto'}
+            decoding="async"
           />
-        )}
+        </picture>
       </div>
     )
   }
@@ -170,19 +174,7 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
     );
   }
 
-  .contact__bg-tall {
-    display: none;
-  }
-
   @media (max-width: 767px) {
-    .contact__bg-wide {
-      display: none;
-    }
-
-    .contact__bg-tall {
-      display: block;
-    }
-
     /* На телефоні текст і форма на всю ширину — шар рівний, без градієнта. */
     .contact__bg::after {
       background: rgb(25 24 23 / 0.62);

@@ -1,5 +1,11 @@
 // Описи зображень: англійський текст після «Назва проєкту — » → переклад.
 const alts: Record<string, string> = {
+  "a styling station on the magenta floor": "рабочее место на пурпурном полу",
+  "the stand under the suspended rig, seen from the aisle": "стенд под подвесной конструкцией со стороны прохода",
+  "the round table with mirrors and styling chairs": "круглый стол с зеркалами и парикмахерскими креслами",
+  "glass vitrines and product shelves on the white stand": "стеклянные витрины и полки с продукцией на белом стенде",
+  "a glass vitrine on the white stand": "стеклянная витрина на белом стенде",
+  "the brochure on the counter and the red campaign wall": "брошюра на стойке и красная рекламная стена",
   "the reception desk under the campaign screen": "стойка ресепшена под рекламным экраном",
   "backlit product shelves along the wall": "полки с продукцией с подсветкой вдоль стены",
   "the treatment room with a heated facial bed": "процедурная комната с косметологической кушеткой",

@@ -14,30 +14,24 @@ materials:
 summary: "Red counters against the campaign wall."
 heroCaption: "Exhibition stand · Design & coordination"
 card: "Exhibition stand · Bologna, Italy · 2026"
-cover: ../../../assets/projects/stand-bologna-2026/003-img-1124.jpg
-coverAlt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
+cover: ../../../assets/projects/stand-bologna-2026/final/01-red-counters-and-campaign-graphics.jpg
+coverAlt: "Christina at Cosmoprof Worldwide Bologna — red counters and campaign graphics on the stand"
 coords: { lat: 44.4949, lon: 11.3426 }
 featured: false
 order: 22
 todo: "Назва, рядок картки, рік і текст — від Марини (текст спільний для всіх стендів)."
 gallery:
-  - src: ../../../assets/projects/stand-bologna-2026/002-img-1123.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
-    size: full
-  - src: ../../../assets/projects/stand-bologna-2026/004-img-1125.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
+  - src: ../../../assets/projects/stand-bologna-2026/final/01-red-counters-and-campaign-graphics.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna — red counters and campaign graphics on the stand"
     size: half
-  - src: ../../../assets/projects/stand-bologna-2026/005-img-1144.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
+  - src: ../../../assets/projects/stand-bologna-2026/final/02-brochure-on-the-counter.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna — the brochure on the counter and the red campaign wall"
     size: half
-  - src: ../../../assets/projects/stand-bologna-2026/001-img-1122.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
+  - src: ../../../assets/projects/stand-bologna-2026/final/03-illuminated-counter-in-front.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna — the illuminated counter in front of the red campaign wall"
     size: half
-  - src: ../../../assets/projects/stand-bologna-2026/006-img-1146.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — red counters and campaign graphics on the stand"
-    size: detail
-  - src: ../../../assets/projects/stand-bologna-2026/more-img-1119.jpg
-    alt: "Christina at Cosmoprof Worldwide Bologna 2026 — the illuminated counter in front of the red campaign wall"
+  - src: ../../../assets/projects/stand-bologna-2026/final/04-stand-seen-from-the-aisle.jpg
+    alt: "Christina at Cosmoprof Worldwide Bologna — the stand seen from the aisle"
     size: half
 ---
 

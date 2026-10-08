@@ -19,7 +19,7 @@ materials:
 summary: "A villa in Nice, completely renovated: a new layout, Calacatta Gold and Emperador Dark marble, and decorative plaster mouldings."
 card: "Nice, France · 2025 · Complete villa renovation"
 heroCaption: "Private villa · Interior architecture & design"
-cover: ../../../assets/projects/la-villa-nice/final/01.jpg
+cover: ../../../assets/projects/la-villa-nice/final/01-kitchen-island-with-the-oak-stair.jpg
 coverAlt: "Villa in Nice — the kitchen island with the oak stair and living room beyond"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
@@ -27,123 +27,123 @@ order: 1
 drawingsPreview: ["007", "008", "003"]
 todo: "Галерея і пари «до/після» — оновлені фото від Марини (жовтень 2026), порядок її нумерації; кімнати не задані, щоб порядок не змінювався. Підписи кадрів — на перевірку Марині. Потрібна площа."
 gallery:
-  - src: ../../../assets/projects/la-villa-nice/final/01.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/01-kitchen-island-with-the-oak-stair.jpg
     alt: "Villa in Nice — the kitchen island with the oak stair and living room beyond"
     caption: "Kitchen & stair"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/02.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/02-living-room-and-the-open-oak.jpg
     alt: "Villa in Nice — the living room and the open oak stair"
     caption: "Living room & stair"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/03.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/03-living-room-and-kitchen.jpg
     alt: "Villa in Nice — the living room and kitchen under the brass ribbon chandelier"
     caption: "Living room & kitchen"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/04.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/04-kitchen-island-in-emperador-dark-marble.jpg
     alt: "Villa in Nice — the kitchen island in Emperador Dark marble"
     caption: "Kitchen island"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/05.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/05-fireplace-wall-and-the-cantilevered-oak.jpg
     alt: "Villa in Nice — the fireplace wall and the cantilevered oak stair"
     caption: "Fireplace wall"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/06.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/06-kitchen-and-living-area.jpg
     alt: "Villa in Nice — the kitchen and living area with the oak stair beyond"
     caption: "Kitchen & dining"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/07.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/07-living-area-with-the-cantilevered-oak.jpg
     alt: "Villa in Nice — the living area with the cantilevered oak stair"
     caption: "Living & dining"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/08.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/08-brass-wall-light-on-the-panelling.jpg
     alt: "Villa in Nice — brass wall light on the panelling"
     caption: "Wall light detail"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/09.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/09-kitchen-cabinetry-and-worktop.jpg
     alt: "Villa in Nice — the kitchen cabinetry and worktop"
     caption: "Kitchen cabinetry"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/10.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/10-kitchen-island-and-the-ribbon-chandelier.jpg
     alt: "Villa in Nice — the kitchen island and the ribbon chandelier above the dining table"
     caption: "Kitchen & living area"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/11.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/11-kitchen-with-its-bronze-mirror-panels.jpg
     alt: "Villa in Nice — the kitchen with its bronze mirror panels"
     caption: "Kitchen detail"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/12.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/12-dining-table-by-the-bay-windows.jpg
     alt: "Villa in Nice — dining table by the bay windows"
     caption: "Dining area"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/13.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/13-dining-area-by-the-bay-windows.jpg
     alt: "Villa in Nice — the dining area by the bay windows"
     caption: "Dining & living"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/14.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/14-built-in-ovens-and-the-marble.jpg
     alt: "Villa in Nice — built-in ovens and the marble worktop"
     caption: "Hob & oven"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/15.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/15-hallway-with-panelled-walls.jpg
     alt: "Villa in Nice — the hallway with panelled walls"
     caption: "Corridor"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/16.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/16-hallway-towards-the-bedrooms.jpg
     alt: "Villa in Nice — the hallway towards the bedrooms"
     caption: "Hallway"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/17.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/17-entrance-hall-with-moulded-wall-panels.jpg
     alt: "Villa in Nice — the entrance hall with moulded wall panels"
     caption: "Entrance hall"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/18.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/18-study-with-built-in-bookcases.jpg
     alt: "Villa in Nice — the study with built-in bookcases"
     caption: "Study"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/19.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/19-master-bedroom-and-its-upholstered-headboard.jpg
     alt: "Villa in Nice — the master bedroom and its upholstered headboard wall"
     caption: "Master bedroom"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/20.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/20-freestanding-bath-against-a-backlit-marble.jpg
     alt: "Villa in Nice — the freestanding bath against a backlit marble slab"
     caption: "The bath"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/21.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/21-master-bathroom-vanity-and-shower.jpg
     alt: "Villa in Nice — the master bathroom vanity and shower"
     caption: "Master bathroom"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/22.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/22-freestanding-bath-and-the-vanity-against.jpg
     alt: "Villa in Nice — the freestanding bath and the vanity against Emperador marble"
     caption: "Master bathroom"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/23.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/23-master-bathroom-double-vanity.jpg
     alt: "Villa in Nice — the master bathroom double vanity"
     caption: "Bathroom vanity"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/24.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/24-dressing-room-with-glazed-joinery.jpg
     alt: "Villa in Nice — dressing room with glazed joinery"
     caption: "Dressing room"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/25.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/25-glazed-shoe-cabinets-in-the-dressing.jpg
     alt: "Villa in Nice — glazed shoe cabinets in the dressing room"
     caption: "Master dressing room"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/26.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/26-guest-bathroom-vanity-and-backlit-mirror.jpg
     alt: "Villa in Nice — the guest bathroom vanity and backlit mirror"
     caption: "Guest shower room"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/27.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/27-childs-bedroom-with-its-built.jpg
     alt: "Villa in Nice — the child’s bedroom with its built-in desk and shelving"
     caption: "Child’s bedroom"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/28.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/28-backlit-display-shelving-in-the-childs.jpg
     alt: "Villa in Nice — backlit display shelving in the child’s bedroom"
     caption: "Child’s bedroom — display shelving"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/29.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/29-wardrobes-and-display-shelving.jpg
     alt: "Villa in Nice — wardrobes and display shelving in the child’s bedroom"
     caption: "Children’s bedroom"
     size: half
-  - src: ../../../assets/projects/la-villa-nice/final/30.jpg
+  - src: ../../../assets/projects/la-villa-nice/final/30-guest-shower-room-with-a-green.jpg
     alt: "Villa in Nice — guest shower room with a green vanity"
     caption: "Guest shower room"
     size: half
@@ -326,59 +326,59 @@ renders:
     caption: "Shower room"
 beforeAfter:
   pairs:
-    - before: ../../../assets/projects/la-villa-nice/ba/01-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/01-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/01-before-original-stair-before-it-was-replaced.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/01-after-stair-hall-the-original-stone-flight.jpg
       caption: "The stair hall: the original stone flight, reconfigured as a new oak stair"
-    - before: ../../../assets/projects/la-villa-nice/ba/02-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/02-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/02-before-stair-wall-marked-out-for.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/02-after-living-room-from-bare-plaster.jpg
       caption: "The living room, from bare plaster to marble and oak"
-    - before: ../../../assets/projects/la-villa-nice/ba/03-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/03-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/03-before-upper-floor-stripped-back-ceiling-opened.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/03-after-kitchen-from-exposed-structure.jpg
       caption: "The kitchen, from exposed structure to the Emperador marble island"
-    - before: ../../../assets/projects/la-villa-nice/ba/04-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/04-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/04-before-old-stair-being-dismantled.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/04-after-open-plan-living-area-from-demolition.jpg
       caption: "The open-plan living area, from demolition to completion"
-    - before: ../../../assets/projects/la-villa-nice/ba/05-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/05-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/05-before-living-area-stripped-back-to-structure.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/05-after-garden-room-now-the-dining-area.jpg
       caption: "The garden room, now the dining area"
-    - before: ../../../assets/projects/la-villa-nice/ba/06-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/06-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/06-before-corridor-with-new-plasterboard.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/06-after-entrance-hall-and-corridor.jpg
       caption: "The entrance hall and corridor"
-    - before: ../../../assets/projects/la-villa-nice/ba/07-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/07-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/07-before-entrance-hall-with-the-stained-glass.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/07-after-entrance-hall-from-bare-walls.jpg
       caption: "The entrance hall, from bare walls to moulded panels"
-    - before: ../../../assets/projects/la-villa-nice/ba/08-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/08-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/08-before-bathroom-with-services-rerouted.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/08-after-master-bathroom-from-stripped-walls.jpg
       caption: "The master bathroom, from stripped walls to marble"
-    - before: ../../../assets/projects/la-villa-nice/ba/09-before.jpg
-      after: ../../../assets/projects/la-villa-nice/ba/09-after.jpg
+    - before: ../../../assets/projects/la-villa-nice/ba/09-before-demolition-with-the-services-exposed.jpg
+      after: ../../../assets/projects/la-villa-nice/ba/09-after-bathroom-from-bare-walls-to-calacatta.jpg
       caption: "The bathroom, from bare walls to Calacatta marble"
   images:
-    - src: ../../../assets/projects/la-villa-nice/ba/01-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/01-before-original-stair-before-it-was-replaced.jpg
       alt: "Villa in Nice — the original stair before it was replaced"
       caption: "The original stair"
-    - src: ../../../assets/projects/la-villa-nice/ba/02-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/02-before-stair-wall-marked-out-for.jpg
       alt: "Villa in Nice — the stair wall marked out for the new flight"
       caption: "The stair wall, marked out for the new flight"
-    - src: ../../../assets/projects/la-villa-nice/ba/03-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/03-before-upper-floor-stripped-back-ceiling-opened.jpg
       alt: "Villa in Nice — the upper floor stripped back, ceiling opened up"
       caption: "Demolition, ceiling opened up"
-    - src: ../../../assets/projects/la-villa-nice/ba/04-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/04-before-old-stair-being-dismantled.jpg
       alt: "Villa in Nice — the old stair being dismantled"
       caption: "The old stair dismantled"
-    - src: ../../../assets/projects/la-villa-nice/ba/05-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/05-before-living-area-stripped-back-to-structure.jpg
       alt: "Villa in Nice — the living area stripped back to structure"
       caption: "The living area stripped back"
-    - src: ../../../assets/projects/la-villa-nice/ba/06-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/06-before-corridor-with-new-plasterboard.jpg
       alt: "Villa in Nice — the corridor with new plasterboard"
       caption: "Corridor with new plasterboard"
-    - src: ../../../assets/projects/la-villa-nice/ba/07-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/07-before-entrance-hall-with-the-stained-glass.jpg
       alt: "Villa in Nice — the entrance hall with the stained-glass door"
       caption: "Entrance hall with the stained-glass door"
-    - src: ../../../assets/projects/la-villa-nice/ba/08-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/08-before-bathroom-with-services-rerouted.jpg
       alt: "Villa in Nice — the bathroom with services rerouted"
       caption: "Bathroom, services rerouted"
-    - src: ../../../assets/projects/la-villa-nice/ba/09-before.jpg
+    - src: ../../../assets/projects/la-villa-nice/ba/09-before-demolition-with-the-services-exposed.jpg
       alt: "Villa in Nice — demolition with the services exposed"
       caption: "Demolition, services exposed"
 ---
