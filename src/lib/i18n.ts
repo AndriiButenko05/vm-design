@@ -326,6 +326,7 @@ const ui: Record<Locale, Dict> = {
     'type.commercial.text':
       'Beauty salons and spaces designed around the people who work in them and the clients they welcome. Thoughtful planning supports everyday routines, while each interior expresses the identity of its brand.',
     'type.exhibition': 'Exhibition Design',
+    'type.next': 'Next',
     'type.exhibition.text':
       'Exhibition stands designed to present a brand with clarity and impact. Each project brings together the visual concept, the needs of the venue and the practical details of installation.',
   },

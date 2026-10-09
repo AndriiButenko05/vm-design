@@ -3,7 +3,7 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import ProjectGrid from '../../../components/project/ProjectGrid.astro';
 import ProjectFilters from '../../../components/project/ProjectFilters.astro';
 import { getProjects, localize, PROJECT_TYPES } from '../../../lib/projects';
-import { resolveLocale, t, DEFAULT_LOCALE } from '../../../lib/i18n';
+import { resolveLocale, t, localePath, DEFAULT_LOCALE } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   const projects = await getProjects(DEFAULT_LOCALE);
@@ -20,6 +20,9 @@ const projects = Astro.props.projects.map((p) => localize(p, locale));
 const label = t(locale, `type.${type}`);
 
 const intro = t(locale, `type.${type}.text`);
+
+// Після останньої категорії — знову перша.
+const next = PROJECT_TYPES[(PROJECT_TYPES.indexOf(type) + 1) % PROJECT_TYPES.length];
 ---
 
 <BaseLayout title={t(locale, `meta.type.${type}.title`)} description={t(locale, `meta.type.${type}.description`)}>
@@ -37,6 +40,18 @@ const intro = t(locale, `type.${type}.text`);
   <section class="work">
     <div class="container">
       <ProjectGrid locale={locale} projects={projects} eager={2} />
+
+      <nav class="more" aria-label={t(locale, 'aria.filter')}>
+        <a class="more__all" href={localePath(locale, '/projects')}>
+          <span aria-hidden="true">←</span> {t(locale, 'index.all')}
+        </a>
+        <a class="more__next" href={localePath(locale, `/projects/type/${next}`)}>
+          <span class="t-meta">{t(locale, 'type.next')}</span>
+          <span class="more__title">
+            {t(locale, `type.${next}`)} <span class="more__arrow" aria-hidden="true">→</span>
+          </span>
+        </a>
+      </nav>
     </div>
   </section>
 </BaseLayout>
@@ -71,5 +86,80 @@ const intro = t(locale, `type.${type}.text`);
 
   .work {
     padding-bottom: var(--section);
+  }
+
+  .more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-l);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--rule);
+  }
+
+  .more__all {
+    display: inline-block;
+    padding: 1.0625rem 2.25rem;
+    border: 1px solid var(--slate);
+    border-radius: 66px;
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    transition:
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .more__all:hover,
+  .more__all:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .more__next {
+    display: block;
+    margin-inline-start: auto;
+    text-align: end;
+  }
+
+  .more__next .t-meta {
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--accent-line);
+  }
+
+  .more__title {
+    font-family: var(--font-display);
+    font-size: var(--step-h2);
+    line-height: var(--lh-heading);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .more__arrow {
+    display: inline-block;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .more__next:hover .more__title,
+  .more__next:focus-visible .more__title {
+    color: var(--accent);
+  }
+
+  .more__next:hover .more__arrow,
+  .more__next:focus-visible .more__arrow {
+    transform: translateX(0.25em);
+  }
+
+  @media (max-width: 600px) {
+    .more {
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+
+    .more__all {
+      text-align: center;
+    }
   }
 </style>

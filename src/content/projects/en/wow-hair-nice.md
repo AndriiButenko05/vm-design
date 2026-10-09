@@ -19,6 +19,7 @@ card: "Hair extension salon · Central Nice, France · 2026"
 year: 2026
 cover: ../../../assets/projects/wow-hair-nice/final/01-oval-backlit-mirrors-and-dusty-rose.jpg
 coverAlt: "Wow Hair Salon in Nice — oval backlit mirrors and dusty-rose chairs along the oak floor"
+coverPosition: "65% 50%"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: false
 order: 13

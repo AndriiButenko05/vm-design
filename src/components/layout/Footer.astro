@@ -64,7 +64,7 @@ const sections = [
     </nav>
 
     <div class="footer__legal t-meta">
-      <p>© {year} VM Design</p>
+      <p>© {year} VM Design{SITE.legal.vat && ` · P.IVA ${SITE.legal.vat}`}</p>
       <p class="footer__legal-links">
         <a class="link" href={localePath(locale, '/legal')}>{t(locale, 'footer.legal')}</a>
         <a class="link" href={localePath(locale, '/privacy')}>{t(locale, 'footer.privacy')}</a>

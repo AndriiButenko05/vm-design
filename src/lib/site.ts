@@ -42,16 +42,19 @@ export const SITE = {
   },
 
   /**
-   * Реквізити для «Mentions légales». Порожні поля на сторінці не показуються —
-   * заповнити даними Марини (статус, напр. «Entrepreneur individuel», SIRET, адреса).
+   * Реквізити італійської реєстрації для «Note legali». Порожні поля на сайті не показуються.
+   * status — форма (напр. «Ditta individuale» або назва SRL), vat — Partita IVA (11 цифр),
+   * address — sede legale, rea — номер REA (лише для компанії), pec — PEC, якщо Марина хоче її показувати.
+   * Partita IVA також виводиться у футері та в JSON-LD (vatID).
    */
   legal: {
     status: '',
-    siret: '',
-    address: '',
-    vat: '',
+    vat: '01834040089',
+    address: 'Via Goethe 551, 18038 Sanremo (IM), Italia',
+    rea: '',
+    pec: '',
   },
-  legalUpdated: '2026-10-07',
+  legalUpdated: '2026-10-08',
 
   formspreeId: FORMSPREE_ID,
   get formAction() {

@@ -18,16 +18,17 @@ summary: "A beauty salon in central Nice, replanned around styling, manicure and
 heroCaption: "Beauty salon · Interior design & supervision"
 card: "Beauty salon · Central Nice, France · 2026"
 year: 2026
-cover: ../../../assets/projects/larimar-nice/final/01-sculpted-plaster-face-behind-the-styling.jpg
-coverAlt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+cover: ../../../assets/projects/larimar-nice/final/05-product-wall-and-a-styling-chair.jpg
+coverAlt: "Larimar Beauty Salon — the product wall and a styling chair"
+coverPosition: "30% 50%"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
 order: 11
 drawingsPreview: ["003", "004", "002"]
 todo: "Тексти й назва — від Марини. Площа 66.52 m² — з legenda креслень (16.02.2026; до робіт 69.1)."
 gallery:
-  - src: ../../../assets/projects/larimar-nice/final/01-sculpted-plaster-face-behind-the-styling.jpg
-    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
+  - src: ../../../assets/projects/larimar-nice/final/05-product-wall-and-a-styling-chair.jpg
+    alt: "Larimar Beauty Salon — the product wall and a styling chair"
     size: half
   - src: ../../../assets/projects/larimar-nice/final/02-salon-with-styling-chairs-and-illuminated.jpg
     alt: "Larimar Beauty Salon — the salon with styling chairs and illuminated mirrors"
@@ -38,8 +39,8 @@ gallery:
   - src: ../../../assets/projects/larimar-nice/final/04-styling-station-with-an-illuminated-mirror.jpg
     alt: "Larimar Beauty Salon — a styling station with an illuminated mirror"
     size: half
-  - src: ../../../assets/projects/larimar-nice/final/05-product-wall-and-a-styling-chair.jpg
-    alt: "Larimar Beauty Salon — the product wall and a styling chair"
+  - src: ../../../assets/projects/larimar-nice/final/01-sculpted-plaster-face-behind-the-styling.jpg
+    alt: "Larimar Beauty Salon — the sculpted plaster face behind the styling stations"
     size: half
   - src: ../../../assets/projects/larimar-nice/final/06-entrance-glazing-with-the-brand-logo.jpg
     alt: "Larimar Beauty Salon — the entrance glazing with the brand logo"

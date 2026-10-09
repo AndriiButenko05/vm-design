@@ -16,14 +16,14 @@ const it: Translation = {
     'hero.line2': 'Il tuo carattere.',
     'hero.line3': 'Il tuo spazio.',
     'hero.lead': 'Ogni interno è unico quanto la persona per cui è progettato.',
-    'hero.role': 'Maryna Vashchenko — architetta e interior designer',
+    'hero.role': 'Maryna Vashchenko — interior designer',
     'hero.places': 'Costa Azzurra · Monaco · Italia',
     'hero.scroll': 'Scorri',
 
     'about.eyebrow': 'Lo studio',
     'about.title': 'Interni su misura, pensati nei dettagli e realizzati con precisione.',
     'about.lead':
-      'VM Design è uno studio di architettura e interior design attivo in Costa Azzurra, a Monaco e in Italia. È guidato dall’architetta e interior designer Maryna Vashchenko.',
+      'VM Design è uno studio di architettura e interior design attivo in Costa Azzurra, a Monaco e in Italia. È guidato dall’interior designer Maryna Vashchenko.',
     'about.body':
       'Maryna segue personalmente ogni progetto — dal primo rilievo dell’immobile e dal concept spaziale fino alla scelta di arredi, illuminazione e materiali e alla supervisione della realizzazione. Si avvale di un team di tecnici specializzati di fiducia.',
     'about.more': 'Lo studio',
@@ -140,7 +140,7 @@ const it: Translation = {
     'project.view': 'Guarda il progetto',
     'project.m2': 'm²',
 
-    'site.role': 'Architetta e interior designer',
+    'site.role': 'Interior designer',
     'contact.phone': 'Telefono',
     'contact.instagram': 'Instagram',
     'contact.workingIn': 'Aree di lavoro',
@@ -227,7 +227,7 @@ const it: Translation = {
     'about.fact.international': 'Esperienza internazionale',
     'about.fact.languages': 'Lingue',
     'about.bio.1':
-      'Maryna Vashchenko è architetta, interior designer e fondatrice di VM Design, con oltre 15 anni di esperienza professionale.',
+      'Maryna Vashchenko è interior designer e fondatrice di VM Design, con oltre 15 anni di esperienza professionale.',
     'about.bio.2':
       'Dopo la formazione in architettura in Ucraina, Maryna ha iniziato la sua carriera a Kyiv. Ha lavorato a interni residenziali e commerciali, centri spa e grandi progetti architettonici, per poi occuparsi della gestione dei progetti, della direzione artistica dei lavori e del coordinamento della realizzazione.',
     'about.bio.3':
@@ -274,6 +274,7 @@ const it: Translation = {
     'type.commercial.text':
       'Saloni e spazi beauty progettati per le persone che ci lavorano e per i clienti che accolgono. Una distribuzione studiata sostiene il lavoro quotidiano, e ogni interno esprime l’identità del proprio marchio.',
     'type.exhibition': 'Design fieristico',
+    'type.next': 'Successivo',
     'type.exhibition.text':
       'Stand fieristici che presentano un marchio con chiarezza e personalità. Ogni progetto unisce il concept visivo, i requisiti della sede e i dettagli pratici dell’allestimento.',
   },

@@ -26,6 +26,8 @@ const projects = defineCollection({
 
       cover: image(),
       coverAlt: z.string(),
+      /** Яку частину обкладинки показувати у вертикальних картках (CSS object-position), напр. "65% 50%". */
+      coverPosition: z.string().optional(),
 
       gallery: z
         .array(

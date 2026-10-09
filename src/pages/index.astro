@@ -30,6 +30,7 @@ const toItem = (p: Project): RailItem => ({
   meta: p.data.card ?? [place(locale, p.data.city), p.data.year].filter(Boolean).join(' · '),
   image: p.data.cover,
   alt: p.data.coverAlt,
+  position: p.data.coverPosition,
 });
 
 ---

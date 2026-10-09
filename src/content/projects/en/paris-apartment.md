@@ -18,6 +18,7 @@ card: "Private apartment renovation · Art Deco details · Paris, France · 2023
 heroCaption: "Private apartment · Art Deco interior"
 cover: ../../../assets/projects/paris-apartment/final/01-round-dining-table-under-a-glass.jpg
 coverAlt: "Apartment in Paris — the round dining table under a glass chandelier"
+coverPosition: "80% 50%"
 coords: { lat: 48.8566, lon: 2.3522 }
 featured: false
 order: 3

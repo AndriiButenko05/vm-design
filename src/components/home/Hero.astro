@@ -64,7 +64,11 @@ const { locale, images, id, eager = false } = Astro.props;
     <p class="hero__places">{t(locale, 'hero.places')}</p>
   </div>
 
-  <span class="hero__scroll t-meta" aria-hidden="true">{t(locale, 'hero.scroll')}</span>
+  <a class="hero__scroll" href="#studio" aria-label={t(locale, 'hero.scroll')}>
+    <svg viewBox="0 0 16 56" aria-hidden="true" focusable="false">
+      <path d="M8 0 V54 M1 47 L8 54 L15 47" />
+    </svg>
+  </a>
 </section>
 
 <script>
@@ -199,11 +203,44 @@ const { locale, images, id, eager = false } = Astro.props;
   .hero__scroll {
     position: absolute;
     left: 50%;
-    bottom: 2rem;
-    transform: translateX(-50%);
-    writing-mode: vertical-rl;
-    letter-spacing: 0.2em;
-    opacity: 0.6;
+    bottom: 1.5rem;
+    translate: -50% 0;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 72px;
+    opacity: 0.7;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .hero__scroll:hover,
+  .hero__scroll:focus-visible {
+    opacity: 1;
+  }
+
+  .hero__scroll svg {
+    width: 16px;
+    height: 56px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+    animation: hero-cue 2.4s var(--ease) infinite;
+  }
+
+  @keyframes hero-cue {
+    0%,
+    100% {
+      transform: translateY(-4px);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll svg {
+      animation: none;
+    }
   }
 
   @media (max-width: 900px) {

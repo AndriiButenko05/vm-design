@@ -8,6 +8,8 @@ export interface RailItem {
   meta: string;
   image: ImageMetadata;
   alt: string;
+  /** object-position обкладинки, якщо центр кадру не підходить. */
+  position?: string;
 }
 
 interface Props {
@@ -75,6 +77,7 @@ const num = String(index).padStart(2, '0');
                           widths={[480, 720, 960, 1200]}
                           sizes="(max-width: 923px) 240px, (max-width: 1538px) 26vw, 400px"
                           loading="lazy"
+                          style={it.position && `object-position: ${it.position}`}
                         />
                       </span>
 

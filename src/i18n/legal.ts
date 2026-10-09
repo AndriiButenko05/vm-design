@@ -1,7 +1,7 @@
 /**
- * Тексти сторінок «Mentions légales» і «Політика конфіденційності».
- * Юридичну силу має французька версія (сайт працює у Франції), решта — переклади.
- * Реквізити (статус, SIRET, адреса) — у src/lib/site.ts → SITE.legal.
+ * Тексти сторінок «Note legali / Mentions légales» і «Політика конфіденційності».
+ * Діяльність Марини зареєстрована в Італії, тож юридичну силу має італійська версія,
+ * решта — переклади. Реквізити (форма, Partita IVA, sede, REA) — у src/lib/site.ts → SITE.legal.
  */
 import type { Locale } from '../lib/i18n';
 import { SITE } from '../lib/site';
@@ -13,14 +13,15 @@ const HOST = 'Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA �
 const DOMAIN = 'vmdesignproject.com';
 
 /** Рядки реквізитів, лише заповнені. */
-function identity(labels: { status: string; siret: string; address: string; vat: string; email: string; phone: string }) {
+function identity(labels: { status: string; address: string; vat: string; email: string; phone: string }) {
   const L = SITE.legal;
   return [
     `${SITE.name} — ${SITE.designer}`,
     L.status && `${labels.status}: ${L.status}`,
-    L.siret && `SIRET: ${L.siret}`,
     L.vat && `${labels.vat}: ${L.vat}`,
     L.address && `${labels.address}: ${L.address}`,
+    L.rea && `REA: ${L.rea}`,
+    L.pec && `PEC: ${L.pec}`,
     `${labels.email}: ${SITE.email}`,
     `${labels.phone}: ${SITE.phone}`,
   ].filter(Boolean) as string[];
@@ -31,12 +32,13 @@ type Pack = { legal: LegalPage; privacy: LegalPage };
 const fr = (): Pack => ({
   legal: {
     title: 'Mentions légales',
+    note: 'Cette page est une traduction ; la version italienne (Note legali) fait foi.',
     sections: [
       {
         h: 'Éditeur du site',
         p: [
           `Le site ${DOMAIN} est édité par :`,
-          ...identity({ status: 'Statut', siret: 'SIRET', address: 'Adresse', vat: 'N° de TVA intracommunautaire', email: 'E-mail', phone: 'Téléphone' }),
+          ...identity({ status: 'Forme juridique', address: 'Siège', vat: 'Partita IVA (numéro de TVA italien)', email: 'E-mail', phone: 'Téléphone' }),
         ],
       },
       { h: 'Directrice de la publication', p: [SITE.designer] },
@@ -56,6 +58,7 @@ const fr = (): Pack => ({
   },
   privacy: {
     title: 'Politique de confidentialité',
+    note: 'Cette page est une traduction ; la version italienne (Informativa sulla privacy) fait foi.',
     sections: [
       {
         h: 'Responsable du traitement',
@@ -71,7 +74,7 @@ const fr = (): Pack => ({
       {
         h: 'Finalité et base légale',
         p: [
-          'Ces données servent uniquement à répondre à votre demande et, le cas échéant, à préparer une proposition. Le traitement repose sur les mesures précontractuelles prises à votre demande (article 6.1.b du RGPD).',
+          'Ces données servent uniquement à répondre à votre demande et, le cas échéant, à préparer une proposition. Le traitement repose sur les mesures précontractuelles prises à votre demande (article 6, paragraphe 1, point b, du RGPD).',
         ],
       },
       {
@@ -100,7 +103,7 @@ const fr = (): Pack => ({
         h: 'Vos droits',
         p: [
           'Vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité de vos données.',
-          `Pour exercer ces droits, écrivez à ${SITE.email}. Vous pouvez également introduire une réclamation auprès de la CNIL (www.cnil.fr).`,
+          `Pour exercer ces droits, écrivez à ${SITE.email}. Vous pouvez également introduire une réclamation auprès du Garante per la protezione dei dati personali (www.garanteprivacy.it) ou de l’autorité de votre pays de résidence, comme la CNIL en France (www.cnil.fr).`,
         ],
       },
     ],
@@ -110,13 +113,13 @@ const fr = (): Pack => ({
 const en = (): Pack => ({
   legal: {
     title: 'Legal notice',
-    note: 'This page is a translation; the French version (Mentions légales) is legally binding.',
+    note: 'This page is a translation; the Italian version (Note legali) is legally binding.',
     sections: [
       {
         h: 'Site publisher',
         p: [
           `${DOMAIN} is published by:`,
-          ...identity({ status: 'Legal status', siret: 'SIRET', address: 'Address', vat: 'EU VAT number', email: 'Email', phone: 'Phone' }),
+          ...identity({ status: 'Legal form', address: 'Registered office', vat: 'Partita IVA (Italian VAT number)', email: 'Email', phone: 'Phone' }),
         ],
       },
       { h: 'Publication director', p: [SITE.designer] },
@@ -133,7 +136,7 @@ const en = (): Pack => ({
   },
   privacy: {
     title: 'Privacy policy',
-    note: 'This page is a translation; the French version (Politique de confidentialité) is legally binding.',
+    note: 'This page is a translation; the Italian version (Informativa sulla privacy) is legally binding.',
     sections: [
       { h: 'Data controller', p: [`${SITE.designer} (${SITE.name}), reachable at ${SITE.email}.`] },
       {
@@ -175,7 +178,7 @@ const en = (): Pack => ({
         h: 'Your rights',
         p: [
           'You have the right to access, rectify, erase, restrict, object to and port your data.',
-          `To exercise these rights, write to ${SITE.email}. You may also lodge a complaint with the French data protection authority, the CNIL (www.cnil.fr).`,
+          `To exercise these rights, write to ${SITE.email}. You may also lodge a complaint with the Italian data protection authority, the Garante per la protezione dei dati personali (www.garanteprivacy.it), or with the authority in your country of residence.`,
         ],
       },
     ],
@@ -185,13 +188,13 @@ const en = (): Pack => ({
 const uk = (): Pack => ({
   legal: {
     title: 'Юридична інформація',
-    note: 'Ця сторінка — переклад; юридичну силу має французька версія (Mentions légales).',
+    note: 'Ця сторінка — переклад; юридичну силу має італійська версія (Note legali).',
     sections: [
       {
         h: 'Власник сайту',
         p: [
           `Сайт ${DOMAIN} видає:`,
-          ...identity({ status: 'Правовий статус', siret: 'SIRET', address: 'Адреса', vat: 'Номер ПДВ ЄС', email: 'Email', phone: 'Телефон' }),
+          ...identity({ status: 'Організаційна форма', address: 'Юридична адреса', vat: 'Partita IVA (італійський номер ПДВ)', email: 'Email', phone: 'Телефон' }),
         ],
       },
       { h: 'Відповідальна за публікацію', p: [SITE.designer] },
@@ -208,7 +211,7 @@ const uk = (): Pack => ({
   },
   privacy: {
     title: 'Політика конфіденційності',
-    note: 'Ця сторінка — переклад; юридичну силу має французька версія (Politique de confidentialité).',
+    note: 'Ця сторінка — переклад; юридичну силу має італійська версія (Informativa sulla privacy).',
     sections: [
       { h: 'Відповідальна за обробку даних', p: [`${SITE.designer} (${SITE.name}), email: ${SITE.email}.`] },
       {
@@ -250,7 +253,7 @@ const uk = (): Pack => ({
         h: 'Ваші права',
         p: [
           'Ви маєте право на доступ до своїх даних, їх виправлення, видалення, обмеження обробки, заперечення проти обробки та перенесення.',
-          `Щоб скористатися цими правами, напишіть на ${SITE.email}. Ви також можете подати скаргу до французького органу із захисту даних CNIL (www.cnil.fr).`,
+          `Щоб скористатися цими правами, напишіть на ${SITE.email}. Ви також можете подати скаргу до італійського органу із захисту даних — Garante per la protezione dei dati personali (www.garanteprivacy.it) — або до органу у вашій країні проживання.`,
         ],
       },
     ],
@@ -260,13 +263,13 @@ const uk = (): Pack => ({
 const ru = (): Pack => ({
   legal: {
     title: 'Юридическая информация',
-    note: 'Эта страница — перевод; юридическую силу имеет французская версия (Mentions légales).',
+    note: 'Эта страница — перевод; юридическую силу имеет итальянская версия (Note legali).',
     sections: [
       {
         h: 'Владелец сайта',
         p: [
           `Сайт ${DOMAIN} издаёт:`,
-          ...identity({ status: 'Правовой статус', siret: 'SIRET', address: 'Адрес', vat: 'Номер НДС ЕС', email: 'Email', phone: 'Телефон' }),
+          ...identity({ status: 'Организационная форма', address: 'Юридический адрес', vat: 'Partita IVA (итальянский номер НДС)', email: 'Email', phone: 'Телефон' }),
         ],
       },
       { h: 'Ответственная за публикацию', p: [SITE.designer] },
@@ -283,7 +286,7 @@ const ru = (): Pack => ({
   },
   privacy: {
     title: 'Политика конфиденциальности',
-    note: 'Эта страница — перевод; юридическую силу имеет французская версия (Politique de confidentialité).',
+    note: 'Эта страница — перевод; юридическую силу имеет итальянская версия (Informativa sulla privacy).',
     sections: [
       { h: 'Ответственная за обработку данных', p: [`${SITE.designer} (${SITE.name}), email: ${SITE.email}.`] },
       {
@@ -325,7 +328,7 @@ const ru = (): Pack => ({
         h: 'Ваши права',
         p: [
           'Вы имеете право на доступ к своим данным, их исправление, удаление, ограничение обработки, возражение против обработки и перенос.',
-          `Чтобы воспользоваться этими правами, напишите на ${SITE.email}. Вы также можете подать жалобу во французский орган по защите данных CNIL (www.cnil.fr).`,
+          `Чтобы воспользоваться этими правами, напишите на ${SITE.email}. Вы также можете подать жалобу в итальянский орган по защите данных — Garante per la protezione dei dati personali (www.garanteprivacy.it) — или в орган вашей страны проживания.`,
         ],
       },
     ],
@@ -335,13 +338,12 @@ const ru = (): Pack => ({
 const it = (): Pack => ({
   legal: {
     title: 'Note legali',
-    note: 'Questa pagina è una traduzione; fa fede la versione francese (Mentions légales).',
     sections: [
       {
         h: 'Editore del sito',
         p: [
-          `Il sito ${DOMAIN} è pubblicato da:`,
-          ...identity({ status: 'Forma giuridica', siret: 'SIRET', address: 'Indirizzo', vat: 'Partita IVA UE', email: 'E-mail', phone: 'Telefono' }),
+          `Il sito ${DOMAIN} è pubblicato da (informazioni ai sensi dell’art. 7 del D.Lgs. 70/2003):`,
+          ...identity({ status: 'Forma giuridica', address: 'Sede', vat: 'Partita IVA', email: 'E-mail', phone: 'Telefono' }),
         ],
       },
       { h: 'Responsabile della pubblicazione', p: [SITE.designer] },
@@ -358,7 +360,6 @@ const it = (): Pack => ({
   },
   privacy: {
     title: 'Informativa sulla privacy',
-    note: 'Questa pagina è una traduzione; fa fede la versione francese (Politique de confidentialité).',
     sections: [
       { h: 'Titolare del trattamento', p: [`${SITE.designer} (${SITE.name}), contattabile all’indirizzo ${SITE.email}.`] },
       {
@@ -400,7 +401,7 @@ const it = (): Pack => ({
         h: 'I tuoi diritti',
         p: [
           'Hai diritto di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità dei tuoi dati.',
-          `Per esercitare questi diritti, scrivi a ${SITE.email}. Puoi anche presentare reclamo all’autorità francese per la protezione dei dati, la CNIL (www.cnil.fr).`,
+          `Per esercitare questi diritti, scrivi a ${SITE.email}. Puoi anche presentare reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it) o all’autorità del tuo Paese di residenza.`,
         ],
       },
     ],
