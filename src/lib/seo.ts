@@ -19,6 +19,8 @@ export function siteGraph(site: URL, locale: Locale): Node[] {
       '@id': `${home}#website`,
       url: home,
       name: SITE.name,
+      // Так бренд шукають за доменом та Instagram — Google звʼязує ці назви із сайтом.
+      alternateName: ['VM Design Project', 'VM Design Studio', 'vmdesignproject', 'VMDesign'],
       inLanguage: locale,
       publisher: { '@id': `${home}#studio` },
     },

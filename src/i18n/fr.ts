@@ -16,14 +16,14 @@ const fr: Translation = {
     'hero.line2': 'Votre caractère.',
     'hero.line3': 'Votre intérieur.',
     'hero.lead': 'Chaque intérieur est aussi singulier que la personne pour qui il est conçu.',
-    'hero.role': 'Maryna Vashchenko — architecte d’intérieur',
+    'hero.role': 'Maryna Vashchenko — architecte d’intérieur et designer',
     'hero.places': 'Côte d’Azur · Monaco · Italie',
     'hero.scroll': 'Défiler',
 
     'about.eyebrow': 'Le studio',
     'about.title': 'Des intérieurs sur mesure, pensés dans le détail et réalisés avec précision.',
     'about.lead':
-      'VM Design est un studio d’architecture et de design d’intérieur actif sur la Côte d’Azur, à Monaco et en Italie. Il est dirigé par l’architecte d’intérieur Maryna Vashchenko.',
+      'VM Design est un studio d’architecture et de design d’intérieur actif sur la Côte d’Azur, à Monaco et en Italie. Il est dirigé par l’architecte d’intérieur et designer Maryna Vashchenko.',
     'about.body':
       'Maryna suit personnellement chaque projet — du premier relevé du bien et du concept spatial jusqu’au choix du mobilier, de l’éclairage et des matériaux, et au suivi de la réalisation. Elle s’appuie sur une équipe de spécialistes techniques de confiance.',
     'about.more': 'Le studio',
@@ -140,7 +140,7 @@ const fr: Translation = {
     'project.view': 'Voir le projet',
     'project.m2': 'm²',
 
-    'site.role': 'Architecte d’intérieur',
+    'site.role': 'Architecte d’intérieur et designer',
     'contact.phone': 'Téléphone',
     'contact.instagram': 'Instagram',
     'contact.workingIn': 'Zones d’intervention',
@@ -227,7 +227,7 @@ const fr: Translation = {
     'about.fact.international': 'Expérience internationale',
     'about.fact.languages': 'Langues',
     'about.bio.1':
-      'Maryna Vashchenko est architecte d’intérieur et fondatrice de VM Design, avec plus de 15 ans d’expérience professionnelle.',
+      'Maryna Vashchenko est architecte d’intérieur, designer et fondatrice de VM Design, avec plus de 15 ans d’expérience professionnelle.',
     'about.bio.2':
       'Après une formation d’architecte en Ukraine, Maryna a commencé sa carrière à Kyiv. Elle a travaillé sur des intérieurs résidentiels et commerciaux, des complexes de spa et de grands projets d’architecture, avant de prendre en charge la gestion de projets, le suivi de chantier et la coordination de la réalisation.',
     'about.bio.3':

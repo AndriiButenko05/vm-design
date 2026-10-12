@@ -21,6 +21,7 @@ card: "Nice, France · 2025 · Complete villa renovation"
 heroCaption: "Private villa · Interior architecture & design"
 cover: ../../../assets/projects/la-villa-nice/final/01-kitchen-island-with-the-oak-stair.jpg
 coverAlt: "Villa in Nice — the kitchen island with the oak stair and living room beyond"
+coverPosition: "25% 50%"
 coords: { lat: 43.7102, lon: 7.262 }
 featured: true
 order: 1
