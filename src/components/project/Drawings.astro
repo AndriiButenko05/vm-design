@@ -114,7 +114,13 @@ const fullAvif = await Promise.all(sheets.map((s) => getImage({ src: s.img, widt
     display: contents;
   }
 
+  /* Інакше Safari робить з <source> окремий порожній рядок сітки, і аркуш зсувається вниз. */
+  .dwg__sheet :global(source) {
+    display: none;
+  }
+
   .dwg__sheet :global(img) {
+    grid-area: 1 / 1;
     min-width: 0;
     min-height: 0;
     max-width: 100%;
