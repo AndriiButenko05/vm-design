@@ -48,7 +48,7 @@ const structured = noindex
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'max-image-preview:large'} />
     {
       !noindex && (
         <>
