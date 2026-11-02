@@ -30,6 +30,9 @@ pnpm-debug.log*
 .env
 .env.local
 
+# Секрети Worker для wrangler dev (ключ Google Places)
+.dev.vars
+
 # Проміжні артефакти пайплайну зображень
 .image-cache/
 

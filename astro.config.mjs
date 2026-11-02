@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { readdirSync, readFileSync } from 'node:fs';
 import pruneOriginals from './scripts/prune-originals.mjs';
+import devWorker from './scripts/dev-worker.mjs';
 
 const SITE = 'https://vmdesignproject.com';
 const LOCALES = ['en', 'fr', 'it', 'ru', 'uk'];
@@ -64,5 +65,6 @@ export default defineConfig({
     optimizeDeps: {
       include: ['ogl'],
     },
+    plugins: [devWorker()],
   },
 });

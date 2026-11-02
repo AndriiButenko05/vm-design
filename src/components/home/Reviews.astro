@@ -1,0 +1,463 @@
+---
+import { t, tp, type Locale } from '../../lib/i18n';
+import { SITE } from '../../lib/site';
+import { REVIEWS } from '../../data/reviews';
+
+interface Props {
+  locale: Locale;
+  id?: string;
+}
+const { locale, id = 'reviews' } = Astro.props;
+
+const { items, live } = REVIEWS;
+
+// Стрічка має бути ширшою за екран, інакше в кінці кола видно порожнечу:
+// якщо відгуків мало, повторюємо їх. Повтори й друга копія — лише для ока.
+const MIN_CARDS = 8;
+const loop = items.length ? Array.from({ length: Math.ceil(MIN_CARDS / items.length) }, () => items).flat() : [];
+
+const rating = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(REVIEWS.rating);
+const monthYear = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
+const when = (d: string) => monthYear.format(new Date(`${d}-01T12:00:00`));
+const stars = (n: number) => '★'.repeat(Math.round(n));
+
+// Форми слова «відгук» для живого режиму (Intl.PluralRules у браузері); яких форм мова не має — не передаємо.
+const word = (rule: string) => {
+  const key = `reviews.word.${rule}`;
+  const value = t(locale, key);
+  return value === key ? null : value;
+};
+const words = Object.fromEntries(
+  ['one', 'few', 'many', 'other'].flatMap((rule) => {
+    const value = word(rule);
+    return value ? [[rule, value]] : [];
+  }),
+);
+---
+
+{
+  (items.length > 0 || live) && (
+    <>
+      {live && <div data-reviews-sentinel />}
+      <section
+        class="reviews section"
+        id={id}
+        aria-labelledby={`${id}-title`}
+        hidden={!items.length}
+        data-reviews
+        data-live={live ? '' : undefined}
+        data-lang={locale}
+        data-words={live ? JSON.stringify(words) : undefined}
+        data-translated={live ? t(locale, 'reviews.translated') : undefined}
+        data-label-original={t(locale, 'reviews.original')}
+        data-label-translation={t(locale, 'reviews.translation')}
+      >
+        <div class="container reviews__head">
+          <div>
+            <p class="t-eyebrow">{t(locale, 'reviews.eyebrow')}</p>
+            <h2 class="t-h2" id={`${id}-title`}>{t(locale, 'reviews.title')}</h2>
+          </div>
+
+          <div class="reviews__side">
+            <p class="reviews__score">
+              <span class="reviews__num" data-rating>{rating}</span>
+              <span class="reviews__stars" aria-hidden="true">★★★★★</span>
+              <span class="t-meta" data-count>
+                {REVIEWS.count} {tp(locale, 'reviews.word', REVIEWS.count)} · Google Maps
+              </span>
+            </p>
+            <div class="reviews__actions">
+              <a class="link t-meta" href={SITE.mapsUrl} target="_blank" rel="noopener" data-all>
+                {t(locale, 'reviews.all')} →
+              </a>
+              <button class="reviews__pause" type="button" data-reviews-pause aria-pressed="false" aria-label={t(locale, 'reviews.pause')}>
+                <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                  <path class="reviews__icon-pause" d="M3 2h2v8H3zM7 2h2v8H7z" />
+                  <path class="reviews__icon-play" d="M3 1.5v9l7.5-4.5z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews__marquee" style={`--n:${loop.length || MIN_CARDS}`} data-marquee>
+          {[0, 1].map((copy) => (
+            <ul class="reviews__track" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {loop.map((r, i) => {
+                const repeat = i >= items.length;
+                // Копії видно на екрані, тож мишею вони працюють, але читач екрана й Tab їх пропускають.
+                const dup = copy === 1 || repeat;
+                const translation = r.lang !== locale ? r.translations[locale] : undefined;
+                return (
+                  <li class="review" data-repeat={repeat ? '' : undefined} aria-hidden={copy === 0 && repeat ? 'true' : undefined}>
+                    <p class="review__stars" aria-label={`${r.rating}/5`}>
+                      {stars(r.rating)}
+                    </p>
+                    <blockquote class="review__text" lang={translation ? locale : r.lang}>
+                      {translation ?? r.text}
+                    </blockquote>
+                    {translation && (
+                      <>
+                        <blockquote class="review__text" lang={r.lang} hidden data-original>
+                          {r.text}
+                        </blockquote>
+                        <p class="review__note t-meta">
+                          {t(locale, `reviews.from.${r.lang}`)} ·{' '}
+                          <button class="review__toggle" type="button" data-review-toggle tabindex={dup ? -1 : undefined}>
+                            {t(locale, 'reviews.original')}
+                          </button>
+                        </p>
+                      </>
+                    )}
+                    <p class="review__by t-meta">
+                      <span class="review__author">{r.author}</span>
+                      {r.date && <span class="review__when">· {when(r.date)}</span>}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          ))}
+        </div>
+
+        {
+          live && (
+            <template data-card>
+              <li class="review">
+                <p class="review__stars" />
+                <blockquote class="review__text" />
+                <p class="review__by t-meta">
+                  <a class="review__author" target="_blank" rel="noopener" />
+                  <span class="review__when" />
+                </p>
+                <p class="review__note t-meta" />
+              </li>
+            </template>
+          )
+        }
+      </section>
+    </>
+  )
+}
+
+<script>
+  type Review = {
+    author: string;
+    authorUrl: string | null;
+    rating: number | null;
+    when: string;
+    text: string;
+    translated: boolean;
+    url: string | null;
+  };
+  type Payload = { rating: number | null; count: number; url: string | null; reviews: Review[] };
+
+  const MIN_CARDS = 8;
+
+  document.querySelectorAll<HTMLButtonElement>('[data-reviews-pause]').forEach((btn) => {
+    const marquee = btn.closest('.reviews')?.querySelector<HTMLElement>('[data-marquee]');
+    btn.addEventListener('click', () => {
+      const paused = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(paused));
+      marquee?.classList.toggle('is-paused', paused);
+    });
+  });
+
+  // «Оригінал» / «Переклад» у картці: міняємо місцями два тексти.
+  document.querySelectorAll<HTMLElement>('[data-reviews]').forEach((section) => {
+    section.addEventListener('click', (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('[data-review-toggle]');
+      const card = btn?.closest('.review');
+      if (!btn || !card) return;
+      const texts = card.querySelectorAll<HTMLElement>('.review__text');
+      texts.forEach((el) => (el.hidden = !el.hidden));
+      const showingOriginal = !texts[1]?.hidden;
+      btn.textContent = (showingOriginal ? section.dataset.labelTranslation : section.dataset.labelOriginal) ?? '';
+    });
+  });
+
+  // Живий режим: запит до Google — лише коли відвідувач догортав до низу сторінки.
+  const root = document.querySelector<HTMLElement>('[data-reviews][data-live]');
+  const sentinel = document.querySelector('[data-reviews-sentinel]');
+  if (root && sentinel) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        load(root);
+      },
+      { rootMargin: '900px 0px' },
+    );
+    io.observe(sentinel);
+  }
+
+  async function load(root: HTMLElement) {
+    const lang = root.dataset.lang ?? 'en';
+    let data: Payload;
+    try {
+      const res = await fetch(`/api/reviews?lang=${lang}`);
+      if (!res.ok) return;
+      data = await res.json();
+    } catch {
+      return;
+    }
+    const items = data.reviews ?? [];
+    const tpl = root.querySelector<HTMLTemplateElement>('[data-card]');
+    const marquee = root.querySelector<HTMLElement>('[data-marquee]');
+    if (!items.length || !tpl || !marquee) return;
+
+    const num = root.querySelector('[data-rating]');
+    if (num && data.rating) {
+      num.textContent = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(data.rating);
+    }
+    const words: Record<string, string> = JSON.parse(root.dataset.words ?? '{}');
+    const count = root.querySelector('[data-count]');
+    if (count) count.textContent = `${data.count} ${words[new Intl.PluralRules(lang).select(data.count)] ?? words.other ?? ''} · Google Maps`;
+    const all = root.querySelector<HTMLAnchorElement>('[data-all]');
+    if (all && data.url) all.href = data.url;
+
+    const card = (r: Review) => {
+      const li = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      const stars = li.querySelector('.review__stars')!;
+      if (r.rating) {
+        stars.textContent = '★'.repeat(Math.round(r.rating));
+        stars.setAttribute('aria-label', `${r.rating}/5`);
+      } else stars.remove();
+      li.querySelector('.review__text')!.textContent = r.text;
+      const author = li.querySelector<HTMLAnchorElement>('.review__author')!;
+      author.textContent = r.author;
+      if (r.authorUrl) author.href = r.authorUrl;
+      li.querySelector('.review__when')!.textContent = r.when ? `· ${r.when}` : '';
+      const note = li.querySelector('.review__note')!;
+      if (r.translated) note.textContent = root.dataset.translated ?? '';
+      else note.remove();
+      return li;
+    };
+
+    const loop = Array.from({ length: Math.ceil(MIN_CARDS / items.length) }, () => items).flat();
+    marquee.querySelectorAll<HTMLElement>('.reviews__track').forEach((track, copy) => {
+      track.replaceChildren(
+        ...loop.map((r, i) => {
+          const li = card(r);
+          if (i >= items.length) {
+            li.dataset.repeat = '';
+            if (copy === 0) li.setAttribute('aria-hidden', 'true');
+          }
+          if (copy === 1 || i >= items.length) li.querySelectorAll('a').forEach((a) => (a.tabIndex = -1));
+          return li;
+        }),
+      );
+    });
+    marquee.style.setProperty('--n', String(loop.length));
+    root.hidden = false;
+  }
+</script>
+
+<style>
+  .reviews {
+    overflow: hidden;
+  }
+
+  .reviews[hidden] {
+    display: none;
+  }
+
+  .reviews__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-m) var(--space-l);
+    margin-bottom: var(--space-xl);
+  }
+
+  .reviews__head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .reviews__side {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: end;
+  }
+
+  .reviews__score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    margin: 0;
+  }
+
+  .reviews__num {
+    font-family: var(--font-subhead);
+    font-size: var(--step-h2);
+    line-height: 1;
+  }
+
+  .reviews__stars,
+  .review__stars {
+    color: var(--accent-line);
+    letter-spacing: 0.12em;
+  }
+
+  .reviews__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .reviews__pause {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    cursor: pointer;
+    transition:
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  .reviews__pause:hover {
+    color: var(--fg);
+    border-color: var(--fg-muted);
+  }
+
+  .reviews__pause path {
+    fill: currentColor;
+  }
+
+  .reviews__icon-play,
+  .reviews__pause[aria-pressed='true'] .reviews__icon-pause {
+    display: none;
+  }
+
+  .reviews__pause[aria-pressed='true'] .reviews__icon-play {
+    display: inline;
+  }
+
+  .reviews__marquee {
+    --gap: var(--grid-gap);
+    display: flex;
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+
+  .reviews__track {
+    display: flex;
+    flex: none;
+    gap: var(--gap);
+    margin: 0;
+    padding: 0 var(--gap) 0 0;
+    list-style: none;
+    animation: reviews-run calc(var(--n) * 9s) linear infinite;
+  }
+
+  .reviews__marquee:hover .reviews__track,
+  .reviews__marquee:focus-within .reviews__track,
+  .reviews__marquee.is-paused .reviews__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes reviews-run {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .review {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    width: min(80vw, 23rem);
+    padding: var(--space-m);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+  }
+
+  .review__stars {
+    margin: 0;
+    font-size: var(--step-small);
+  }
+
+  .review__text {
+    margin: 0;
+    font-family: var(--font-subhead);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+    line-clamp: 9;
+    overflow: hidden;
+  }
+
+  .review__text[hidden] {
+    display: none;
+  }
+
+  .review__toggle {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--link);
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .review__by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.4em;
+    margin: auto 0 0;
+    color: var(--fg-muted);
+  }
+
+  .review__author {
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .review__author[href]:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .review__note {
+    margin: calc(var(--space-s) * -0.5) 0 0;
+    color: var(--fg-muted);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  @media (max-width: 700px) {
+    .reviews__side {
+      justify-items: start;
+    }
+  }
+
+  /* Без руху: звичайна стрічка, яку гортають пальцем, без повторів. */
+  @media (prefers-reduced-motion: reduce) {
+    .reviews__marquee {
+      overflow-x: auto;
+      mask-image: none;
+      padding-inline: var(--gutter);
+    }
+
+    .reviews__track {
+      animation: none;
+    }
+
+    .reviews__track[aria-hidden='true'],
+    .review[data-repeat],
+    .reviews__pause {
+      display: none;
+    }
+  }
+</style>

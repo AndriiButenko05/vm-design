@@ -8,10 +8,27 @@ interface Props {
   locale: Locale;
   id?: string;
   as?: 'h1' | 'h2';
+  eyebrow?: string;
+  title?: string;
+  /** Сторінка проєкту: назва йде в лист окремим полем, щоб Марина бачила, звідки заявка. */
+  project?: string;
+  /** Власне фото фону замість стандартного (на сторінці проєкту — його обкладинка). */
+  backdrop?: ImageMetadata;
+  backdropPosition?: string;
 }
-const { locale, as: Heading = 'h2', id = 'contact' } = Astro.props;
+const {
+  locale,
+  as: Heading = 'h2',
+  id = 'contact',
+  eyebrow = t(locale, 'contact.eyebrow'),
+  title = t(locale, 'contact.title'),
+  project,
+  backdrop,
+  backdropPosition,
+} = Astro.props;
 
-const { wide, tall } = CONTACT_BACKDROP;
+const { wide, tall } = backdrop ? { wide: backdrop, tall: backdrop } : CONTACT_BACKDROP;
+const subject = project ? `VM Design — enquiry about «${project}»` : 'VM Design — new enquiry from the website';
 
 // Одне фото з двома кадрами: вузький — для телефона, широкий — для решти.
 // Браузер вантажить лише потрібний; на сторінці контактів (h1) — одразу.
@@ -41,6 +58,7 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
             width={wide.width}
             height={wide.height}
             alt=""
+            style={backdropPosition && `object-position: ${backdropPosition}`}
             loading={top ? 'eager' : 'lazy'}
             fetchpriority={top ? 'high' : 'auto'}
             decoding="async"
@@ -52,8 +70,8 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
 
   <div class="container grid contact__inner">
     <div class="contact__type" data-reveal>
-      <p class="t-eyebrow">{t(locale, 'contact.eyebrow')}</p>
-      <Heading class="t-h2 contact__title">{t(locale, 'contact.title')}</Heading>
+      <p class="t-eyebrow">{eyebrow}</p>
+      <Heading class="t-h2 contact__title">{title}</Heading>
       <p class="t-lead">{t(locale, 'contact.lead')}</p>
 
       <dl class="contact__details">
@@ -88,7 +106,8 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
       data-endpoint={SITE.formAction}
       data-reveal
     >
-      <input type="hidden" name="_subject" value="VM Design — new enquiry from the website" />
+      <input type="hidden" name="_subject" value={subject} />
+      {project && <input type="hidden" name="project" value={project} />}
       <div class="form__trap" aria-hidden="true">
         <label for="company">Company</label>
         <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off" />

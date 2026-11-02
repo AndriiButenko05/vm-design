@@ -7,6 +7,7 @@ import ContactSection from '../components/home/ContactSection.astro';
 import Hero from '../components/home/Hero.astro';
 import Materials from '../components/home/Materials.astro';
 import GeographyMap from '../components/map/GeographyMap.astro';
+import Reviews from '../components/home/Reviews.astro';
 import { getProjects, slugOf, type Project } from '../lib/projects';
 import { resolveLocale, localePath, t, place } from '../lib/i18n';
 import { SITE } from '../lib/site';
@@ -106,6 +107,8 @@ const toItem = (p: Project): RailItem => ({
   <Materials locale={locale} projects={projects} id="materials" />
 
   <GeographyMap locale={locale} projects={projects} id="geography" />
+
+  <Reviews locale={locale} id="reviews" />
 
   <ContactSection locale={locale} id="contact" />
 </BaseLayout>

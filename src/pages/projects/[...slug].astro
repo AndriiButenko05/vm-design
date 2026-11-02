@@ -8,6 +8,7 @@ import ProjectGallery from '../../components/project/ProjectGallery.astro';
 import ProjectProcess from '../../components/project/ProjectProcess.astro';
 import Drawings from '../../components/project/Drawings.astro';
 import ProjectGrid from '../../components/project/ProjectGrid.astro';
+import ContactSection from '../../components/home/ContactSection.astro';
 import { setsForProject } from '../../lib/drawings';
 import { byRoom } from '../../lib/rooms';
 import { getProjects, localize, slugOf } from '../../lib/projects';
@@ -216,6 +217,15 @@ const jsonLd = [
         </section>
       )
     }
+
+    <ContactSection
+      locale={locale}
+      eyebrow={t(locale, 'project.cta.eyebrow')}
+      title={t(locale, 'project.cta.title')}
+      project={d.title}
+      backdrop={d.cover}
+      backdropPosition={d.coverPosition}
+    />
 
     <Lightbox locale={locale} label={d.title} />
   </article>
