@@ -6,7 +6,7 @@ import '../../styles/base.css';
 import { getImage } from 'astro:assets';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
-import { resolveLocale, stripLocale, LOCALES, localePath, t } from '../../lib/i18n';
+import { resolveLocale, stripLocale, LOCALES, localePath, t, type Locale } from '../../lib/i18n';
 import { OG_LOCALE, siteGraph } from '../../lib/seo';
 import defaultOgImage from '../../assets/hero/01-villa-staircase.jpg';
 
@@ -17,9 +17,19 @@ interface Props {
   noindex?: boolean;
   ogImage?: ImageMetadata;
   jsonLd?: Record<string, unknown>[];
+  /** Мови, якими сторінка існує (напр. лише ['fr'] для лендингу під Ніццу) — лише їх показуємо в hreflang. */
+  locales?: readonly Locale[];
 }
 
-const { title, description, transparentHeader = false, noindex = false, ogImage, jsonLd = [] } = Astro.props;
+const {
+  title,
+  description,
+  transparentHeader = false,
+  noindex = false,
+  ogImage,
+  jsonLd = [],
+  locales = LOCALES,
+} = Astro.props;
 
 const locale = resolveLocale(Astro.currentLocale, Astro.url);
 const bare = stripLocale(Astro.url.pathname);
@@ -53,10 +63,12 @@ const structured = noindex
       !noindex && (
         <>
           <link rel="canonical" href={canonical} />
-          {LOCALES.map((l) => (
+          {locales.map((l) => (
             <link rel="alternate" hreflang={l} href={abs(localePath(l, bare))} />
           ))}
-          <link rel="alternate" hreflang="x-default" href={abs(localePath('en', bare))} />
+          {locales.includes('en') && (
+            <link rel="alternate" hreflang="x-default" href={abs(localePath('en', bare))} />
+          )}
         </>
       )
     }
@@ -64,7 +76,7 @@ const structured = noindex
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="VM Design" />
     <meta property="og:locale" content={OG_LOCALE[locale]} />
-    {LOCALES.filter((l) => l !== locale).map((l) => <meta property="og:locale:alternate" content={OG_LOCALE[l]} />)}
+    {locales.filter((l) => l !== locale).map((l) => <meta property="og:locale:alternate" content={OG_LOCALE[l]} />)}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={og} />
@@ -104,7 +116,7 @@ const structured = noindex
 
   <body>
     <a class="skip-link" href="#main">{t(locale, 'skip')}</a>
-    <Header locale={locale} transparent={transparentHeader} />
+    <Header locale={locale} transparent={transparentHeader} locales={locales} />
     <main id="main">
       <slot />
     </main>

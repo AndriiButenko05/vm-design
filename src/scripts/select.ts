@@ -78,6 +78,12 @@ for (const field of document.querySelectorAll<HTMLElement>('[data-select]')) {
     if (next) setActive(select!.selectedIndex);
   }
 
+  // Після form.reset() нативний select уже скинуто — показуємо його вибір.
+  select.addEventListener('reset', () => {
+    value.textContent = select.selectedOptions[0]?.text ?? '';
+    items.forEach((li, n) => li.setAttribute('aria-selected', String(n === select.selectedIndex)));
+  });
+
   button.addEventListener('click', () => setOpen(!open));
 
   button.addEventListener('keydown', (e) => {

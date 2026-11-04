@@ -1,0 +1,339 @@
+---
+/**
+ * Лендинг лише французькою: для пошуку «architecte d'intérieur Nice» і реклами Google у Ніцці.
+ * Інших мовних версій немає, тож у BaseLayout передаємо locales={['fr']}: hreflang і перемикач
+ * мов не ведуть на неіснуючі сторінки. Тексти — з фактів сайту; Марині варто їх вичитати.
+ */
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import ContactSection from '../../components/home/ContactSection.astro';
+import ProjectGrid from '../../components/project/ProjectGrid.astro';
+import Reviews from '../../components/home/Reviews.astro';
+import { getProjects, slugOf } from '../../lib/projects';
+import { getServices } from '../../lib/services';
+import { localePath, place, t } from '../../lib/i18n';
+import { SITE } from '../../lib/site';
+
+const locale = 'fr';
+const site = Astro.site!;
+const home = new URL('/', site).href;
+const url = new URL(Astro.url.pathname, site).href;
+
+const projects = (await getProjects(locale)).filter((p) => p.data.city === 'Nice');
+const hero = projects.find((p) => slugOf(p) === 'la-villa-nice') ?? projects[0];
+const services = getServices(locale);
+
+const PROCESS = [1, 2, 3, 4].map((n) => ({
+  n: String(n).padStart(2, '0'),
+  title: t(locale, `about.process.${n}.title`),
+  text: t(locale, `about.process.${n}.text`),
+}));
+
+const title = 'Architecte d’intérieur à Nice — Maryna Vashchenko | VM Design';
+const description =
+  'Maryna Vashchenko, architecte d’intérieur basée à Nice : rénovation de villas, d’appartements et de commerces, plans techniques et suivi de chantier. Plus de 15 ans d’expérience.';
+
+const jsonLd = [
+  {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: 'Architecture et design d’intérieur à Nice',
+    serviceType: 'Interior design',
+    url,
+    provider: { '@id': `${home}#studio` },
+    areaServed: { '@type': 'City', name: 'Nice' },
+  },
+];
+---
+
+<BaseLayout title={title} description={description} locales={['fr']} ogImage={hero?.data.cover} jsonLd={jsonLd}>
+  <section class="lp-head">
+    <div class="container grid">
+      <div class="lp-head__type">
+        <p class="t-eyebrow">Nice · {place(locale, 'French Riviera')}</p>
+        <h1 class="t-display lp-head__title">Architecte d’intérieur à Nice</h1>
+        <p class="t-lead lp-head__lead">
+          Maryna Vashchenko, architecte d’intérieur et designer basée à Nice, conçoit et rénove des villas, des
+          appartements et des commerces à Nice et sur la Côte d’Azur.
+        </p>
+        <p class="lp-head__body">{t(locale, 'about.body')}</p>
+
+        <p class="lp-head__actions">
+          <a class="lp-btn lp-btn--solid" href="#contact">Parler de votre projet</a>
+          <a class="lp-btn" href={localePath(locale, '/projects')}>Voir tous les projets</a>
+        </p>
+
+        <dl class="lp-facts">
+          <div>
+            <dt class="t-meta">{t(locale, 'about.fact.experience')}</dt>
+            <dd>{t(locale, 'about.fact.experienceValue', { n: SITE.facts.experienceYears })}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">{t(locale, 'about.fact.based')}</dt>
+            <dd>{place(locale, SITE.facts.based)}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">Projets à Nice</dt>
+            <dd>{projects.length}</dd>
+          </div>
+          <div>
+            <dt class="t-meta">{t(locale, 'about.fact.languages')}</dt>
+            <dd>{SITE.facts.languages.map((l) => place(locale, l)).join(' · ')}</dd>
+          </div>
+        </dl>
+      </div>
+
+      {
+        hero && (
+          <figure class="lp-head__photo plate">
+            <Picture
+              formats={['avif']}
+              fallbackFormat="webp"
+              src={hero.data.cover}
+              alt={hero.data.coverAlt}
+              widths={[600, 900, 1300, 1800]}
+              sizes="(max-width: 900px) 92vw, 45vw"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </figure>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section lp-work">
+    <div class="container">
+      <header class="lp-sec-head" data-reveal>
+        <p class="t-eyebrow">Réalisations</p>
+        <h2 class="t-h2">Projets à Nice</h2>
+      </header>
+      <ProjectGrid locale={locale} projects={projects} />
+    </div>
+  </section>
+
+  <section class="section on-sand">
+    <div class="container">
+      <header class="lp-sec-head" data-reveal>
+        <p class="t-eyebrow">{t(locale, 'services.eyebrow')}</p>
+        <h2 class="t-h2">{t(locale, 'services.page.title')}</h2>
+        <p class="t-lead lp-sec-head__lead">{t(locale, 'services.page.lead')}</p>
+      </header>
+
+      <ul class="lp-services">
+        {
+          services.map((s, i) => (
+            <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+              <h3 class="lp-services__title">
+                <a href={`${localePath(locale, '/services')}#${s.slug}`}>{s.title}</a>
+              </h3>
+              <p>{s.short}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="lp-sec-head" data-reveal>
+        <p class="t-eyebrow">{t(locale, 'about.process.eyebrow')}</p>
+        <h2 class="t-h2">{t(locale, 'about.process.title')}</h2>
+      </header>
+
+      <ol class="lp-process">
+        {
+          PROCESS.map((step, i) => (
+            <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="t-meta">{step.n}</span>
+              <h3 class="lp-process__title">{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Reviews locale={locale} />
+
+  <ContactSection locale={locale} eyebrow="Votre projet à Nice" title="Parlons de votre intérieur" />
+</BaseLayout>
+
+<style>
+  .lp-head {
+    padding-top: 7rem;
+    padding-bottom: var(--section);
+  }
+
+  .lp-head__type {
+    grid-column: span 6;
+  }
+
+  .lp-head__title {
+    margin-block: var(--space-s) var(--space-m);
+  }
+
+  .lp-head__lead {
+    max-width: var(--measure);
+  }
+
+  .lp-head__body {
+    margin-top: var(--space-m);
+    max-width: var(--measure);
+    color: var(--fg-muted);
+  }
+
+  .lp-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
+  }
+
+  .lp-btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--fg);
+    font-size: var(--step-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .lp-btn:hover,
+  .lp-btn:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .lp-btn--solid {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bone);
+  }
+
+  .lp-btn--solid:hover,
+  .lp-btn--solid:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bone);
+  }
+
+  .lp-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-l);
+    margin: var(--space-xl) 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .lp-facts > div {
+    padding-block: var(--space-s);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .lp-facts dd {
+    margin: 0.25rem 0 0;
+  }
+
+  .lp-head__photo {
+    grid-column: 8 / span 5;
+    align-self: start;
+    margin: 0;
+    aspect-ratio: var(--ratio-tall);
+  }
+
+  .lp-head__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lp-sec-head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .lp-sec-head .t-eyebrow {
+    margin-bottom: var(--space-s);
+  }
+
+  .lp-sec-head__lead {
+    margin-top: var(--space-m);
+    max-width: var(--measure);
+  }
+
+  .lp-services,
+  .lp-process {
+    display: grid;
+    gap: var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lp-services {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lp-process {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lp-services li,
+  .lp-process li {
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--rule);
+  }
+
+  .lp-services p {
+    color: var(--fg-muted);
+  }
+
+  .lp-services__title,
+  .lp-process__title {
+    margin-block: var(--space-xs) var(--space-s);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.375rem;
+    line-height: var(--lh-heading);
+  }
+
+  .lp-services__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .lp-services__title a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .lp-head__type,
+    .lp-head__photo {
+      grid-column: 1 / -1;
+    }
+
+    .lp-head__photo {
+      margin-top: var(--space-xl);
+    }
+
+    .lp-services,
+    .lp-process {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .lp-facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

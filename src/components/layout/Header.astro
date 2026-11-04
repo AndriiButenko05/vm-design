@@ -6,9 +6,11 @@ import { localePath, stripLocale, LOCALES, LOCALE_SHORT, t, type Locale } from '
 interface Props {
   locale: Locale;
   transparent?: boolean;
+  /** Мови, якими сторінка існує; для решти перемикач веде на головну цієї мови. */
+  locales?: readonly Locale[];
 }
 
-const { locale, transparent = false } = Astro.props;
+const { locale, transparent = false, locales = LOCALES } = Astro.props;
 const stripped = stripLocale(Astro.url.pathname).replace(/\/$/, '') || '/';
 const bare = stripped === '/404' ? '/' : stripped;
 
@@ -18,6 +20,8 @@ const nav = [
   { key: 'nav.about', href: '/about' },
   { key: 'nav.contact', href: '/contact' },
 ];
+
+const langHref = (l: Locale) => localePath(l, locales.includes(l) ? bare : '/');
 
 const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/');
 ---
@@ -52,7 +56,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
           LOCALES.map((l) => (
             <li>
               <a
-                href={localePath(l, bare)}
+                href={langHref(l)}
                 hreflang={l}
                 lang={l}
                 aria-current={l === locale ? 'true' : null}
@@ -96,7 +100,7 @@ const isCurrent = (href: string) => bare === href || bare.startsWith(href + '/')
     {
       LOCALES.map((l) => (
         <li>
-          <a href={localePath(l, bare)} hreflang={l} lang={l} aria-current={l === locale ? 'true' : null}>
+          <a href={langHref(l)} hreflang={l} lang={l} aria-current={l === locale ? 'true' : null}>
             {LOCALE_SHORT[l]}
           </a>
         </li>

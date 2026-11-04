@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 
 /**
- * Лише для `astro dev`: запити /api/* обслуговує той самий worker/index.js,
+ * Лише для `astro dev`: запити /api/* і /go/ обслуговує той самий worker/index.js,
  * що й на Cloudflare. Ключ береться з .dev.vars, Place ID — із vars у wrangler.jsonc.
  */
 export default function devWorker() {
@@ -10,7 +10,7 @@ export default function devWorker() {
     apply: 'serve',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (!req.url?.startsWith('/api/')) return next();
+        if (!/^\/(api\/|go\/?(\?|$))/.test(req.url ?? '')) return next();
         try {
           const { default: worker } = await server.ssrLoadModule('/worker/index.js');
           const headers = Object.entries(req.headers).filter(([, v]) => typeof v === 'string');

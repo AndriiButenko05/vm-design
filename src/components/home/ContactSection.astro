@@ -41,6 +41,15 @@ const bgWide = wide ? await variants(wide, [1200, 1800, 2600, 3600]) : null;
 const bgTall = tall ? await variants(tall, [800, 1200, 1900]) : null;
 
 const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'contact.other')];
+
+// Значення — англійською на всіх мовах, щоб Марині було просто рахувати, звідки приходять заявки.
+const sourceOptions = [
+  { value: 'Google search', label: t(locale, 'contact.source.google') },
+  { value: 'Google Maps', label: t(locale, 'contact.source.maps') },
+  { value: 'Instagram', label: t(locale, 'contact.source.instagram') },
+  { value: 'Recommendation', label: t(locale, 'contact.source.referral') },
+  { value: 'Other', label: t(locale, 'contact.other') },
+];
 ---
 
 <section class="contact on-ink-deep" id={id}>
@@ -130,6 +139,16 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
         </select>
       </div>
 
+      <div class="form__field form__field--select" data-select>
+        <label for="source">
+          {t(locale, 'contact.source')} <span class="form__optional">({t(locale, 'contact.optional')})</span>
+        </label>
+        <select id="source" name="source">
+          <option value="">—</option>
+          {sourceOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+
       <div class="form__field">
         <label for="message">{t(locale, 'contact.message')}</label>
         <textarea id="message" name="message" rows="5" required></textarea>
@@ -153,6 +172,22 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
       />
     </form>
   </div>
+
+  <dialog class="thanks" aria-labelledby="thanks-title" data-thanks>
+    <div class="thanks__inner">
+      <svg class="thanks__mark" viewBox="0 0 96 96" aria-hidden="true">
+        <circle class="thanks__ring" cx="48" cy="48" r="45" pathLength="1" />
+        <path class="thanks__tick" d="M29 49.5 L42 62 L67 35" pathLength="1" />
+      </svg>
+      <h2 class="thanks__title" id="thanks-title">{t(locale, 'thanks.title')}</h2>
+      <p class="thanks__text">{t(locale, 'thanks.text')}</p>
+    </div>
+    <form class="thanks__corner" method="dialog">
+      <button class="thanks__close" type="submit" aria-label={t(locale, 'nav.close')}>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 3 L17 17 M17 3 L3 17" /></svg>
+      </button>
+    </form>
+  </dialog>
 </section>
 
 <script>
@@ -245,6 +280,12 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
     letter-spacing: var(--ls-meta);
     text-transform: uppercase;
     color: var(--fg-muted);
+  }
+
+  .form__optional {
+    text-transform: none;
+    letter-spacing: normal;
+    opacity: 0.75;
   }
 
   .form__field input,
@@ -420,6 +461,174 @@ const serviceOptions = [...getServices(locale).map((s) => s.title), t(locale, 'c
 
   .form__status[data-state='ok'] {
     color: var(--accent-inv);
+  }
+
+  /* Подяка після відправлення: на весь екран, світла, з галочкою, що малюється. */
+  .thanks {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: var(--gutter);
+    border: 0;
+    background: var(--bone);
+    color: var(--ink);
+    --focus: var(--accent);
+  }
+
+  .thanks[open] {
+    display: grid;
+    place-items: center;
+    animation: thanks-in 600ms var(--ease) both;
+  }
+
+  /* Закривається сама: коротке згасання перед close() (див. contact-form.ts). */
+  .thanks.is-closing {
+    animation: thanks-out 500ms var(--ease) forwards;
+  }
+
+  .thanks::backdrop {
+    background: transparent;
+  }
+
+  :global(html:has(.thanks[open])) {
+    overflow: hidden;
+  }
+
+  .thanks__inner {
+    max-width: 34rem;
+    text-align: center;
+  }
+
+  .thanks__mark {
+    width: clamp(4.5rem, 10vw, 6rem);
+    height: auto;
+    margin-inline: auto;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .thanks__ring,
+  .thanks__tick {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .thanks[open] .thanks__ring {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: thanks-draw 900ms var(--ease) 250ms forwards;
+  }
+
+  .thanks[open] .thanks__tick {
+    stroke-width: 2;
+    animation: thanks-draw 500ms var(--ease) 950ms forwards;
+  }
+
+  .thanks__title {
+    margin: var(--space-l) 0 var(--space-s);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--step-h1);
+    line-height: var(--lh-heading);
+  }
+
+  .thanks__text {
+    margin: 0;
+    font-size: var(--step-lead);
+    line-height: var(--lh-lead);
+    color: var(--muted);
+  }
+
+  .thanks__title,
+  .thanks__text {
+    animation: thanks-rise 700ms var(--ease) both;
+  }
+
+  .thanks__title {
+    animation-delay: 700ms;
+  }
+
+  .thanks__text {
+    animation-delay: 820ms;
+  }
+
+  .thanks__corner {
+    position: absolute;
+    top: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2rem);
+  }
+
+  .thanks__close {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .thanks__close:hover {
+    color: var(--ink);
+  }
+
+  .thanks__close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+
+  @keyframes thanks-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes thanks-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes thanks-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes thanks-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thanks[open],
+    .thanks[open] .thanks__ring,
+    .thanks[open] .thanks__tick,
+    .thanks__title,
+    .thanks__text,
+    .thanks.is-closing {
+      animation: none;
+    }
+
+    .thanks__ring,
+    .thanks__tick {
+      stroke-dashoffset: 0;
+    }
   }
 
   @media (max-width: 900px) {
